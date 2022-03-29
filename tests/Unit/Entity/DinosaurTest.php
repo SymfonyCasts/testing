@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class DinosaurTest extends TestCase
 {
+    /** @dataProvider getDinoLengthForSpecification */
     public function testDinoOver15MetersIsLarge(int $length, string $expectedSize): void
     {
         $dino = new Dinosaur($length);
@@ -16,7 +17,7 @@ class DinosaurTest extends TestCase
 
     public function getDinoLengthForSpecification(): \Generator
     {
-        yield [15, 'Large'];
-        yield [10, 'Small'];
+        yield '15 Meter Large Dino!' => [15, 'Large'];
+        yield '10 Meter Small Dino!' => [10, 'Small'];
     }
 }
