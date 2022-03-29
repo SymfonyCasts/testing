@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\GitHubDinoService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,8 +10,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     #[Route(path: '/', name: 'main_controller', methods: ['GET'])]
-    public function index(): Response
+    public function index(GitHubDinoService $dinoService): Response
     {
-        return $this->render('base.html.twig');
+        $issues = $dinoService->getDinoIssues();
+
+        return $this->render('base.html.twig', [
+            'sick_dinos' => $issues,
+        ]);
     }
 }
