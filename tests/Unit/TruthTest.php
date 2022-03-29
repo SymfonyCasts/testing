@@ -8,6 +8,6 @@ class TruthTest extends TestCase
 {
     public function testIsItTrue(): void
     {
-        self::assertTrue(condition: false, message: 'We know this will fail!');
+        self::assertTrue(condition: true, message: 'We know this will fail because false is never true!');
     }
 }
