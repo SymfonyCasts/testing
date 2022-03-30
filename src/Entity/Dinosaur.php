@@ -21,5 +21,7 @@ class Dinosaur
         if ($this->length >= 10) {
             return 'Large';
         }
+
+        return 'Small';
     }
 }
