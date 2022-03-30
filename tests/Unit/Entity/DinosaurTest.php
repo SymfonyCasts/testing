@@ -22,7 +22,7 @@ class DinosaurTest extends TestCase
 
     public function getDinoLengthSpecification(): \Generator
     {
-        yield '15 Meter Large Dino' => [15, 'Large'];
+        yield '15 Meter Large Dino' => [5, 'Large'];
         yield '5 Meter Small Dino' => [5, 'Small'];
     }
 }
