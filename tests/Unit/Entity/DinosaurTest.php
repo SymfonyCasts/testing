@@ -2,6 +2,7 @@
 
 namespace App\Tests\Unit\Entity;
 
+use App\Entity\Dinosaur;
 use PHPUnit\Framework\TestCase;
 
 class DinosaurTest extends TestCase
