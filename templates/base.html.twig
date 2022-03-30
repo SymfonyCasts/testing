@@ -66,6 +66,9 @@
             </table>
         {% endblock %}
 
-        {{ dump(sick_dinos) }}
+        <h2>Health Reports</h2>
+        {% for dino in dinos %}
+            <div>{{ dino.title }} - {{ dino.health }}</div>
+        {% endfor %}
     </body>
 </html>

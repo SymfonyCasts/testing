@@ -15,7 +15,7 @@ class MainController extends AbstractController
         $issues = $dinoService->getDinoIssues();
 
         return $this->render('base.html.twig', [
-            'sick_dinos' => $issues,
+            'dinos' => $issues,
         ]);
     }
 }

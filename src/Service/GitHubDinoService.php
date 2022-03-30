@@ -9,8 +9,17 @@ class GitHubDinoService
     public function getDinoIssues(): array
     {
         $client = HttpClient::create();
-        $response = $client->request(method: 'GET', url: 'https://api.github.com/repos/SymfonyCasts/reset-password-bundle/issues?per_page=1');
+        $response = $client->request(method: 'GET', url: 'https://api.github.com/repos/jrushlow/nothing-here/issues');
 
-        return $response->toArray();
+        $dinoIssues = [];
+
+        foreach ($response->toArray() as $issue) {
+            $dinoIssues[] = [
+                'title' => $issue['title'],
+                'health' => $issue['labels'][0]['name']
+            ];
+        }
+
+        return $dinoIssues;
     }
 }
