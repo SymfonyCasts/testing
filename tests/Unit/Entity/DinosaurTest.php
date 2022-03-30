@@ -7,16 +7,21 @@ use PHPUnit\Framework\TestCase;
 
 class DinosaurTest extends TestCase
 {
-    public function testDinoOver15MetersIsLarge(int $length, string $expectedSize): void
+    public function testDinoHasLength(): void
     {
-        $dino = new Dinosaur($length);
+        $dino = new Dinosaur();
 
-        self::assertSame(expected: $expectedSize, actual: $dino->getSpecification(), message: 'This is supposed to be a large dino!');
+        self::assertSame(0, $dino->length);
     }
 
-    public function getDinoLengthForSpecification(): \Generator
+    public function testDinoOver15MetersIsLarge(): void
     {
-        yield [15, 'Large'];
-        yield [10, 'Small'];
+        $dino = new Dinosaur(20);
+
+        self::assertSame(expected: 'Large', actual: $dino->getSpecification(), message: 'This is supposed to be a large dino!');
+
+        $dino = new Dinosaur(10);
+
+        self::assertSame(expected: 'Small', actual: $dino->getSpecification(), message: 'This is supposed to be a large dino!');
     }
 }
