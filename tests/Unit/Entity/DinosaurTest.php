@@ -21,4 +21,16 @@ class DinosaurTest extends TestCase
         self::assertSame(15, $dino->length);
         self::assertSame('Paddock A', $dino->enclosure);
     }
+
+    public function testDinoOver15MetersIsLarge(): void
+    {
+        $dino = new Dinosaur(
+            name: 'Big Eaty',
+            genus: 'Tyrannosaurus',
+            length: 15,
+            enclosure: 'Paddock A'
+        );
+
+        self::assertSame('Large', $dino->getSpecification(), 'This is supposed to be a large dino!');
+    }
 }

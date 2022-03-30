@@ -15,4 +15,11 @@ class Dinosaur
         $this->length = $length;
         $this->enclosure = $enclosure;
     }
+
+    public function getSpecification(): string
+    {
+        if ($this->length >= 10) {
+            return 'Large';
+        }
+    }
 }
