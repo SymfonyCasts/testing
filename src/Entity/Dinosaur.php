@@ -13,5 +13,6 @@ class Dinosaur
         $this->name = $name;
         $this->genus = $genus;
         $this->length = $length;
+        $this->enclosure = $enclosure;
     }
 }
