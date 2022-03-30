@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class DinosaurTest extends TestCase
 {
     /** @dataProvider getDinoLengthSpecification */
-    public function testDinoOver15MetersIsLarge(int $length, string $expectedSpecification): void
+    public function testDinoHasCorrectSpecificationFromLength(int $length, string $expectedSpecification): void
     {
         $dino = new Dinosaur(
             name: 'Big Eaty',
@@ -17,12 +17,12 @@ class DinosaurTest extends TestCase
             enclosure: 'Paddock A'
         );
 
-        self::assertSame($expectedSpecification, $dino->getSpecification(), 'This is supposed to be a small dino!');
+        self::assertSame($expectedSpecification, $dino->getSpecification());
     }
 
     public function getDinoLengthSpecification(): \Generator
     {
-        yield '15 Meter Large Dino' => [5, 'Large'];
+        yield '15 Meter Large Dino' => [15, 'Large'];
         yield '5 Meter Small Dino' => [5, 'Small'];
     }
 }
