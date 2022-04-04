@@ -5,6 +5,7 @@ namespace App\Tests\Unit\Service;
 use App\Service\GithubService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class GithubServiceTest extends TestCase
 {
@@ -15,7 +16,7 @@ class GithubServiceTest extends TestCase
             ['name' => 'Maverick', 'health' => 'Healthy'],
         ];
 
-        $httpClient = HttpClient::create();
+        $httpClient = $this->createMock(HttpClientInterface::class);
 
         $service = new GithubService($httpClient);
 
