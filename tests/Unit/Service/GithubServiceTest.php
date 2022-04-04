@@ -39,6 +39,7 @@ class GithubServiceTest extends TestCase
         $httpClient
             ->expects(self::once())
             ->method('request')
+            ->with('GET', 'https://api.github.com/repos/jrushlow/nothing-here/issues')
             ->willReturn($mockedResponse)
         ;
 
