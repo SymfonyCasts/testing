@@ -2,15 +2,18 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class GithubService
 {
+    public function __construct(
+        private readonly HttpClientInterface $httpClient
+    ) {
+    }
+
     public function getHealthReports(): array
     {
-        $client = HttpClient::create();
-
-        $response = $client->request('GET', 'https://api.github.com/repos/jrushlow/nothing-here/issues');
+        $response = $this->httpClient->request('GET', 'https://api.github.com/repos/jrushlow/nothing-here/issues');
 
         $healthReports = [];
 
