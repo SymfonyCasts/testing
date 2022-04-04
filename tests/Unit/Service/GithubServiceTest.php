@@ -30,12 +30,14 @@ class GithubServiceTest extends TestCase
 
         $mockedResponse = $this->createMock(ResponseInterface::class);
         $mockedResponse
+            ->expects(self::once())
             ->method('toArray')
             ->willReturn($data)
         ;
 
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
+            ->expects(self::once())
             ->method('request')
             ->willReturn($mockedResponse)
         ;
