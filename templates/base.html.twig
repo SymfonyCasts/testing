@@ -23,52 +23,19 @@
                         <th>Genus</th>
                         <th>Size</th>
                         <th>Enclosure</th>
-                        <th>Accepting Visitors</th>
                     </tr>
                 </thead>
                 <tbody>
+                {% for dino in dinos %}
                     <tr>
-                        <td>Daisy</td>
-                        <td>Velociraptor</td>
-                        <td>Small</td>
-                        <td>Paddock A</td>
-                        <td>Yes!</td>
+                        <td>{{ dino.name }}</td>
+                        <td>{{ dino.genus }}</td>
+                        <td>{{ dino.specification }}</td>
+                        <td>{{ dino.enclosure }}</td>
                     </tr>
-                    <tr>
-                        <td>Bumpy</td>
-                        <td>Triceratops</td>
-                        <td>Medium</td>
-                        <td>Paddock B</td>
-                        <td>Not right now</td>
-                    </tr>
-                    <tr>
-                        <td>Big Eaty</td>
-                        <td>Tyrannosaurus</td>
-                        <td>Large</td>
-                        <td>Paddock C</td>
-                        <td>Not right now</td>
-                    </tr>
-                    <tr>
-                        <td>Maverick</td>
-                        <td>Pterodactyl</td>
-                        <td>Small</td>
-                        <td>Aviary 1</td>
-                        <td>Not right now</td>
-                    </tr>
-                    <tr>
-                        <td>Dennis</td>
-                        <td>Dilophosaurus</td>
-                        <td>Medium</td>
-                        <td>Paddock B</td>
-                        <td>Not right now</td>
-                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
         {% endblock %}
-
-        <h2>Health Reports</h2>
-        {% for dino in dinos %}
-            <div>{{ dino.title }} - {{ dino.health }}</div>
-        {% endfor %}
     </body>
 </html>
