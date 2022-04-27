@@ -8,6 +8,7 @@ class Dinosaur
     private string $genus;
     private int $length;
     private string $enclosure;
+    private string $health = 'Healthy';
 
     public function __construct(string $name, string $genus, int $length, string $enclosure)
     {
@@ -35,5 +36,17 @@ class Dinosaur
     public function getEnclosure(): string
     {
         return $this->enclosure;
+    }
+
+    public function getHealth(): string
+    {
+        return $this->health;
+    }
+
+    public function setHealth(string $health): self
+    {
+        $this->health = $health;
+
+        return $this;
     }
 }
