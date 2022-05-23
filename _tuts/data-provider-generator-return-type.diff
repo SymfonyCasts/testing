@@ -1,0 +1,13 @@
+diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
+index 54a13af..f74d449 100644
+--- a/tests/Unit/Entity/DinosaurTest.php
++++ b/tests/Unit/Entity/DinosaurTest.php
+@@ -37,7 +37,7 @@ class DinosaurTest extends TestCase
+         self::assertSame($specification, $dino->getSpecification());
+     }
+ 
+-    public function getDinoLengthSpecification()
++    public function getDinoLengthSpecification(): \Generator
+     {
+         yield '15 Meter Large Dino' => [15, 'Large'];
+         yield '7 Meter Medium Dino' => [7, 'Medium'];

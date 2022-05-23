@@ -74,7 +74,37 @@
             "id": "tdd-show-spec-in-template",
             "name": "TDD: show spec in template",
             "description": null
+        },
+        {
+            "id": "data-provider-create-a-get-specification-data-provider",
+            "name": "Data Provider: create a get specification data provider",
+            "description": null
+        },
+        {
+            "id": "data-provider-add-at-dataprovider-annotation",
+            "name": "Data Provider: add @dataProvider annotation",
+            "description": null
+        },
+        {
+            "id": "data-provider-use-message-keys",
+            "name": "Data Provider: use message keys",
+            "description": null
+        },
+        {
+            "id": "data-provider-show-failure-message-keys",
+            "name": "Data Provider: show failure message keys",
+            "description": null
+        },
+        {
+            "id": "data-provider-remove-assertsame-message-arg-and-cleanup",
+            "name": "Data Provider: remove assertSame message arg and cleanup",
+            "description": null
+        },
+        {
+            "id": "data-provider-generator-return-type",
+            "name": "Data Provider: generator return type",
+            "description": null
         }
     ],
-    "sha": "43fe93f6df07ae1113334d345f8b7699eb49e8e3"
+    "sha": "fbecbde18dc2dcf5f81f1a2222b84b5d3f1dab32"
 }

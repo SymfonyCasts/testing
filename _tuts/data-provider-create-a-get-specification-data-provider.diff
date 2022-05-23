@@ -1,0 +1,47 @@
+diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
+index cdab975..534abea 100644
+--- a/tests/Unit/Entity/DinosaurTest.php
++++ b/tests/Unit/Entity/DinosaurTest.php
+@@ -22,33 +22,22 @@ class DinosaurTest extends TestCase
+         self::assertSame('Paddock A', $dino->getEnclosure());
+     }
+ 
+-    public function testDinoOver15MetersIsLarge(): void
++    public function testDinoOver15MetersIsLarge(int $length, string $specification): void
+     {
+         $dino = new Dinosaur(
+             name: 'Big Eaty',
+             genus: 'Tyrannosaurus',
+-            length: 15,
+-            enclosure: 'Paddock A',
+-        );
+-
+-        self::assertSame('Large', $dino->getSpecification(), 'This is supposed to be a large Dinosaur');
+-
+-        $dino = new Dinosaur(
+-            name: 'Big Eaty',
+-            genus: 'Tyrannosaurus',
+-            length: 7,
++            length: $length,
+             enclosure: 'Paddock A',
+         );
+ 
+-        self::assertSame('Medium', $dino->getSpecification(), 'This is supposed to be a medium Dinosaur');
+-
+-        $dino = new Dinosaur(
+-            name: 'Big Eaty',
+-            genus: 'Tyrannosaurus',
+-            length: 4,
+-            enclosure: 'Paddock A',
+-        );
++        self::assertSame($specification, $dino->getSpecification(), 'This is supposed to be a large Dinosaur');
++    }
+ 
+-        self::assertSame('Small', $dino->getSpecification(), 'This is supposed to be a small Dinosaur');
++    public function getDinoLengthSpecification()
++    {
++        yield [15, 'Large'];
++        yield [7, 'Medium'];
++        yield [5, 'Small'];
+     }
+ }
