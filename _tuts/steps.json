@@ -44,7 +44,12 @@
             "id": "dinosaur-fix-failed-assertion",
             "name": "[Dinosaur] fix failed assertion",
             "description": null
+        },
+        {
+            "id": "tdd-intro-tdd-with-getspecification",
+            "name": "TDD: intro TDD with getSpecification",
+            "description": null
         }
     ],
-    "sha": "301d657f457a1aba39a4ce55fbbb296f276664e7"
+    "sha": "964855d62859ed33f1c4e557a43ec587fa3832f5"
 }
