@@ -199,7 +199,17 @@
             "id": "mock-objects-use-github-service-in-our-controller",
             "name": "Mock Objects: use github service in our controller",
             "description": null
+        },
+        {
+            "id": "pre-exception-add-test-case-for-hungry-dinos",
+            "name": "Pre Exception: add test case for hungry dinos",
+            "description": null
+        },
+        {
+            "id": "pre-exception-hungry-dinos-can-accept-visitors",
+            "name": "Pre Exception: hungry dinos can accept visitors",
+            "description": null
         }
     ],
-    "sha": "c0a635ef63ab85895bda3117b174509481e267ab"
+    "sha": "bca1751dfb9921a7aaa42586f3a239778e282599"
 }

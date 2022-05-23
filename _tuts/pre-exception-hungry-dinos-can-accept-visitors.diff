@@ -1,0 +1,17 @@
+diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
+index f1f4bb2..51f5cbb 100644
+--- a/src/Entity/Dinosaur.php
++++ b/src/Entity/Dinosaur.php
+@@ -57,11 +57,7 @@ class Dinosaur
+ 
+     public function isAcceptingVisitors(): bool
+     {
+-        if ($this->health === self::STATUS_HEALTH) {
+-            return true;
+-        }
+-
+-        return false;
++        return $this->health !== self::STATUS_SICK;
+     }
+ 
+     public function setHealth(string $health): self

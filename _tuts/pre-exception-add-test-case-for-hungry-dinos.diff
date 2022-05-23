@@ -1,0 +1,46 @@
+diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
+index 9723648..f1f4bb2 100644
+--- a/src/Entity/Dinosaur.php
++++ b/src/Entity/Dinosaur.php
+@@ -6,6 +6,7 @@ class Dinosaur
+ {
+     public const STATUS_HEALTH = 'HEALTHY';
+     public const STATUS_SICK = 'SICK';
++    public const STATUS_HUNGRY = 'HUNGRY';
+ 
+     private string $name;
+     private string $genus;
+diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
+index 19dcb47..24fb7d3 100644
+--- a/tests/Unit/Entity/DinosaurTest.php
++++ b/tests/Unit/Entity/DinosaurTest.php
+@@ -3,6 +3,7 @@
+ namespace App\Tests\Unit\Entity;
+ 
+ use App\Entity\Dinosaur;
++use PhpParser\Node\Expr\Yield_;
+ use PHPUnit\Framework\TestCase;
+ 
+ class DinosaurTest extends TestCase
+@@ -44,10 +45,19 @@ class DinosaurTest extends TestCase
+         yield '4 Meter Small Dino' => [4, 'Small'];
+     }
+ 
+-    public function testHealth(): void
++    /** @dataProvider getIsAcceptingVisitors */
++    public function testIsAcceptingVisitors(string $health, bool $expectedVisitorStatus): void
+     {
+         $dino = new Dinosaur('Rex', 'Trex', 0, 'Paddock A');
++        $dino->setHealth($health);
+ 
+-        self::assertTrue($dino->isAcceptingVisitors());
++        self::assertSame($expectedVisitorStatus, $dino->isAcceptingVisitors());
++    }
++
++    public function getIsAcceptingVisitors(): \Generator
++    {
++        yield 'HEALTHY dino is accepting visitors' => [Dinosaur::STATUS_HEALTH, true];
++        yield 'SICK dino is not accepting visitors' => [Dinosaur::STATUS_SICK, false];
++        yield 'HUNGRY dino is accepting visitors' => [Dinosaur::STATUS_HUNGRY, true];
+     }
+ }
