@@ -1,0 +1,16 @@
+diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
+index f74d449..19dcb47 100644
+--- a/tests/Unit/Entity/DinosaurTest.php
++++ b/tests/Unit/Entity/DinosaurTest.php
+@@ -43,4 +43,11 @@ class DinosaurTest extends TestCase
+         yield '7 Meter Medium Dino' => [7, 'Medium'];
+         yield '4 Meter Small Dino' => [4, 'Small'];
+     }
++
++    public function testHealth(): void
++    {
++        $dino = new Dinosaur('Rex', 'Trex', 0, 'Paddock A');
++
++        self::assertTrue($dino->isAcceptingVisitors());
++    }
+ }

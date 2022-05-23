@@ -1,0 +1,20 @@
+diff --git a/templates/base.html.twig b/templates/base.html.twig
+index 957aee4..14fe328 100644
+--- a/templates/base.html.twig
++++ b/templates/base.html.twig
+@@ -23,6 +23,7 @@
+                 <th>Genus</th>
+                 <th>Size</th>
+                 <th>Enclosure</th>
++                <th>Accepting Visitors</th>
+             </tr>
+             </thead>
+             <tbody>
+@@ -32,6 +33,7 @@
+                     <td>{{ dino.genus }}</td>
+                     <td>{{ dino.specification }}</td>
+                     <td>{{ dino.enclosure }}</td>
++                    <td>{{ dino.acceptingVisitors ? 'Yes' : 'No' }}</td>
+                 </tr>
+             {% endfor %}
+             </tbody>

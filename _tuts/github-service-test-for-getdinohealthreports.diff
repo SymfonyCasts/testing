@@ -1,0 +1,32 @@
+diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
+new file mode 100644
+index 0000000..67fa467
+--- /dev/null
++++ b/tests/Unit/Service/GithubServiceTest.php
+@@ -0,0 +1,26 @@
++<?php
++
++namespace App\Tests\Unit\Service;
++
++use App\Entity\Dinosaur;
++use PHPUnit\Framework\TestCase;
++
++class GithubServiceTest extends TestCase
++{
++    public function testGetDinoHealthReports(): void
++    {
++        $service = new GithubService();
++
++        $expectedDinos = [
++            (new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'))->setHealth('SICK'),
++            new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1')
++        ];
++
++        self::assertSame($expectedDinos,
++            $service->getHealthReports([
++                new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'),
++                new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1')
++            ])
++        );
++    }
++}

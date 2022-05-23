@@ -104,7 +104,52 @@
             "id": "data-provider-generator-return-type",
             "name": "Data Provider: generator return type",
             "description": null
+        },
+        {
+            "id": "dino-health-add-health-test",
+            "name": "Dino Health: add health test",
+            "description": null
+        },
+        {
+            "id": "dino-health-add-health-methods",
+            "name": "Dino Health: add health methods",
+            "description": null
+        },
+        {
+            "id": "dino-health-show-visitor-status-in-ui",
+            "name": "Dino Health: show visitor status in UI",
+            "description": null
+        },
+        {
+            "id": "github-service-test-for-getdinohealthreports",
+            "name": "GitHub Service: test for getDinoHealthReports",
+            "description": null
+        },
+        {
+            "id": "github-service-implement-the-service",
+            "name": "GitHub Service: implement the service",
+            "description": null
+        },
+        {
+            "id": "github-service-require-the-http-client",
+            "name": "GitHub Service: require the http client",
+            "description": null
+        },
+        {
+            "id": "github-service-handel-status-prefix-on-lables",
+            "name": "GitHub Service: handel status prefix on lables",
+            "description": null
+        },
+        {
+            "id": "github-service-use-equals-instead-of-same-for-object-arrays",
+            "name": "GitHub Service: use equals instead of same for object arrays",
+            "description": null
+        },
+        {
+            "id": "github-service-log-exceptions-from-the-http-client",
+            "name": "GitHub Service: log exceptions from the http-client",
+            "description": null
         }
     ],
-    "sha": "fbecbde18dc2dcf5f81f1a2222b84b5d3f1dab32"
+    "sha": "cf3a5339c21195b0bc62b29e3b81c6ae8c396047"
 }

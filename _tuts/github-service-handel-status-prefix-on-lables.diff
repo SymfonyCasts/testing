@@ -1,0 +1,26 @@
+diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
+index 0e4feba..f73edc1 100644
+--- a/src/Service/GithubService.php
++++ b/src/Service/GithubService.php
+@@ -15,11 +15,20 @@ class GithubService
+         foreach ($response->toArray() as $issue) {
+             foreach($dinosaurs as $dinosaur) {
+                 if (str_contains($issue['title'], $dinosaur->getName())) {
+-                    $dinosaur->setHealth($issue['labels'][0]['name']);
++                    $dinosaur->setHealth($this->getDinoStatusFromLabels($issue['labels']));
+                 }
+             }
+         }
+ 
+         return $dinosaurs;
+     }
++
++    private function getDinoStatusFromLabels(array $labels): string
++    {
++        return str_replace(
++            search: 'STATUS: ',
++            replace: '',
++            subject: strtoupper($labels[0]['name'])
++        );
++    }
+ }

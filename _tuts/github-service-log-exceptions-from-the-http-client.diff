@@ -1,0 +1,30 @@
+diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
+index f73edc1..523c817 100644
+--- a/src/Service/GithubService.php
++++ b/src/Service/GithubService.php
+@@ -2,15 +2,24 @@
+ 
+ namespace App\Service;
+ 
++use Psr\Log\LoggerInterface;
+ use Symfony\Component\HttpClient\HttpClient;
+ 
+ class GithubService
+ {
++    public function __construct(private LoggerInterface $logger)
++    {
++    }
++
+     public function getHealthReports(array $dinosaurs): array
+     {
+         $client = HttpClient::create();
+ 
+-        $response = $client->request('GET', 'https://api.github.com/repos/jrushlow/nothing-here/issues');
++        try {
++            $response = $client->request('GET', 'https://api.github.com/repos/jrushlow/nothing-here/issues');
++        } catch (\Throwable $exception) {
++            $this->logger->info($exception->getMessage());
++        }
+ 
+         foreach ($response->toArray() as $issue) {
+             foreach($dinosaurs as $dinosaur) {

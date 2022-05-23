@@ -1,0 +1,33 @@
+diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
+new file mode 100644
+index 0000000..efaff13
+--- /dev/null
++++ b/src/Service/GithubService.php
+@@ -0,0 +1,15 @@
++<?php
++
++namespace App\Service;
++
++class GithubService
++{
++    public function getHealthReports(array $dinosaurs): array
++    {
++        // Call Github API
++
++        // Filter the issues
++
++        return $dinosaurs;
++    }
++}
+diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
+index 67fa467..02bbaaf 100644
+--- a/tests/Unit/Service/GithubServiceTest.php
++++ b/tests/Unit/Service/GithubServiceTest.php
+@@ -3,6 +3,7 @@
+ namespace App\Tests\Unit\Service;
+ 
+ use App\Entity\Dinosaur;
++use App\Service\GithubService;
+ use PHPUnit\Framework\TestCase;
+ 
+ class GithubServiceTest extends TestCase

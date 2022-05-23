@@ -1,0 +1,13 @@
+diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
+index 02bbaaf..c0dd842 100644
+--- a/tests/Unit/Service/GithubServiceTest.php
++++ b/tests/Unit/Service/GithubServiceTest.php
+@@ -17,7 +17,7 @@ class GithubServiceTest extends TestCase
+             new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1')
+         ];
+ 
+-        self::assertSame($expectedDinos,
++        self::assertEquals($expectedDinos,
+             $service->getHealthReports([
+                 new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'),
+                 new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1')
