@@ -46,10 +46,35 @@
             "description": null
         },
         {
-            "id": "tdd-intro-tdd-with-getspecification",
-            "name": "TDD: intro TDD with getSpecification",
+            "id": "tdd-intro-tdd-with-testgetspecification",
+            "name": "[TDD] intro TDD with testGetSpecification",
+            "description": null
+        },
+        {
+            "id": "tdd-step-3-add-code-to-make-test-pass",
+            "name": "TDD: step 3 - add code to make test pass",
+            "description": null
+        },
+        {
+            "id": "tdd-add-medium-and-small-assertions",
+            "name": "TDD: add medium and small assertions",
+            "description": null
+        },
+        {
+            "id": "tdd-add-medium-and-small-specification-to-make-test-pass",
+            "name": "TDD: add medium and small specification to make test pass",
+            "description": null
+        },
+        {
+            "id": "tdd-step-4-refactor",
+            "name": "TDD: step 4 refactor",
+            "description": null
+        },
+        {
+            "id": "tdd-show-spec-in-template",
+            "name": "TDD: show spec in template",
             "description": null
         }
     ],
-    "sha": "964855d62859ed33f1c4e557a43ec587fa3832f5"
+    "sha": "dcdb44341515b168c3c5514c241e1aa3ac616e9d"
 }
