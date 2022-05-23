@@ -209,7 +209,32 @@
             "id": "pre-exception-hungry-dinos-can-accept-visitors",
             "name": "Pre Exception: hungry dinos can accept visitors",
             "description": null
+        },
+        {
+            "id": "exceptions-throw-an-exception-with-unknown-status-label",
+            "name": "Exceptions: throw an exception with unknown status label",
+            "description": null
+        },
+        {
+            "id": "exceptions-test-our-logic-throws-an-exception",
+            "name": "Exceptions: test our logic throws an exception",
+            "description": null
+        },
+        {
+            "id": "exceptions-add-exception-assertion",
+            "name": "Exceptions: add exception assertion",
+            "description": null
+        },
+        {
+            "id": "exceptions-test-the-exception-message",
+            "name": "Exceptions: test the exception message",
+            "description": null
+        },
+        {
+            "id": "mock-response-use-symfonys-mock-http-client-and-response-object",
+            "name": "Mock Response: use symfonys mock http client and response object",
+            "description": null
         }
     ],
-    "sha": "bca1751dfb9921a7aaa42586f3a239778e282599"
+    "sha": "a97c5476529dc5989b32051c7b5b52d4c127c5cb"
 }

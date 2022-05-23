@@ -1,0 +1,43 @@
+diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
+index d4a806e..3609824 100644
+--- a/tests/Unit/Service/GithubServiceTest.php
++++ b/tests/Unit/Service/GithubServiceTest.php
+@@ -6,6 +6,8 @@ use App\Entity\Dinosaur;
+ use App\Service\GithubService;
+ use PHPUnit\Framework\TestCase;
+ use Psr\Log\LoggerInterface;
++use Symfony\Component\HttpClient\MockHttpClient;
++use Symfony\Component\HttpClient\Response\MockResponse;
+ use Symfony\Contracts\HttpClient\HttpClientInterface;
+ use Symfony\Contracts\HttpClient\ResponseInterface;
+ 
+@@ -55,10 +57,7 @@ class GithubServiceTest extends TestCase
+ 
+     public function testExceptionThrownWithUnknownStatusLabel(): void
+     {
+-        $mockResponse = $this->createMock(ResponseInterface::class);
+-        $mockResponse
+-            ->method('toArray')
+-            ->willReturn([
++        $mockResponse = new MockResponse(json_encode([
+                 [
+                     'title' => 'Dennis',
+                     'labels' => [['name' => 'Status: Hungry']],
+@@ -71,15 +70,9 @@ class GithubServiceTest extends TestCase
+                     'title' => 'Bumpy',
+                     'labels' => [['name' => 'Status: Drowsy']],
+                 ],
+-            ]);
+-
+-        $mockHttpClient = $this->createMock(HttpClientInterface::class);
+-        $mockHttpClient
+-            ->expects(self::once())
+-            ->method('request')
+-            ->willReturn($mockResponse)
+-        ;
++            ]));
+ 
++        $mockHttpClient = new MockHttpClient($mockResponse);
+         $service = new GithubService($mockHttpClient, $this->createMock(LoggerInterface::class));
+ 
+         $this->expectException(\RuntimeException::class);

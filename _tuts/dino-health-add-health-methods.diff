@@ -1,19 +1,19 @@
 diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
-index a41f558..9723648 100644
+index a41f558..e27a39c 100644
 --- a/src/Entity/Dinosaur.php
 +++ b/src/Entity/Dinosaur.php
 @@ -4,10 +4,14 @@ namespace App\Entity;
  
  class Dinosaur
  {
-+    public const STATUS_HEALTH = 'HEALTHY';
++    public const STATUS_HEALTHY = 'HEALTHY';
 +    public const STATUS_SICK = 'SICK';
 +
      private string $name;
      private string $genus;
      private int $length;
      private string $enclosure;
-+    private string $health = self::STATUS_HEALTH;
++    private string $health = self::STATUS_HEALTHY;
  
      public function __construct(string $name, string $genus, int $length, string $enclosure)
      {
@@ -24,7 +24,7 @@ index a41f558..9723648 100644
 +
 +    public function isAcceptingVisitors(): bool
 +    {
-+        if ($this->health === self::STATUS_HEALTH) {
++        if ($this->health === self::STATUS_HEALTHY) {
 +            return true;
 +        }
 +

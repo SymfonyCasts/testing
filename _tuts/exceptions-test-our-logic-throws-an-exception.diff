@@ -1,0 +1,40 @@
+diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
+index 2824a91..1067115 100644
+--- a/tests/Unit/Service/GithubServiceTest.php
++++ b/tests/Unit/Service/GithubServiceTest.php
+@@ -52,4 +52,35 @@ class GithubServiceTest extends TestCase
+             ])
+         );
+     }
++
++    public function testExceptionThrownWithUnknownStatusLabel(): void
++    {
++        $mockResponse = $this->createMock(ResponseInterface::class);
++        $mockResponse
++            ->method('toArray')
++            ->willReturn([
++                [
++                    'title' => 'Dennis',
++                    'labels' => [['name' => 'Status: Hungry']],
++                ],
++                [
++                    'title' => 'Bumpy',
++                    'labels' => [['name' => 'Status: Drowsy']],
++                ],
++            ]);
++
++        $mockHttpClient = $this->createMock(HttpClientInterface::class);
++        $mockHttpClient
++            ->expects(self::once())
++            ->method('request')
++            ->willReturn($mockResponse)
++        ;
++
++        $service = new GithubService($mockHttpClient, $this->createMock(LoggerInterface::class));
++
++        $service->getHealthReports([
++            new Dinosaur('Dennis','Pterodactyl', 7, 'Aviary 1'),
++            new Dinosaur('Bumpy', 'Triceratops', 10, 'Paddock B'),
++        ]);
++    }
+ }
