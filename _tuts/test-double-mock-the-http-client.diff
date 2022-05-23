@@ -1,0 +1,23 @@
+diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
+index b1ca46a..74f3457 100644
+--- a/tests/Unit/Service/GithubServiceTest.php
++++ b/tests/Unit/Service/GithubServiceTest.php
+@@ -6,15 +6,16 @@ use App\Entity\Dinosaur;
+ use App\Service\GithubService;
+ use PHPUnit\Framework\TestCase;
+ use Psr\Log\LoggerInterface;
+-use Symfony\Component\HttpClient\HttpClient;
++use Symfony\Contracts\HttpClient\HttpClientInterface;
+ 
+ class GithubServiceTest extends TestCase
+ {
+     public function testGetDinoHealthReports(): void
+     {
+         $mockLogger = $this->createMock(LoggerInterface::class);
++        $mockHttpClient = $this->createMock(HttpClientInterface::class);
+ 
+-        $service = new GithubService(HttpClient::create(), $mockLogger);
++        $service = new GithubService($mockHttpClient, $mockLogger);
+ 
+         $expectedDinos = [
+             (new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'))->setHealth('SICK'),

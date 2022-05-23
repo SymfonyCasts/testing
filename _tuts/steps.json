@@ -149,7 +149,57 @@
             "id": "github-service-log-exceptions-from-the-http-client",
             "name": "GitHub Service: log exceptions from the http-client",
             "description": null
+        },
+        {
+            "id": "test-double-intro-mock-logger-instance",
+            "name": "Test Double: intro mock logger instance",
+            "description": null
+        },
+        {
+            "id": "test-double-use-di-for-the-http-client",
+            "name": "Test  Double: use DI for the http-client",
+            "description": null
+        },
+        {
+            "id": "test-double-mock-the-http-client",
+            "name": "Test  Double: mock the http client",
+            "description": null
+        },
+        {
+            "id": "stubs-configure-http-client-request-method",
+            "name": "Stubs: configure http client request method",
+            "description": null
+        },
+        {
+            "id": "stubs-configure-the-mocked-response",
+            "name": "Stubs: configure the mocked response",
+            "description": null
+        },
+        {
+            "id": "stubs-mock-response-returns-fixture-array",
+            "name": "Stubs: mock response returns fixture array",
+            "description": null
+        },
+        {
+            "id": "mock-objects-expect-the-client-to-call-request-once",
+            "name": "Mock Objects: expect the client to call request once",
+            "description": null
+        },
+        {
+            "id": "mock-objects-expect-request-is-called-with-correct-data",
+            "name": "Mock Objects: expect request is called with correct data",
+            "description": null
+        },
+        {
+            "id": "mock-objects-fix-expected-api-url",
+            "name": "Mock Objects: fix expected api url",
+            "description": null
+        },
+        {
+            "id": "mock-objects-use-github-service-in-our-controller",
+            "name": "Mock Objects: use github service in our controller",
+            "description": null
         }
     ],
-    "sha": "cf3a5339c21195b0bc62b29e3b81c6ae8c396047"
+    "sha": "c0a635ef63ab85895bda3117b174509481e267ab"
 }

@@ -1,0 +1,22 @@
+diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
+index 2b2dc79..b862f61 100644
+--- a/tests/Unit/Service/GithubServiceTest.php
++++ b/tests/Unit/Service/GithubServiceTest.php
+@@ -19,7 +19,16 @@ class GithubServiceTest extends TestCase
+ 
+         $mockResponse
+             ->method('toArray')
+-            ->willReturn([])
++            ->willReturn([
++                [
++                    'title' => 'Daisy',
++                    'labels' => [['name' => 'Status: Sick']],
++                ],
++                [
++                    'title' => 'Maverick',
++                    'labels' => [['name' => 'Status: Healthy']],
++                ],
++            ])
+         ;
+ 
+         $mockHttpClient

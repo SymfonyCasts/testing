@@ -193,7 +193,7 @@ index 579d561..e64f2f5 100644
              "name": "symfony/http-foundation",
              "version": "v6.0.7",
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index efaff13..0e4feba 100644
+index efaff13..8a3b183 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
 @@ -2,13 +2,23 @@
@@ -209,7 +209,7 @@ index efaff13..0e4feba 100644
 -        // Call Github API
 +        $client = HttpClient::create();
 +
-+        $response = $client->request('GET', 'https://api.github.com/repos/jrushlow/nothing-here/issues');
++        $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
  
 -        // Filter the issues
 +        foreach ($response->toArray() as $issue) {

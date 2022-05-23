@@ -1,13 +1,14 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index f73edc1..523c817 100644
+index d337ace..a30cad2 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
-@@ -2,15 +2,24 @@
+@@ -2,15 +2,25 @@
  
  namespace App\Service;
  
 +use Psr\Log\LoggerInterface;
  use Symfony\Component\HttpClient\HttpClient;
++use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
  
  class GithubService
  {
@@ -19,10 +20,10 @@ index f73edc1..523c817 100644
      {
          $client = HttpClient::create();
  
--        $response = $client->request('GET', 'https://api.github.com/repos/jrushlow/nothing-here/issues');
+-        $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
 +        try {
-+            $response = $client->request('GET', 'https://api.github.com/repos/jrushlow/nothing-here/issues');
-+        } catch (\Throwable $exception) {
++            $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
++        } catch (TransportExceptionInterface $exception) {
 +            $this->logger->info($exception->getMessage());
 +        }
  

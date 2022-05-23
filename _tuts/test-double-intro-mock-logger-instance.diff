@@ -1,0 +1,21 @@
+diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
+index c0dd842..b9c2d77 100644
+--- a/tests/Unit/Service/GithubServiceTest.php
++++ b/tests/Unit/Service/GithubServiceTest.php
+@@ -5,12 +5,15 @@ namespace App\Tests\Unit\Service;
+ use App\Entity\Dinosaur;
+ use App\Service\GithubService;
+ use PHPUnit\Framework\TestCase;
++use Psr\Log\LoggerInterface;
+ 
+ class GithubServiceTest extends TestCase
+ {
+     public function testGetDinoHealthReports(): void
+     {
+-        $service = new GithubService();
++        $mockLogger = $this->createMock(LoggerInterface::class);
++
++        $service = new GithubService($mockLogger);
+ 
+         $expectedDinos = [
+             (new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'))->setHealth('SICK'),

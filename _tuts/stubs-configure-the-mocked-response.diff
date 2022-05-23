@@ -1,0 +1,16 @@
+diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
+index 024cbbd..2b2dc79 100644
+--- a/tests/Unit/Service/GithubServiceTest.php
++++ b/tests/Unit/Service/GithubServiceTest.php
+@@ -17,6 +17,11 @@ class GithubServiceTest extends TestCase
+         $mockHttpClient = $this->createMock(HttpClientInterface::class);
+         $mockResponse = $this->createMock(ResponseInterface::class);
+ 
++        $mockResponse
++            ->method('toArray')
++            ->willReturn([])
++        ;
++
+         $mockHttpClient
+             ->method('request')
+             ->willReturn($mockResponse)

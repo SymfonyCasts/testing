@@ -1,0 +1,50 @@
+diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
+index a30cad2..7b48e3e 100644
+--- a/src/Service/GithubService.php
++++ b/src/Service/GithubService.php
+@@ -3,21 +3,19 @@
+ namespace App\Service;
+ 
+ use Psr\Log\LoggerInterface;
+-use Symfony\Component\HttpClient\HttpClient;
++use Symfony\Contracts\HttpClient\HttpClientInterface;
+ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+ 
+ class GithubService
+ {
+-    public function __construct(private LoggerInterface $logger)
++    public function __construct(private HttpClientInterface $httpClient, private LoggerInterface $logger)
+     {
+     }
+ 
+     public function getHealthReports(array $dinosaurs): array
+     {
+-        $client = HttpClient::create();
+-
+         try {
+-            $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
++            $response = $this->httpClient->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
+         } catch (TransportExceptionInterface $exception) {
+             $this->logger->info($exception->getMessage());
+         }
+diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
+index b9c2d77..b1ca46a 100644
+--- a/tests/Unit/Service/GithubServiceTest.php
++++ b/tests/Unit/Service/GithubServiceTest.php
+@@ -6,6 +6,7 @@ use App\Entity\Dinosaur;
+ use App\Service\GithubService;
+ use PHPUnit\Framework\TestCase;
+ use Psr\Log\LoggerInterface;
++use Symfony\Component\HttpClient\HttpClient;
+ 
+ class GithubServiceTest extends TestCase
+ {
+@@ -13,7 +14,7 @@ class GithubServiceTest extends TestCase
+     {
+         $mockLogger = $this->createMock(LoggerInterface::class);
+ 
+-        $service = new GithubService($mockLogger);
++        $service = new GithubService(HttpClient::create(), $mockLogger);
+ 
+         $expectedDinos = [
+             (new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'))->setHealth('SICK'),
