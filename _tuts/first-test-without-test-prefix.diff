@@ -1,0 +1,14 @@
+diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
+index 503df7b..d06b651 100644
+--- a/tests/Unit/Entity/DinosaurTest.php
++++ b/tests/Unit/Entity/DinosaurTest.php
+@@ -10,4 +10,9 @@ class DinosaurTest extends TestCase
+     {
+         self::assertEquals(42, 42);
+     }
++
++    public function itWorksTheSame(): void
++    {
++        self::assertSame(42, 42);
++    }
+ }

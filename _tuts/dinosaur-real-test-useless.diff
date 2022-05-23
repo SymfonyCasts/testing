@@ -1,0 +1,34 @@
+diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
+index f1729b8..37c4b68 100644
+--- a/tests/Unit/Entity/DinosaurTest.php
++++ b/tests/Unit/Entity/DinosaurTest.php
+@@ -2,17 +2,23 @@
+ 
+ namespace App\Tests\Unit\Entity;
+ 
++use App\Entity\Dinosaur;
+ use PHPUnit\Framework\TestCase;
+ 
+ class DinosaurTest extends TestCase
+ {
+-    public function testItWorks(): void
++    public function testDinosaur(): void
+     {
+-        self::assertEquals('42', 42);
+-    }
++        $dino = new Dinosaur(
++            name: 'Big Eaty',
++            genus: 'Tyrannosaurus',
++            length: 15,
++            enclosure: 'Paddock A',
++        );
+ 
+-    public function testItWorksTheSame(): void
+-    {
+-        self::assertSame('42', 42);
++        self::assertSame('Big Eaty', $dino->getName());
++        self::assertSame('Tyrannosaurus', $dino->getGenus());
++        self::assertSame(15, $dino->getLength());
++        self::assertSame('Paddock A', $dino->getEnclosure());
+     }
+ }

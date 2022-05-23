@@ -1,0 +1,19 @@
+diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
+new file mode 100644
+index 0000000..503df7b
+--- /dev/null
++++ b/tests/Unit/Entity/DinosaurTest.php
+@@ -0,0 +1,13 @@
++<?php
++
++namespace App\Tests\Unit\Entity;
++
++use PHPUnit\Framework\TestCase;
++
++class DinosaurTest extends TestCase
++{
++    public function testItWorks(): void
++    {
++        self::assertEquals(42, 42);
++    }
++}

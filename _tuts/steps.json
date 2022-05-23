@@ -1,0 +1,50 @@
+{
+    "steps": [
+        {
+            "id": "start",
+            "name": "start",
+            "description": null
+        },
+        {
+            "id": "phpunit-get-test-pack",
+            "name": "[PHPUnit] get test-pack",
+            "description": null
+        },
+        {
+            "id": "first-test-simple-assert-equals",
+            "name": "[First Test] simple assert equals",
+            "description": null
+        },
+        {
+            "id": "first-test-without-test-prefix",
+            "name": "[First Test] without test prefix",
+            "description": null
+        },
+        {
+            "id": "first-test-add-missing-prefix",
+            "name": "[First Test] add missing prefix",
+            "description": null
+        },
+        {
+            "id": "first-test-first-failure-same-is-not-equal",
+            "name": "[First Test] first failure - same is not equal",
+            "description": null
+        },
+        {
+            "id": "dinosaur-real-test-useless",
+            "name": "[Dinosaur] real test (useless)",
+            "description": null
+        },
+        {
+            "id": "dinosaur-failed-assertion-with-message",
+            "name": "[Dinosaur] failed assertion with message",
+            "description": null
+        },
+        {
+            "id": "dinosaur-fix-failed-assertion",
+            "name": "[Dinosaur] fix failed assertion",
+            "description": null
+        }
+    ],
+    "sha": "301d657f457a1aba39a4ce55fbbb296f276664e7"
+}
