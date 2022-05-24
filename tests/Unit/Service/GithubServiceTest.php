@@ -17,6 +17,11 @@ class GithubServiceTest extends TestCase
         $mockHttpClient = $this->createMock(HttpClientInterface::class);
         $mockResponse = $this->createMock(ResponseInterface::class);
 
+        $mockResponse
+            ->method('toArray')
+            ->willReturn([])
+        ;
+
         $mockHttpClient
             ->method('request')
             ->willReturn($mockResponse)
