@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Dinosaur;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
@@ -33,10 +34,25 @@ class GithubService
 
     private function getDinoStatusFromLabels(array $labels): string
     {
-        return str_replace(
-            search: 'STATUS: ',
-            replace: '',
-            subject: strtoupper($labels[0]['name'])
-        );
+        $status = null;
+
+        foreach ($labels as $label) {
+            $label = strtoupper($label['name']);
+
+            // We only care about "Status" labels
+            if (!str_starts_with($label, 'STATUS:')) {
+                continue;
+            }
+
+            // Remove the "Status:" and whitespace from the label
+            $status = trim(substr($label, strlen('STATUS:')));
+
+            // Determine if we know about the label - throw an exception is we don't
+            if (!in_array($status, [Dinosaur::STATUS_SICK, Dinosaur::STATUS_HUNGRY, Dinosaur::STATUS_HEALTHY])) {
+                throw new \RuntimeException(sprintf('%s is an unknown status label!', $label));
+            }
+        }
+
+        return $status ?? Dinosaur::STATUS_HEALTHY;
     }
 }
