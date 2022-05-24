@@ -32,5 +32,23 @@ class DinosaurTest extends TestCase
         );
 
         self::assertSame('Large', $dino->getSpecification(), 'This is supposed to be a large Dinosaur');
+
+        $dino = new Dinosaur(
+            name: 'Big Eaty',
+            genus: 'Tyrannosaurus',
+            length: 7,
+            enclosure: 'Paddock A',
+        );
+
+        self::assertSame('Medium', $dino->getSpecification(), 'This is supposed to be a medium Dinosaur');
+
+        $dino = new Dinosaur(
+            name: 'Big Eaty',
+            genus: 'Tyrannosaurus',
+            length: 4,
+            enclosure: 'Paddock A',
+        );
+
+        self::assertSame('Small', $dino->getSpecification(), 'This is supposed to be a small Dinosaur');
     }
 }
