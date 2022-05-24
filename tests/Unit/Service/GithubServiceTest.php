@@ -17,7 +17,7 @@ class GithubServiceTest extends TestCase
             new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1')
         ];
 
-        self::assertSame($expectedDinos,
+        self::assertEquals($expectedDinos,
             $service->getHealthReports([
                 new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'),
                 new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1')
