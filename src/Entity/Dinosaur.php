@@ -4,10 +4,14 @@ namespace App\Entity;
 
 class Dinosaur
 {
+    public const STATUS_HEALTHY = 'HEALTHY';
+    public const STATUS_SICK = 'SICK';
+
     private string $name;
     private string $genus;
     private int $length;
     private string $enclosure;
+    private string $health = self::STATUS_HEALTHY;
 
     public function __construct(string $name, string $genus, int $length, string $enclosure)
     {
@@ -48,5 +52,21 @@ class Dinosaur
         }
 
         return 'Small';
+    }
+
+    public function isAcceptingVisitors(): bool
+    {
+        if ($this->health === self::STATUS_HEALTHY) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function setHealth(string $health): self
+    {
+        $this->health = $health;
+
+        return $this;
     }
 }
