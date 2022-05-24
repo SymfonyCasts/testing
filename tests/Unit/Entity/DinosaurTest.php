@@ -41,6 +41,6 @@ class DinosaurTest extends TestCase
     {
         yield '15 Meter Large Dino' => [15, 'Large'];
         yield '7 Meter Medium Dino' => [7, 'Medium'];
-        yield '4 Meter Small Dino' => [4, 'Small'];
+        yield '4 Meter Small Dino' => [15, 'Small'];
     }
 }
