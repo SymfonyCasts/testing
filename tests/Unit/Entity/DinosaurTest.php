@@ -18,7 +18,7 @@ class DinosaurTest extends TestCase
 
         self::assertSame('Big Eaty', $dino->getName());
         self::assertSame('Tyrannosaurus', $dino->getGenus());
-        self::assertSame(5, $dino->getLength(), 'Dino length getter is not the same as the constructor');
+        self::assertSame(15, $dino->getLength(), 'Dino length getter is not the same as the constructor');
         self::assertSame('Paddock A', $dino->getEnclosure());
     }
 }
