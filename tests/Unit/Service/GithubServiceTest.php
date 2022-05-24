@@ -64,6 +64,10 @@ class GithubServiceTest extends TestCase
                     'labels' => [['name' => 'Status: Hungry']],
                 ],
                 [
+                    'title' => 'Big Eaty',
+                    'labels' => [['name' => 'Escaped!']],
+                ],
+                [
                     'title' => 'Bumpy',
                     'labels' => [['name' => 'Status: Drowsy']],
                 ],
@@ -79,10 +83,12 @@ class GithubServiceTest extends TestCase
         $service = new GithubService($mockHttpClient, $this->createMock(LoggerInterface::class));
 
         $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('DROWSY is an unknown status label!');
 
         $service->getHealthReports([
             new Dinosaur('Dennis','Pterodactyl', 7, 'Aviary 1'),
             new Dinosaur('Bumpy', 'Triceratops', 10, 'Paddock B'),
+            new Dinosaur('Big Eaty', 'Tyrannosaurus', 15, 'Paddock C'),
         ]);
     }
 }
