@@ -32,6 +32,7 @@ class GithubServiceTest extends TestCase
         ;
 
         $mockHttpClient
+            ->expects(self::once())
             ->method('request')
             ->willReturn($mockResponse)
         ;
