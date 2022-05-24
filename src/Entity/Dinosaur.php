@@ -43,12 +43,10 @@ class Dinosaur
             return 'Large';
         }
 
-        if ($this->length < 5) {
-            return 'Small';
-        }
-
-        if ($this->length < 9) {
+        if ($this->length >= 5) {
             return 'Medium';
         }
+
+        return 'Small';
     }
 }
