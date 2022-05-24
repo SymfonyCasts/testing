@@ -3,21 +3,19 @@
 namespace App\Service;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class GithubService
 {
-    public function __construct(private LoggerInterface $logger)
+    public function __construct(private HttpClientInterface $httpClient, private LoggerInterface $logger)
     {
     }
 
     public function getHealthReports(array $dinosaurs): array
     {
-        $client = HttpClient::create();
-
         try {
-            $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
+            $response = $this->httpClient->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
         } catch (TransportExceptionInterface $exception) {
             $this->logger->info($exception->getMessage());
         }
