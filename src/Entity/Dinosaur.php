@@ -6,6 +6,7 @@ class Dinosaur
 {
     public const STATUS_HEALTHY = 'HEALTHY';
     public const STATUS_SICK = 'SICK';
+    public const STATUS_HUNGRY = 'HUNGRY';
 
     private string $name;
     private string $genus;
