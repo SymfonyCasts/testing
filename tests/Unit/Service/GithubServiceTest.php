@@ -78,6 +78,8 @@ class GithubServiceTest extends TestCase
 
         $service = new GithubService($mockHttpClient, $this->createMock(LoggerInterface::class));
 
+        $this->expectException(\RuntimeException::class);
+
         $service->getHealthReports([
             new Dinosaur('Dennis','Pterodactyl', 7, 'Aviary 1'),
             new Dinosaur('Bumpy', 'Triceratops', 10, 'Paddock B'),
