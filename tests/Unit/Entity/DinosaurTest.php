@@ -37,7 +37,7 @@ class DinosaurTest extends TestCase
         self::assertSame($specification, $dino->getSpecification());
     }
 
-    public function getDinoLengthSpecification()
+    public function getDinoLengthSpecification(): \Generator
     {
         yield '15 Meter Large Dino' => [15, 'Large'];
         yield '7 Meter Medium Dino' => [7, 'Medium'];
