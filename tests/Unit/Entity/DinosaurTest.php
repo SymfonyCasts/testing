@@ -43,4 +43,11 @@ class DinosaurTest extends TestCase
         yield '7 Meter Medium Dino' => [7, 'Medium'];
         yield '4 Meter Small Dino' => [4, 'Small'];
     }
+
+    public function testDinoHealth(): void
+    {
+        $dino = new Dinosaur('Rex', 'Trex', 0, 'Paddock A');
+
+        self::assertTrue($dino->isAcceptingVisitors());
+    }
 }
