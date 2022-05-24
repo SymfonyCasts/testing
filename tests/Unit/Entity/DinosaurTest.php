@@ -8,11 +8,11 @@ class DinosaurTest extends TestCase
 {
     public function testItWorks(): void
     {
-        self::assertEquals(42, 42);
+        self::assertEquals('42', 42);
     }
 
     public function testItWorksTheSame(): void
     {
-        self::assertSame(42, 42);
+        self::assertSame('42', 42);
     }
 }
