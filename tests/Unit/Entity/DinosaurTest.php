@@ -22,6 +22,9 @@ class DinosaurTest extends TestCase
         self::assertSame('Paddock A', $dino->getEnclosure());
     }
 
+    /**
+     * @dataProvider getDinoLengthSpecification
+     */
     public function testDinoOver15MetersIsLarge(int $length, string $specification): void
     {
         $dino = new Dinosaur(
@@ -38,6 +41,6 @@ class DinosaurTest extends TestCase
     {
         yield [15, 'Large'];
         yield [7, 'Medium'];
-        yield [5, 'Small'];
+        yield [4, 'Small'];
     }
 }
