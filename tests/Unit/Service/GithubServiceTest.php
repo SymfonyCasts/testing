@@ -52,4 +52,35 @@ class GithubServiceTest extends TestCase
             ])
         );
     }
+
+    public function testExceptionThrownWithUnknownStatusLabel(): void
+    {
+        $mockResponse = $this->createMock(ResponseInterface::class);
+        $mockResponse
+            ->method('toArray')
+            ->willReturn([
+                [
+                    'title' => 'Dennis',
+                    'labels' => [['name' => 'Status: Hungry']],
+                ],
+                [
+                    'title' => 'Bumpy',
+                    'labels' => [['name' => 'Status: Drowsy']],
+                ],
+            ]);
+
+        $mockHttpClient = $this->createMock(HttpClientInterface::class);
+        $mockHttpClient
+            ->expects(self::once())
+            ->method('request')
+            ->willReturn($mockResponse)
+        ;
+
+        $service = new GithubService($mockHttpClient, $this->createMock(LoggerInterface::class));
+
+        $service->getHealthReports([
+            new Dinosaur('Dennis','Pterodactyl', 7, 'Aviary 1'),
+            new Dinosaur('Bumpy', 'Triceratops', 10, 'Paddock B'),
+        ]);
+    }
 }
