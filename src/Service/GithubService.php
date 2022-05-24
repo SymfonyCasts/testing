@@ -15,11 +15,20 @@ class GithubService
         foreach ($response->toArray() as $issue) {
             foreach($dinosaurs as $dinosaur) {
                 if (str_contains($issue['title'], $dinosaur->getName())) {
-                    $dinosaur->setHealth($issue['labels'][0]['name']);
+                    $dinosaur->setHealth($this->getDinoStatusFromLabels($issue['labels']));
                 }
             }
         }
 
         return $dinosaurs;
+    }
+
+    private function getDinoStatusFromLabels(array $labels): string
+    {
+        return str_replace(
+            search: 'STATUS: ',
+            replace: '',
+            subject: strtoupper($labels[0]['name'])
+        );
     }
 }
