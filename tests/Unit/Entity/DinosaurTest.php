@@ -39,8 +39,8 @@ class DinosaurTest extends TestCase
 
     public function getDinoLengthSpecification()
     {
-        yield [15, 'Large'];
-        yield [7, 'Medium'];
-        yield [4, 'Small'];
+        yield '15 Meter Large Dino' => [15, 'Large'];
+        yield '7 Meter Medium Dino' => [7, 'Medium'];
+        yield '4 Meter Small Dino' => [4, 'Small'];
     }
 }
