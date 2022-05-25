@@ -36,8 +36,13 @@
             "description": null
         },
         {
-            "id": "dinosaur-failed-assertion-with-message",
-            "name": "Dinosaur: failed assertion with message",
+            "id": "dinosaur-failed-assertion",
+            "name": "Dinosaur: failed assertion",
+            "description": null
+        },
+        {
+            "id": "dinosaur-add-message-to-failed-assertion",
+            "name": "Dinosaur: add message to failed assertion",
             "description": null
         },
         {
@@ -236,5 +241,5 @@
             "description": null
         }
     ],
-    "sha": "7b6a654f01ef7fea5ccaed1f7412ac15ee101b94"
+    "sha": "6d08b32c57e3d96db768b5ec30eab8fdf8b230d7"
 }

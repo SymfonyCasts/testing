@@ -11,14 +11,14 @@ index e27a39c..c193ba9 100644
      private string $name;
      private string $genus;
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index 35fe91c..6eef766 100644
+index 51e079e..6eef766 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
 @@ -44,10 +44,19 @@ class DinosaurTest extends TestCase
          yield '4 Meter Small Dino' => [4, 'Small'];
      }
  
--    public function testDinoHealth(): void
+-    public function testIsAcceptingVisitors(): void
 +    /** @dataProvider getIsAcceptingVisitors */
 +    public function testIsAcceptingVisitors(string $health, bool $expectedVisitorStatus): void
      {

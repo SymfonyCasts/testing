@@ -1,5 +1,5 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index cdab975..534abea 100644
+index cdab975..eca3588 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
 @@ -22,33 +22,22 @@ class DinosaurTest extends TestCase
@@ -42,6 +42,6 @@ index cdab975..534abea 100644
 +    {
 +        yield [15, 'Large'];
 +        yield [7, 'Medium'];
-+        yield [5, 'Small'];
++        yield [4, 'Small'];
      }
  }

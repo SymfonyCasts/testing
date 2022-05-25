@@ -1,5 +1,5 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index d337ace..a30cad2 100644
+index 245f6ca..3ae008f 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
 @@ -2,15 +2,25 @@
@@ -16,7 +16,7 @@ index d337ace..a30cad2 100644
 +    {
 +    }
 +
-     public function getHealthReports(array $dinosaurs): array
+     public function updateHealthStatuses(array $dinosaurs): array
      {
          $client = HttpClient::create();
  

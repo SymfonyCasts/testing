@@ -1,5 +1,5 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index a30cad2..7b48e3e 100644
+index 3ae008f..f320c06 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
 @@ -3,21 +3,19 @@
@@ -17,7 +17,7 @@ index a30cad2..7b48e3e 100644
      {
      }
  
-     public function getHealthReports(array $dinosaurs): array
+     public function updateHealthStatuses(array $dinosaurs): array
      {
 -        $client = HttpClient::create();
 -
@@ -28,7 +28,7 @@ index a30cad2..7b48e3e 100644
              $this->logger->info($exception->getMessage());
          }
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index b9c2d77..b1ca46a 100644
+index 2278113..715fae9 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -6,6 +6,7 @@ use App\Entity\Dinosaur;

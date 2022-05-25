@@ -1,6 +1,6 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
 new file mode 100644
-index 0000000..67fa467
+index 0000000..f20153c
 --- /dev/null
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -0,0 +1,26 @@
@@ -23,7 +23,7 @@ index 0000000..67fa467
 +        ];
 +
 +        self::assertSame($expectedDinos,
-+            $service->getHealthReports([
++            $service->updateHealthStatuses([
 +                new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'),
 +                new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1')
 +            ])

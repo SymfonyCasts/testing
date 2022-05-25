@@ -70,20 +70,20 @@ index 7fa7bdb..1f33199 100644
      }
  }
 diff --git a/composer.lock b/composer.lock
-index 9769794..579d561 100644
+index 7f7a7a0..056f78c 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "d1fe5c7fb612fa14cd462a9dbb11c4c1",
+-    "content-hash": "3ce66719a722e0a7086a42d12024f92f",
 +    "content-hash": "71ff47c157b4046c5278aacd0df7e8e1",
      "packages": [
          {
              "name": "psr/cache",
-@@ -2783,14 +2783,2323 @@
-             "time": "2022-04-06T06:47:41+00:00"
+@@ -2783,7 +2783,2316 @@
+             "time": "2022-05-17T05:48:52+00:00"
          }
      ],
 -    "packages-dev": [],
@@ -2400,14 +2400,6 @@ index 9769794..579d561 100644
      "aliases": [],
      "minimum-stability": "stable",
      "stability-flags": [],
-     "prefer-stable": true,
-     "prefer-lowest": false,
-     "platform": {
--        "php": ">=8.1.2",
-+        "php": ">=8.1.0",
-         "ext-ctype": "*",
-         "ext-iconv": "*"
-     },
 diff --git a/phpunit.xml.dist b/phpunit.xml.dist
 new file mode 100644
 index 0000000..af3f147
