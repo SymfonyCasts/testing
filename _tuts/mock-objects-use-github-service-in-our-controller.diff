@@ -1,5 +1,5 @@
 diff --git a/src/Controller/MainController.php b/src/Controller/MainController.php
-index 42f9430..e3dd54a 100644
+index 42f9430..139bf52 100644
 --- a/src/Controller/MainController.php
 +++ b/src/Controller/MainController.php
 @@ -3,6 +3,7 @@
@@ -10,22 +10,23 @@ index 42f9430..e3dd54a 100644
  use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  use Symfony\Component\HttpFoundation\Response;
  use Symfony\Component\Routing\Annotation\Route;
-@@ -10,15 +11,15 @@ use Symfony\Component\Routing\Annotation\Route;
+@@ -10,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
  class MainController extends AbstractController
  {
      #[Route(path: '/', name: 'main_controller', methods: ['GET'])]
 -    public function index(): Response
 +    public function index(GithubService $github): Response
      {
--        $dinos = [
-+        $dinos = $github->getHealthReports([
+         $dinos = [
              new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'),
-             new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1'),
-             new Dinosaur('Big Eaty', 'Tyrannosaurus', 15, 'Paddock C'),
-             new Dinosaur('Dennis', 'Dilophosaurus', 10, 'Paddock B'),
+@@ -20,6 +21,10 @@ class MainController extends AbstractController
              new Dinosaur('Bumpy', 'Triceratops', 10, 'Paddock B'),
--        ];
-+        ]);
+         ];
  
++        foreach ($dinos as $dino) {
++            $dino->setHealth($github->getHealthReport($dino));
++        }
++
          return $this->render('base.html.twig', [
              'dinos' => $dinos,
+         ]);

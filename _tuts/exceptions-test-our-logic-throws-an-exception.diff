@@ -1,13 +1,14 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 1ad1ad2..27f8819 100644
+index 89a7ebf..8fa7ff1 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -52,4 +52,35 @@ class GithubServiceTest extends TestCase
-             ])
-         );
+@@ -97,4 +97,44 @@ class GithubServiceTest extends TestCase
+             new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1'),
+         ];
      }
 +
-+    public function testExceptionThrownWithUnknownStatusLabel(): void
++    /** @dataProvider getExceptionFixture */
++    public function testExceptionThrownWithUnknownStatusLabel(string $expectedStatus, Dinosaur $fixture): void
 +    {
 +        $mockResponse = $this->createMock(ResponseInterface::class);
 +        $mockResponse
@@ -32,9 +33,17 @@ index 1ad1ad2..27f8819 100644
 +
 +        $service = new GithubService($mockHttpClient, $this->createMock(LoggerInterface::class));
 +
-+        $service->getHealthReports([
++        $service->getHealthReport($fixture);
++    }
++
++    public function getExceptionFixture(): \Generator
++    {
++        yield 'Hungry Dino' => [
 +            new Dinosaur('Dennis','Pterodactyl', 7, 'Aviary 1'),
++        ];
++
++        yield 'Drowsy Dino' => [
 +            new Dinosaur('Bumpy', 'Triceratops', 10, 'Paddock B'),
-+        ]);
++        ];
 +    }
  }

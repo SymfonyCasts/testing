@@ -1,10 +1,10 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 3ae008f..f320c06 100644
+index afbe40a..b0909d1 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
-@@ -3,21 +3,19 @@
- namespace App\Service;
+@@ -4,21 +4,19 @@ namespace App\Service;
  
+ use App\Entity\Dinosaur;
  use Psr\Log\LoggerInterface;
 -use Symfony\Component\HttpClient\HttpClient;
 +use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -27,8 +27,20 @@ index 3ae008f..f320c06 100644
          } catch (TransportExceptionInterface $exception) {
              $this->logger->info($exception->getMessage());
          }
+@@ -38,10 +36,8 @@ class GithubService
+     {
+         $health = Dinosaur::STATUS_HEALTHY;
+ 
+-        $client = HttpClient::create();
+-
+         try {
+-            $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
++            $response = $this->httpClient->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
+         } catch (TransportExceptionInterface $exception) {
+             $this->logger->info($exception->getMessage());
+ 
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 2278113..715fae9 100644
+index 1e7f56f..d556e5d 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -6,6 +6,7 @@ use App\Entity\Dinosaur;
@@ -48,3 +60,12 @@ index 2278113..715fae9 100644
  
          $expectedDinos = [
              (new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'))->setHealth('SICK'),
+@@ -32,7 +33,7 @@ class GithubServiceTest extends TestCase
+     {
+         $mockLogger = $this->createMock(LoggerInterface::class);
+ 
+-        $service = new GithubService($mockLogger);
++        $service = new GithubService(HttpClient::create(), $mockLogger);
+ 
+         self::assertSame($expectedStatus, $service->getHealthReport($fixture));
+     }

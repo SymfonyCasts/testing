@@ -1,9 +1,9 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
 new file mode 100644
-index 0000000..f20153c
+index 0000000..6d1dc69
 --- /dev/null
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -0,0 +1,26 @@
+@@ -0,0 +1,46 @@
 +<?php
 +
 +namespace App\Tests\Unit\Service;
@@ -28,5 +28,25 @@ index 0000000..f20153c
 +                new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1')
 +            ])
 +        );
++    }
++
++    public function testDinoHealth(string $expectedStatus, Dinosaur $fixture): void
++    {
++        $service = new GithubService();
++
++        self::assertSame($expectedStatus, $service->getHealthReport($fixture));
++    }
++
++    public function getDino(): \Generator
++    {
++        yield 'Sick Dino' => [
++            'SICK',
++            (new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'))->setHealth('SICK'),
++        ];
++
++        yield 'Healthy Dino' => [
++            'HEALTHY',
++            new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1'),
++        ];
 +    }
 +}

@@ -1,8 +1,8 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 60a2518..f98593d 100644
+index cb77e18..f89c10c 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -63,6 +63,10 @@ class GithubServiceTest extends TestCase
+@@ -109,6 +109,10 @@ class GithubServiceTest extends TestCase
                      'title' => 'Dennis',
                      'labels' => [['name' => 'Status: Hungry']],
                  ],
@@ -13,16 +13,22 @@ index 60a2518..f98593d 100644
                  [
                      'title' => 'Bumpy',
                      'labels' => [['name' => 'Status: Drowsy']],
-@@ -79,10 +83,12 @@ class GithubServiceTest extends TestCase
+@@ -125,6 +129,7 @@ class GithubServiceTest extends TestCase
          $service = new GithubService($mockHttpClient, $this->createMock(LoggerInterface::class));
  
          $this->expectException(\RuntimeException::class);
 +        $this->expectExceptionMessage('DROWSY is an unknown status label!');
  
-         $service->getHealthReports([
-             new Dinosaur('Dennis','Pterodactyl', 7, 'Aviary 1'),
-             new Dinosaur('Bumpy', 'Triceratops', 10, 'Paddock B'),
-+            new Dinosaur('Big Eaty', 'Tyrannosaurus', 15, 'Paddock C'),
-         ]);
+         $service->getHealthReport($fixture);
      }
- }
+@@ -135,6 +140,10 @@ class GithubServiceTest extends TestCase
+             new Dinosaur('Dennis','Pterodactyl', 7, 'Aviary 1'),
+         ];
+ 
++        yield 'Escaped Dino' => [
++            new Dinosaur('Big Eaty', 'Tyrannosaurus', 15, 'Paddock C'),
++        ];
++
+         yield 'Drowsy Dino' => [
+             new Dinosaur('Bumpy', 'Triceratops', 10, 'Paddock B'),
+         ];

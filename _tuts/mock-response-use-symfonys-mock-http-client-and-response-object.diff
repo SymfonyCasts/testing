@@ -1,5 +1,5 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index f98593d..cc17a1c 100644
+index f89c10c..fb1d7eb 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -6,6 +6,8 @@ use App\Entity\Dinosaur;
@@ -11,9 +11,9 @@ index f98593d..cc17a1c 100644
  use Symfony\Contracts\HttpClient\HttpClientInterface;
  use Symfony\Contracts\HttpClient\ResponseInterface;
  
-@@ -55,10 +57,7 @@ class GithubServiceTest extends TestCase
- 
-     public function testExceptionThrownWithUnknownStatusLabel(): void
+@@ -101,10 +103,7 @@ class GithubServiceTest extends TestCase
+     /** @dataProvider getExceptionFixture */
+     public function testExceptionThrownWithUnknownStatusLabel(string $expectedStatus, Dinosaur $fixture): void
      {
 -        $mockResponse = $this->createMock(ResponseInterface::class);
 -        $mockResponse
@@ -23,7 +23,7 @@ index f98593d..cc17a1c 100644
                  [
                      'title' => 'Dennis',
                      'labels' => [['name' => 'Status: Hungry']],
-@@ -71,15 +70,9 @@ class GithubServiceTest extends TestCase
+@@ -117,15 +116,9 @@ class GithubServiceTest extends TestCase
                      'title' => 'Bumpy',
                      'labels' => [['name' => 'Status: Drowsy']],
                  ],

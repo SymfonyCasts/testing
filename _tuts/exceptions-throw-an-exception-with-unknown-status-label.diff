@@ -1,16 +1,8 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index f320c06..7edecd8 100644
+index b0909d1..7be4ce6 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
-@@ -2,6 +2,7 @@
- 
- namespace App\Service;
- 
-+use App\Entity\Dinosaur;
- use Psr\Log\LoggerInterface;
- use Symfony\Contracts\HttpClient\HttpClientInterface;
- use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-@@ -33,10 +34,25 @@ class GithubService
+@@ -55,10 +55,25 @@ class GithubService
  
      private function getDinoStatusFromLabels(array $labels): string
      {
