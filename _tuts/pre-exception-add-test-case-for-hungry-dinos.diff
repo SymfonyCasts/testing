@@ -1,5 +1,5 @@
 diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
-index e27a39c..c193ba9 100644
+index ba6340f..f544196 100644
 --- a/src/Entity/Dinosaur.php
 +++ b/src/Entity/Dinosaur.php
 @@ -6,6 +6,7 @@ class Dinosaur
@@ -11,10 +11,10 @@ index e27a39c..c193ba9 100644
      private string $name;
      private string $genus;
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index 51e079e..6eef766 100644
+index 26dedc8..a21d908 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
-@@ -44,10 +44,19 @@ class DinosaurTest extends TestCase
+@@ -43,10 +43,19 @@ class DinosaurTest extends TestCase
          yield '4 Meter Small Dino' => [4, 'Small'];
      }
  
@@ -22,7 +22,7 @@ index 51e079e..6eef766 100644
 +    /** @dataProvider getIsAcceptingVisitors */
 +    public function testIsAcceptingVisitors(string $health, bool $expectedVisitorStatus): void
      {
-         $dino = new Dinosaur('Rex', 'Trex', 0, 'Paddock A');
+         $dino = new Dinosaur('Rex', 'Trex');
 +        $dino->setHealth($health);
  
 -        self::assertTrue($dino->isAcceptingVisitors());

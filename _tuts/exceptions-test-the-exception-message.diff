@@ -1,5 +1,5 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index f8efa1a..7784422 100644
+index c233b6f..d688c9e 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -67,6 +67,10 @@ class GithubServiceTest extends TestCase
@@ -22,13 +22,13 @@ index f8efa1a..7784422 100644
          $service->getHealthReport($fixture);
      }
 @@ -93,6 +98,10 @@ class GithubServiceTest extends TestCase
-             new Dinosaur('Dennis','Pterodactyl', 7, 'Aviary 1'),
+             new Dinosaur('Dennis','Pterodactyl'),
          ];
  
 +        yield 'Escaped Dino' => [
-+            new Dinosaur('Big Eaty', 'Tyrannosaurus', 15, 'Paddock C'),
++            new Dinosaur('Big Eaty', 'Tyrannosaurus'),
 +        ];
 +
          yield 'Drowsy Dino' => [
-             new Dinosaur('Bumpy', 'Triceratops', 10, 'Paddock B'),
+             new Dinosaur('Bumpy', 'Triceratops'),
          ];

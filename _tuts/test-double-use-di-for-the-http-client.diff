@@ -30,7 +30,7 @@ index 2f89bac..45c108c 100644
              $this->logger->info($exception->getMessage());
  
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index d4e2c99..4a115f3 100644
+index e3ba0b0..aad9c65 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -6,6 +6,7 @@ use App\Entity\Dinosaur;

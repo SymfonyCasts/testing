@@ -1,8 +1,8 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index b67ad61..d876f40 100644
+index 77781f4..37f52de 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
-@@ -39,8 +39,8 @@ class DinosaurTest extends TestCase
+@@ -38,8 +38,8 @@ class DinosaurTest extends TestCase
  
      public function getDinoLengthSpecification()
      {

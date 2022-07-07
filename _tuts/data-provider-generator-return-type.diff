@@ -1,8 +1,8 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index 54a13af..f74d449 100644
+index 52532a2..ee588d7 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
-@@ -37,7 +37,7 @@ class DinosaurTest extends TestCase
+@@ -36,7 +36,7 @@ class DinosaurTest extends TestCase
          self::assertSame($specification, $dino->getSpecification());
      }
  

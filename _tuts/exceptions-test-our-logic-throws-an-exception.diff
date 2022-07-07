@@ -1,9 +1,9 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 0d95118..957f3fe 100644
+index 6a5be6a..97ba910 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -55,4 +55,44 @@ class GithubServiceTest extends TestCase
-             new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1'),
+             new Dinosaur('Maverick','Pterodactyl'),
          ];
      }
 +
@@ -39,11 +39,11 @@ index 0d95118..957f3fe 100644
 +    public function getExceptionFixture(): \Generator
 +    {
 +        yield 'Hungry Dino' => [
-+            new Dinosaur('Dennis','Pterodactyl', 7, 'Aviary 1'),
++            new Dinosaur('Dennis','Pterodactyl'),
 +        ];
 +
 +        yield 'Drowsy Dino' => [
-+            new Dinosaur('Bumpy', 'Triceratops', 10, 'Paddock B'),
++            new Dinosaur('Bumpy', 'Triceratops'),
 +        ];
 +    }
  }

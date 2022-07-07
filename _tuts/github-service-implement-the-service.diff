@@ -22,7 +22,7 @@ index 0000000..8aca418
 +    }
 +}
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index ea820fa..7bd938f 100644
+index ff0a4ba..34a53cb 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -3,6 +3,7 @@

@@ -1,6 +1,6 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
 new file mode 100644
-index 0000000..ea820fa
+index 0000000..ff0a4ba
 --- /dev/null
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -0,0 +1,29 @@
@@ -24,12 +24,12 @@ index 0000000..ea820fa
 +    {
 +        yield 'Sick Dino' => [
 +            'SICK',
-+            (new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'))->setHealth('SICK'),
++            (new Dinosaur('Daisy', 'Velociraptor'))->setHealth('SICK'),
 +        ];
 +
 +        yield 'Healthy Dino' => [
 +            'HEALTHY',
-+            new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1'),
++            new Dinosaur('Maverick','Pterodactyl'),
 +        ];
 +    }
 +}

@@ -1,8 +1,8 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index d41b063..cdab975 100644
+index dd9e659..e339dc5 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
-@@ -32,5 +32,23 @@ class DinosaurTest extends TestCase
+@@ -31,5 +31,21 @@ class DinosaurTest extends TestCase
          );
  
          self::assertSame('Large', $dino->getSpecification(), 'This is supposed to be a large Dinosaur');
@@ -11,7 +11,6 @@ index d41b063..cdab975 100644
 +            name: 'Big Eaty',
 +            genus: 'Tyrannosaurus',
 +            length: 7,
-+            enclosure: 'Paddock A',
 +        );
 +
 +        self::assertSame('Medium', $dino->getSpecification(), 'This is supposed to be a medium Dinosaur');
@@ -20,7 +19,6 @@ index d41b063..cdab975 100644
 +            name: 'Big Eaty',
 +            genus: 'Tyrannosaurus',
 +            length: 4,
-+            enclosure: 'Paddock A',
 +        );
 +
 +        self::assertSame('Small', $dino->getSpecification(), 'This is supposed to be a small Dinosaur');

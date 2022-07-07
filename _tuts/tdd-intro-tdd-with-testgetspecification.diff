@@ -1,8 +1,8 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index d2150d8..d41b063 100644
+index d2150d8..dd9e659 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
-@@ -21,4 +21,16 @@ class DinosaurTest extends TestCase
+@@ -21,4 +21,15 @@ class DinosaurTest extends TestCase
          self::assertSame(15, $dino->getLength(), 'Dino length getter is not the same as the constructor');
          self::assertSame('Paddock A', $dino->getEnclosure());
      }
@@ -13,7 +13,6 @@ index d2150d8..d41b063 100644
 +            name: 'Big Eaty',
 +            genus: 'Tyrannosaurus',
 +            length: 15,
-+            enclosure: 'Paddock A',
 +        );
 +
 +        self::assertSame('Large', $dino->getSpecification(), 'This is supposed to be a large Dinosaur');
