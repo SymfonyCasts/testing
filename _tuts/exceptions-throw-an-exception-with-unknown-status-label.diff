@@ -1,8 +1,8 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index b0909d1..7be4ce6 100644
+index 45c108c..05fa442 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
-@@ -55,10 +55,25 @@ class GithubService
+@@ -36,10 +36,25 @@ class GithubService
  
      private function getDinoStatusFromLabels(array $labels): string
      {

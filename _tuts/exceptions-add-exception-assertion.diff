@@ -1,8 +1,8 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 8fa7ff1..cb77e18 100644
+index 957f3fe..f8efa1a 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -124,6 +124,8 @@ class GithubServiceTest extends TestCase
+@@ -82,6 +82,8 @@ class GithubServiceTest extends TestCase
  
          $service = new GithubService($mockHttpClient, $this->createMock(LoggerInterface::class));
  

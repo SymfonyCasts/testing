@@ -1,5 +1,5 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index d556e5d..9a224ad 100644
+index 4a115f3..d195e73 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -6,15 +6,16 @@ use App\Entity\Dinosaur;
@@ -11,17 +11,6 @@ index d556e5d..9a224ad 100644
  
  class GithubServiceTest extends TestCase
  {
-     public function testGetDinoHealthReports(): void
-     {
-         $mockLogger = $this->createMock(LoggerInterface::class);
-+        $mockHttpClient = $this->createMock(HttpClientInterface::class);
- 
--        $service = new GithubService(HttpClient::create(), $mockLogger);
-+        $service = new GithubService($mockHttpClient, $mockLogger);
- 
-         $expectedDinos = [
-             (new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'))->setHealth('SICK'),
-@@ -32,8 +33,9 @@ class GithubServiceTest extends TestCase
      public function testDinoHealth(string $expectedStatus, Dinosaur $fixture): void
      {
          $mockLogger = $this->createMock(LoggerInterface::class);

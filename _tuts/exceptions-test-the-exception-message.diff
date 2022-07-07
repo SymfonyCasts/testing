@@ -1,8 +1,8 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index cb77e18..f89c10c 100644
+index f8efa1a..7784422 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -109,6 +109,10 @@ class GithubServiceTest extends TestCase
+@@ -67,6 +67,10 @@ class GithubServiceTest extends TestCase
                      'title' => 'Dennis',
                      'labels' => [['name' => 'Status: Hungry']],
                  ],
@@ -13,7 +13,7 @@ index cb77e18..f89c10c 100644
                  [
                      'title' => 'Bumpy',
                      'labels' => [['name' => 'Status: Drowsy']],
-@@ -125,6 +129,7 @@ class GithubServiceTest extends TestCase
+@@ -83,6 +87,7 @@ class GithubServiceTest extends TestCase
          $service = new GithubService($mockHttpClient, $this->createMock(LoggerInterface::class));
  
          $this->expectException(\RuntimeException::class);
@@ -21,7 +21,7 @@ index cb77e18..f89c10c 100644
  
          $service->getHealthReport($fixture);
      }
-@@ -135,6 +140,10 @@ class GithubServiceTest extends TestCase
+@@ -93,6 +98,10 @@ class GithubServiceTest extends TestCase
              new Dinosaur('Dennis','Pterodactyl', 7, 'Aviary 1'),
          ];
  

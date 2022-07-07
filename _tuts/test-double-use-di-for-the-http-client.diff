@@ -1,8 +1,8 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index afbe40a..b0909d1 100644
+index 2f89bac..45c108c 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
-@@ -4,21 +4,19 @@ namespace App\Service;
+@@ -4,12 +4,12 @@ namespace App\Service;
  
  use App\Entity\Dinosaur;
  use Psr\Log\LoggerInterface;
@@ -17,17 +17,7 @@ index afbe40a..b0909d1 100644
      {
      }
  
-     public function updateHealthStatuses(array $dinosaurs): array
-     {
--        $client = HttpClient::create();
--
-         try {
--            $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
-+            $response = $this->httpClient->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
-         } catch (TransportExceptionInterface $exception) {
-             $this->logger->info($exception->getMessage());
-         }
-@@ -38,10 +36,8 @@ class GithubService
+@@ -17,10 +17,8 @@ class GithubService
      {
          $health = Dinosaur::STATUS_HEALTHY;
  
@@ -40,7 +30,7 @@ index afbe40a..b0909d1 100644
              $this->logger->info($exception->getMessage());
  
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 1e7f56f..d556e5d 100644
+index d4e2c99..4a115f3 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -6,6 +6,7 @@ use App\Entity\Dinosaur;
@@ -52,15 +42,6 @@ index 1e7f56f..d556e5d 100644
  class GithubServiceTest extends TestCase
  {
 @@ -13,7 +14,7 @@ class GithubServiceTest extends TestCase
-     {
-         $mockLogger = $this->createMock(LoggerInterface::class);
- 
--        $service = new GithubService($mockLogger);
-+        $service = new GithubService(HttpClient::create(), $mockLogger);
- 
-         $expectedDinos = [
-             (new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'))->setHealth('SICK'),
-@@ -32,7 +33,7 @@ class GithubServiceTest extends TestCase
      {
          $mockLogger = $this->createMock(LoggerInterface::class);
  

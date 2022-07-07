@@ -1,8 +1,8 @@
 diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
-index 53ba658..95d160f 100644
+index c193ba9..b68224d 100644
 --- a/src/Entity/Dinosaur.php
 +++ b/src/Entity/Dinosaur.php
-@@ -58,11 +58,7 @@ class Dinosaur
+@@ -57,11 +57,7 @@ class Dinosaur
  
      public function isAcceptingVisitors(): bool
      {

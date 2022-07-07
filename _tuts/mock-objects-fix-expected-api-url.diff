@@ -1,17 +1,8 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 6988403..89a7ebf 100644
+index e0847e2..0d95118 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -34,7 +34,7 @@ class GithubServiceTest extends TestCase
-         $mockHttpClient
-             ->expects(self::once())
-             ->method('request')
--            ->with('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park')
-+            ->with('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues')
-             ->willReturn($mockResponse)
-         ;
- 
-@@ -76,7 +76,7 @@ class GithubServiceTest extends TestCase
          $mockHttpClient
              ->expects(self::once())
              ->method('request')

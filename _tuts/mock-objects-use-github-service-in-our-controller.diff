@@ -1,5 +1,5 @@
 diff --git a/src/Controller/MainController.php b/src/Controller/MainController.php
-index 42f9430..139bf52 100644
+index 42f9430..af2fc1e 100644
 --- a/src/Controller/MainController.php
 +++ b/src/Controller/MainController.php
 @@ -3,6 +3,7 @@
@@ -24,7 +24,7 @@ index 42f9430..139bf52 100644
          ];
  
 +        foreach ($dinos as $dino) {
-+            $dino->setHealth($github->getHealthReport($dino));
++            $dino->setHealth($github->getHealthReport($dino) ?? 'Unknown');
 +        }
 +
          return $this->render('base.html.twig', [

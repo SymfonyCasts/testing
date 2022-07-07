@@ -196,10 +196,10 @@ index 5720f01..a0915b2 100644
              "name": "symfony/http-foundation",
              "version": "v6.1.0",
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 3674945..0677466 100644
+index 8aca418..3a9432c 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
-@@ -3,24 +3,41 @@
+@@ -3,15 +3,24 @@
  namespace App\Service;
  
  use App\Entity\Dinosaur;
@@ -207,42 +207,23 @@ index 3674945..0677466 100644
  
  class GithubService
  {
-     public function updateHealthStatuses(array $dinosaurs): array
-     {
--        // Call Github API
-+        $client = HttpClient::create();
- 
--        // Filter the issues
-+        $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
-+
-+        foreach ($response->toArray() as $issue) {
-+            foreach($dinosaurs as $dinosaur) {
-+                if (str_contains($issue['title'], $dinosaur->getName())) {
-+                    $dinosaur->setHealth($issue['labels'][0]['name']);
-+                }
-+            }
-+        }
- 
-         return $dinosaurs;
-     }
- 
      public function getHealthReport(Dinosaur $dinosaur): string
      {
 -        // Call Github API
 +        $health = Dinosaur::STATUS_HEALTHY;
-+
-+        $client = HttpClient::create();
-+
-+        $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
  
 -        // Filter the issues
++        $client = HttpClient::create();
+ 
+-        return Dinosaur::STATUS_HEALTHY;
++        $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
++
 +        foreach ($response->toArray() as $issue) {
 +            if (str_contains($issue['title'], $dinosaur->getName())) {
 +                $health = $issue['labels'][0]['name'];
 +            }
 +        }
- 
--        return Dinosaur::STATUS_HEALTHY;
++
 +        return $health;
      }
  }

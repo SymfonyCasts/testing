@@ -1,5 +1,5 @@
 diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
-index 00b0aa8..53ba658 100644
+index e27a39c..c193ba9 100644
 --- a/src/Entity/Dinosaur.php
 +++ b/src/Entity/Dinosaur.php
 @@ -6,6 +6,7 @@ class Dinosaur
@@ -7,9 +7,9 @@ index 00b0aa8..53ba658 100644
      public const STATUS_HEALTHY = 'HEALTHY';
      public const STATUS_SICK = 'SICK';
 +    public const STATUS_HUNGRY = 'HUNGRY';
-     public const STATUS_UNKNOWN = 'UNKNOWN';
  
      private string $name;
+     private string $genus;
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
 index 51e079e..6eef766 100644
 --- a/tests/Unit/Entity/DinosaurTest.php

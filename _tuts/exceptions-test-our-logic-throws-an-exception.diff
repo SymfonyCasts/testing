@@ -1,8 +1,8 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 89a7ebf..8fa7ff1 100644
+index 0d95118..957f3fe 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -97,4 +97,44 @@ class GithubServiceTest extends TestCase
+@@ -55,4 +55,44 @@ class GithubServiceTest extends TestCase
              new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1'),
          ];
      }

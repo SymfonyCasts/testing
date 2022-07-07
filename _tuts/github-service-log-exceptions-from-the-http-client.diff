@@ -1,8 +1,8 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 59c5e66..afbe40a 100644
+index 38462eb..2f89bac 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
-@@ -3,15 +3,25 @@
+@@ -3,17 +3,29 @@
  namespace App\Service;
  
  use App\Entity\Dinosaur;
@@ -12,28 +12,11 @@ index 59c5e66..afbe40a 100644
  
  class GithubService
  {
+-    public function getHealthReport(Dinosaur $dinosaur): string
 +    public function __construct(private LoggerInterface $logger)
 +    {
 +    }
 +
-     public function updateHealthStatuses(array $dinosaurs): array
-     {
-         $client = HttpClient::create();
- 
--        $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
-+        try {
-+            $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
-+        } catch (TransportExceptionInterface $exception) {
-+            $this->logger->info($exception->getMessage());
-+        }
- 
-         foreach ($response->toArray() as $issue) {
-             foreach($dinosaurs as $dinosaur) {
-@@ -24,13 +34,19 @@ class GithubService
-         return $dinosaurs;
-     }
- 
--    public function getHealthReport(Dinosaur $dinosaur): string
 +    public function getHealthReport(Dinosaur $dinosaur): ?string
      {
          $health = Dinosaur::STATUS_HEALTHY;
