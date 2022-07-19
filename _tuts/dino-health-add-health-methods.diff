@@ -1,5 +1,5 @@
 diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
-index 3e07fc4..ba6340f 100644
+index 0b2306a..6ec0cd3 100644
 --- a/src/Entity/Dinosaur.php
 +++ b/src/Entity/Dinosaur.php
 @@ -4,10 +4,14 @@ namespace App\Entity;
@@ -15,7 +15,7 @@ index 3e07fc4..ba6340f 100644
      private string $enclosure;
 +    private string $health = self::STATUS_HEALTHY;
  
-     public function __construct(string $name, string $genus, int $length = 0, string $enclosure = null)
+     public function __construct(string $name, string $genus, int $length = 0, string $enclosure = 'Unknown')
      {
 @@ -49,4 +53,20 @@ class Dinosaur
  
