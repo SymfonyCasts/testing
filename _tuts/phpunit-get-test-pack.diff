@@ -54,10 +54,10 @@ index 0000000..f26f2c7
 +    require dirname(__DIR__).'/vendor/symfony/phpunit-bridge/bin/simple-phpunit.php';
 +}
 diff --git a/composer.json b/composer.json
-index 5619435..0033286 100644
+index bffc60e..67b2227 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -15,6 +15,12 @@
+@@ -16,6 +16,12 @@
          "symfony/twig-bundle": "6.1.*",
          "symfony/yaml": "6.1.*"
      },
@@ -71,19 +71,19 @@ index 5619435..0033286 100644
          "allow-plugins": {
              "composer/package-versions-deprecated": true,
 diff --git a/composer.lock b/composer.lock
-index e15964b..d4224c7 100644
+index 949ab53..57e3b55 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "2c0439c8abe5cd10908c2e894d514bbb",
-+    "content-hash": "16800f8a94d4b2c6cd06d9efaeb5ac0c",
+-    "content-hash": "2c84af6556f9cc61be27a500492cb113",
++    "content-hash": "b3178a67ca799f45a1ebc1821e858cea",
      "packages": [
          {
              "name": "psr/cache",
-@@ -2723,7 +2723,2381 @@
+@@ -2795,7 +2795,2381 @@
              "time": "2022-05-17T05:48:52+00:00"
          }
      ],

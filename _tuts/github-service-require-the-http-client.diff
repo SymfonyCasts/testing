@@ -1,8 +1,8 @@
 diff --git a/composer.json b/composer.json
-index 0033286..209f9e6 100644
+index 67b2227..7715a7a 100644
 --- a/composer.json
 +++ b/composer.json
-@@ -11,6 +11,7 @@
+@@ -12,6 +12,7 @@
          "symfony/dotenv": "6.1.*",
          "symfony/flex": "^2",
          "symfony/framework-bundle": "6.1.*",
@@ -11,19 +11,19 @@ index 0033286..209f9e6 100644
          "symfony/twig-bundle": "6.1.*",
          "symfony/yaml": "6.1.*"
 diff --git a/composer.lock b/composer.lock
-index d4224c7..922a9fa 100644
+index 57e3b55..e920293 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
          "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
          "This file is @generated automatically"
      ],
--    "content-hash": "16800f8a94d4b2c6cd06d9efaeb5ac0c",
-+    "content-hash": "6b10e32dd5053051b227d88b2da73b1a",
+-    "content-hash": "b3178a67ca799f45a1ebc1821e858cea",
++    "content-hash": "3e6dd9806a02dc80edafa123eb3d93d6",
      "packages": [
          {
              "name": "psr/cache",
-@@ -1359,6 +1359,171 @@
+@@ -1431,6 +1431,171 @@
              ],
              "time": "2022-06-26T10:01:04+00:00"
          },

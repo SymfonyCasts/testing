@@ -1,13 +1,13 @@
 diff --git a/templates/base.html.twig b/templates/base.html.twig
-index e7a4d86..957aee4 100644
+index 9b058a8..0db9d76 100644
 --- a/templates/base.html.twig
 +++ b/templates/base.html.twig
-@@ -30,7 +30,7 @@
-                 <tr>
-                     <td>{{ dino.name }}</td>
-                     <td>{{ dino.genus }}</td>
--                    <td>{{ dino.length }}</td>
-+                    <td>{{ dino.specification }}</td>
-                     <td>{{ dino.enclosure }}</td>
-                 </tr>
-             {% endfor %}
+@@ -36,7 +36,7 @@
+                         <tr>
+                             <td>{{ dino.name }}</td>
+                             <td>{{ dino.genus }}</td>
+-                            <td>{{ dino.length }}</td>
++                            <td>{{ dino.specification }}</td>
+                             <td>{{ dino.enclosure }}</td>
+                         </tr>
+                     {% endfor %}
