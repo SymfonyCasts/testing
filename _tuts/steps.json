@@ -99,7 +99,7 @@
             "id": "data-provider-use-message-keys",
             "name": "Data Provider: use message keys",
             "description": null
-        }
+        },
         {
             "id": "data-provider-remove-assertsame-message-arg-and-cleanup",
             "name": "Data Provider: remove assertSame message arg and cleanup",
@@ -144,7 +144,7 @@
             "id": "github-service-handel-status-prefix-on-lables",
             "name": "GitHub Service: handel status prefix on lables",
             "description": null
-        }
+        },
         {
             "id": "github-service-log-exceptions-from-the-http-client",
             "name": "GitHub Service: log exceptions from the http-client",
@@ -199,7 +199,7 @@
             "id": "mock-objects-use-github-service-in-our-controller",
             "name": "Mock Objects: use github service in our controller",
             "description": null
-        }
+        },
         {
             "id": "pre-exception-add-test-case-for-hungry-dinos",
             "name": "Pre Exception: add test case for hungry dinos",
@@ -229,7 +229,7 @@
             "id": "exceptions-change-the-response",
             "name": "Exceptions: change the response",
             "description": null
-        }
+        },
         {
             "id": "exceptions-add-exception-assertion",
             "name": "Exceptions: add exception assertion",
