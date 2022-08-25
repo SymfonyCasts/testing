@@ -16,7 +16,7 @@ class MainController extends AbstractController
             new Dinosaur('Daisy', 'Velociraptor', 2, 'Paddock A'),
             new Dinosaur('Maverick','Pterodactyl', 7, 'Aviary 1'),
             new Dinosaur('Big Eaty', 'Tyrannosaurus', 15, 'Paddock C'),
-            new Dinosaur('Dennis', 'Dilophosaurus', 10, 'Paddock B'),
+            new Dinosaur('Dennis', 'Dilophosaurus', 6, 'Paddock B'),
             new Dinosaur('Bumpy', 'Triceratops', 10, 'Paddock B'),
         ];
 
