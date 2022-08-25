@@ -1,0 +1,13 @@
+diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
+index 7596820..9f4a4a3 100644
+--- a/src/Entity/Dinosaur.php
++++ b/src/Entity/Dinosaur.php
+@@ -39,6 +39,8 @@ class Dinosaur
+ 
+     public function getSizeDescription(): string
+     {
++        if ($this->length >= 10) {
+             return 'Large';
++        }
+     }
+ }

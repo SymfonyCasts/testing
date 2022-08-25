@@ -1,0 +1,21 @@
+diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
+index 122c564..da9863c 100644
+--- a/tests/Unit/Service/GithubServiceTest.php
++++ b/tests/Unit/Service/GithubServiceTest.php
+@@ -59,7 +59,7 @@ class GithubServiceTest extends TestCase
+         ];
+     }
+ 
+-    public function testExceptionThrownWithUnknownLabel(string $expectedStatus, Dinosaur $fixture): void
++    public function testExceptionThrownWithUnknownLabel(): void
+     {
+         $mockLogger = $this->createMock(LoggerInterface::class);
+         $mockHttpClient = $this->createMock(HttpClientInterface::class);
+@@ -88,6 +88,6 @@ class GithubServiceTest extends TestCase
+ 
+         $service = new GithubService($mockHttpClient, $mockLogger);
+ 
+-        self::assertSame($expectedStatus, $service->getHealthReport($fixture));
++        $service->getHealthReport(new Dinosaur('Maverick'));
+     }
+ }

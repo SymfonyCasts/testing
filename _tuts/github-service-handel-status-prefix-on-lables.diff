@@ -1,8 +1,8 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 3a9432c..38462eb 100644
+index 3a9432c..8ff32f0 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
-@@ -17,10 +17,19 @@ class GithubService
+@@ -17,10 +17,29 @@ class GithubService
  
          foreach ($response->toArray() as $issue) {
              if (str_contains($issue['title'], $dinosaur->getName())) {
@@ -16,10 +16,20 @@ index 3a9432c..38462eb 100644
 +
 +    private function getDinoStatusFromLabels(array $labels): string
 +    {
-+        return str_replace(
-+            search: 'STATUS: ',
-+            replace: '',
-+            subject: strtoupper($labels[0]['name'])
-+        );
++        $status = null;
++
++        foreach ($labels as $label) {
++            $label = strtoupper($label['name']);
++
++            // We only care about "Status" labels
++            if (!str_starts_with($label, 'STATUS:')) {
++                continue;
++            }
++
++            // Remove the "Status:" and whitespace from the label
++            $status = trim(substr($label, strlen('STATUS:')));
++        }
++
++        return $status ?? Dinosaur::STATUS_HEALTHY;
 +    }
  }

@@ -1,16 +1,14 @@
 diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
-index 03c3dc4..f13d550 100644
+index 0b33812..7596820 100644
 --- a/src/Entity/Dinosaur.php
 +++ b/src/Entity/Dinosaur.php
-@@ -36,4 +36,11 @@ class Dinosaur
+@@ -36,4 +36,9 @@ class Dinosaur
      {
          return $this->enclosure;
      }
 +
-+    public function getSpecification(): string
++    public function getSizeDescription(): string
 +    {
-+        if ($this->length >= 10) {
 +            return 'Large';
-+        }
 +    }
  }

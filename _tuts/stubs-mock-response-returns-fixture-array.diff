@@ -1,8 +1,8 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index fdcfa3e..fe45bdf 100644
+index d87e961..7bb3cc7 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -19,7 +19,16 @@ class GithubServiceTest extends TestCase
+@@ -22,7 +22,16 @@ class GithubServiceTest extends TestCase
  
          $mockResponse
              ->method('toArray')

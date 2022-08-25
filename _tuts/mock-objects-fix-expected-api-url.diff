@@ -1,8 +1,8 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 4af3489..6a5be6a 100644
+index a5b2369..6e935b7 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -34,7 +34,7 @@ class GithubServiceTest extends TestCase
+@@ -37,7 +37,7 @@ class GithubServiceTest extends TestCase
          $mockHttpClient
              ->expects(self::once())
              ->method('request')

@@ -1,5 +1,5 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index d16e1e5..77781f4 100644
+index fa3f283..7cc36c8 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
 @@ -22,6 +22,9 @@ class DinosaurTest extends TestCase
@@ -7,8 +7,8 @@ index d16e1e5..77781f4 100644
      }
  
 +    /**
-+     * @dataProvider getDinoLengthSpecification
++     * @dataProvider getDinoSizeDescription
 +     */
-     public function testDinoOver15MetersIsLarge(int $length, string $specification): void
+     public function testDinoOver10MetersIsLarge(int $length, string $expectedSize): void
      {
-         $dino = new Dinosaur(
+         $dino = new Dinosaur(name: 'Big Eaty', length: $length);

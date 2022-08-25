@@ -1,16 +1,16 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index 77781f4..37f52de 100644
+index 7cc36c8..c684144 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
-@@ -38,8 +38,8 @@ class DinosaurTest extends TestCase
+@@ -34,8 +34,8 @@ class DinosaurTest extends TestCase
  
-     public function getDinoLengthSpecification()
+     public function getDinoSizeDescription()
      {
--        yield [15, 'Large'];
--        yield [7, 'Medium'];
+-        yield [10, 'Large'];
+-        yield [5, 'Medium'];
 -        yield [4, 'Small'];
-+        yield '15 Meter Large Dino' => [15, 'Large'];
-+        yield '7 Meter Medium Dino' => [7, 'Medium'];
++        yield '10 Meter Large Dino' => [10, 'Large'];
++        yield '5 Meter Medium Dino' => [5, 'Medium'];
 +        yield '4 Meter Small Dino' => [4, 'Small'];
      }
  }

@@ -1,9 +1,9 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index ee588d7..26dedc8 100644
+index dcbab7b..22882e2 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
-@@ -42,4 +42,11 @@ class DinosaurTest extends TestCase
-         yield '7 Meter Medium Dino' => [7, 'Medium'];
+@@ -38,4 +38,11 @@ class DinosaurTest extends TestCase
+         yield '5 Meter Medium Dino' => [5, 'Medium'];
          yield '4 Meter Small Dino' => [4, 'Small'];
      }
 +

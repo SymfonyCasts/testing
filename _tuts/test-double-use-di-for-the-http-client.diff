@@ -1,5 +1,5 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 2f89bac..45c108c 100644
+index 2273157..a800e97 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
 @@ -4,12 +4,12 @@ namespace App\Service;
@@ -30,7 +30,7 @@ index 2f89bac..45c108c 100644
              $this->logger->info($exception->getMessage());
  
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index e3ba0b0..aad9c65 100644
+index ba07f94..638d32e 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -6,6 +6,7 @@ use App\Entity\Dinosaur;
@@ -41,7 +41,7 @@ index e3ba0b0..aad9c65 100644
  
  class GithubServiceTest extends TestCase
  {
-@@ -13,7 +14,7 @@ class GithubServiceTest extends TestCase
+@@ -16,7 +17,7 @@ class GithubServiceTest extends TestCase
      {
          $mockLogger = $this->createMock(LoggerInterface::class);
  

@@ -1,8 +1,8 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 34a53cb..e3ba0b0 100644
+index d0f0ebe..ba07f94 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -5,12 +5,15 @@ namespace App\Tests\Unit\Service;
+@@ -5,6 +5,7 @@ namespace App\Tests\Unit\Service;
  use App\Entity\Dinosaur;
  use App\Service\GithubService;
  use PHPUnit\Framework\TestCase;
@@ -10,6 +10,8 @@ index 34a53cb..e3ba0b0 100644
  
  class GithubServiceTest extends TestCase
  {
+@@ -13,7 +14,9 @@ class GithubServiceTest extends TestCase
+      */
      public function testDinoHealth(string $expectedStatus, Dinosaur $fixture): void
      {
 -        $service = new GithubService();

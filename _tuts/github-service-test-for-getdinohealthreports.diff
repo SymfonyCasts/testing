@@ -1,9 +1,9 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
 new file mode 100644
-index 0000000..ff0a4ba
+index 0000000..ee66f6b
 --- /dev/null
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -0,0 +1,29 @@
+@@ -0,0 +1,32 @@
 +<?php
 +
 +namespace App\Tests\Unit\Service;
@@ -13,6 +13,9 @@ index 0000000..ff0a4ba
 +
 +class GithubServiceTest extends TestCase
 +{
++    /**
++     * @dataProvider getDino
++     */
 +    public function testDinoHealth(string $expectedStatus, Dinosaur $fixture): void
 +    {
 +        $service = new GithubService();
@@ -24,12 +27,12 @@ index 0000000..ff0a4ba
 +    {
 +        yield 'Sick Dino' => [
 +            'SICK',
-+            (new Dinosaur('Daisy', 'Velociraptor'))->setHealth('SICK'),
++            (new Dinosaur('Daisy'))->setHealth('SICK'),
 +        ];
 +
 +        yield 'Healthy Dino' => [
 +            'HEALTHY',
-+            new Dinosaur('Maverick','Pterodactyl'),
++            new Dinosaur('Maverick'),
 +        ];
 +    }
 +}

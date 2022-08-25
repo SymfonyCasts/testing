@@ -1,5 +1,5 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 38462eb..2f89bac 100644
+index 8ff32f0..2273157 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
 @@ -3,17 +3,29 @@

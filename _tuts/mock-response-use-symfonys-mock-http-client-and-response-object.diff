@@ -1,5 +1,5 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index d688c9e..0eda942 100644
+index 5653b40..70a21d0 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -6,6 +6,8 @@ use App\Entity\Dinosaur;
@@ -11,33 +11,36 @@ index d688c9e..0eda942 100644
  use Symfony\Contracts\HttpClient\HttpClientInterface;
  use Symfony\Contracts\HttpClient\ResponseInterface;
  
-@@ -59,10 +61,7 @@ class GithubServiceTest extends TestCase
-     /** @dataProvider getExceptionFixture */
-     public function testExceptionThrownWithUnknownStatusLabel(string $expectedStatus, Dinosaur $fixture): void
+@@ -69,28 +71,15 @@ class GithubServiceTest extends TestCase
+ 
+     public function testExceptionThrownWithUnknownLabel(): void
      {
+-        $mockLogger = $this->createMock(LoggerInterface::class);
+-        $mockHttpClient = $this->createMock(HttpClientInterface::class);
 -        $mockResponse = $this->createMock(ResponseInterface::class);
+-
 -        $mockResponse
 -            ->method('toArray')
 -            ->willReturn([
 +        $mockResponse = new MockResponse(json_encode([
                  [
-                     'title' => 'Dennis',
-                     'labels' => [['name' => 'Status: Hungry']],
-@@ -75,15 +74,9 @@ class GithubServiceTest extends TestCase
-                     'title' => 'Bumpy',
+                     'title' => 'Maverick',
                      'labels' => [['name' => 'Status: Drowsy']],
                  ],
--            ]);
--
--        $mockHttpClient = $this->createMock(HttpClientInterface::class);
--        $mockHttpClient
--            ->expects(self::once())
--            ->method('request')
--            ->willReturn($mockResponse)
+-            ])
 -        ;
 +            ]));
  
+-        $mockHttpClient
+-            ->expects(self::once())
+-            ->method('request')
+-            ->with('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues')
+-            ->willReturn($mockResponse)
+-        ;
+-
+-        $service = new GithubService($mockHttpClient, $mockLogger);
 +        $mockHttpClient = new MockHttpClient($mockResponse);
-         $service = new GithubService($mockHttpClient, $this->createMock(LoggerInterface::class));
++        $service = new GithubService($mockHttpClient, $this->createMock(LoggerInterface::class));
  
          $this->expectException(\RuntimeException::class);
+         $this->expectExceptionMessage('DROWSY is an unknown status label!');

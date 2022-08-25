@@ -1,29 +1,18 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index 542c42d..52532a2 100644
+index c684144..97161a6 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
-@@ -25,7 +25,7 @@ class DinosaurTest extends TestCase
+@@ -25,11 +25,11 @@ class DinosaurTest extends TestCase
      /**
-      * @dataProvider getDinoLengthSpecification
+      * @dataProvider getDinoSizeDescription
       */
--    public function testDinoOver15MetersIsLarge(int $length, string $specification): void
-+    public function testDinoHasCorrectSpecificationFromLength(int $length, string $specification): void
+-    public function testDinoOver10MetersIsLarge(int $length, string $expectedSize): void
++    public function testDinoHasCorrectSizeDescriptionFromLength(int $length, string $expectedSize): void
      {
-         $dino = new Dinosaur(
-             name: 'Big Eaty',
-@@ -33,13 +33,13 @@ class DinosaurTest extends TestCase
-             length: $length,
-         );
+         $dino = new Dinosaur(name: 'Big Eaty', length: $length);
  
--        self::assertSame($specification, $dino->getSpecification(), 'This is supposed to be a large Dinosaur');
-+        self::assertSame($specification, $dino->getSpecification());
+-        self::assertSame($expectedSize, $dino->getSizeDescription(), 'This is supposed to be a large Dinosaur');
++        self::assertSame($expectedSize, $dino->getSizeDescription());
      }
  
-     public function getDinoLengthSpecification()
-     {
-         yield '15 Meter Large Dino' => [15, 'Large'];
-         yield '7 Meter Medium Dino' => [7, 'Medium'];
--        yield '4 Meter Small Dino' => [15, 'Small'];
-+        yield '4 Meter Small Dino' => [4, 'Small'];
-     }
- }
+     public function getDinoSizeDescription()
