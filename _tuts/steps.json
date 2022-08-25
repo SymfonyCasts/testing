@@ -101,11 +101,6 @@
             "description": null
         },
         {
-            "id": "empty-2",
-            "name": "empty 2",
-            "description": null
-        },
-        {
             "id": "data-provider-remove-assertsame-message-arg-and-cleanup",
             "name": "Data Provider: remove assertSame message arg and cleanup",
             "description": null
@@ -148,11 +143,6 @@
         {
             "id": "github-service-handel-status-prefix-on-lables",
             "name": "GitHub Service: handel status prefix on lables",
-            "description": null
-        },
-        {
-            "id": "empty",
-            "name": "empty",
             "description": null
         },
         {
@@ -211,11 +201,6 @@
             "description": null
         },
         {
-            "id": "delete-me",
-            "name": "delete me",
-            "description": null
-        },
-        {
             "id": "pre-exception-add-test-case-for-hungry-dinos",
             "name": "Pre Exception: add test case for hungry dinos",
             "description": null
@@ -243,11 +228,6 @@
         {
             "id": "exceptions-change-the-response",
             "name": "Exceptions: change the response",
-            "description": null
-        },
-        {
-            "id": "delete-me-3",
-            "name": "delete me 3",
             "description": null
         },
         {
