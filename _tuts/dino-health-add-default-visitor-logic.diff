@@ -1,0 +1,14 @@
+diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
+index 8e92774..6505bf1 100644
+--- a/src/Entity/Dinosaur.php
++++ b/src/Entity/Dinosaur.php
+@@ -49,4 +49,9 @@ class Dinosaur
+ 
+         return 'Small';
+     }
++
++    public function isAcceptingVisitors(): bool
++    {
++        return true;
++    }
+ }

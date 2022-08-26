@@ -1,12 +1,12 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index c684144..97161a6 100644
+index 11bd44d..e342b35 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
 @@ -25,11 +25,11 @@ class DinosaurTest extends TestCase
      /**
-      * @dataProvider getDinoSizeDescription
+      * @dataProvider sizeDescriptionProvider
       */
--    public function testDinoOver10MetersIsLarge(int $length, string $expectedSize): void
+-    public function testDino10MetersOrGreaterIsLarge(int $length, string $expectedSize): void
 +    public function testDinoHasCorrectSizeDescriptionFromLength(int $length, string $expectedSize): void
      {
          $dino = new Dinosaur(name: 'Big Eaty', length: $length);
@@ -15,4 +15,4 @@ index c684144..97161a6 100644
 +        self::assertSame($expectedSize, $dino->getSizeDescription());
      }
  
-     public function getDinoSizeDescription()
+     public function sizeDescriptionProvider()

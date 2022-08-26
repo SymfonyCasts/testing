@@ -1,5 +1,5 @@
 diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
-index 9f4a4a3..153df9c 100644
+index 9f4a4a3..387a3b1 100644
 --- a/src/Entity/Dinosaur.php
 +++ b/src/Entity/Dinosaur.php
 @@ -42,5 +42,13 @@ class Dinosaur
@@ -11,7 +11,7 @@ index 9f4a4a3..153df9c 100644
 +            return 'Small';
 +        }
 +
-+        if ($this->length < 9) {
++        if ($this->length < 10) {
 +            return 'Medium';
 +        }
      }

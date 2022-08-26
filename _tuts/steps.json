@@ -111,13 +111,28 @@
             "description": null
         },
         {
-            "id": "dino-health-add-health-test",
-            "name": "Dino Health: add health test",
+            "id": "dino-health-assert-is-accepting-visitors-by-default",
+            "name": "Dino Health: assert is accepting visitors by default",
             "description": null
         },
         {
-            "id": "dino-health-add-health-methods",
-            "name": "Dino Health: add health methods",
+            "id": "dino-health-add-default-visitor-logic",
+            "name": "Dino Health: add default visitor logic",
+            "description": null
+        },
+        {
+            "id": "dino-health-assert-is-not-accepting-visitors-if-sick",
+            "name": "Dino Health: assert is not accepting visitors if sick",
+            "description": null
+        },
+        {
+            "id": "dino-health-add-logic-to-not-allow-visitors-if-sick",
+            "name": "Dino Health: add logic to not allow visitors if sick",
+            "description": null
+        },
+        {
+            "id": "dino-health-use-health-constants",
+            "name": "Dino Health: use health constants",
             "description": null
         },
         {
@@ -251,5 +266,5 @@
             "description": null
         }
     ],
-    "sha": "5deabd2975df83e114cc8ed09e4fcda5e62e143c"
+    "sha": "40914c394fbc26fa6caca9e6633fd08694de4b5e"
 }

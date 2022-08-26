@@ -1,5 +1,5 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index d2150d8..13a9f08 100644
+index d371a0a..baca77b 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
 @@ -21,4 +21,11 @@ class DinosaurTest extends TestCase
@@ -7,7 +7,7 @@ index d2150d8..13a9f08 100644
          self::assertSame('Paddock A', $dino->getEnclosure());
      }
 +
-+    public function testDinoOver10MetersIsLarge(): void
++    public function testDino10MetersOrGreaterIsLarge(): void
 +    {
 +        $dino = new Dinosaur(name: 'Big Eaty', length: 10);
 +

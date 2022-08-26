@@ -1,5 +1,5 @@
 diff --git a/src/Controller/MainController.php b/src/Controller/MainController.php
-index c9b57af..46191dc 100644
+index 1139ee5..2656ac5 100644
 --- a/src/Controller/MainController.php
 +++ b/src/Controller/MainController.php
 @@ -3,6 +3,7 @@
@@ -27,6 +27,6 @@ index c9b57af..46191dc 100644
 +            $dino->setHealth($github->getHealthReport($dino) ?? 'Unknown');
 +        }
 +
-         return $this->render('base.html.twig', [
+         return $this->render('main/index.html.twig', [
              'dinos' => $dinos,
          ]);

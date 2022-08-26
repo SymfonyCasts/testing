@@ -1,20 +1,20 @@
-diff --git a/templates/base.html.twig b/templates/base.html.twig
-index 437df83..e86294a 100644
---- a/templates/base.html.twig
-+++ b/templates/base.html.twig
-@@ -29,6 +29,7 @@
-                         <th>Genus</th>
-                         <th>Size</th>
-                         <th>Enclosure</th>
-+                        <th>Accepting Visitors</th>
-                     </tr>
-                     </thead>
-                     <tbody>
-@@ -38,6 +39,7 @@
-                             <td>{{ dino.genus }}</td>
-                             <td>{{ dino.sizeDescription }}</td>
-                             <td>{{ dino.enclosure }}</td>
-+                            <td>{{ dino.acceptingVisitors ? 'Yes' : 'No' }}</td>
-                         </tr>
-                     {% endfor %}
-                     </tbody>
+diff --git a/templates/main/index.html.twig b/templates/main/index.html.twig
+index ee3ce32..ddeb36a 100644
+--- a/templates/main/index.html.twig
++++ b/templates/main/index.html.twig
+@@ -11,6 +11,7 @@
+                 <th>Genus</th>
+                 <th>Size</th>
+                 <th>Enclosure</th>
++                <th>Accepting Visitors</th>
+             </tr>
+             </thead>
+             <tbody>
+@@ -20,6 +21,7 @@
+                     <td>{{ dino.genus }}</td>
+                     <td>{{ dino.sizeDescription }}</td>
+                     <td>{{ dino.enclosure }}</td>
++                    <td>{{ dino.acceptingVisitors ? 'Yes' : 'No' }}</td>
+                 </tr>
+             {% endfor %}
+             </tbody>

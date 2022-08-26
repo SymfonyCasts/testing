@@ -1,10 +1,10 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index 7cc36c8..c684144 100644
+index 0ba6067..11bd44d 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
 @@ -34,8 +34,8 @@ class DinosaurTest extends TestCase
  
-     public function getDinoSizeDescription()
+     public function sizeDescriptionProvider()
      {
 -        yield [10, 'Large'];
 -        yield [5, 'Medium'];

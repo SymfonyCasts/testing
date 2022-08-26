@@ -1,0 +1,42 @@
+diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
+index 0aa937e..58e3eb9 100644
+--- a/src/Entity/Dinosaur.php
++++ b/src/Entity/Dinosaur.php
+@@ -4,11 +4,14 @@ namespace App\Entity;
+ 
+ class Dinosaur
+ {
++    public const STATUS_HEALTHY = 'HEALTHY';
++    public const STATUS_SICK = 'SICK';
++
+     private string $name;
+     private string $genus;
+     private int $length;
+     private string $enclosure;
+-    private string $health = 'Healthy';
++    private string $health = self::STATUS_HEALTHY;
+ 
+     public function __construct(string $name, string $genus = 'Unknown', int $length = 0, string $enclosure = 'Unknown')
+     {
+@@ -53,7 +56,7 @@ class Dinosaur
+ 
+     public function isAcceptingVisitors(): bool
+     {
+-        return $this->health === 'Healthy';
++        return $this->health === self::STATUS_HEALTHY;
+     }
+ 
+     public function setHealth(string $health): self
+diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
+index 829229d..2161aa2 100644
+--- a/tests/Unit/Entity/DinosaurTest.php
++++ b/tests/Unit/Entity/DinosaurTest.php
+@@ -50,7 +50,7 @@ class DinosaurTest extends TestCase
+     {
+         $dino = new Dinosaur('Bumpy');
+ 
+-        $dino->setHealth('Sick');
++        $dino->setHealth(Dinosaur::STATUS_SICK);
+ 
+         self::assertFalse($dino->isAcceptingVisitors());
+     }
