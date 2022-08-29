@@ -156,6 +156,11 @@
             "description": null
         },
         {
+            "id": "github-service-use-the-http-client-in-our-service",
+            "name": "GitHub Service: use the http client in our service",
+            "description": null
+        },
+        {
             "id": "github-service-handel-status-prefix-on-lables",
             "name": "GitHub Service: handel status prefix on lables",
             "description": null
@@ -266,5 +271,5 @@
             "description": null
         }
     ],
-    "sha": "40914c394fbc26fa6caca9e6633fd08694de4b5e"
+    "sha": "6b9a3fe7bbbb0b81e1be32cc9f516afca1b73a79"
 }

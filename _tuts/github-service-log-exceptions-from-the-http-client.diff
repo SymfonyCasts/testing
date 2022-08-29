@@ -1,5 +1,5 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 8ff32f0..2273157 100644
+index 04f2b9c..5a19519 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
 @@ -3,17 +3,29 @@
@@ -12,12 +12,12 @@ index 8ff32f0..2273157 100644
  
  class GithubService
  {
--    public function getHealthReport(Dinosaur $dinosaur): string
+-    public function getHealthReport(string $dinosaurName): string
 +    public function __construct(private LoggerInterface $logger)
 +    {
 +    }
 +
-+    public function getHealthReport(Dinosaur $dinosaur): ?string
++    public function getHealthReport(string $dinosaurName): ?string
      {
          $health = Dinosaur::STATUS_HEALTHY;
  
@@ -33,4 +33,4 @@ index 8ff32f0..2273157 100644
 +        }
  
          foreach ($response->toArray() as $issue) {
-             if (str_contains($issue['title'], $dinosaur->getName())) {
+             if (str_contains($issue['title'], $dinosaurName)) {

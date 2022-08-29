@@ -1,6 +1,6 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
 new file mode 100644
-index 0000000..8aca418
+index 0000000..12f1074
 --- /dev/null
 +++ b/src/Service/GithubService.php
 @@ -0,0 +1,17 @@
@@ -12,7 +12,7 @@ index 0000000..8aca418
 +
 +class GithubService
 +{
-+    public function getHealthReport(Dinosaur $dinosaur): string
++    public function getHealthReport(string $dinosaurName): string
 +    {
 +        // Call Github API
 +
@@ -22,7 +22,7 @@ index 0000000..8aca418
 +    }
 +}
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index ee66f6b..d0f0ebe 100644
+index 425acb8..7a457df 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -3,6 +3,7 @@

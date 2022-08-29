@@ -1,5 +1,5 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index d87e961..7bb3cc7 100644
+index f3a3e6b..9762f9b 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -22,7 +22,16 @@ class GithubServiceTest extends TestCase

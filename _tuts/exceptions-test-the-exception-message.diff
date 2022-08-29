@@ -1,12 +1,12 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 5cbf656..8a6d25c 100644
+index 5b3d413..446713a 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -85,6 +85,7 @@ class GithubServiceTest extends TestCase
+@@ -84,6 +84,7 @@ class GithubServiceTest extends TestCase
          $service = new GithubService($mockHttpClient, $mockLogger);
  
          $this->expectException(\RuntimeException::class);
 +        $this->expectExceptionMessage('DROWSY is an unknown status label!');
  
-         $service->getHealthReport(new Dinosaur('Maverick'));
+         $service->getHealthReport('Maverick');
      }

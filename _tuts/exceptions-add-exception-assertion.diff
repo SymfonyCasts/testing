@@ -1,13 +1,13 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index e83a3be..5cbf656 100644
+index 4301893..5b3d413 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -84,6 +84,8 @@ class GithubServiceTest extends TestCase
+@@ -83,6 +83,8 @@ class GithubServiceTest extends TestCase
  
          $service = new GithubService($mockHttpClient, $mockLogger);
  
 +        $this->expectException(\RuntimeException::class);
 +
-         $service->getHealthReport(new Dinosaur('Maverick'));
+         $service->getHealthReport('Maverick');
      }
  }

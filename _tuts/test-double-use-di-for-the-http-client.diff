@@ -1,5 +1,5 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 2273157..a800e97 100644
+index 5a19519..aab839b 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
 @@ -4,12 +4,12 @@ namespace App\Service;
@@ -30,7 +30,7 @@ index 2273157..a800e97 100644
              $this->logger->info($exception->getMessage());
  
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index ba07f94..638d32e 100644
+index 2ba6739..7f535ce 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -6,6 +6,7 @@ use App\Entity\Dinosaur;
@@ -48,5 +48,5 @@ index ba07f94..638d32e 100644
 -        $service = new GithubService($mockLogger);
 +        $service = new GithubService(HttpClient::create(), $mockLogger);
  
-         self::assertSame($expectedStatus, $service->getHealthReport($fixture));
+         self::assertSame($expectedStatus, $service->getHealthReport($dinoName));
      }

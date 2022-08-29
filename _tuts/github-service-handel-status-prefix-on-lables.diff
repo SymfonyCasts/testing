@@ -1,11 +1,11 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 3a9432c..8ff32f0 100644
+index 7d687fc..04f2b9c 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
 @@ -17,10 +17,29 @@ class GithubService
  
          foreach ($response->toArray() as $issue) {
-             if (str_contains($issue['title'], $dinosaur->getName())) {
+             if (str_contains($issue['title'], $dinosaurName)) {
 -                $health = $issue['labels'][0]['name'];
 +                $health = $this->getDinoStatusFromLabels($issue['labels']);
              }

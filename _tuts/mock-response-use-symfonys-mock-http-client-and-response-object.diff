@@ -1,8 +1,8 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 5653b40..70a21d0 100644
+index 0c5b748..04c3abf 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -6,6 +6,8 @@ use App\Entity\Dinosaur;
+@@ -5,6 +5,8 @@ namespace App\Tests\Unit\Service;
  use App\Service\GithubService;
  use PHPUnit\Framework\TestCase;
  use Psr\Log\LoggerInterface;
@@ -11,7 +11,7 @@ index 5653b40..70a21d0 100644
  use Symfony\Contracts\HttpClient\HttpClientInterface;
  use Symfony\Contracts\HttpClient\ResponseInterface;
  
-@@ -69,28 +71,15 @@ class GithubServiceTest extends TestCase
+@@ -68,28 +70,15 @@ class GithubServiceTest extends TestCase
  
      public function testExceptionThrownWithUnknownLabel(): void
      {

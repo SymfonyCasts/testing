@@ -195,38 +195,6 @@ index 57e3b55..e920293 100644
          {
              "name": "symfony/http-foundation",
              "version": "v6.1.2",
-diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 8aca418..3a9432c 100644
---- a/src/Service/GithubService.php
-+++ b/src/Service/GithubService.php
-@@ -3,15 +3,24 @@
- namespace App\Service;
- 
- use App\Entity\Dinosaur;
-+use Symfony\Component\HttpClient\HttpClient;
- 
- class GithubService
- {
-     public function getHealthReport(Dinosaur $dinosaur): string
-     {
--        // Call Github API
-+        $health = Dinosaur::STATUS_HEALTHY;
- 
--        // Filter the issues
-+        $client = HttpClient::create();
- 
--        return Dinosaur::STATUS_HEALTHY;
-+        $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
-+
-+        foreach ($response->toArray() as $issue) {
-+            if (str_contains($issue['title'], $dinosaur->getName())) {
-+                $health = $issue['labels'][0]['name'];
-+            }
-+        }
-+
-+        return $health;
-     }
- }
 diff --git a/symfony.lock b/symfony.lock
 index 536e3d8..b36ed81 100644
 --- a/symfony.lock
