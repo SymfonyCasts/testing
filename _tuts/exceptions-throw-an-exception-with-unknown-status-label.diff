@@ -1,8 +1,8 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index aab839b..3219267 100644
+index 54365be..e33dfe2 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
-@@ -48,6 +48,11 @@ class GithubService
+@@ -46,6 +46,11 @@ class GithubService
  
              // Remove the "Status:" and whitespace from the label
              $status = trim(substr($label, strlen('STATUS:')));

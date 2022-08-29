@@ -1,14 +1,13 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 5a19519..aab839b 100644
+index e737c6d..54365be 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
-@@ -4,12 +4,12 @@ namespace App\Service;
+@@ -4,11 +4,11 @@ namespace App\Service;
  
  use App\Entity\Dinosaur;
  use Psr\Log\LoggerInterface;
 -use Symfony\Component\HttpClient\HttpClient;
 +use Symfony\Contracts\HttpClient\HttpClientInterface;
- use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
  
  class GithubService
  {
@@ -17,18 +16,17 @@ index 5a19519..aab839b 100644
      {
      }
  
-@@ -17,10 +17,8 @@ class GithubService
+@@ -16,9 +16,7 @@ class GithubService
      {
          $health = Dinosaur::STATUS_HEALTHY;
  
 -        $client = HttpClient::create();
 -
-         try {
--            $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
-+            $response = $this->httpClient->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
-         } catch (TransportExceptionInterface $exception) {
-             $this->logger->info($exception->getMessage());
+-        $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
++        $response = $this->httpClient->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
  
+         $this->logger->info('Request Dino Issues', [
+             'dino' => $dinosaurName,
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
 index 2ba6739..7f535ce 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
