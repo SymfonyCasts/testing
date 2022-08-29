@@ -266,8 +266,8 @@
             "description": null
         },
         {
-            "id": "exceptions-ensure-hungry-is-healthy",
-            "name": "Exceptions: Ensure Hungry is Healthy",
+            "id": "drop-me",
+            "name": "drop me",
             "description": null
         },
         {
@@ -276,5 +276,5 @@
             "description": null
         }
     ],
-    "sha": "0df68a7bd746d3610306b17fc02cc3e89be01dc4"
+    "sha": "347300b24c968a038cc3b1f040ffd1cb96026807"
 }

@@ -1,5 +1,5 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 3b7eee8..23bdab2 100644
+index 99c3d2b..232f002 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -6,6 +6,8 @@ use App\Enum\HealthStatus;
@@ -11,7 +11,7 @@ index 3b7eee8..23bdab2 100644
  use Symfony\Contracts\HttpClient\HttpClientInterface;
  use Symfony\Contracts\HttpClient\ResponseInterface;
  
-@@ -69,28 +71,15 @@ class GithubServiceTest extends TestCase
+@@ -61,28 +63,15 @@ class GithubServiceTest extends TestCase
  
      public function testExceptionThrownWithUnknownLabel(): void
      {

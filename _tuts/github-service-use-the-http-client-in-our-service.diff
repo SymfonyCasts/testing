@@ -1,5 +1,5 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 1963a0b..ed18fb8 100644
+index 1963a0b..82daddb 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
 @@ -3,15 +3,24 @@
@@ -23,7 +23,7 @@ index 1963a0b..ed18fb8 100644
 +
 +        foreach ($response->toArray() as $issue) {
 +            if (str_contains($issue['title'], $dinosaurName)) {
-+                $health = HealthStatus::tryFrom($issue['labels'][0]['name']) ?? HealthStatus::HEALTHY;
++                $health = HealthStatus::tryFrom($issue['labels'][0]['name']);
 +            }
 +        }
 +
