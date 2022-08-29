@@ -131,8 +131,13 @@
             "description": null
         },
         {
-            "id": "dino-health-use-health-constants",
-            "name": "Dino Health: use health constants",
+            "id": "dino-health-create-enum-of-health-status",
+            "name": "Dino Health: create enum of health status",
+            "description": null
+        },
+        {
+            "id": "dino-health-use-health-enum",
+            "name": "Dino Health: use health enum",
             "description": null
         },
         {
@@ -171,18 +176,18 @@
             "description": null
         },
         {
-            "id": "test-double-intro-mock-logger-instance",
-            "name": "Test Double: intro mock logger instance",
+            "id": "test-doubles-intro-mock-logger-instance",
+            "name": "Test Doubles: intro mock logger instance",
             "description": null
         },
         {
-            "id": "test-double-use-di-for-the-http-client",
-            "name": "Test  Double: use DI for the http-client",
+            "id": "test-doubles-use-di-for-the-http-client",
+            "name": "Test Doubles: use di for the http client",
             "description": null
         },
         {
-            "id": "test-double-mock-the-http-client",
-            "name": "Test  Double: mock the http client",
+            "id": "test-doubles-mock-the-http-client",
+            "name": "Test Doubles: mock the http client",
             "description": null
         },
         {
@@ -271,5 +276,5 @@
             "description": null
         }
     ],
-    "sha": "d55ac0d699bc70f4a333aad425bb4610d73189c9"
+    "sha": "0df68a7bd746d3610306b17fc02cc3e89be01dc4"
 }

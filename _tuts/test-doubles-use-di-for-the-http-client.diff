@@ -1,10 +1,10 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index e737c6d..54365be 100644
+index 620484b..55cbb0e 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
 @@ -4,11 +4,11 @@ namespace App\Service;
  
- use App\Entity\Dinosaur;
+ use App\Enum\HealthStatus;
  use Psr\Log\LoggerInterface;
 -use Symfony\Component\HttpClient\HttpClient;
 +use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -18,7 +18,7 @@ index e737c6d..54365be 100644
  
 @@ -16,9 +16,7 @@ class GithubService
      {
-         $health = Dinosaur::STATUS_HEALTHY;
+         $health = HealthStatus::HEALTHY;
  
 -        $client = HttpClient::create();
 -
@@ -28,10 +28,10 @@ index e737c6d..54365be 100644
          $this->logger->info('Request Dino Issues', [
              'dino' => $dinosaurName,
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 2ba6739..7f535ce 100644
+index b34d199..08d7d66 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -6,6 +6,7 @@ use App\Entity\Dinosaur;
+@@ -6,6 +6,7 @@ use App\Enum\HealthStatus;
  use App\Service\GithubService;
  use PHPUnit\Framework\TestCase;
  use Psr\Log\LoggerInterface;

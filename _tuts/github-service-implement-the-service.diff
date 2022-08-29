@@ -1,6 +1,6 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
 new file mode 100644
-index 0000000..12f1074
+index 0000000..1963a0b
 --- /dev/null
 +++ b/src/Service/GithubService.php
 @@ -0,0 +1,17 @@
@@ -8,27 +8,27 @@ index 0000000..12f1074
 +
 +namespace App\Service;
 +
-+use App\Entity\Dinosaur;
++use App\Enum\HealthStatus;
 +
 +class GithubService
 +{
-+    public function getHealthReport(string $dinosaurName): string
++    public function getHealthReport(string $dinosaurName): HealthStatus
 +    {
 +        // Call Github API
 +
 +        // Filter the issues
 +
-+        return Dinosaur::STATUS_HEALTHY;
++        return HealthStatus::HEALTHY;
 +    }
 +}
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 425acb8..7a457df 100644
+index a7a4d1e..555b048 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -3,6 +3,7 @@
  namespace App\Tests\Unit\Service;
  
- use App\Entity\Dinosaur;
+ use App\Enum\HealthStatus;
 +use App\Service\GithubService;
  use PHPUnit\Framework\TestCase;
  

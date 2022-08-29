@@ -1,16 +1,8 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index b9d0a52..c5db1b4 100644
+index f5e3ab1..5c5a74a 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -2,7 +2,6 @@
- 
- namespace App\Tests\Unit\Service;
- 
--use App\Entity\Dinosaur;
- use App\Service\GithubService;
- use PHPUnit\Framework\TestCase;
- use Psr\Log\LoggerInterface;
-@@ -59,7 +58,7 @@ class GithubServiceTest extends TestCase
+@@ -59,7 +59,7 @@ class GithubServiceTest extends TestCase
          ];
      }
  
@@ -19,7 +11,7 @@ index b9d0a52..c5db1b4 100644
      {
          $mockLogger = $this->createMock(LoggerInterface::class);
          $mockHttpClient = $this->createMock(HttpClientInterface::class);
-@@ -88,6 +87,6 @@ class GithubServiceTest extends TestCase
+@@ -88,6 +88,6 @@ class GithubServiceTest extends TestCase
  
          $service = new GithubService($mockHttpClient, $mockLogger);
  

@@ -1,11 +1,11 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 04f2b9c..e737c6d 100644
+index 6f0bc8a..620484b 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
 @@ -3,10 +3,15 @@
  namespace App\Service;
  
- use App\Entity\Dinosaur;
+ use App\Enum\HealthStatus;
 +use Psr\Log\LoggerInterface;
  use Symfony\Component\HttpClient\HttpClient;
  
@@ -15,9 +15,9 @@ index 04f2b9c..e737c6d 100644
 +    {
 +    }
 +
-     public function getHealthReport(string $dinosaurName): string
+     public function getHealthReport(string $dinosaurName): HealthStatus
      {
-         $health = Dinosaur::STATUS_HEALTHY;
+         $health = HealthStatus::HEALTHY;
 @@ -15,6 +20,11 @@ class GithubService
  
          $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');

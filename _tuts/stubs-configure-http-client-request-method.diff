@@ -1,5 +1,5 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 526be00..6057dcf 100644
+index c3e74fd..631f9cb 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -7,6 +7,7 @@ use App\Service\GithubService;

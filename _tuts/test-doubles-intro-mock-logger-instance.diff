@@ -1,9 +1,9 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 7a457df..2ba6739 100644
+index 555b048..b34d199 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -5,6 +5,7 @@ namespace App\Tests\Unit\Service;
- use App\Entity\Dinosaur;
+ use App\Enum\HealthStatus;
  use App\Service\GithubService;
  use PHPUnit\Framework\TestCase;
 +use Psr\Log\LoggerInterface;
@@ -12,7 +12,7 @@ index 7a457df..2ba6739 100644
  {
 @@ -13,7 +14,9 @@ class GithubServiceTest extends TestCase
       */
-     public function testDinoHealth(string $expectedStatus, string $dinoName): void
+     public function testDinoHealth(HealthStatus $expectedStatus, string $dinoName): void
      {
 -        $service = new GithubService();
 +        $mockLogger = $this->createMock(LoggerInterface::class);

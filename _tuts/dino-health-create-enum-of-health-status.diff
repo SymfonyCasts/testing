@@ -1,0 +1,15 @@
+diff --git a/src/Enum/HealthStatus.php b/src/Enum/HealthStatus.php
+new file mode 100644
+index 0000000..c5ba116
+--- /dev/null
++++ b/src/Enum/HealthStatus.php
+@@ -0,0 +1,9 @@
++<?php
++
++namespace App\Enum;
++
++enum HealthStatus: string
++{
++    case HEALTHY = 'Healthy';
++    case SICK = 'Sick';
++}

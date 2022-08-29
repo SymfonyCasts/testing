@@ -1,20 +1,18 @@
-diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
-index 58e3eb9..5ec1619 100644
---- a/src/Entity/Dinosaur.php
-+++ b/src/Entity/Dinosaur.php
-@@ -6,6 +6,7 @@ class Dinosaur
+diff --git a/src/Enum/HealthStatus.php b/src/Enum/HealthStatus.php
+index c5ba116..a57e070 100644
+--- a/src/Enum/HealthStatus.php
++++ b/src/Enum/HealthStatus.php
+@@ -6,4 +6,5 @@ enum HealthStatus: string
  {
-     public const STATUS_HEALTHY = 'HEALTHY';
-     public const STATUS_SICK = 'SICK';
-+    public const STATUS_HUNGRY = 'HUNGRY';
- 
-     private string $name;
-     private string $genus;
+     case HEALTHY = 'Healthy';
+     case SICK = 'Sick';
++    case HUNGRY = 'Hungry';
+ }
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index 2161aa2..bb9102f 100644
+index 590bbab..8d12536 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
-@@ -54,4 +54,13 @@ class DinosaurTest extends TestCase
+@@ -55,4 +55,13 @@ class DinosaurTest extends TestCase
  
          self::assertFalse($dino->isAcceptingVisitors());
      }
@@ -23,7 +21,7 @@ index 2161aa2..bb9102f 100644
 +    {
 +        $dino = new Dinosaur('Dennis');
 +
-+        $dino->setHealth(Dinosaur::STATUS_HUNGRY);
++        $dino->setHealth(HealthStatus::HUNGRY);
 +
 +        self::assertTrue($dino->isAcceptingVisitors());
 +    }

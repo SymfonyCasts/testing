@@ -1,12 +1,12 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 7d687fc..04f2b9c 100644
+index ed18fb8..6f0bc8a 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
 @@ -17,10 +17,29 @@ class GithubService
  
          foreach ($response->toArray() as $issue) {
              if (str_contains($issue['title'], $dinosaurName)) {
--                $health = $issue['labels'][0]['name'];
+-                $health = HealthStatus::tryFrom($issue['labels'][0]['name']) ?? HealthStatus::HEALTHY;
 +                $health = $this->getDinoStatusFromLabels($issue['labels']);
              }
          }
@@ -14,22 +14,22 @@ index 7d687fc..04f2b9c 100644
          return $health;
      }
 +
-+    private function getDinoStatusFromLabels(array $labels): string
++    private function getDinoStatusFromLabels(array $labels): HealthStatus
 +    {
 +        $status = null;
 +
 +        foreach ($labels as $label) {
-+            $label = strtoupper($label['name']);
++            $label = $label['name'];
 +
 +            // We only care about "Status" labels
-+            if (!str_starts_with($label, 'STATUS:')) {
++            if (!str_starts_with($label, 'Status:')) {
 +                continue;
 +            }
 +
 +            // Remove the "Status:" and whitespace from the label
-+            $status = trim(substr($label, strlen('STATUS:')));
++            $status = trim(substr($label, strlen('Status:')));
 +        }
 +
-+        return $status ?? Dinosaur::STATUS_HEALTHY;
++        return HealthStatus::tryFrom($status) ?? HealthStatus::HEALTHY;
 +    }
  }

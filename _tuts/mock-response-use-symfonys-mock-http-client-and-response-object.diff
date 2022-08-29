@@ -1,8 +1,8 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index 0c5b748..04c3abf 100644
+index 3b7eee8..23bdab2 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
-@@ -5,6 +5,8 @@ namespace App\Tests\Unit\Service;
+@@ -6,6 +6,8 @@ use App\Enum\HealthStatus;
  use App\Service\GithubService;
  use PHPUnit\Framework\TestCase;
  use Psr\Log\LoggerInterface;
@@ -11,7 +11,7 @@ index 0c5b748..04c3abf 100644
  use Symfony\Contracts\HttpClient\HttpClientInterface;
  use Symfony\Contracts\HttpClient\ResponseInterface;
  
-@@ -68,28 +70,15 @@ class GithubServiceTest extends TestCase
+@@ -69,28 +71,15 @@ class GithubServiceTest extends TestCase
  
      public function testExceptionThrownWithUnknownLabel(): void
      {
@@ -43,4 +43,4 @@ index 0c5b748..04c3abf 100644
 +        $service = new GithubService($mockHttpClient, $this->createMock(LoggerInterface::class));
  
          $this->expectException(\RuntimeException::class);
-         $this->expectExceptionMessage('DROWSY is an unknown status label!');
+         $this->expectExceptionMessage('Drowsy is an unknown status label!');

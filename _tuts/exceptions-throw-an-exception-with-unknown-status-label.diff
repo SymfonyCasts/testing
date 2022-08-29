@@ -1,16 +1,16 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 54365be..e33dfe2 100644
+index 55cbb0e..220a8bb 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
 @@ -46,6 +46,11 @@ class GithubService
  
              // Remove the "Status:" and whitespace from the label
-             $status = trim(substr($label, strlen('STATUS:')));
+             $status = trim(substr($label, strlen('Status:')));
 +
 +            // Determine if we know about the label - throw an exception is we don't
-+            if (!in_array($status, [Dinosaur::STATUS_SICK, Dinosaur::STATUS_HUNGRY, Dinosaur::STATUS_HEALTHY])) {
++            if (null === HealthStatus::tryFrom($status)) {
 +                throw new \RuntimeException(sprintf('%s is an unknown status label!', $label));
 +            }
          }
  
-         return $status ?? Dinosaur::STATUS_HEALTHY;
+         return HealthStatus::tryFrom($status) ?? HealthStatus::HEALTHY;
