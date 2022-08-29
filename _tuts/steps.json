@@ -266,11 +266,6 @@
             "description": null
         },
         {
-            "id": "drop-me",
-            "name": "drop me",
-            "description": null
-        },
-        {
             "id": "mock-response-use-symfonys-mock-http-client-and-response-object",
             "name": "Mock Response: use symfonys mock http client and response object",
             "description": null
