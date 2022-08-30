@@ -11,7 +11,7 @@ index 67b2227..7715a7a 100644
          "symfony/twig-bundle": "6.1.*",
          "symfony/yaml": "6.1.*"
 diff --git a/composer.lock b/composer.lock
-index 57e3b55..e920293 100644
+index 401656f..2b9bb95 100644
 --- a/composer.lock
 +++ b/composer.lock
 @@ -4,7 +4,7 @@
@@ -25,20 +25,20 @@ index 57e3b55..e920293 100644
              "name": "psr/cache",
 @@ -1431,6 +1431,171 @@
              ],
-             "time": "2022-06-26T10:01:04+00:00"
+             "time": "2022-08-26T10:32:31+00:00"
          },
 +        {
 +            "name": "symfony/http-client",
-+            "version": "v6.1.2",
++            "version": "v6.1.4",
 +            "source": {
 +                "type": "git",
 +                "url": "https://github.com/symfony/http-client.git",
-+                "reference": "ea1af6c8cc479147d67a3fead457dd7b06261041"
++                "reference": "06dc27cbdcee26d6796c226db5266a0d58359739"
 +            },
 +            "dist": {
 +                "type": "zip",
-+                "url": "https://api.github.com/repos/symfony/http-client/zipball/ea1af6c8cc479147d67a3fead457dd7b06261041",
-+                "reference": "ea1af6c8cc479147d67a3fead457dd7b06261041",
++                "url": "https://api.github.com/repos/symfony/http-client/zipball/06dc27cbdcee26d6796c226db5266a0d58359739",
++                "reference": "06dc27cbdcee26d6796c226db5266a0d58359739",
 +                "shasum": ""
 +            },
 +            "require": {
@@ -93,7 +93,7 @@ index 57e3b55..e920293 100644
 +            "description": "Provides powerful methods to fetch HTTP resources synchronously or asynchronously",
 +            "homepage": "https://symfony.com",
 +            "support": {
-+                "source": "https://github.com/symfony/http-client/tree/v6.1.2"
++                "source": "https://github.com/symfony/http-client/tree/v6.1.4"
 +            },
 +            "funding": [
 +                {
@@ -109,7 +109,7 @@ index 57e3b55..e920293 100644
 +                    "type": "tidelift"
 +                }
 +            ],
-+            "time": "2022-06-19T13:02:30+00:00"
++            "time": "2022-08-02T16:17:38+00:00"
 +        },
 +        {
 +            "name": "symfony/http-client-contracts",
@@ -194,7 +194,7 @@ index 57e3b55..e920293 100644
 +        },
          {
              "name": "symfony/http-foundation",
-             "version": "v6.1.2",
+             "version": "v6.1.4",
 diff --git a/symfony.lock b/symfony.lock
 index 536e3d8..b36ed81 100644
 --- a/symfony.lock
