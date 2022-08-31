@@ -1,3 +1,5 @@
 chapters:
     - install
     - first-test
+    - real-test
+    - tdd
