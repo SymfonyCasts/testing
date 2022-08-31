@@ -1,13 +1,16 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index 94e2821..470b608 100644
+index 94e2821..7a6124b 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
-@@ -18,7 +18,7 @@ class DinosaurTest extends TestCase
+@@ -16,6 +16,11 @@ class DinosaurTest extends TestCase
+             enclosure: 'Paddock A',
+         );
  
++        self::assertGreaterThan(
++            $dino->getLength(),
++            10
++        );
++
          self::assertSame('Big Eaty', $dino->getName());
          self::assertSame('Tyrannosaurus', $dino->getGenus());
--        self::assertSame(15, $dino->getLength());
-+        self::assertSame(5, $dino->getLength());
-         self::assertSame('Paddock A', $dino->getEnclosure());
-     }
- }
+         self::assertSame(15, $dino->getLength());

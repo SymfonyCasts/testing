@@ -1,0 +1,17 @@
+diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
+index f540040..94e2821 100644
+--- a/tests/Unit/Entity/DinosaurTest.php
++++ b/tests/Unit/Entity/DinosaurTest.php
+@@ -16,12 +16,6 @@ class DinosaurTest extends TestCase
+             enclosure: 'Paddock A',
+         );
+ 
+-        self::assertGreaterThan(
+-            $dino->getLength(),
+-            10,
+-            message: 'Dino is supposed to be bigger than 10 meters!'
+-        );
+-
+         self::assertSame('Big Eaty', $dino->getName());
+         self::assertSame('Tyrannosaurus', $dino->getGenus());
+         self::assertSame(15, $dino->getLength());

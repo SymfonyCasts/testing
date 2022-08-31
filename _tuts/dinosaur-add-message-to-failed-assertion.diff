@@ -1,13 +1,14 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index 470b608..1041d51 100644
+index 7a6124b..f540040 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
-@@ -18,7 +18,7 @@ class DinosaurTest extends TestCase
+@@ -18,7 +18,8 @@ class DinosaurTest extends TestCase
+ 
+         self::assertGreaterThan(
+             $dino->getLength(),
+-            10
++            10,
++            message: 'Dino is supposed to be bigger than 10 meters!'
+         );
  
          self::assertSame('Big Eaty', $dino->getName());
-         self::assertSame('Tyrannosaurus', $dino->getGenus());
--        self::assertSame(5, $dino->getLength());
-+        self::assertSame(5, $dino->getLength(), 'Dino length getter is not the same as the constructor');
-         self::assertSame('Paddock A', $dino->getEnclosure());
-     }
- }

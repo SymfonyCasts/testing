@@ -1,9 +1,9 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index d371a0a..baca77b 100644
+index 94e2821..43bbf47 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
 @@ -21,4 +21,11 @@ class DinosaurTest extends TestCase
-         self::assertSame(15, $dino->getLength(), 'Dino length getter is not the same as the constructor');
+         self::assertSame(15, $dino->getLength());
          self::assertSame('Paddock A', $dino->getEnclosure());
      }
 +

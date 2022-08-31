@@ -1,5 +1,5 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index 11bd44d..e342b35 100644
+index fa5a6be..ee58a11 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
 @@ -25,11 +25,11 @@ class DinosaurTest extends TestCase

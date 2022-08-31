@@ -36,8 +36,8 @@
             "description": null
         },
         {
-            "id": "dinosaur-failed-assertion",
-            "name": "Dinosaur: failed assertion",
+            "id": "dinosaur-failed-assert-because-of-argument-order",
+            "name": "Dinosaur: failed assert because of argument order",
             "description": null
         },
         {
@@ -46,8 +46,8 @@
             "description": null
         },
         {
-            "id": "dinosaur-fix-failed-assertion",
-            "name": "Dinosaur: fix failed assertion",
+            "id": "dinosaur-cleanup-test",
+            "name": "Dinosaur: cleanup test",
             "description": null
         },
         {
@@ -271,5 +271,5 @@
             "description": null
         }
     ],
-    "sha": "9e1b694738473879485552ca81f974f867fec672"
+    "sha": "958dcd46451f394aa1bb04e5f2ad2fd07d4ac02e"
 }
