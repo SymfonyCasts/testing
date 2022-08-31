@@ -3,3 +3,4 @@ chapters:
     - first-test
     - real-test
     - tdd
+    - data-providers
