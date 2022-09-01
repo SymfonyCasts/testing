@@ -33,7 +33,7 @@ index 0aa937e..0c98c50 100644
          $this->health = $health;
  
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index 45322d4..7eeb75f 100644
+index 152e546..e2c5b53 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
 @@ -3,6 +3,7 @@

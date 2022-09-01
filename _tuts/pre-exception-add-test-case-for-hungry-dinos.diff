@@ -9,7 +9,7 @@ index c5ba116..a57e070 100644
 +    case HUNGRY = 'Hungry';
  }
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index 7eeb75f..501b6b7 100644
+index e2c5b53..65441b0 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
 @@ -55,4 +55,13 @@ class DinosaurTest extends TestCase
