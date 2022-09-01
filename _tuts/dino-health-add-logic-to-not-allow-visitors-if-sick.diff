@@ -1,5 +1,5 @@
 diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
-index 6505bf1..0aa937e 100644
+index 6505bf1..8437eae 100644
 --- a/src/Entity/Dinosaur.php
 +++ b/src/Entity/Dinosaur.php
 @@ -8,6 +8,7 @@ class Dinosaur
@@ -10,7 +10,7 @@ index 6505bf1..0aa937e 100644
  
      public function __construct(string $name, string $genus = 'Unknown', int $length = 0, string $enclosure = 'Unknown')
      {
-@@ -52,6 +53,13 @@ class Dinosaur
+@@ -52,6 +53,11 @@ class Dinosaur
  
      public function isAcceptingVisitors(): bool
      {
@@ -18,10 +18,8 @@ index 6505bf1..0aa937e 100644
 +        return $this->health === 'Healthy';
 +    }
 +
-+    public function setHealth(string $health): self
++    public function setHealth(string $health): void
 +    {
 +        $this->health = $health;
-+
-+        return $this;
      }
  }

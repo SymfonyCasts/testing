@@ -1,5 +1,5 @@
 diff --git a/src/Entity/Dinosaur.php b/src/Entity/Dinosaur.php
-index 0aa937e..0c98c50 100644
+index 8437eae..9412a8e 100644
 --- a/src/Entity/Dinosaur.php
 +++ b/src/Entity/Dinosaur.php
 @@ -2,13 +2,15 @@
@@ -27,11 +27,11 @@ index 0aa937e..0c98c50 100644
 +        return $this->health === HealthStatus::HEALTHY;
      }
  
--    public function setHealth(string $health): self
-+    public function setHealth(HealthStatus $health): self
+-    public function setHealth(string $health): void
++    public function setHealth(HealthStatus $health)
      {
          $this->health = $health;
- 
+     }
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
 index 152e546..e2c5b53 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
