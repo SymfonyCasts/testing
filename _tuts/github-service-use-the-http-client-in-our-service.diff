@@ -1,8 +1,8 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 1963a0b..82daddb 100644
+index 1963a0b..2d0b8bc 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
-@@ -3,15 +3,24 @@
+@@ -3,15 +3,27 @@
  namespace App\Service;
  
  use App\Enum\HealthStatus;
@@ -19,11 +19,14 @@ index 1963a0b..82daddb 100644
 +        $client = HttpClient::create();
  
 -        return HealthStatus::HEALTHY;
-+        $response = $client->request('GET', 'https://api.github.com/repos/SymfonyCasts/dino-park/issues');
++        $response = $client->request(
++            method: 'GET',
++            url: 'https://api.github.com/repos/SymfonyCasts/dino-park/issues'
++        );
 +
 +        foreach ($response->toArray() as $issue) {
 +            if (str_contains($issue['title'], $dinosaurName)) {
-+                $health = HealthStatus::tryFrom($issue['labels'][0]['name']);
++
 +            }
 +        }
 +

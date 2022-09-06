@@ -1,6 +1,6 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
 new file mode 100644
-index 0000000..a7a4d1e
+index 0000000..ff21992
 --- /dev/null
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -0,0 +1,32 @@
@@ -16,7 +16,7 @@ index 0000000..a7a4d1e
 +    /**
 +     * @dataProvider dinoNameProvider
 +     */
-+    public function testDinoHealth(HealthStatus $expectedStatus, string $dinoName): void
++    public function testGetHealthReportReturnsCorrectHealthStatusForDino(HealthStatus $expectedStatus, string $dinoName): void
 +    {
 +        $service = new GithubService();
 +

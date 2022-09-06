@@ -1,8 +1,8 @@
 diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
-index 55cbb0e..220a8bb 100644
+index 01621dc..e213d8d 100644
 --- a/src/Service/GithubService.php
 +++ b/src/Service/GithubService.php
-@@ -46,6 +46,11 @@ class GithubService
+@@ -49,6 +49,11 @@ class GithubService
  
              // Remove the "Status:" and whitespace from the label
              $status = trim(substr($label, strlen('Status:')));
@@ -13,4 +13,4 @@ index 55cbb0e..220a8bb 100644
 +            }
          }
  
-         return HealthStatus::tryFrom($status) ?? HealthStatus::HEALTHY;
+         return HealthStatus::tryFrom($status);
