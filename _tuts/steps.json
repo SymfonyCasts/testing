@@ -231,6 +231,11 @@
             "description": null
         },
         {
+            "id": "pre-exception-wire-up-our-data-provider",
+            "name": "Pre Exception: wire up our data provider",
+            "description": null
+        },
+        {
             "id": "pre-exception-hungry-dinos-can-accept-visitors",
             "name": "Pre Exception: hungry dinos can accept visitors",
             "description": null
@@ -271,5 +276,5 @@
             "description": null
         }
     ],
-    "sha": "8ffae3133165a4504dd6a796cac978afc906c222"
+    "sha": "fb8f166389add420cc1fe1920b9cc27a9eb99186"
 }

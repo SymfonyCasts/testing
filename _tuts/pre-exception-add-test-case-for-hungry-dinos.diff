@@ -9,20 +9,17 @@ index c5ba116..a57e070 100644
 +    case HUNGRY = 'Hungry';
  }
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index e2c5b53..65441b0 100644
+index e2c5b53..1eb9621 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
-@@ -55,4 +55,13 @@ class DinosaurTest extends TestCase
+@@ -55,4 +55,10 @@ class DinosaurTest extends TestCase
  
          self::assertFalse($dino->isAcceptingVisitors());
      }
 +
-+    public function testIsAcceptingVisitorsIfHungry(): void
++    public function healthStatusProvider(): \Generator
 +    {
-+        $dino = new Dinosaur('Dennis');
-+
-+        $dino->setHealth(HealthStatus::HUNGRY);
-+
-+        self::assertTrue($dino->isAcceptingVisitors());
++        yield 'Sick dino is not accepting visitors' => [HealthStatus::SICK, false];
++        yield 'Hungry dino is accepting visitors' => [HealthStatus::HUNGRY, true];
 +    }
  }
