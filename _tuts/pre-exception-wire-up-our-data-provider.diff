@@ -1,5 +1,5 @@
 diff --git a/tests/Unit/Entity/DinosaurTest.php b/tests/Unit/Entity/DinosaurTest.php
-index 1eb9621..01d9016 100644
+index 1eb9621..263cf58 100644
 --- a/tests/Unit/Entity/DinosaurTest.php
 +++ b/tests/Unit/Entity/DinosaurTest.php
 @@ -47,13 +47,16 @@ class DinosaurTest extends TestCase
@@ -10,7 +10,7 @@ index 1eb9621..01d9016 100644
 +    /**
 +     * @dataProvider healthStatusProvider
 +     */
-+    public function testIsNotAcceptingVisitorsIfSick(HealthStatus $healthStatus, bool $expectedVisitorStatus): void
++    public function testIsAcceptingVisitorsBasedOnHealthStatus(HealthStatus $healthStatus, bool $expectedVisitorStatus): void
      {
          $dino = new Dinosaur('Bumpy');
  
