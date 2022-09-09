@@ -4,3 +4,11 @@ chapters:
     - real-test
     - tdd
     - data-providers
+    - github-service-part-1
+    - github-service-part-2
+    - test-doubles
+    - stubs
+    - mock-objects
+    - pre-exceptions
+    - exceptions
+    - mock-http-client
