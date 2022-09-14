@@ -51,7 +51,7 @@ about all of these - except for math tests - throughout this series. In this tut
 we're going to zoom in on unit tests: tests that cover one specific piece of code - like
 a function or method.
 
-Oh, and by the way, tests also *super* fun. It's automation! So buckley up.
+Oh, and by the way, tests are also *super* fun. It's automation! So buckley up.
 
 ## Installing PHPUnit
 
