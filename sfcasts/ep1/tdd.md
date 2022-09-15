@@ -29,7 +29,7 @@ Add `public function` and let's first test that a dinosaur that's over 10 meters
 or greater is large. Inside, say `$dino = new Dinosaur()`, give him a name,
 let's use Big Eaty again, since he's a cool dude, and set his length to 10.
 
-Then, `assertSame()` that `Large` will be equal to `$dino->getSizeDescription()`.
+Then, `assertSame()` that `Large` will be identical to `$dino->getSizeDescription()`.
 For our failure message, let's use this is supposed to be a large Dinosaur.
 Yes, we're *literally* testing a method that doesn't exist yet. That's TDD.
 
@@ -86,7 +86,7 @@ size description tests. In our `DinosaurTest::class` copy our
 to `Medium`. Update the message to `Medium` as well.
 *Finally*, paste the method again for our small dino test,
 rename it to `testDinoUnder5MetersIsSmall()`, set the
-length to `4`, assert that `Small` is equal to `getSizeDescription()` and *also*
+length to `4`, assert that `Small` is identical to `getSizeDescription()` and *also*
 update the message.
 
 Back in our terminal, run the tests again:
