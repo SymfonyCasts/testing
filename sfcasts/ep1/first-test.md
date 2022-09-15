@@ -1,14 +1,123 @@
 # Our First Test
 
-We already have this dinosaur class and it's pretty simple, but when it comes to dinosaurs, bug or code can be, Hmm, a bit painful. I think we should add some basic tests to make sure this class is doing everything it's supposed to. So where do we put this new test at? When we, you can actually put your tests anywheres, but when we installed symphony test pack, Symphony's flex created this test directory force, and this is the recommended place to put your tests. Remember we're only dealing with unit tests, so let's create a new directory unit. And inside that directory, we're gonna create another one inside that directory. We're gonna create another one called entity. The reason we're creating this entity directory is because we want our test structure to mirror our source structure. In this case, dinosaur lives in the entity name space. So we're gonna do the same thing here. Now let's create a new class. We'll call it Dino shore test. And it's important to remember that all of your test classes must end with the word test and they also need to extend PHP units test case. Now let's go ahead and write a simple test to make sure everything's working. So
+We already have this `Dinosaur` class... and it's *pretty* simple. But when it comes to
+dinosaurs, bugs in our code can be, mmm, a bit painful. So let's add some basic tests!
 
-Public function test. It works. If you're using return types, which are not required, void is the return type to use for your tests inside this method, let's assert equals that 42 is the same as 42. Move over to your terminal type in vendor bin PHP unit enter he awesome. We have one test and one assertion PHP. Unit's one test that's saying right here, these are all of our test methods within the test classes that PHP unit has ran. The one assertion are the individual assertions across all of our test methods. So we have one test and one assertion, and what's an assertion. These are basically methods that are provided by PHP units test case that allow us to compare assertions are methods that are provided by PHB unit's test case that determine if an actual value matches an expected value. In this case, we wanna make sure that our 42 is what we expect matches the 42. That was the actual value. The two most common assertions that we'll use are assert same and assert equals for fullest of assertions. Move back to your browser, move back to your browser. Let's open up a new tab and go to PHP. Unit dot, read the docs.io.
+## Creating the Test Class
 
-This is all the documentation for PHP unit, but for assertions, we can look at our appendix click on assertions and look at them all. Yeah, look at 'em all the, okay. Back in our test. So how did PHP unit know that this is a test? When we call P vendor bend PHP, unit PHP unit does three things. First, it looks for it's configuration file, which is a pH unit dot XL disc. And it's looking for the test directory and side within our test suites. We have a directory test. Now that PHP, now that PHP unit knows where to find the tests looks in our project structure finds the test directory and it scans recursively through the directory for any classes that end with the word test in this case, dinosaur test, once it finds out the test class, it starts looking at all the public methods within the class, but does it run all of the public methods? Well, let's find out it's create a new public function. It works the same can void, and we are going to assert same that 42, the same as 42. Move back to your terminal and let's run these tests again,
+So... where do we put this new test? We can *technically* put our tests *anywhere* within our project.
+But when we installed `symfony/test-pack`, Flex created a `tests/` directory which,
+no surprise, is the *recommended* place to put our tests.
 
-Huh? We have one test and one looking at her test. We have two tests and two assertions. The differences that the second test method, it's not doesn't it doesn't start with test. So PHP unit only looks for public public methods that are prefixed with the word test. You could also use PHP units, annotation. You could also use PHP units at test annotation, but it's not commonly used. So we just stick with the, uh, test method. Prefix. Let's try this out, come back over here. Vendor bin PHP unit, and now we have two tests and two assertions. Awesome. So what happens when a test fails? Well, let's change our 42 to a string and we'll do the same thing with search. Same move back to your terminal run PHP unit. Again, he, there we go. There is one failure dinosaur test test. It works the same failed asserting that 42 is identical to 42, but this assert equals method passed. But our assert same method failed that's because with PHP unit assert equals is the equivalent to doing an if 42 equal using the double equals sign 42, whereas a search same, whereas a search same is doing if 42 is equal with three equal signs, 42
+Remember that, in this tutorial, we're only dealing with
+Unit tests. So, inside of `tests/`, create a new directory called `Unit`.
+And because our `Dinosaur::class` lives in the `Entity` namespace - create an `Entity`
+directory inside of *that* at the same time.
 
-In, in regular PHP code, this is going to fail. This is going to return false. Whereas the cert equals a 42 string does equal a 42 integer with type casting.
+All of this organization is *technically* optional: you can organize the `tests/`
+directory *however* you want. *But*, putting all of our unit tests into a `Unit`
+directory is just... nice. And the reason we made the `Entity`
+directory is because we want the file structure inside of `Unit` to mirror our `src/`
+directory structure. That's a best practice that keeps our tests organized.
 
-We already have this dinosaur class and it's pretty simple, but when it comes to dinosaurs, bugs in our code can be, Hmm. A bit painful. I think we should add some.
+Finally, create a new class called `DinosaurTest`. Using that `Test` suffix makes
+sense: we're testing `Dinosaur`, so we call this `DinosaurTest`! But it's also
+a requirement: PHPUnit - our testing library - *requires* this. It also requires
+that each class extend `TestCase`. Now let's go ahead
+and write a simple test to make sure everything is working.
 
+Inside our `DinosaurTest` class, let's add `public function testIsWorks()`... where
+we'll create the most *exciting* test ever! If you like return types - I do! - use
+`void`... though that's optional
+
+Inside call `self::assertEquals(42, 42)`.
+
+That's it! Sure... it's not a very *interesting* test - if our computer thinks that
+42 doesn't equal 42, we have bigger problems - but it's *enough*.
+
+## Executing PHPUnit
+
+How do we *execute* the test? By executing PHPUnit. At your terminal, run:
+
+```terminal
+./vendor/bin/phpunit
+```
+
+And... awesome! PHPUnit saw *one* test - for our one test method - and one
+*assertion*. What's... an assertion?
+
+Looking back at `DinosaurTest`, the one assertion refers to the `assertEquals()`
+method, which comes from PHPUnit's `TestCase` class. If the *actual*
+value - 42 - doesn't match the *expected* value, the test would fail.
+PHPUnit has a *bunch* more assertion methods... and we can see them
+all by going to https://phpunit.readthedocs.io. This is *full*
+of goodies, including an "Assertions" section. And... *wow*! Look at them all...
+We'll talk about the most important assertions throughout the series.
+But for now, back to the test!
+
+## Test Naming Conventions
+
+Because, I have a question: how did PHPUnit *know* that this is a test? When we call
+`vendor/bin/phpunit`, PHPUnit does three things. First, it looks for its configuration
+file, which is `phpunit.xml.dist`. Inside, it finds `testsuites`... and the `directory`
+part says:
+
+> Hey PHPUnit: go look inside a `tests/` directory for tests!
+
+Second, it finds that directory and *recursively* looks for every class that end with the word
+`Test`. In this case, `DinosaurTest`. Finally, once it finds a test class, it gets
+a list of all of its public methods.
+
+So... am I saying that PHPUnit will execute *every* public method as a test? Let's find out!
+Create a new `public function itWorksTheSame(): void`.
+
+Inside we are going to `self::assertSame()` that 42 is equal to 42. `assertSame()` is
+*very* similar to `assertEquals()` and we'll see the difference in a minute.
+
+Now, move back to your terminal and let's run these tests again:
+
+```terminal-silent
+./vendor/bin/phpunit
+```
+
+Huh? PHPUnit *still* says just one test and one assertion. But inside our
+test class, we have *two* tests and *two* assertions. The problem is that
+PHPUnit *only* executes public methods that are prefixed with the word `test`.
+You *could* also put the `@test`  annotation above the method, but that's
+not very common. So let's avoid being weird, and change this to
+`testItWorksTheSame()`.
+
+Now when we run the test:
+
+```terminal-silent
+./vendor/bin/phpunit
+```
+
+PHPUnit sees 2 tests and 2 assertions! Shweeeet!
+
+## Testing Failures 😱
+
+What does it look like when a test fails? Let's find out! Change our expected `42` to a
+*string* inside `testItWorks()`... and do the same inside `testItWorksTheSame()`. Yup,
+one of these *won't* work.
+
+This time when we try it:
+
+```terminal-silent
+./vendor/bin/phpunit
+``` 
+
+Oh no! One failure!
+
+> `DinosaurTest::testItWorksTheSame()` failed asserting that `42` is identical to `42`.
+
+So... `assertEquals()` *passed*, but `assertSame()` failed. That's because
+`assertEquals()` is the equivalent to doing an if 42 `==` 42: using the
+double equal sign. But `assertSame()` is equivalent to 42 `===` 42: with *three* equal signs.
+
+And since the string 42 does *not* triple-equals the integer 42, that test fails
+and PHPUnit yells at us.
+
+Ok, we've got our first tests behind us! Though... testing that the answer to life
+the universe and everything is equal to the answer to life the universe and everything...
+isn't very interesting. So next: let's write *real* tests for the `Dinosaur` class.
