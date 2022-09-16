@@ -11,7 +11,7 @@ do that!
 
 *But*, to add this feature, we're going to use a philosophy called
 Test Driven Development or TDD. TDD is basically a buzzword that describes a
-4-step process for writing your test *before* the feature.
+4-step process for writing your tests first.
 
 Step 1: Write a test for the feature. Step 2: Run your test and watch it fail...
 since we haven't created that feature yet! Step 3: Write as little code as
@@ -30,13 +30,13 @@ or greater is large. Inside, say `$dino = new Dinosaur()`, give him a name,
 let's use Big Eaty again, since he's a cool dude, and set his length to 10.
 
 Then, `assertSame()` that `Large` will be identical to `$dino->getSizeDescription()`.
-For our failure message, let's use this is supposed to be a large Dinosaur.
+For our failure message, let's use `This is supposed to be a Large Dinosaur`.
 Yes, we're *literally* testing a method that doesn't exist yet. That's TDD.
 
 
 ## Step 2: Run the test and watch it fail
 
-Ok, step 1 of TDD is done. Step 2 is to run our test and make sure it fails.
+Ok, step 1 is done. Step 2 is to run our test and make sure it fails.
 Open up a terminal and then run `./vendor/bin/phpunit` and also add the
 `--testdox` flag.
 
@@ -46,14 +46,15 @@ Open up a terminal and then run `./vendor/bin/phpunit` and also add the
 
 And... great! 2 tests, 4 assertions, and 1 error.
 Our new test failed because, of course, we called an undefined method! We kind
-of knew this would happen. I'll explain why in a minute, but notice that our
-"this is supposed to be at large dinosaur" message isn't showing up here?
+of knew this would happen. Hm... Did you notice that our
+"this is supposed to be at large dinosaur" message isn't showing up here? I'll
+explain why in just a minute.
 
 ## Step 3: Write simple code to make it pass
 
 Time for step 3 of TDD: write simple code to make this test pass.
 This part, taken literally, can get kinda funny. Watch:
-back in our Dinosaur class add a new `public function getSizeDescription()`
+back in our `Dinosaur` class add a new `public function getSizeDescription()`
 which will return a `string`. Inside... `return 'Large'`. Yup, that's it!
 Move back to your terminal and re-run the tests.
 
@@ -103,7 +104,7 @@ failing due to a type error on `getSizeDescription()`:
 Do you remember earlier we ran our large dinosaur test *before* writing the
 method and we didn't see our "this is supposed to be a large dino" message?
 Well, we don't see it here either... That's because PHP threw an error... and
-so the `getSizeDescription()` message explodes *before* the test can run the
+so the `getSizeDescription()` message explodes *before* PHPUnit can run the
 `assertSame()` method. It's no big deal and we can still use the stack trace to
 see exactly where things went wrong.
 
