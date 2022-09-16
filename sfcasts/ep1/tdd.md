@@ -127,6 +127,8 @@ So let's move on to the *last* step of TDD... and a fun one! Refactoring our cod
 Looking at our `getSizeDescription()` method, I think we can clean this up a bit.
 And the great news is that, because we've covered our method with tests, if we
 mess something up during refactoring, the tests will tell us! We get to be reckless!
+It also means that we didn't really need to worry about writing *perfect* code earlier.
+We just needed to make our tests pass. NOW we can improve things...
 
 Let's change this middle condition to `if ($this->length)` is greater than or equal
 to `5`, return `Medium`. We can get rid of this last conditional altogether and
@@ -142,6 +144,12 @@ tests again.
 And... we've done it! That's TDD - write the test, see the test fail,
 write simple code to see the test pass, then refactor our code. Rinse and repeat.
 
+TDD Is interesting because, by writing our test first, it forces us to think about
+*exactly* how a feature should work... Instead of just blindly writing code and
+seeing what comes out. It also helps us focus on *what* we need to code... Without
+making things too fancy. Yes, I'm guilty of that too... Get your tests to pass,
+then refactor... Nothing more is needed.
+
 # Use the Size Description in our Controller
 
 And now that we have our fancy new method - built via the powers of TDD - let's
@@ -151,7 +159,7 @@ Close up our terminal and move to our template: `templates/base.html.twig`.
 Instead of showing the dino's with `dino.length`, change this to
 `dino.sizeDescription`. Save it, go back to our browser and... refresh.
 Awesome. We have large, medium, and small for the dinosaur's size instead of a number.
-No way Bob will accidentally wander into the T-Rex enclosure anymore!
+No way Bob will accidentally wander into the T-Rex enclosure again!
 
 We've just used TDD to make our app a bit more human-friendly. Coming up next,
 we'll use some of the TDD principles we've learned here to clean up our tests with
