@@ -9,7 +9,7 @@ In `DinosaurTest`, remove these two tests and replace them with
 the object by instantiating it and trying some methods.
 
 So, `$dino = new Dinosaur()`.... and pass in some data.
-For the name, eh - let's use `Big Eaty`: he's our resident `Tyrannosaurs` who happens to
+For the name, eh - let's use `Big Eaty`: he's our resident `Tyrannosaurus` who happens to
 be `15` meters in length. And Big Eaty is currently living in `Paddock A`. Now
 that we have our `Dinosaur` object, we can write a few assertions. `self::assertSame()`
 that `Big Eaty` is identical to `$dino->getName()`, `assertSame()` that `Tyrannosaurus` is
