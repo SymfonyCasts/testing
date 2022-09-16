@@ -3,8 +3,10 @@
 We treat our source code as first-class citizens. Why not do the same with our
 tests? Our three tests for the size are... repetitive. They test the same thing
 just with slightly different input and then a different assertion. We can improve
-this by using PHPUnit's Data Providers. Which run the same test over and over
+this by using PHPUnit's Data Providers - which run the same test over and over
 with different sets of data.
+
+## Refactor our tests 
 
 Move down to the bottom of our `Dinosaur` class and add
 `public function sizeDescriptionProvider()`. Inside, `yield` an array `[10, 'Large']`,
@@ -26,6 +28,8 @@ Uh oh... Our test is failing because:
 
 > Dino 10 Meters Or Greater Is Large expected 2 arguments and 0 were passed.
 
+## Tell our test to use the Data Provider
+
 Oops, we never told our test method to use the data provider. Move back into our
 test and add a DocBlock with `@dataProvider sizeDescriptionProvider`. When PHPUnit
 10 gets released, we'll be able to use a dataProvider attribute instead of this
@@ -38,6 +42,8 @@ Back to the terminal and run the tests again:
 ```
 
 And... Yes! Our tests are passing!
+
+## Message Keys instead of Arguments
 
 In the output, we see that each test ran with datasets 0, 1, & 2. Those are our
 arrays from the data provider. We can spruce this up a bit.
@@ -64,6 +70,8 @@ In our test, change the method name to `testDinoHasCorrectSizeDescriptionFromLen
 Looking at our assertion, the message argument isn't very useful anymore... Let's
 remove it. We can always add it back in using our data provider later if we need
 to.
+
+# Return Types Everywhere!
 
 Lastly, although not required... We can use either `array` or
 `\Generator` as the return type for our data provider. Let's go with
