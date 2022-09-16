@@ -1,7 +1,9 @@
-# TDD Part 2
+# TDD Part 2: Finish & Refactor
 
 Before we move on to the *last* step in TDD, I think we need to add a couple more
 size description tests for medium and small dinosaurs. 
+
+## A few more tests
 
 In our `DinosaurTest::class` copy our
 `testDino10MetersOrGreaterIsLarge` method and rename it to
