@@ -18,7 +18,7 @@ update the message.
 Back in our terminal, run the tests again:
 
 ```terminal-silent
-./vendor/bin/phpunit
+./vendor/bin/phpunit --testdox
 ```
 
 And... they're failing! But not because our method returns the wrong result. They're
@@ -35,7 +35,7 @@ see exactly where things went wrong.
 
 Alrighty, back to the `Dinosaur` class. Lets fix these tests by adding
 `if ($this->length)` is less than `5`, `return 'Small'`. And
-`if ($this->length)` is greater than `10`, `return 'Medium'`
+`if ($this->length)` is less than `10`, `return 'Medium'`
 
 Back to our terminal, run the test again:
 
@@ -80,7 +80,7 @@ then refactor... Nothing more is needed.
 And now that we have our fancy new method - built via the powers of TDD - let's
 celebrate by *using* it on the site!
 
-Close up our terminal and move to our template: `templates/base.html.twig`.
+Close up our terminal and move to our template: `templates/main/index.html.twig`.
 Instead of showing the dino's with `dino.length`, change this to
 `dino.sizeDescription`. Save it, go back to our browser and... refresh.
 Awesome. We have large, medium, and small for the dinosaur's size instead of a number.
