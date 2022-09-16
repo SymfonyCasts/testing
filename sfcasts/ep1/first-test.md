@@ -5,7 +5,7 @@ dinosaurs, bugs in our code can be, mmm, a bit painful. So let's add some basic 
 
 ## Creating the Test Class
 
-So... where do we put this new test? We can *technically* put our tests *anywhere* within our project.
+Mmmm... where do we put this new test? We can *technically* put our tests *anywhere* within our project.
 But when we installed `symfony/test-pack`, Flex created a `tests/` directory which,
 no surprise, is the *recommended* place to put our tests.
 
@@ -64,7 +64,7 @@ part says:
 
 > Hey PHPUnit: go look inside a `tests/` directory for tests!
 
-Second, it finds that directory and *recursively* looks for every class that end with the word
+Second, it finds that directory and *recursively* looks for every class that ends with the word
 `Test`. In this case, `DinosaurTest`. Finally, once it finds a test class, it gets
 a list of all of its public methods.
 
@@ -83,7 +83,7 @@ Now, move back to your terminal and let's run these tests again:
 Huh? PHPUnit *still* says just one test and one assertion. But inside our
 test class, we have *two* tests and *two* assertions. The problem is that
 PHPUnit *only* executes public methods that are prefixed with the word `test`.
-You *could* also put the `@test`  annotation above the method, but that's
+You *could* put the `@test` annotation above the method, but that's
 not very common. So let's avoid being weird, and change this to
 `testItWorksTheSame()`.
 
