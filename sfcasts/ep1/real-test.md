@@ -43,7 +43,7 @@ safe to add a test.
 By the way: the argument *order* for the assert methods is important.
 
 The first argument should always be the *expected* argument - like
-`Big Eaty` - and the second the *actual* that we got - like `$dino->getName()`.
+`Big Eaty` - and the second should be the *actual* value we get - like `$dino->getName()`.
 This isn't a huge deal for the assertions we're using here... though if
 you reverse this, the error message will be confusing.
 
