@@ -3,6 +3,7 @@ chapters:
     - first-test
     - real-test
     - tdd
+    - tdd-2
     - data-providers
     - github-service-part-1
     - github-service-part-2
