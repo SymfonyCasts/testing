@@ -85,8 +85,8 @@ And... Great! We didn't break anything.
 
 Back to our failing test, call `$dino->setHealthStatus()` and pass in `HealthStatus::SICK`.
 We *could* run this test, but we already know it would give us an undefined method error,
-so let's skip that and in our `Dinosaur` class just add `public function setHealthStatus()` in our `Dinosaur`
-class. This method will accept a `HealthStatus $health` argument and returns nothing.
+so let's skip that and in our `Dinosaur` class just add `public function setHealthStatus()`.
+This method will accept a `HealthStatus $health` argument and returns nothing.
 Inside, `$this->health === $health`
 
 *NOW* move back to our terminal and run our tests again...
