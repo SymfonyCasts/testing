@@ -1,31 +1,31 @@
 # Dino Health
 
 Bob has just told us he needs to display which dinos are accepting lunch in our
-app... Ha... I mean visitors. If a dino is feeling good, they're accepting visitors.
-If they are sick - no visitors are allowed. Eventually, we'll call GitHub's API
-to get a list of sick dinos from GenLab. But for now, we'll assume that all dinos
-are healthy.
+app... Ha... I mean visitors. If a dino is feeling good, park guests should be able
+to see them. But if they are sick - no visitors are allowed. *Eventually*, we'll
+call GitHub's API to get a list of sick dinos from GenLab. But for now, we'll 
+assume that all dinos are healthy.
 
 ## Are they accepting visitors?
 
-To kick this off, let's create a new test in our `DinosaurTest`...
+To kick this off, in our `DinosaurTest` add
 `public function testIsAcceptingVisitorsByDefault()`. Inside, `$dino = new Dinosaur()`
 and let's call him `Dennis`.
 
 Now we want to `assertTrue()` that Dennis `isAcceptingVisitors()`.
 
-Move to our terminal and run our test:
+Move to our terminal to run our test:
 
 ```terminal
 ./vendor/bin/phpunit --testdox
 ```
 
-And... great. We have 5 tests, 7 Assertions, & 1 Error because:
+And... great! We have 5 tests, 7 Assertions, & 1 Error because:
 
 > isAcceptingVisitorsByDefault() calls an undefined method.
 
 To fix this, move to our `Dinosaur` class and at the bottom, add
-`public function isAcceptingVisitors(): bool`. Inside, return `true`.
+`public function isAcceptingVisitors()` that returns `bool`. Inside, return `true`.
 
 Move back to the terminal and run our tests again...
 
@@ -43,21 +43,21 @@ Now let's take care of our sick dino's by adding
 Inside we'll create a `$dino` with the name `Bumpy`. And then `assertFalse()` that
 `$dino->isAcceptingVisitors()`.
 
-Let's see this test fail in our terminal
+Let's see this test fail in our terminal...
 
 ```terminal-silent
 ./vendor/bin/phpunit --testdox
 ```
 
-Hmm... Yup...
+Hmm... Yup!
 
 < Is not accepting visitors if sick failed asserting that true is false.
 
 This is *exactly* what we were expecting...
 
 Looking at our `Dinosaur` class, we need to
-do 2 things. `isAcceptingVisitors()` should return false for sick dinos. *And* we
-need a way to set the health status on our object.
+do 2 things. `isAcceptingVisitors()` should return true if the dino is healthy. *And* we
+need a way to set a health status on our object.
 
 With a quick peek at the issues on GitHub - GenLab is using labels for "Sick" and
 "Healthy" dino's. I'm thinking we can use those labels on our dino objects too.
@@ -65,15 +65,15 @@ With a quick peek at the issues on GitHub - GenLab is using labels for "Sick" an
 # Enums are cool for health labels
 
 Instead of setting `Healthy` or `Sick` on a property in our `Dinosaur` class. Let's
-be a bit more modern than Dennis & his buddy Bumpy... Create a new folder `Enum/` 
-inside of the `src` directory. Now create a new class - `HealthStatus`. For the 
+be a bit more modern than Dennis & his buddy Bumpy by creating a new `Enum/` folder
+inside the `src` directory. Now create a new class - `HealthStatus` and for the 
 template, select `Enum`. We need `HealthStatus` to be backed by a `: string`. 
 Inside... add a `case` for `HEALTHY` that returns `Healthy'` and do the same for
 `SICK`.
 
 Over in our `Dinosaur`, add a new `private HealthStatus $health` property
 that defaults to `HealthStatus::HEALTHY`. And down in our `isAcceptingVisitors()`
-method, return `$this->health === HealthStatus::HEALTHY`.
+method, only return true if `$this->health === HealthStatus::HEALTHY`.
 
 Back to the terminal and make sure we still have just the one failure.
 
@@ -85,7 +85,7 @@ And... Great! We didn't break anything.
 
 Back to our failing test, call `$dino->setHealthStatus()` and pass in `HealthStatus::SICK`.
 We *could* run this test, but we already know it would give us an undefined method error,
-so let's skip that and just add `public function setHealthStatus()` in our `Dinosaur`
+so let's skip that and in our `Dinosaur` class just add `public function setHealthStatus()` in our `Dinosaur`
 class. This method will accept a `HealthStatus $health` argument and returns nothing.
 Inside, `$this->health === $health`
 
