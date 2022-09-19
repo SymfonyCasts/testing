@@ -8,12 +8,12 @@ with different sets of data.
 
 ## Refactor our tests 
 
-Move down to the bottom of our `Dinosaur` class and add
-`public function sizeDescriptionProvider()`. Inside, `yield` an array `[10, 'Large']`,
+Move down to the bottom of our `DinosaurTest` and add
+`public function sizeDescriptionProvider()`. Inside, `yield` an array with `[10, 'Large']`,
 then `yield [5, 'Medium']`, and finally `yield [4, 'Small']`. Yield is just a fancy
 way of returning arrays using PHP's built-in Generator function.
 
-Alrighty, move back to our test and add the `int $length` argument and then
+Alrighty, up in our test method, add the `int $length` argument and then
 `string $expectedSize`. Now instead of Big Eaty's length being `10`, we'll use
 `$length`. For our assertion, use `$expectedSize` instead of `Large`. We do not
 need the medium and small tests anymore, so remove both of those methods too.
@@ -24,9 +24,10 @@ Move back to your terminal and run our tests:
 ./vendor/bin/phpunit --testdox
 ```
 
-Uh oh... Our test is failing because:
+Uh oh... Our test is failing because `Dino 10 Meters or Greater Is Large` had
+an:
 
-> Dino 10 Meters Or Greater Is Large expected 2 arguments and 0 were passed.
+> ArgumentCountError - Too few arguments were provided. 0 passed and exactly 2 expected.
 
 ## Tell our test to use the Data Provider
 
