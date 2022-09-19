@@ -1,33 +1,100 @@
 # Dino Health
-Yeah. So over here on, uh, G lab has a couple of issues that they've opened up that show if, uh, S are sick and sick Daniels, don't like visitors. So we need to figure out a way we're going to get these issues from GitHub into our app to tell us which standards can be visited. We're also gonna wanna display the we're also gonna wanna display on our dashboard here. If the dinosaurs are accepting visitors, or if they're off exhibit from a high level, I think the best way to accomplish this would probably be to create, um, create a new GitHub service anytime. Yeah, we'll create a new GitHub service. And anytime we hit our controller, our service will then call the GitHub API retrieve a list of issues, uh, will IM parse any of the issues that concern our dinos. And finally, we'll set the, uh, correct health status of each of our dinos objects, but first things first let's tackle a way to get, uh, you know, first things. First let's tackle a way to get, uh, our, to determine whether Dino is accepting visitors based off their current health status. We'll start off in the dinosaur test and will add, uh, at the bottom down here, we'll add a new,
 
-Add a new public, uh, function test is accepting visitors by default. We wanna make sure that if for some reason we can't get ahold of, uh, get hub through the API that we're always saying, yes, the, the dinos are, uh, on exhibit insider method. Let's create a new Dino. So Dino equals new dinosaur and we'll use Dennis. And then we'll do selfer same that, I'm sorry. We'll do self assert true. That Dino is accepting visitors. All right, now let's go to a terminal. Make sure that test is failing vendor bend HP unit. And yes, we have one error. Dinosaur test test is accepting visitors by default. Uh, there's an error called to undefined method is accepting visitors. So let's fix that head into our dinosaur class. And at the bottom here, we'll add a new public function is accepting visitors and this method will return to bullying. And for now we're going to return room. Let's head back to our test. I'm sorry. Move back into your terminal. Yeah. Move back into your terminal. And again, run PHP unit. And now we have five passing tests. Now we need to make sure that our dinos that are not accepting visitors, if they're sick.
+Bob has just told us he needs to display which dinos are accepting lunch, erm... I mean visitors
+in our app. If a dino is feeling good, they're accepting visitors, if they are sick -
+no visitors allowed. Eventually, we'll call githubs API to get a list of sick dinos
+from genlab. But for now, we'll assume all dinos are healthy.
 
-So to do that, we'll add another test again, and we'll do public function. Test is not accepting disappears, tips, sick. Again, we void for the return type is always, and let's create a new dyno download equals new dinosaur, and for the name we'll use bumpy, but now we want to do Dino set health and set we're using sick because if we go back to our GitHub repo, we look at the issues. We go back to our GitHub repo, and we look at the issues. We can see that the sick dinos have a status label of status sick and the same thing for healthy dinos. All right. So that self assert false that Dino is accepting visitors. And again, we'll run our test and great it's passing. Uh, dinosaur test test is not accepting visitors of sick called to undefined method, dinosaur set health. So again, let's go fix that too. Back into our dinosaur class. Let's, let's go back up to the top and we're gonna add a new property to this class, private string health, right? And our default will be healthy. Sit on back down here to the bottom and we'll go ahead and create a new method,
 
-Public function, set health and string healthy. And this will return itself.
+To kick this off, lets create a new test in our `DinosaurTest`...
+`public function testIsAcceptingVisitorsByDefault()`. Inside, `$dino = new Dinosaur()`
+and let's call him `Dennis`.
 
-<affirmative>
+Now we want to `assertTrue()` that `$dino->isAcceptingVisitors()`.
 
-Uh, back this up here to the return and this method is going to return void. It's not gonna return anything. So, uh, inside here, we are going to this health equals healthy. All right now to actually get our test to pass. We need to, we can't just return true. So we're going to return this health equals healthy. So a dinosaurs accepting visitors, if is health status is healthy. Let's head back to our test and give the shot another shot. And yeah, we have nine te excuse me, we have six tests and nine assertions. All right, let's take a look at this right now. We are returning, we're allowing any string to be set for the health. And we are assuming it's always gonna be healthy or sick. I think we can enforce this, uh, by using an enum. So let's create a new directory and we'll call it enum in our source directory, right? And then within that, we'll create a new PHP class and we'll call this class health status and for the template let's select Eno and okay. And awesome. We have a heat. Uh, we have a PHP, uh, enumeration. Now we're gonna use what's called a backed EUM because we want this to return a string.
+Move to our terminal and run our test:
 
-And with inside our class, we're going to create a new case healthy and we'll do equals whole. And then right below that case, sit equals six. I'll show you why we're using a backed EUM instead of just using a regular one, which would not have these strings. You'll see what, uh, why we're doing that here in just a minute. All right. So now that we have our enum created, let's go ahead and use this EUM in our, uh, dinosaur class. So back over here, let's go back to the top and we're gonna change this string on our health property to health status. And instead of healthy, we'll do health status and we'll select healthy as the default, right? Let's go ahead and go back down to, or is accepting visitors. And we have to change this as well. So instead of this health is identical to healthy. We're gonna say health status, uh, healthy, right? And for our set method, we can't pass a string anymore. So we'll change this to health status as well. And there we go, our class is all set let's, uh, run our test. And as you can see, we're getting an error.
+```terminal
+./vendor/bin/phpunit --testdox
+```
 
-Dinosaur test test is not accepting visitors of sick type error, dinosaur set health argument. One healthy must be of type enum health status. And instead we pass the string. So let's go ahead and fix that, move back to our test. But as you can see here on line 53, Dino set health, we're passing in sick. So we just need to change this to health status and we'll select sick. Let's go run our test one more time. Great. It's passing six tests, nine assertions. The thing that's cool about TD D and test in general, we made the only thing we changed in our test was how we were setting the health. But aside from that, we made a pretty big change to dinosaur test using Enos instead of strings. And our test reinforced helped us reinforce that the changes we've made actually worked. The last thing we need to do is make this, uh, the last thing we need to do is head over to our index template. And in here, we're gonna add a new property to this table. I'm sorry, a new heading to this table and accepting visitors. And down here, we will call
+And... great. We have 5 tests, 7 Assertions, & 1 Error because:
 
-TD and Dino dot, accepting visitors. Alright. And finally, let's go to our browser back to where atop app refresh and yes. Oh no, let's not do that.
+> isAcceptingVisitorsByDefault() calls an undefined method.
 
-Shoot.
+Move to our `Dinosaur` class and at the bottom, add `public function isAcceptingVisitors(): bool`.
+Inside, return `true`.
 
-I made a whoopsie. I'm gonna back this up a little bit. Sorry. I'm gonna take this line out real quick.
+Move back to the terminal and run our tests again...
 
-Cut
+```terminal-silent
+./vendor/bin/phpunit --testdox
 
-This snow. Cut that one out. All right. I'm gonna refresh. Okay, cool. Okay. So now we're gonna head into our index and right here. Oops. Nope.
+```
 
-Where's
+And... Yes! `Is accepting visitors by default` is now passing!
 
-That cursor go. It's just anywhere. Okay. So I can close this. I'm making a mess for the editor. Sorry about that. Ah, close this out. Okay. We're in here. We're dinosaur short. Yeah. All right. So the last thing we need to do is head over to our index, head over to our index template. And we'll scroll down to the headers of the table. Let's add a new heading and we'll call it accepting visitors, accepting visitors. And then let's come on down here to our loop and, and inside this table row, we'll add new table data and we'll call Dino accepting visitors. Now, if we were to look at this, if we were to refresh a browser right now, we just see a bullion, either a one or zero. So we want it to say yes or no. So let's do if accepting visitors is true. Yes. Otherwise we want to return no, right back to the browser. Let's go back to our Dyna Toia app and refresh. Awesome. So now all of our dinosaurs are accepting visitors. This is the default logic we have in place, because if we look back in our controller, none of the dinos here have,
+Back in our test, add a `public function testIsNotAcceptingVisitorsIfSick(): void`.
+Inside we'll create a `$dino` with the name `Bumpy`. And then `assertFalse()` that
+`$dino->isAcceptingVisitors()`.
 
-Are none of the dinos here are setting of the new health property coming up next. We're gonna change that by calling GitHub to retrieve that property off of her dinos.
+Let's see this test fail in our terminal
 
+```terminal-silent
+./vendor/bin/phpunit --testdox
+```
+
+Hmm... Yup...
+
+< Is not accepting visitors if sick failed asserting that true is false.
+
+Is exaclty what we were expecting... Looking at our `Dinosaur` class, we need to
+do 2 things. Add a way to set the dinos health status and refactor our `isAcceptingVisitors()`
+to return false if the dino is sick. Over here on GitHub, we can see that GenLab is
+using `Sick` and `Healthy` on a few dino issues. So lets use those
+on our dino objects too.
+
+
+Instead of just using a string for the health status, create a new folder `src/Enum/`
+and then create a new class - `HealthStatus`. For the template, select `Enum`.
+Enum that is backed with a `string`. Inside... add
+a `case` for `HEALTHY = 'Healthy'` and do the same for `SICK`.
+
+Over in our `Dinosaur`, add a new `private HealthStatus $health` property
+that defaults to `HealthStatus::HEALTHY`. And down in our `isAcceptingVisitors()` method,
+change return `true` to return `$this->health === HealthStatus::HEALTHY`.
+
+Back to the terminal and lets make sure we still have just the 1 failure.
+
+```terminal-silent
+./vendor/bin/phpunit --testdox
+```
+
+And... Great! We didn't break anything.
+
+Back in our test, call `$dino->setHealthStatus()` and pass in `HealthStatus::SICK`.
+We *could* run this test, but we already know it would give us an undefined method error,
+so let's skip that and just add `public function setHealthStatus()` in our `Dinosaur` class.
+This method will accept a `HealthStatus $health` argument and returns `void`.
+Inside, `$this->health === $health`
+
+*NOW* move back to our terminal and run our tests again...
+
+
+And... WooHoo! Our 6 tests and 9 assertions are all passing!
+
+
+Alrighty... The last thing we need to do is use our health status in the app. Open
+our `index.html.twig` template here in the `main/` and add a new `Accepting Visitors`
+heading to our table. In the dino loop, call `dino.acceptingVisitors` and we'll
+show `Yes` if this is true or `No` if we get false.
+
+
+Move into our browser, and refresh our status page... And... WooHoo! All
+of our dinos are accepting visitors!
+
+But... We already know from looking at GitHub earlier, some of our dinos *are* sick
+and should not be accepting visitors... We *could* set the health status for our sick
+dinos in the `MainController` now. but, why not just get that information from
+GitHub instead. We'll do that next by creating a GitHub Service to keep our dino
+table updated automatically.
