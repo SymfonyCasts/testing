@@ -1,42 +1,42 @@
 # Data Providers
 
-We treat our source code as first-class citizens. Why not do the same with our
+We treat our source code as a first-class citizen. That means, among other things,
+we avoid duplication. Why not do the same with our
 tests? Our three tests for the size are... repetitive. They test the same thing
-just with slightly different input and then a different assertion. We can improve
-this by using PHPUnit's Data Providers - which run the same test over and over
-with different sets of data.
+just with *slightly* different input and then a different assertion. Is there
+a way to improve this? Absolutely: thanks to PHPUnit Data Providers.
 
 ## Refactor our tests 
 
-Move down to the bottom of our `DinosaurTest` and add
+Move to the bottom of `DinosaurTest` and add
 `public function sizeDescriptionProvider()`. Inside, `yield` an array with `[10, 'Large']`,
 then `yield [5, 'Medium']`, and finally `yield [4, 'Small']`. Yield is just a fancy
-way of returning arrays using PHP's built-in Generator function.
+way of returning arrays using PHP's built-in Generator function. As you'll see in
+a minute, these keys - like `10` and `large` will become *arguments* to our test.
 
-Alrighty, up in our test method, add the `int $length` argument and then
-`string $expectedSize`. Now instead of Big Eaty's length being `10`, we'll use
-`$length`. For our assertion, use `$expectedSize` instead of `Large`. We do not
-need the medium and small tests anymore, so remove both of those methods too.
+Alrighty, up in our test method, add an `int $length` argument and then
+`string $expectedSize`. Now instead of Big Eaty's length being `10`, use
+`$length`. Abd for our assertion, use `$expectedSize` instead of `Large`. We do not
+need the medium and small tests anymore, so we can remove *both* of them.
 
-Move back to your terminal and run our tests:
+Ok! Move back to your terminal and run our tests:
 
 ```terminal
 ./vendor/bin/phpunit --testdox
 ```
 
-Uh oh... Our test is failing because `Dino 10 Meters or Greater Is Large` had
-an:
+Uh oh... Our test is failing because! It says:
 
 > ArgumentCountError - Too few arguments were provided. 0 passed and exactly 2 expected.
 
 ## Tell our test to use the Data Provider
 
-Oops, we never told our test method to use the data provider. Move back into our
+Oops, we never told our test method to *use* the data provider. Move back into our
 test and add a DocBlock with `@dataProvider sizeDescriptionProvider`. When PHPUnit
-10 gets released, we'll be able to use a dataProvider attribute instead of this
+10 gets released, we'll be able to use a fancy `#pDataProvider]` attribute instead of this
 annotation.
 
-Back to the terminal and run the tests again:
+Back to the terminal! Run the tests again:
 
 ```terminal-silent
 ./vendor/bin/phpunit --testdox
@@ -46,15 +46,17 @@ And... Yes! Our tests are passing!
 
 ## Message Keys instead of Arguments
 
-In the output, we see that each test ran with datasets 0, 1, & 2. Those are our
-arrays from the data provider. We can spruce this up a bit.
+In the output, we see that each test ran with datasets 0, 1, & 2. Those are the
+arrays from the data provider. We can spruce this up a bit... because it's not
+going to be very helpful later if PHPUnit tells us that dataset `2` failed. Which
+one is that?
 
-Move back into our test and down here after a first yield statement, add the message
+Move back to our test and, down here after the first `yield` statement, add the message
 key `'10 Meter Large Dino' =>`. Copy and paste this for our medium dino with `5`
 instead of `10` and this needs to be `Medium`. Do the same for our small dino
 with `4` and `Small`.
 
-Back in our terminal and see our tests now:
+Back in our terminal, let's see our tests now:
 
 ```terminal-silent
 ./vendor/bin/phpunit --testdox
@@ -64,21 +66,20 @@ And... Cool Beans! We now have
 
 > Dino 10 meters of greater is large with 10 Meter Large Dino
 
-This looks a lot better than just seeing data set 0... We do however need to fix
-one more thing. That test method name doesn't fit in with our other 2 data providers.
-In our test, change the method name to `testDinoHasCorrectSizeDescriptionFromLength()`.
+This looks a lot better than just seeing data set 0... though we do need to fix
+one more thing. That test method name doesn't make sense anymore.
+Change it to `testDinoHasCorrectSizeDescriptionFromLength()`.
 
-Looking at our assertion, the message argument isn't very useful anymore... Let's
-remove it. We can always add it back in using our data provider later if we need
-to.
+And, looking at our assertion, the message argument isn't very useful anymore... so let's
+remove it.
 
 # Return Types Everywhere!
 
-Lastly, although not required... We can use either `array` or
-`\Generator` as the return type for our data provider. Let's go with
+Finally, although not required... We can use either `array` or
+`\Generator` as the return type for the data provider. Let's go with
 `\Generator`- after all, we may need those for the park fences one day...
 
-Move back into the terminal and run our tests one last time:
+To make sure this didn't break anything, try the tests one more time:
 
 ```terminal-silent
 ./vendor/bin/phpunit --testdox
