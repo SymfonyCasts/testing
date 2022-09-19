@@ -32,7 +32,7 @@ we'll create the most *exciting* test ever! If you like return types - I do! - u
 
 Inside call `self::assertEquals(42, 42)`.
 
-That's it! Sure... it's not a very *interesting* test - if our computer thinks that
+That's it! It's not a very *interesting* test - if our computer thinks that
 42 doesn't equal 42, we have bigger problems - but it's *enough*.
 
 ## Executing PHPUnit
