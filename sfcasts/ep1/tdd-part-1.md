@@ -37,11 +37,10 @@ Yes, we're *literally* testing a method that doesn't exist yet. That's TDD.
 ## Step 2: Run the test and watch it fail
 
 Ok, step 1 is done. Step 2 is to run our test and make sure it fails.
-Open up a terminal and then run `./vendor/bin/phpunit` and also add the
-`--testdox` flag.
+Open up a terminal and then run `./vendor/bin/phpunit`.
 
 ```terminal
-./vendor/bin/phpunit --testdox
+./vendor/bin/phpunit
 ```
 
 And... great! 2 tests, 4 assertions, and 1 error.
