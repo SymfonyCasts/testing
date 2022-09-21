@@ -1,7 +1,15 @@
 # Dino Health
 
 Bob has just told us he needs to display which dinos are accepting lunch in our
-app... Ha... I mean visitors. If a dino is feeling good, park guests should be able
+app... Ha... I mean visitors. GenLab has strict protocols in place for dinos that
+are feeling under the weather. That means no park guests are allowed... To help 
+display this we need to store the health status for each of our dinos and have 
+an easy way to figure out whether or not this means they're accepting visitors...
+
+GenLab has a long standing tradition - if they havent labeled a dino as sick on
+GitHub, the dino is healthy.
+
+If a dino is feeling good, park guests should be able
 to see them. But if they are sick - no visitors are allowed. *Eventually*, we'll
 call GitHub's API to get a list of sick dinos from GenLab. But for now, we'll 
 assume that all dinos are healthy.
