@@ -6,17 +6,17 @@ tests? Our three tests for the size are... repetitive. They test the same thing
 just with *slightly* different input and then a different assertion. Is there
 a way to improve this? Absolutely: thanks to PHPUnit Data Providers.
 
-## Refactor our tests 
+## Refactor our tests
 
 Move to the bottom of `DinosaurTest` and add
 `public function sizeDescriptionProvider()`. Inside, `yield` an array with `[10, 'Large']`,
 then `yield [5, 'Medium']`, and finally `yield [4, 'Small']`. Yield is just a fancy
 way of returning arrays using PHP's built-in Generator function. As you'll see in
-a minute, these keys - like `10` and `large` will become *arguments* to our test.
+a minute, these values - like `10` and `large` will become *arguments* to our test.
 
 Alrighty, up in our test method, add an `int $length` argument and then
 `string $expectedSize`. Now instead of Big Eaty's length being `10`, use
-`$length`. Abd for our assertion, use `$expectedSize` instead of `Large`. We do not
+`$length`. And for our assertion, use `$expectedSize` instead of `Large`. We do not
 need the medium and small tests anymore, so we can remove *both* of them.
 
 Ok! Move back to your terminal and run our tests:
@@ -33,7 +33,7 @@ Uh oh... Our test is failing because! It says:
 
 Oops, we never told our test method to *use* the data provider. Move back into our
 test and add a DocBlock with `@dataProvider sizeDescriptionProvider`. When PHPUnit
-10 gets released, we'll be able to use a fancy `#pDataProvider]` attribute instead of this
+10 gets released, we'll be able to use a fancy `#[DataProvider]` attribute instead of this
 annotation.
 
 Back to the terminal! Run the tests again:
