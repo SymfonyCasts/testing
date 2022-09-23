@@ -1,18 +1,141 @@
-# Real Test
+# Testing Class Methods
 
-All right, let's go ahead and make sure the dinos really are bug free. First, we'll remove these two test methods and we'll create a new one. Public function test can get and set data in here. We're going to create a new dinosaur. So Dino equals new dinosaur and the name of the Dino is going to be big Edy, a Gina he's a Tyre sores Rex, and his length is 15 meters. And his enclosure is pad pay. Now that we have a diner wall object, let's go ahead and write some test some assertions. So assert same that big ed is returned when we call Dino get name and we can do the same for the rest of these. So assert same that Tyre sword. So his returning, we called Dino get genus search. Same at big S length is 15 meters. When we call his get length method. And last search saying that big ed is still living in pad a when we call is get enclosure method,
+As a reminder, the class is currently pretty simple: we pass some data to the constructor...
+and then we can *read* that data via some methods. Instead of just "hoping" this all works,
+let's go ahead and make sure that our `Dinosaur` class is *really* bug-free with some tests!
 
-Move
+In `DinosaurTest`, remove these two tests and replace them with
+`public function testCanGetAndSetData()`. Inside... we're literally going to play with
+the object by instantiating it and trying some methods.
 
-Back to your terminal vendor bend PHP unit. And yes, we have one test with four assertions, but if we look at our dinosaur class real quick, we're not really doing a whole heck of a lot in here. We're taking a few arguments in the constructor, putting them on, sending them on our class properties and then accessing the values of those properties with the getter methods. And there's no complex logic here. So while this test is perfectly acceptable, it's kind of useless later on we're we were later on. We're actually gonna be testing a lot of these methods no. Later on. We're probably gonna be testing a lot of these methods, uh, indirectly through other tests. So this isn't really a test. I would write myself unless there was some complex logic in one of these methods. Another thing that's worth pointing out is the order is the argument order for the assert methods. We need to make sure that we pass the expected argument first. And then the actual argument that we're testing against second with the assert same methods. This really isn't a huge deal, but for others, for instance, a assert greater than
+So, `$dino = new Dinosaur()`.... and pass in some data.
+For the name, eh - let's use `Big Eaty`: he's our resident `Tyrannosaurus` who happens to
+be `15` meters in length. And Big Eaty is currently living in `Paddock A`. Now
+that we have our `Dinosaur` object, we can write a few assertions. `self::assertSame()`
+that `Big Eaty` is identical to `$dino->getName()`, `assertSame()` that `Tyrannosaurus` is
+identical to `$dino->getGenus()`, `assertSame()` that `15` is identical to `getLength()`,
+and last but not least, `assertSame()` that Big Eaty is *still* in `Paddock A` when we
+call `getEnclosure()`... and not running wild around the island.
 
-If we were to do Dino get length and we wanna make sure that's greater than say 10. And we run this test with vendor bend PHP unit. We can see that there was one failure Dyna test test can get and said, data failed asserting that 10 is greater than 15, but 15 is actually greater than 10, but you can see that the test failed because we have our argument order wrong, something else, uh, before we remove it before we clean this up, there's a third argument that the, all the exert methods, uh, no, there's a third optional argument that all the exert methods have. And that is the message argument. So if we do message Diano is supposed to be bigger than 10 meters. Move back to our terminal. We'll run this test again, and we can see that the failure we're still having our failure dinosaur test test can get set data S supposed to be bigger than 10 meters. Anytime that we provide a message argument to an assert method. When the test fails, that message will be displayed and the, and PHPs output, this could be soup, super helpful for explaining complex tests.
+Let's try it! Move back to your terminal and run:
 
-No, this is actually U this is us. The message argument is useful. No, this is useful to help explain and add more context to why a test has failed something else worth mentioning. Let's circle back to naming conventions real quick. So when we're writing PHP code, for instance, get gen or get length, we usually name our methods in our classes to be very short and concise, you know, to the point. But when it comes to our method, names and tests, we want to be very robust and descriptive of what the test is actually doing. So for instance, on this test, we are testing can get and set data. That's a pretty good method name, but if we were to change this to say, test dinosaur, and then we run our test, we really don't know what we're actually testing here taking no, if we didn't have this message argument, we wouldn't know what this test is actually doing. Dinosaur test failed because test dinosaur method failed asserting that 10 is greater than 15. If you have a ton of tests, this is not very useful. So we'll go ahead and change this back. We'll go ahead and change this back to can't get set data
+```terminal
+./vendor/bin/phpunit
+```
+## Should I Test that Method?
 
-And it'll show you one more cool trick with PHP units by, uh, with PHP unit. We want vendor Ben PHP unit and add a test docs, flag, enter our output is a little bit more human friendly. Now we're still getting the same information like our dinosaur test. The method can get and set data failed. And the S supposed to be bigger than 10 meters failed asserting that 10 is greater than 15 and overall we had one test, one assertion and one failure. Well, this is pretty cool. And really the P PHP unit accepts a wide range of flags, which you can find by hinder and PHP unit help. We'll touch on some of these as we go on. We'll touch on some of these as we progress in the testing series, but feel free to look around in here and see which if there's any options or arguments that are available, that you find useful, uh, let's go ahead and clean our test up. We'll remove this method cause we really don't need it and move back to her terminal vendor and PHP unit. And we'll use the test box flag again and awesome. Our dinosaur test can get and set data test is passing with one test and four assertions.
+And... YES! We have one test with four assertions. But... looking back at our
+`Dinosaur` class, we're not really doing a whole heck of a lot in here. We're
+requiring a few arguments in our constructor, setting them on properties, and
+exposing those properties with getter methods. Nothing complex at all. So while
+our `DinosaurTest` is *perfectly* acceptable, it's not the *most* useful.
+Because the odds of these methods having a bug are low. And besides, if there
+*were* a bug, we'll probably catch it while testing *other* parts of our app
+that *call* these.
 
-<affirmative>
+The point is: while you can do whatever you want, this probably
+isn't a test that I would write in a *real* project. My rule of thumb is:
+if a method scares, it's worth a test. And if you're not sure, it's always
+safe to add a test.
 
-Coming up next. We're gonna take a look at coming up next. We're gonna take a look at how to.
+## The Order of the assert() Method Arguments
+
+By the way: the argument *order* for the assert methods is important.
+
+The first argument should always be the *expected* argument - like
+`Big Eaty` - and the second should be the *actual* value we get - like `$dino->getName()`.
+This isn't a huge deal for the assertions we're using here... though if
+you reverse this, the error message will be confusing.
+
+It *is* more important for other assertions, like `assertGreaterThan()`... which we
+can use to test that `$dino->getLength()` is greater than `10`.
+
+When we try this:
+
+```terminal-silent
+./vendor/bin/phpunit
+```
+
+Yup! One failure in `DinosaurTest`:
+
+> Failed asserting that 10 is greater than 15.
+
+Whoops! Looking back in our `DinosaurTest`, this test failed because
+we passed the *actual* value first instead of our *expected* value.
+
+## The Assert Message
+
+Before we clean this up, let's pass a 3rd *optional* argument:
+
+> Dino is supposed to be bigger than 10 meters.
+
+To see what this does, run the tests again:
+
+```terminal-silent
+./vendor/bin/phpunit
+```
+
+And... sweet! The test still fails but now we *also* see the message, which
+can sometimes help us more quickly understand *what* failed and why. Every
+assert method has this "message" argument and I like to use it when a complex
+test could use a bit more explanation.
+
+## Naming Conventions
+
+I want to circle back to the *name* of our first test method: `testCanGetAndSetData`.
+In standard PHP, we try to create methods that are descriptive... but not necessarily
+*super* long... since we'll need to call them in our code. Good examples
+are `getGenus()` and `getName()` in the `Dinosaur` class. But when it comes to testing,
+keeping things short is *not* a benefit.
+
+Check it out: I change the name of our test method to `testDinosaur()`...
+and then run our tests again.
+
+```terminal-silent
+vendor/bin/phpunit
+```
+
+PHPUnit tells us that `DinosaurTest::testDinosaur()` failed asserting that 10 is
+greater than 15. Ok... but *what* are we testing? The method name - `testDinosaur()` -
+tells us nothing... especially since we're *inside* of a class called `DinosaurTest`!
+Yea, I get it: we're testing dinosaurs!
+
+The *name* of each test method is *your* chance to describe *exactly* what you're
+testing, and even sometimes *why*. Change the test name back to `testCanGetAndSetData()`,
+which does a *much* better job of explaining the *purpose* of this test. Notice that
+it almost reads like a sentence. That's great! And some people even take this further
+by including the word "it", like `testItCanGetAndSetData()`. The point is: be descriptive,
+there's no downside to long test names.
+
+## Descriptive Testdox Output
+
+Let me show you one more cool trick with PHPUnit. Move back to the terminal and run our tests
+again... but *this* time pass a `--testdox` flag:
+
+```terminal-silent
+./vendor/bin/phpunit --testdox
+```
+
+And... Wooah! The output is different. Most importantly, it turned the method name
+into a human-readable sentence... which is minor, but cool.
+
+By the way, the `phpunit` executable has a lot more options and arguments available.
+Run PHPUnit with the `help` flag to see them.
+
+```terminal-silent
+./vendor/bin/phpunit --help
+```
+
+We'll talk about the most useful of these throughout the tutorial.
+
+Before we keep going, we need to cleanup our test. Remove this `testGreaterThan()` assertion...
+and run our tests again:
+
+```terminal-silent
+./vendor/bin/phpunit --testdox
+```
+
+And... YES! All of our tests are passing. Coming up next, we're going to get
+philosophical and take a look at Test Driven Development or simply - TDD.
+
 
