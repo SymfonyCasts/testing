@@ -12,13 +12,12 @@ have an easy way to figure out whether or not this means they're accepting visit
 
 Lets start by adding a method - `isAcceptingVisitors()` to our `Dinosaur`. But,
 we'll do this the TDD way by writing the test first. In `DinosaurTest` add
-`public function testIsAcceptingVisitorsByDefault()`. Inside, `$dino = new Dinosaur()`
-and let's call him `Dennis`.
+`public function testIsAcceptingVisitorsByDefault()`. I say by default because if 
+we simply instantiate a `Dinosaur` and do nothing else the dino *should* be accepting
+visitors. Inside, `$dino = new Dinosaur()` and let's call him `Dennis` and 
+`assertTrue()` that Dennis `isAcceptingVisitors()`
 
-If we simply instantiate a `Dinosaur` and do nothing else, the `dino`
-*should* be accepting visitors, so let's `assertTrue()` that Dennis `isAcceptingVisitors()`
-
-Below create a `public function testIsNotAcceptingVisitorsIfSick()`. Inside
+Below this test, add `public function testIsNotAcceptingVisitorsIfSick()`. Inside
 this one call `$this->markTestImcomplete()`.
 
 Move to our terminal to run our test:
