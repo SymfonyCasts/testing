@@ -1,27 +1,30 @@
 # Dino Health
 
+!!!!!!! Start with screen on the app !!!!!!!!!
 Bob has just told us he needs to display which dinos are accepting lunch in our
-app... Ha... I mean visitors. GenLab has strict protocols in place for dinos that
-are feeling under the weather. That means no park guests are allowed... But for
-healthy dinos, guests can see their enclosures... To help 
-display this we need to store the health status for each of our dinos and have 
-an easy way to figure out whether or not this means they're accepting visitors...
+app... Ha... I mean visitors. GenLab has strict protocols in place for our dinos - 
+park guests can visit with healthy dinos but if they're sick, no visitors allowed...
+To help display this, we need to store the health status for each of our dinos and
+have an easy way to figure out whether or not this means they're accepting visitors...
 
-*Eventually*, we'll call GitHub's API to get a list of sick dinos from GenLab.
+Looking at the issues on GitHub - GenLab is using labels for "Sick" and "Healthy" 
+dino's. We can probably use those labels too on our dino objects.
 
 ## Are they accepting visitors?
 
 Lets start by adding a method - `isAcceptingVisitors()` to our `Dinosaur`. But,
 we'll do this the TDD way by writing the test first. In `DinosaurTest` add
-`public function`, Hmm... if only sick dinos cannot have guests then we should name
-this `testIsAcceptingVisitorsByDefault()`. Inside, `$dino = new Dinosaur()`
+`public function testIsAcceptingVisitorsByDefault()`. Inside, `$dino = new Dinosaur()`
 and let's call him `Dennis`.
 
-By default, if we simply instantiate a `Dinosaur` and do nothing else, the `dino`
+If we simply instantiate a `Dinosaur` and do nothing else, the `dino`
 *should* be accepting visitors, so let's `assertTrue()` that Dennis `isAcceptingVisitors()`
 
-While we're here, lets also create a `testIsNotAcceptingVisitorsIfSick()`. Inside,
-this test, call `$this->markTestIncomplete()`.
+Below create a `public function testIsNotAcceptingVisitorsIfSick()`. Inside
+this one, we need also need a `new Dinosaur()` named `Bumpy`. I'm not entirely sure
+yet how this test will work. So let's call `$this->markTestImcomplete()`. You'll
+see why in just a sec. But I *think* we'll end up doing something like...
+`$dino->setHealth('Sick')` and then `assertFalse` that Bumpy `isAcceptingVisitors()`.
 
 Move to our terminal to run our test:
 
@@ -33,11 +36,12 @@ And... great! Our `isAcceptingVisitors()` test is failing because of a
 
 > Call to undefined method.
 
-But our *next* test has this weird circle `∅`. That's
-because we marked the test as incomplete. I use this sometimes when I know I'll
-need a test for a feature, but I'm not ready to *completely* write the test yet.
-There also is a `markSkipped()` that can be used to when you need to skip tests
-under certain conditions. For instance, if the test only should run on PHP 8.1.
+But our *next* test has this weird circle `∅` but it is *not* showing that we called
+an undefined method. That's because we marked the test as incomplete. I use this
+sometimes when I know I'll need a test for a feature, but I'm not ready to 
+*completely* write the test yet. There also is a `markSkipped()` method that can 
+be used to when you need to skip tests under certain conditions. For instance, 
+if the test only should run on PHP 8.1.
 
 Anywho, lets get back to coding shall we... In our `Dinosaur` class, add
 `public function isAcceptingVisitors()` that returns `bool`. Inside, return `true`.
@@ -50,15 +54,13 @@ In the terminal run our tests again...
 ```
 
 And... Yes! `Is accepting visitors by default`... is now passing! Check it out,
-even though we have 1 test marked as incomplete, *all* of our tests are passing.
-This is super cool when using a continuous integration service, like GitHub Actions,
-where we wouldn't want a skipped or incomplete test to crash our CI.
+even though we still have are "sick" test marked as incomplete, *all* of our tests
+are passing. This is super cool when using a continuous integration service, like 
+GitHub Actions, where we wouldn't want a skipped or incomplete test to crash our CI.
 
 ## Sick Dino's - Stay Away!
 
-Let's take care of this incomplete test... a quick peek at the issues on
-GitHub - GenLab is using labels for "Sick" and "Healthy" dino's. We can probably
-use those labels too on our dino objects.
+Alrighty, time to take care of this incomplete test... a quick peek 
 
 Inside our test, remove `markAsIncomplete()` and create a `$dino` with the name
 `Bumpy`. Now call `$dino->setHealth('Sick')` and then `assertFalse()` that
