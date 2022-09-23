@@ -16,11 +16,14 @@ assume that all dinos are healthy.
 
 ## Are they accepting visitors?
 
-To kick this off, in our `DinosaurTest` add
-`public function testIsAcceptingVisitorsByDefault()`. Inside, `$dino = new Dinosaur()`
+Lets start by adding a method - `isAcceptingVisitors()` to our `Dinosaur`. But,
+we'll do this the TDD way by writing the test first. In `DinosaurTest` add
+`public function`, Hmm... if only sick dinos cannot have guests then we should name
+this `testIsAcceptingVisitorsByDefault()`. Inside, `$dino = new Dinosaur()`
 and let's call him `Dennis`.
 
-Now we want to `assertTrue()` that Dennis `isAcceptingVisitors()`.
+By default, if we simply instantiate a `Dinosaur` and do nothing else, the `dino`
+*should* be accepting visitors, so let's `assertTrue()` that Dennis `isAcceptingVisitors()`
 
 Move to our terminal to run our test:
 
@@ -32,7 +35,7 @@ And... great! We have 5 tests, 7 Assertions, & 1 Error because:
 
 > isAcceptingVisitorsByDefault() calls an undefined method.
 
-To fix this, move to our `Dinosaur` class and at the bottom, add
+To fix this, move to our `Dinosaur` class and add
 `public function isAcceptingVisitors()` that returns `bool`. Inside, return `true`.
 
 Move back to the terminal and run our tests again...
@@ -48,7 +51,11 @@ And... Yes! `Is accepting visitors by default` is now passing!
 
 Now let's take care of our sick dino's by adding
 `public function testIsNotAcceptingVisitorsIfSick(): void`.
-Inside we'll create a `$dino` with the name `Bumpy`. And then `assertFalse()` that
+Inside we'll create a `$dino` with the name `Bumpy`.
+
+// we'll need to set his health to false
+
+And then `assertFalse()` that
 `$dino->isAcceptingVisitors()`.
 
 Let's see this test fail in our terminal...
