@@ -2,17 +2,12 @@
 
 Bob has just told us he needs to display which dinos are accepting lunch in our
 app... Ha... I mean visitors. GenLab has strict protocols in place for dinos that
-are feeling under the weather. That means no park guests are allowed... To help 
+are feeling under the weather. That means no park guests are allowed... But for
+healthy dinos, guests can see their enclosures... To help 
 display this we need to store the health status for each of our dinos and have 
 an easy way to figure out whether or not this means they're accepting visitors...
 
-GenLab has a long standing tradition - if they havent labeled a dino as sick on
-GitHub, the dino is healthy.
-
-If a dino is feeling good, park guests should be able
-to see them. But if they are sick - no visitors are allowed. *Eventually*, we'll
-call GitHub's API to get a list of sick dinos from GenLab. But for now, we'll 
-assume that all dinos are healthy.
+*Eventually*, we'll call GitHub's API to get a list of sick dinos from GenLab.
 
 ## Are they accepting visitors?
 
@@ -25,55 +20,56 @@ and let's call him `Dennis`.
 By default, if we simply instantiate a `Dinosaur` and do nothing else, the `dino`
 *should* be accepting visitors, so let's `assertTrue()` that Dennis `isAcceptingVisitors()`
 
+While we're here, lets also create a `testIsNotAcceptingVisitorsIfSick()`. Inside,
+this test, call `$this->markTestIncomplete()`.
+
 Move to our terminal to run our test:
 
 ```terminal
 ./vendor/bin/phpunit --testdox
 ```
 
-And... great! We have 5 tests, 7 Assertions, & 1 Error because:
+And... great! Our `isAcceptingVisitors()` test is failing because of a
 
-> isAcceptingVisitorsByDefault() calls an undefined method.
+> Call to undefined method.
 
-To fix this, move to our `Dinosaur` class and add
+But our *next* test has this weird circle `∅`. That's
+because we marked the test as incomplete. I use this sometimes when I know I'll
+need a test for a feature, but I'm not ready to *completely* write the test yet.
+There also is a `markSkipped()` that can be used to when you need to skip tests
+under certain conditions. For instance, if the test only should run on PHP 8.1.
+
+Anywho, lets get back to coding shall we... In our `Dinosaur` class, add
 `public function isAcceptingVisitors()` that returns `bool`. Inside, return `true`.
 
-Move back to the terminal and run our tests again...
+In the terminal run our tests again...
 
 ```terminal-silent
 ./vendor/bin/phpunit --testdox
 
 ```
 
-And... Yes! `Is accepting visitors by default` is now passing!
+And... Yes! `Is accepting visitors by default`... is now passing! Check it out,
+even though we have 1 test marked as incomplete, *all* of our tests are passing.
+This is super cool when using a continuous integration service, like GitHub Actions,
+where we wouldn't want a skipped or incomplete test to crash our CI.
 
 ## Sick Dino's - Stay Away!
 
-Now let's take care of our sick dino's by not allowing visitors. Add
-`public function testIsNotAcceptingVisitorsIfSick(): void` and
-inside we'll create a `$dino` with the name `Bumpy`. 
+Let's take care of this incomplete test... a quick peek at the issues on
+GitHub - GenLab is using labels for "Sick" and "Healthy" dino's. We can probably
+use those labels too on our dino objects.
 
-We'll need a way to set a dino's health status... With a quick peek at the issues
-on GitHub - GenLab is using labels for "Sick" and
-"Healthy" dino's. We can probably use those labels too on our dino objects by
-calling `$dino->setHealth('Sick')`. Now we'll want to `assertFalse` that Bumpy
-`isAcceptingVisitors()`.
+Inside our test, remove `markAsIncomplete()` and create a `$dino` with the name
+`Bumpy`. Now call `$dino->setHealth('Sick')` and then `assertFalse()` that
+Bumpy `isAcceptingVisitors()`. Hmm... PHPStorm is telling us
 
-Let's see this test fail in our terminal...
+> Method setHealth() is not found inside Dinosaur
 
-```terminal-silent
-./vendor/bin/phpunit --testdox
-```
-
-Hmm... Yup!
-
-< !!!!!!!!!!!!!! ERRRRRROR MEESSAGE HERE !!!!!!!!!!!!!!!!!!!!!!!!!
-
-This is *exactly* what we were expecting...
-
-Back in `Dinosaur`, add a new `setHealth()` method that accepts a `string $health`
-argument and returns `void`. Inside, set the `$health` on `$this->health`. Up top,
-add a `private string $health` property that defaults to `'Health'`.
+Let's skip running the test and in `Dinosaur` add a new `setHealth()` method that 
+accepts a `string $health` argument and returns `void`. Inside, set the `$health`
+on `$this->health` then up top, add a `private string $health` property that defaults
+to `'Health'`.
 
 Cool! The last we need to do is change the return value in `isAcceptingVisitors()`.
 Instead of `true`, lets return `$this->health === $healthy`.
@@ -84,23 +80,20 @@ In the terminal, run our tests again.
 ./vendor/bin/phpunit --testdox
 ```
 
-WOOOHOOOOOOOOO! ITS WORKING.. (IM ALL CAPS, NEED TO GET THE ACTUAL OUTPUT HERE) !!!!!!!!!!!!!!!!!!!!!!
+And... Awesome! They're passing!
 
 # Enums are cool for health labels
 
-!!!!!!!!!! LETS ENSURE THAT WE ONLY ACCEPT HEALTHY OR SICK BY USING AN ENUM!!!!!!!!!!!!!!!!!11
+I'm thinking that we should refactor our `setHealth()` to only allow `Sick` or 
+`Healthy` and not something like `Dancing`... Crate a new `Enum/` folder
+inside the `src` directory then create a new class - `HealthStatus`. For the 
+template, select `Enum` and click `OK`. We need `HealthStatus` to be backed by a
+`: string` and inside add a `case` for `HEALTHY` that returns `Healthy` and do 
+the same for `SICK`.
 
-
-Instead of setting `Healthy` or `Sick` on a property in our `Dinosaur` class. Let's
-be a bit more modern than Dennis & his buddy Bumpy by creating a new `Enum/` folder
-inside the `src` directory. Now create a new class - `HealthStatus` and for the 
-template, select `Enum`. We need `HealthStatus` to be backed by a `: string`. 
-Inside... add a `case` for `HEALTHY` that returns `Healthy'` and do the same for
-`SICK`.
-
-Over in our `Dinosaur` health property, use `HealthStatus::HEALTHY` instead of
-`'Healthy`. And down in our `isAcceptingVisitors()`
-method, true if `$this->health === HealthStatus::HEALTHY`.
+On the `Dinosaur::health` property, use `HealthStatus::HEALTHY` instead of
+`Healthy`. And down in our `isAcceptingVisitors()` method, true if
+`$this->health === HealthStatus::HEALTHY`.
 
 Last thing todo is use `HealthStatus::SICK` in our test.
 
@@ -111,8 +104,6 @@ Run our tests again to make sure nothing is borked up.
 ```
 
 And... Great! We didn't break anything.
-
-And... WooHoo! Our 6 tests and 9 assertions are all passing!
 
 ## Show which exhibits are open
 
