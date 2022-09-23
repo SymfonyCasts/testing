@@ -49,14 +49,15 @@ And... Yes! `Is accepting visitors by default` is now passing!
 
 ## Sick Dino's - Stay Away!
 
-Now let's take care of our sick dino's by adding
-`public function testIsNotAcceptingVisitorsIfSick(): void`.
-Inside we'll create a `$dino` with the name `Bumpy`.
+Now let's take care of our sick dino's by not allowing visitors. Add
+`public function testIsNotAcceptingVisitorsIfSick(): void` and
+inside we'll create a `$dino` with the name `Bumpy`. 
 
-// we'll need to set his health to false
-
-And then `assertFalse()` that
-`$dino->isAcceptingVisitors()`.
+We'll need a way to set a dino's health status... With a quick peek at the issues
+on GitHub - GenLab is using labels for "Sick" and
+"Healthy" dino's. We can probably use those labels too on our dino objects by
+calling `$dino->setHealth('Sick')`. Now we'll want to `assertFalse` that Bumpy
+`isAcceptingVisitors()`.
 
 Let's see this test fail in our terminal...
 
@@ -66,18 +67,29 @@ Let's see this test fail in our terminal...
 
 Hmm... Yup!
 
-< Is not accepting visitors if sick failed asserting that true is false.
+< !!!!!!!!!!!!!! ERRRRRROR MEESSAGE HERE !!!!!!!!!!!!!!!!!!!!!!!!!
 
 This is *exactly* what we were expecting...
 
-Looking at our `Dinosaur` class, we need to
-do 2 things. `isAcceptingVisitors()` should return true if the dino is healthy. *And* we
-need a way to set a health status on our object.
+Back in `Dinosaur`, add a new `setHealth()` method that accepts a `string $health`
+argument and returns `void`. Inside, set the `$health` on `$this->health`. Up top,
+add a `private string $health` property that defaults to `'Health'`.
 
-With a quick peek at the issues on GitHub - GenLab is using labels for "Sick" and
-"Healthy" dino's. I'm thinking we can use those labels on our dino objects too.
+Cool! The last we need to do is change the return value in `isAcceptingVisitors()`.
+Instead of `true`, lets return `$this->health === $healthy`.
+
+In the terminal, run our tests again.
+
+```terminal-silent
+./vendor/bin/phpunit --testdox
+```
+
+WOOOHOOOOOOOOO! ITS WORKING.. (IM ALL CAPS, NEED TO GET THE ACTUAL OUTPUT HERE) !!!!!!!!!!!!!!!!!!!!!!
 
 # Enums are cool for health labels
+
+!!!!!!!!!! LETS ENSURE THAT WE ONLY ACCEPT HEALTHY OR SICK BY USING AN ENUM!!!!!!!!!!!!!!!!!11
+
 
 Instead of setting `Healthy` or `Sick` on a property in our `Dinosaur` class. Let's
 be a bit more modern than Dennis & his buddy Bumpy by creating a new `Enum/` folder
@@ -86,25 +98,19 @@ template, select `Enum`. We need `HealthStatus` to be backed by a `: string`.
 Inside... add a `case` for `HEALTHY` that returns `Healthy'` and do the same for
 `SICK`.
 
-Over in our `Dinosaur`, add a new `private HealthStatus $health` property
-that defaults to `HealthStatus::HEALTHY`. And down in our `isAcceptingVisitors()`
-method, only return true if `$this->health === HealthStatus::HEALTHY`.
+Over in our `Dinosaur` health property, use `HealthStatus::HEALTHY` instead of
+`'Healthy`. And down in our `isAcceptingVisitors()`
+method, true if `$this->health === HealthStatus::HEALTHY`.
 
-Back to the terminal and make sure we still have just the one failure.
+Last thing todo is use `HealthStatus::SICK` in our test.
+
+Run our tests again to make sure nothing is borked up.
 
 ```terminal-silent
 ./vendor/bin/phpunit --testdox
 ```
 
 And... Great! We didn't break anything.
-
-Back to our failing test, call `$dino->setHealthStatus()` and pass in `HealthStatus::SICK`.
-We *could* run this test, but we already know it would give us an undefined method error,
-so let's skip that and in our `Dinosaur` class just add `public function setHealthStatus()`.
-This method will accept a `HealthStatus $health` argument and returns nothing.
-Inside, `$this->health === $health`
-
-*NOW* move back to our terminal and run our tests again...
 
 And... WooHoo! Our 6 tests and 9 assertions are all passing!
 
