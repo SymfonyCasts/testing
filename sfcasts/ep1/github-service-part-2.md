@@ -1,22 +1,25 @@
 # GitHub Service: Implementation
 
-Now, now that we have our service, we'll need a way to call GitHub's API from within
-our service. So we can grab the list of issues for our Dyna park repository on
-GitHub. We're going to use Symfony's HTTP client for that. So move over to your
-terminal. And let's composer require Symfony HTTP client. Now that we have that,
-let's use it in a wrap. So the first thing we need to do is, uh, initialize the
-client and we can do that by creating a client variable that = HTTP client, and we
-are going to create next. We're going to do alright. Yeah, next we're going to
-actually call the, uh, GitHub's API. So we'll do that with client, uh,
+Now that we have an idea of what we need to do in our new service. Let's add
+some logic inside our service to fetch the issues in the `dino-park` report using
+GitHubs API.
 
-Think
+Move into the terminal and run
 
-Right. Expert on call, get hubs API with their client. So we'll do client request and
-the request method for the HTTP client accepts two arguments. The first is method,
-and this refers to the HTTP method, like get or post that we're going to use in this
-case, we're going to use GI. And the next argument for the request method is URL. And
-this is the actual URL that we're going to call to retrieve the list of issues from
-our Dyna park repository. All right,
+```terminal
+composer require symfony/http-client
+```
+
+to add Symfony's Http Client to to our app which we'll use to call the API.
+Inside of `GithubService`, instantiate the client with `$client = HttpClient::create()`.
+
+Now we we'll make an actual HTTP request by calling `$client->request()`, which accepts
+two arguments, the first being `method`. This tells the client which HTTP Method,
+like `GET` or `POST`, that we want to use. In this case we're performing a `GET`
+request. Now we'll tell the client what `url` we are going to call to retrieve a
+list of issues from the `dino-park` repository by passing in
+`https://api.github.com/repos/SymfonyCasts/dino-park/issues`.
+
 
 Al, when we call the re uh, when we call the API endpoint for GitHub, GitHub's going
 to return to us a list of J O but what does that look like? Let's move back to our
@@ -102,4 +105,3 @@ at GitHub service construct, zero pass. And exactly one were expected looking at
 uh, service here. That's because we're supposed to be passing in from our test a
 logger instance, and we are not doing that yet. So coming up next, we'll show you how
 to do that. And we'll fix this.
-
