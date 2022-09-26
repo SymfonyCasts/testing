@@ -8,7 +8,7 @@ can visit with healthy dinos but if they're sick... no visitors allowed.
 To help display this, we need to store the health status for each of our dinos *and*
 have an easy way to figure out whether or not this means they're accepting visitors...
 
-## Are they accepting visitors?
+## Let's skip a test...
 
 Lets start by adding a method - `isAcceptingVisitors()` to our `Dinosaur`. But,
 we'll do this the TDD way by writing the test first. In `DinosaurTest` add
@@ -16,7 +16,7 @@ we'll do this the TDD way by writing the test first. In `DinosaurTest` add
 and let's call him `Dennis`. 
 
 By default if we simply instantiate a `Dinosaur` and do nothing else, the dino 
-*should* be accepting visitors until GenLab tells us otherwise so 
+*should* be accepting visitors until GenLab tells us otherwise, so 
 `assertTrue()` that Dennis `isAcceptingVisitors()`
 
 Below this test, add another called `testIsNotAcceptingVisitorsIfSick()`. And 
@@ -38,8 +38,10 @@ but I haven't *completed* the test yet. There also is a `markSkipped()` method t
 be used too when you need to skip tests under certain conditions. For instance, 
 if the test only should run on PHP 8.1.
 
+## Are they accepting visitors?
+
 Anywho, lets get back to coding shall we... In our `Dinosaur` class, add new method
-`isAcceptingVisitors()` that returns a `bool`. Inside we'll return `true`.
+`isAcceptingVisitors()` that returns a `bool` and inside we'll return `true`.
 
 Let's see what happens when we run our tests now...
 
@@ -52,7 +54,7 @@ And... Yes! `Is accepting visitors by default`... is now passing! Check it out,
 even though we still have our "sick dino" test marked as incomplete, *all* of our tests
 are *technically* passing. This is super cool when using a continuous integration 
 service, like GitHub Actions, where we wouldn't want a skipped or incomplete test
-to halt our test run.
+to show our tests have failed.
 
 ## Sick Dino's - Stay Away!
 
@@ -66,7 +68,7 @@ Bumpy `isAcceptingVisitors()`. Hmm... PHPStorm is telling us
 
 > Method setHealth() is not found inside Dinosaur
 
-so let's skip running the test and in `Dinosaur` add a new `setHealth()` method that 
+so... let's skip running the test and in `Dinosaur` add a new `setHealth()` method that 
 accepts a `string $health` and returns `void`. Inside, set the `$health`
 on `$this->health`... Then up top, add a `private string $health` property that
 defaults to `'Health'`.
@@ -108,8 +110,8 @@ And... Ya! We didn't break anything...
 
 Alrighty... To fulfill Bob's wishes, open our `index.html.twig` template here 
 in the `main/` templates directory and add a `Accepting Visitors`
-heading to our table. In the dino loop, call `dino.acceptingVisitors` and we'll
-show `Yes` if this is true or `No` if we get false.
+heading to our table. In the dino loop, create a new `<td>` and call 
+`dino.acceptingVisitors`. We'll show `Yes` if this is true or `No` if we get false.
 
 In the browser, refresh the status page... And... WooHoo! All
 of our dinos are accepting visitors!
