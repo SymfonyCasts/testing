@@ -1,9 +1,10 @@
 # GitHub Service: Implementation
 
 Now that we have an idea of what we need to do in our `GithubService`. Let's add
-some logic inside the service to fetch the issues from the `dino-park` repository
+some logic inside the service to fetch our issues from the `dino-park` repository
 using GitHub's API.
 
+## Add the client and make a request
 Move into the terminal and run
 
 ```terminal
@@ -16,13 +17,15 @@ Then make an HTTP request by calling the`$client->request()` method. To make the
 request, the HTTP Client needs to know 2 things - what HTTP Method to use, like
 `GET` or `POST`, in our case set `GET` as the `method`. And 2nd, what `url` to call,
 use `https://api.github.com/repos/SymfonyCasts/dino-park/issues` which is the 
-endpoint needed to get all of the "issues" from the `dino-park` repository.
+endpoint needed to get all the "issues" from the `dino-park` repository.
+
+## Parse the HTTP Response
 
 After we call the `request()` method, what happens next? Looking back at the 
-`dino-park` repo, GitHub will return a JSON response that contains these 4 issues.
-Each issue has a title with a dino's name and if the issue has a label attached
-to it, we'll get that back too. So, in our service, let's set the `HttpResponse`
-returned from the `request()` method on `$response`.
+`dino-park` repo, GitHub will return a JSON response that contains the issues we
+see here. Each issue has a title with a dino's name and if the issue has a label 
+attached to it, we'll get that back too. So, in our service, let's set the 
+`HttpResponse` object returned from the `request()` method on `$response`.
 
 To filter the issues in our response, add a `foreach()` loop, and for each
 `$response->toArray()` as `$issue` will check that `if()` `str_contains($issue['title'])`
@@ -36,7 +39,7 @@ one of the labels is a health status label, it will return the correct `HealthSt
 enum.
 
 Now if the title contains the dino's name, then `$health` will equal
-`$this->getDinoStatusFromLabels()`. Pass and labels that are applied to the issue
+`$this->getDinoStatusFromLabels()`. Pass the labels that are applied to the issue
 with `$issue['labels']` and for the `return`, use `$health`. But what if an issue 
 doesn't have a health status label? No worries, back up top, the default `$health`
 we'll be `HealthStatus::HEALTHY` - because GenLab would *never* forget to put a
@@ -49,6 +52,8 @@ From the terminal and run the tests:
 ```
 
 And... We 8 tests and 11 assertions that are all passing! Shweeet!
+
+## Log all of our requests
 
 One last thing that we need to do... Add a constructor to our `GithubService`
 and create a `private LoggerInterface $logger` property for the service. Right
