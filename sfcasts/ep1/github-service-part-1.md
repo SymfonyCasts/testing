@@ -1,24 +1,29 @@
 # Create a GitHub Service Test
 
-Alrighty. So now that a dinosaur object is able to persist the health status and
-tell us if the dinosaurs are able to accept visitors, we need to go ahead and get
-these, uh, labels for each of our S and the GitHub repo and pull 'em into our app.
-Instead up on our objects accordingly, to do that, we're going to create a new GitHub
-service that will use Symfony's HTTP client to call up, uh, GitHub's API, fetch those
-issues and figure out which1s apply to our dinosaurs.
+Now that we can see if a `Dinosaur` is accepting visitors based on its
+current health. We need to keep our dino's health updated automatically using the
+health status labels that GenLab has applied to several issues on GitHub. We'll
+create a new service that will grab those labels from the issues using GitHub's API.
 
-First thing we're going to do is create a `Service/` directory for a new
-`GithubServiceTest`, which extends `TestCase`, and add a test -
-`testGetHealthReportReturnsCorrectHealthStatusForDino`. Inside, even though it doesnt
-exist yet - `$service = new GithubService()`. Now we want to `assertSame()` that
-our `$expectedStatus` is identical to `$service->getHealthReport()`. We also need
-to pass in `$dinoName` to this method.
+## Test for our service first
 
-As you may have already guessed, create a `dinoNameProvider()` which
-returns a `\Generator`. Our first dataset will be a `Sick Dino` with `HealthStatus::SICK`,
-and `Daisy` for the dino name. Next up is a `Healthy Dino` with `HealthStatus::HEALTHY`
-and we'll use `Maverick` this time. Now lets add the `@dataProvider` so our test
-uses the `dinoNameProvider`. We'll pass in a `HealthStatus $expectedStatus`
+To test our new service, create a `Service/` directory inside of `Unit/` and then
+create a new `GithubServiceTest` which will extend `TestCase`. Add a method
+called `testGetHealthReportReturnsCorrectHealthStatusForDino`. Inside, even
+though it doesn't exist yet, `$service = new GithubService()`.
+
+Our service will return a `HealthStatus` enum that is created from the health status
+label on GitHub, so we'll `assertSame()` that `$expectedStatus` is identical to 
+`$service->getHealthReport()`. Yes, we'll be using a data provider for this test...
+Because our service will return a single `HealthStatus` object, let's tell the method
+which dino we need a health report for by passing in a `$dinoName` argument to
+`getHealthReport()`.
+
+Create a `dinoNameProvider()` which returns a `\Generator` and our first dataset
+will be a `Sick Dino` with `HealthStatus::SICK` then `Daisy` for the dino's name.
+Next up is a `Healthy Dino` with `HealthStatus::HEALTHY` and we'll use `Maverick`
+this time. Now add the `@dataProvider` annotation so our test uses the
+`dinoNameProvider` and we'll pass in a `HealthStatus $expectedStatus`
 argument and a `string` called `$dinoName`.
 
 Move to your terminal and run:
@@ -27,23 +32,26 @@ Move to your terminal and run:
 ./vendor/bin/phpunit
 ```
 
-And... Yup - we have two errors. The GithubService class cannot be found for
-both of our tests which is to be expected. Let's go fix that...
+And... Yup - we have two errors. The `GithubService` class cannot be found for
+both of our tests which is to be expected.
 
-Back in our code, create a new `src/Service/` directory and then we'll need a new
+## Create the service that will call GitHub
+
+Let's fix that by creating a new `Service/` directory inside our `src/ and then we'll need a new
 `GithubService` class. Inside, we'll add a `getHealthReport()` method which takes
 a `string $dinosaurName` and gives back a `HealthStatus`.
 
-Hmm... Alrighty, first thing we need to do is Call GitHubs API to get the list
+Hmm... Alrighty, the first thing we will do is call GitHub's API to get the list
 of issues for `dino-park`, then filter those issues to pick the one that matches
 `$dinosaurName` and last but not least... return `GithubStatus::HEALTHY` unless
-we find GenLab has added a `Status: Sick` flag to an issue that matches our dinos
+we find GenLab has added a `Status: Sick` label to an issue that matches our dinos
 name.
 
-Jump back into our test and chop off the last couple of letters for `GithubService`,
-and with a little PHPStorm Magic... we now have the use statement automatically
-added to the test. Move to the terminal and run our tests again:
+## Add the use statement in our test
 
+Jump back into our test and chop off the last couple of letters for `GithubService`,
+and with a little PHPStorm Magic... as soon as I type the letter `i`, we now have the use statement automatically
+added to the test. Run our tests again over in the terminal:
 
 ```terminal-silent
 ./vendor/bin/phpunit
