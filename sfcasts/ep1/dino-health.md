@@ -20,7 +20,7 @@ that it *is* ok to visit that Dinosaur. So `assertTrue()` that Dennis
 `isAcceptingVisitors()`.
 
 Below this test, add another called `testIsNotAcceptingVisitorsIfSick()`. And
-for now, let's be lazy and just say `$this->markTestIncomplete()`. 
+for now, let's be lazy and just say `$this->markTestIncomplete()`.
 
 Ok, let's try the tests:
 
@@ -50,7 +50,7 @@ Let's see what happens when we run our tests now...
 ```
 
 And... Yes! `Is accepting visitors by default`... is now passing! We still have
-one *incomplete* test as reminder, but it's not causing our whole test suite to fail.
+one *incomplete* test as a reminder, but it's not causing our whole test suite to fail.
 
 ## Sick Dinos - Stay Away!
 
@@ -60,7 +60,7 @@ on GitHub - GenLab is using labels to identify the "health" of each dino: "Sick"
 To prep for that, we need a way to store the current *health* on each `Dinosaur`.
 
 Inside the test, remove `markAsIncomplete()` and create a `$dino` named
-`Bumpy`... he's an ankylosaurus. Now call `$dino->setHealth('Sick')` and then `assertFalse()`
+`Bumpy`... he's a triceratops. Now call `$dino->setHealth('Sick')` and then `assertFalse()`
 that Bumpy `isAcceptingVisitors()`. He's cranky when he's sick.
 
 But, no surprise, PHPStorm is telling us:
@@ -88,8 +88,8 @@ And... Mission Accomplished!
 Now that the tests are passing, I'm thinking we should refactor the `setHealth()` method to only allow
 `Sick` or `Healthy`... and not something like `Dancing`... Inside `src/`, create a new `Enum/`
 directory then a new class: `HealthStatus`. For the template,
-select `Enum` and click `OK`. We need `HealthStatus` to be backed by a `: string`... 
-And our first `case HEALTHY` will return `Healthy`, then `case SICK` will return 
+select `Enum` and click `OK`. We need `HealthStatus` to be backed by a `: string`...
+And our first `case HEALTHY` will return `Healthy`, then `case SICK` will return
 `Sick`.
 
 On the `Dinosaur::$health` property, default to `HealthStatus::HEALTHY`. And down
@@ -110,13 +110,13 @@ And... Ya! We *didn't* break anything... I'm only a little surprised.
 
 To fulfill Bob's wishes, open the `main/index.html.twig` template
 and add an `Accepting Visitors` heading to the table. In the
-dino loop, create a new `<td>` and call `dino.acceptingVisitors`. We'll show 
+dino loop, create a new `<td>` and call `dino.acceptingVisitors`. We'll show
 `Yes` if this is true or `No` if we get false.
 
 In the browser, refresh the status page... And... WooHoo! All of our dinos *are*
-accepting visitors... beause we haven't set any as "sick" on our code!
+accepting visitors... because we haven't set any as "sick" on our code!
 
 But... We already know from looking at GitHub earlier, that some of our dinos
 *are* sick. Next: let's use GitHub's API to read the labels from our GitHub
 repository and set the *real* health on each `Dinosaur` so that our dashboard
-will update in real time.
+will update in real-time.
