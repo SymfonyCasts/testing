@@ -1,7 +1,5 @@
 # Incomplete Tests and Dancing Dino's
 
-!!!!!!! Start with screen on the app !!!!!!!!! <----- Note to self while recording, to be removed before merge...
-
 Bob just told us he needs to display which dinos are accepting lunch in our
 app... I mean accepting *visitors*. GenLab has strict protocols in place: park guests
 can visit with *healthy* dinos... but if they're sick, no visitors allowed.
@@ -92,9 +90,10 @@ select `Enum` and click `OK`. We need `HealthStatus` to be backed by a `: string
 And our first `case HEALTHY` will return `Healthy`, then `case SICK` will return
 `Sick`.
 
-On the `Dinosaur::$health` property, default to `HealthStatus::HEALTHY`. And down
-in `isAcceptingVisitors()`, return true if
-`$this->health === HealthStatus::HEALTHY`.
+On the `Dinosaur::$health` property, default to `HealthStatus::HEALTHY`. And
+change the property type to `HealthStatus`. Down in `isAcceptingVisitors()`, 
+return true if `$this->health === HealthStatus::HEALTHY`. Below in `setHealth()`,
+change the argument type from `string` to `HealthStatus`.
 
 The last thing to do is use `HealthStatus::SICK` in our test.
 
