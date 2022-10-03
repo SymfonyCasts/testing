@@ -11,8 +11,8 @@ To test our new service... which doesn't exist yet, inside of `tests/Unit/` crea
 a new `Service/` directory and then a new class: `GithubServiceTest`... which will
 extend `TestCase`. I'm creating this in a `Service/` sub-directory because I'm
 planning to put the class in the `src/Service/` directory. Add method
-`testGetHealthReportReturnsCorrectHealthStatusForDino` and inside, even though
-it doesn't exist yet, `$service = new GithubService()`.
+`testGetHealthReportReturnsCorrectHealthStatusForDino` and inside,
+`$service = new GithubService()`. Yup, that doesn't exist yet either...
 
 Our service will return a `HealthStatus` enum that's created from the health status
 label on GitHub, so we'll `assertSame()` that `$expectedStatus` is identical to
