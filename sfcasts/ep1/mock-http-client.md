@@ -1,3 +1,5 @@
+# Mocking Symfony's Http Client
+
 There we go. Having the ability to use mocking their test is really awesome, but
 mocking is a bit weird and complex. It's not as simple as using the real normal
 object to keep this complexity to a minimum. We should only mock objects that are

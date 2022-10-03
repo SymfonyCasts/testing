@@ -1,3 +1,5 @@
+# GitHub Service: Implementation
+
 Now, now that we have our service, we'll need a way to call GitHub's API from within
 our service. So we can grab the list of issues for our Dyna park repository on
 GitHub. We're going to use Symfony's HTTP client for that. So move over to your

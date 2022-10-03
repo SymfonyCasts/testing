@@ -1,3 +1,5 @@
+# Mocking: Stubs
+
 All right. Let's take a quick look back at our GI hub service real quick and see
 exactly what we're doing in here. First, we're using our HT HTTP client interface and
 we're calling the request method, which ultimately gives us a response interface

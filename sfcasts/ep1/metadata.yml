@@ -3,14 +3,14 @@ chapters:
     - first-test
     - real-test
     - tdd
-    - tdd-2
+    - tdd-part-2
     - data-providers
     - incomplete-tests
     - github-service-part-1
     - github-service-part-2
-    - test-doubles
-    - stubs
-    - mock-objects
-    - pre-exceptions
+    - mocking-test-doubles
+    - mocking-stubs
+    - mocking-mock-objects
+    - hungry-dinos
     - exceptions
     - mock-http-client
