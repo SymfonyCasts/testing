@@ -5,6 +5,7 @@ chapters:
     - tdd
     - tdd-2
     - data-providers
+    - incomplete-tests
     - github-service-part-1
     - github-service-part-2
     - test-doubles

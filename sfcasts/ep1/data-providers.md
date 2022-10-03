@@ -1,26 +1,92 @@
 # Data Providers
 
-We treat our tests. Oh no, we don't. We treat our source as first class citizens. Why not do the same with other tests? Our three tests for the size are repetitive. They test the same thing just with different sets of input and then a different assertion. We can improve this by using PHP units, data providers, data providers run the same test over and over again with different sets of data to test against let's scroll down to the bottom of our te dinosaur test and we will create a public function. Oops. Um,
+We treat our source code as a first-class citizen. That means, among other things,
+we avoid duplication. Why not do the same with our
+tests? Our three tests for the size are... repetitive. They test the same thing
+just with *slightly* different input and then a different assertion. Is there
+a way to improve this? Absolutely: thanks to PHPUnit Data Providers.
 
-Take
+## Refactor our tests
 
-A stare at the way. Let's scroll down to the bottom of our dinosaur test and let's create a new public function, size description provider method. Cool. Inside this method, you're gonna return a yield 10 and large, and then we will yield and array, which contains five and medium and finally yield four and small. All right, back up to our first size, uh, test let's go ahead and add into the method. Arguments, hint length, and then a string. And this will be expected size, right then here we can take, uh, we'll change the link from 10 to length. And then for large, let's change this to expected size these two, uh, or other two medium and small methods. We can just go ahead and get rid of those. We don't need them anymore there. Okay. Move back to your terminal. And let's run vendor bend PHP unit, and we'll use the test plan.
+Move to the bottom of `DinosaurTest` and add
+`public function sizeDescriptionProvider()`. Inside, `yield` an array with `[10, 'Large']`,
+then `yield [5, 'Medium']`, and finally `yield [4, 'Small']`. Yield is just a fancy
+way of returning arrays using PHP's built-in Generator function. As you'll see in
+a minute, these values - like `10` and `large` will become *arguments* to our test.
 
-Oh,
+Alrighty, up in our test method, add an `int $length` argument and then
+`string $expectedSize`. Now instead of Big Eaty's length being `10`, use
+`$length`. And for our assertion, use `$expectedSize` instead of `Large`. We do not
+need the medium and small tests anymore, so we can remove *both* of them.
 
-Our, our Dino 10 meter or greater is large test is failing because too few arguments to function test Dino 10 meters or greater is large. We passed zero and there's exactly two arguments expected. This is because we never told PHP unit to actually use our data provider for our test method to do that. Let's create a new doc block. Do that. Let's create a no still all to do that. Let's create a new dock block method or a new dock block on a method. We'll go ahead and get rid of all the stuff that PHP storm throws in there. And instead we'll write data provider and we'll use our size description provider and PHP, unit 10, instead of using a dock block for this, we'll be able to use attributes, move back to our terminal. Let's clean things up, run the test. Again, hand it passes. You can see that we have four tests and seven assertions. You notice how this dataset zero dataset one and dataset two are showing for the same test. Those are yield. Those are our arrays that we yielded in our data provider. But I think we can come up with a better name.
+Ok! Move back to your terminal and run our tests:
 
-I think we can improve this by using me. Me. Yeah. We can improve this by using message keys in the data provider. Let's go back to our test and for a size description method let's type in and what am I typing in? Oh, here we go. Yeah. Let's type in 10 meter. Large Dino. We'll do the same. Oops. And we'll do the same for our medium and small. We'll just copy this little bit right here and we'll paste it here. And again, here for small change, the 10 here to five. This is supposed to be a medium and then a four. And this will be a small D cool. Let's go run our test one more time. Huh? Awesome. So we have our three size tests and instead of dataset zero, we get 10 meter, large Dino here, but what about this method name, but what about this Dino 10 meters or greater is large name that we're getting for all three of these tests? Well, again, that's the name of our test method and of course, test docs takes off the test, prefix to our method name, and then transforms our transforms the name into hu human blah.
+```terminal
+./vendor/bin/phpunit --testdox
+```
 
-Test docs takes off the test, prefix to our method name, and then transforms the name itself into human readable words. Uh, put my mouse. All right, let's go ahead and change this method. Name to test Dino as correct size description description from length. And while we're at it, this message or message failure key here. This is supposed to be a large dial. We don't really need this anymore because we're able to unfer this because we're able to see this from our data provider message keys. So we'll just remove this if you really wanted to keep it that message. You could just add another value down here into the data provider, into this, the data provider array. Then add an additional argument up here and stick that in just like we did with the length and the expected size I'm supposed to. Hey, bear, come you, come
+Uh oh... Our test is failing because! It says:
 
-On,
+> ArgumentCountError - Too few arguments were provided. 0 passed and exactly 2 expected.
 
-Come on, get down your dogs, pulling cords. All I need to back up a little bit here. Let me back it up. All right, let's go run our test. I need clear first. All right. Let's run our test again. And also Dino has correct size description from length. This is a lot more meaningful than what we had before and we can also see that it's using our data sets with 10 meter, large Dono, medium and small. But
+## Tell our test to use the Data Provider
 
-What
+Oops, we never told our test method to *use* the data provider. Move back into our
+test and add a DocBlock with `@dataProvider sizeDescriptionProvider`. When PHPUnit
+10 gets released, we'll be able to use a fancy `#[DataProvider]` attribute instead of this
+annotation.
 
-About this message key here? Well, let's go ahead and change this 10 and we'll make it a five. We'll run our test real quick. And you can see here that Dino has correct size description from lake with 10 meter. Large Dino test has failed because this is supposed to be a large dinosaur and it failed as serving that two strings are identical. And again, we have the diff of large and medium. We don't really need this. This is supposed to be a large dinosaur because we already know that from D Dino has correct size description from length and the message key here. So let's just remove that. We'll fix this back to 10, remove this message key. And there we go. If we really needed to keep that message key for something, we could just add another argument to our test method and then throw that key in and our data provider and pass it just like we do with the Nu with our length into, with our length and our expected size string. All right, let's run our test one last time just to make sure they're still passing. And of course we got four tests and seven assertions
+Back to the terminal! Run the tests again:
 
-And great they're passing. We have four tests and seven assertions. If you want to go with strict typing like I do, we can add either a generator or an array type for our re no, we can add either a generator or an array for our return type on our data provider. Most of the time you'll see generator. So that's what we'll use here. And again, our test test methods, test methods use the void return type, cuz it's really the only appropriate return type for PHP unit tests, but neither of those return types are, are required. Ah, how we doing end? Oh, stop recording. There we go.
+```terminal-silent
+./vendor/bin/phpunit --testdox
+```
 
+And... Yes! Our tests are passing!
+
+## Message Keys instead of Arguments
+
+In the output, we see that each test ran with datasets 0, 1, & 2. Those are the
+arrays from the data provider. We can spruce this up a bit... because it's not
+going to be very helpful later if PHPUnit tells us that dataset `2` failed. Which
+one is that?
+
+Move back to our test and, down here after the first `yield` statement, add the message
+key `'10 Meter Large Dino' =>`. Copy and paste this for our medium dino with `5`
+instead of `10` and this needs to be `Medium`. Do the same for our small dino
+with `4` and `Small`.
+
+Back in our terminal, let's see our tests now:
+
+```terminal-silent
+./vendor/bin/phpunit --testdox
+```
+
+And... Cool Beans! We now have
+
+> Dino 10 meters of greater is large with 10 Meter Large Dino
+
+This looks a lot better than just seeing data set 0... though we do need to fix
+one more thing. That test method name doesn't make sense anymore.
+Change it to `testDinoHasCorrectSizeDescriptionFromLength()`.
+
+And, looking at our assertion, the message argument isn't very useful anymore... so let's
+remove it.
+
+# Return Types Everywhere!
+
+Finally, although not required... We can use either `array` or
+`\Generator` as the return type for the data provider. Let's go with
+`\Generator`- after all, we may need those for the park fences one day...
+
+To make sure this didn't break anything, try the tests one more time:
+
+```terminal-silent
+./vendor/bin/phpunit --testdox
+```
+
+Ummm... Awesome! Green Checks Everywhere!
+
+And there you have it, with a little TLC, our tests are now nice and tidy...
+Coming up next, let's figure out how we can get our Dino's health status from
+GitHub and use it in our app...
