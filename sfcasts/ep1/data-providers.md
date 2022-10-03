@@ -64,7 +64,7 @@ Back in our terminal, let's see our tests now:
 
 And... Cool Beans! We now have
 
-> Dino 10 meters of greater is large with 10 Meter Large Dino
+> Dino 10 meters or greater is large with 10 Meter Large Dino
 
 This looks a lot better than just seeing data set 0... though we do need to fix
 one more thing. That test method name doesn't make sense anymore.
