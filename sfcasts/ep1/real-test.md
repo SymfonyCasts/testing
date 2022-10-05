@@ -22,6 +22,7 @@ Let's try it! Move back to your terminal and run:
 ```terminal
 ./vendor/bin/phpunit
 ```
+
 ## Should I Test that Method?
 
 And... YES! We have one test with four assertions. But... looking back at our
@@ -137,5 +138,3 @@ and run our tests again:
 
 And... YES! All of our tests are passing. Coming up next, we're going to get
 philosophical and take a look at Test Driven Development or simply - TDD.
-
-
