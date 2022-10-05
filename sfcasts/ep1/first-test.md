@@ -44,7 +44,12 @@ How do we *execute* the test? By executing PHPUnit. At your terminal, run:
 ```
 
 And... awesome! PHPUnit saw *one* test - for our one test method - and one
-*assertion*. What's... an assertion?
+*assertion*.
+
+We could also say `bin/phpunit` to execute our tests, which is basically just a 
+shortcut to run `vendor/bin/phpunit`.
+
+But, I'm sure your curious... What's... an assertion?
 
 Looking back at `DinosaurTest`, the one assertion refers to the `assertEquals()`
 method, which comes from PHPUnit's `TestCase` class. If the *actual*
