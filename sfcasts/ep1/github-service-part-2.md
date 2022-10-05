@@ -24,7 +24,7 @@ case, it should be `GET`. 2nd: the URL. Use
 Ok, now what? Looking back at the `dino-park` repo, GitHub will return a JSON 
 response that contains the issues we see here. Each issue has a title with a 
 dino's name and if the issue has a label attached to it, we'll get that back too.
-So, set `$client->get()` to a new `$response` variable. Then, below, `foreach()`
+So, set `$client->request()` to a new `$response` variable. Then, below, `foreach()`
 over `$response->toArray()` as an `$issue`. The cool thing about using Symfony's
 HTTP Client is that we don't have to bother transforming the JSON from GitHub 
 into an array - `toArray()` does that heavy lifting for us. Inside this loop,
