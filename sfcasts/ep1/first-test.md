@@ -23,14 +23,19 @@ directory structure. That's a best practice that keeps our tests organized.
 Finally, create a new class called `DinosaurTest`. Using that `Test` suffix makes
 sense: we're testing `Dinosaur`, so we call this `DinosaurTest`! But it's also
 a requirement: PHPUnit - our testing library - *requires* this. It also requires
-that each class extend `TestCase`. Now let's go ahead
-and write a simple test to make sure everything is working.
+that each class extend `TestCase`:
+
+[[[ code('a18a9e97ac') ]]]
+
+Now let's go ahead and write a simple test to make sure everything is working.
 
 Inside our `DinosaurTest` class, let's add `public function testIsWorks()`... where
 we'll create the most *exciting* test ever! If you like return types - I do! - use
 `void`... though that's optional
 
-Inside call `self::assertEquals(42, 42)`.
+Inside call `self::assertEquals(42, 42)`:
+
+[[[ code('c65f8a62e5') ]]]
 
 That's it! It's not a very *interesting* test - if our computer thinks that
 42 doesn't equal 42, we have bigger problems - but it's *enough*.
@@ -64,8 +69,13 @@ But for now, back to the test!
 
 Because, I have a question: how did PHPUnit *know* that this is a test? When we call
 `vendor/bin/phpunit`, PHPUnit does three things. First, it looks for its configuration
-file, which is `phpunit.xml.dist`. Inside, it finds `testsuites`... and the `directory`
-part says:
+file, which is `phpunit.xml.dist`:
+
+[[[ code('93d0379590') ]]]
+
+Inside, it finds `testsuites`... and the `directory` part says:
+
+[[[ code('2f4b344a62') ]]]
 
 > Hey PHPUnit: go look inside a `tests/` directory for tests!
 
@@ -74,10 +84,14 @@ Second, it finds that directory and *recursively* looks for every class that end
 a list of all of its public methods.
 
 So... am I saying that PHPUnit will execute *every* public method as a test? Let's find out!
-Create a new `public function itWorksTheSame(): void`.
+Create a new `public function itWorksTheSame(): void`
+
+[[[ code('67cfb1a4ef') ]]]
 
 Inside we are going to `self::assertSame()` that 42 is equal to 42. `assertSame()` is
 *very* similar to `assertEquals()` and we'll see the difference in a minute.
+
+[[[ code('31924251b4') ]]]
 
 Now, move back to your terminal and let's run these tests again:
 
@@ -92,6 +106,8 @@ You *could* put the `@test` annotation above the method, but that's
 not very common. So let's avoid being weird, and change this to
 `testItWorksTheSame()`.
 
+[[[ code('0d3b2cd0c0') ]]]
+
 Now when we run the test:
 
 ```terminal-silent
@@ -105,6 +121,8 @@ PHPUnit sees 2 tests and 2 assertions! Shweeeet!
 What does it look like when a test fails? Let's find out! Change our expected `42` to a
 *string* inside `testItWorks()`... and do the same inside `testItWorksTheSame()`. Yup,
 one of these *won't* work.
+
+[[[ code('729d779ffd') ]]]
 
 This time when we try it:
 
