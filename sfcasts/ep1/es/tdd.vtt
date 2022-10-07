@@ -1,0 +1,224 @@
+WEBVTT
+
+00:00:01.296 --> 00:00:01.896 align:middle
+Muy bien.
+
+00:00:02.336 --> 00:00:07.216 align:middle
+Uno de los problemas es que cuando Bob, nuestro
+guardabosques, ve el tamaño de los dinosaurios...
+
+00:00:07.816 --> 00:00:10.116 align:middle
+no puede recordar si están en metros...
+
+00:00:10.246 --> 00:00:11.676 align:middle
+o en centímetros...
+
+00:00:12.196 --> 00:00:15.556 align:middle
+lo que supone una gran diferencia
+a la hora de entrar en una jaula.
+
+00:00:16.446 --> 00:00:20.366 align:middle
+Una forma mejor sería utilizar simplemente
+palabras como pequeño, mediano o grande.
+
+00:00:20.466 --> 00:00:22.286 align:middle
+Así que... ¡hagamos eso!
+
+00:00:23.146 --> 00:00:25.536 align:middle
+Pero, para añadir esta
+característica, vamos a
+
+00:00:25.536 --> 00:00:28.956 align:middle
+utilizar una filosofía llamada
+Desarrollo Dirigido por Pruebas o TDD.
+
+00:00:29.786 --> 00:00:36.576 align:middle
+TDD es básicamente una palabra de moda que describe un
+proceso de 4 pasos para escribir tus pruebas primero.
+
+00:00:37.436 --> 00:00:40.246 align:middle
+Paso 1: Escribe una prueba para la función.
+
+00:00:40.726 --> 00:00:44.196 align:middle
+Paso 2: Ejecuta tu prueba
+y observa cómo falla...
+
+00:00:44.676 --> 00:00:47.326 align:middle
+ya que aún no hemos creado esa función
+
+00:00:48.206 --> 00:00:52.596 align:middle
+Paso 3: Escribe el menor código
+posible para que nuestra prueba pase.
+
+00:00:53.146 --> 00:01:00.146 align:middle
+Y Paso 4: Ahora que pasa, refactoriza tu código si
+es necesario para hacerlo más impresionante Así,
+
+00:01:00.626 --> 00:01:03.046 align:middle
+para obtener el texto
+Pequeño, Mediano o Grande,
+
+00:01:03.666 --> 00:01:08.316 align:middle
+creo que deberíamos añadir un nuevo método
+getSizeDescription() a nuestra clase Dinosaur.
+
+00:01:08.686 --> 00:01:12.836 align:middle
+Pero, recuerda, vamos a hacer
+esto a la manera de TDD,
+
+00:01:12.836 --> 00:01:16.426 align:middle
+donde el paso 1 es escribir
+una prueba para ese método...
+
+00:01:16.926 --> 00:01:18.636 align:middle
+aunque todavía no exista.
+
+00:01:19.276 --> 00:01:21.336 align:middle
+Sí, sé que es raro...
+
+00:01:21.896 --> 00:01:23.586 align:middle
+¡pero es un poco increíble!
+
+00:01:24.276 --> 00:01:28.746 align:middle
+Añade public function y probemos
+primero que un dinosaurio de
+
+00:01:28.746 --> 00:01:31.436 align:middle
+más de 10 metros es grande.
+
+00:01:32.446 --> 00:01:39.766 align:middle
+Dentro, digamos $dino = new Dinosaur(),
+dale un nombre, usemos de nuevo Big Eaty,
+
+00:01:39.976 --> 00:01:43.966 align:middle
+ya que es un tío guay, y
+establece su longitud en 10.
+
+00:01:45.176 --> 00:01:51.606 align:middle
+Entonces, assertSame() que Large será
+idéntico a $dino->getSizeDescription().
+
+00:01:52.546 --> 00:01:57.586 align:middle
+Para nuestro mensaje de fallo, utilicemos
+This is supposed to be a Large Dinosaur.
+
+00:01:58.186 --> 00:02:02.966 align:middle
+Sí, estamos probando literalmente
+un método que aún no existe.
+
+00:02:03.646 --> 00:02:04.856 align:middle
+Eso es TDD.
+
+00:02:05.716 --> 00:02:08.306 align:middle
+Bien, el paso 1 está hecho.
+
+00:02:08.846 --> 00:02:12.976 align:middle
+El paso 2 es ejecutar nuestra
+prueba y asegurarnos de que falla.
+
+00:02:14.126 --> 00:02:15.816 align:middle
+Abre un terminal y ejecuta
+./vendor/bin/phpunit.
+
+00:02:16.016 --> 00:02:17.336 align:middle
+./vendor/bin/phpunit
+
+00:02:17.336 --> 00:02:18.836 align:middle
+Y... ¡genial!
+
+00:02:18.836 --> 00:02:23.116 align:middle
+2 pruebas, 4 aserciones y 1 error. Nuestra
+
+00:02:23.466 --> 00:02:28.446 align:middle
+nueva prueba ha fallado porque, por supuesto,
+¡hemos llamado a un método indefinido!
+
+00:02:29.456 --> 00:02:32.236 align:middle
+Ya sabíamos que esto pasaría. Hm...
+
+00:02:32.406 --> 00:02:36.076 align:middle
+¿Te has dado cuenta de que nuestro
+mensaje "se supone que esto es un
+
+00:02:36.076 --> 00:02:38.716 align:middle
+gran dinosaurio" no aparece aquí?
+
+00:02:39.406 --> 00:02:41.316 align:middle
+Te explicaré por qué en
+un minuto. Es el momento
+
+00:02:42.346 --> 00:02:47.956 align:middle
+del paso 3 de TDD: escribir código
+sencillo para que esta prueba pase. Esta
+
+00:02:48.626 --> 00:02:52.196 align:middle
+parte, tomada al pie de la letra, puede
+llegar a ser bastante divertida. Observa:
+
+00:02:53.026 --> 00:02:58.996 align:middle
+en nuestra clase Dinosaur añadimos un nuevo
+public function getSizeDescription() que
+
+00:02:59.506 --> 00:03:01.256 align:middle
+devolverá un string. Dentro....
+
+00:03:02.676 --> 00:03:05.516 align:middle
+return 'Large'. Sí,
+
+00:03:06.166 --> 00:03:08.076 align:middle
+¡eso es todo!
+
+00:03:09.096 --> 00:03:12.046 align:middle
+Vuelve a tu terminal y vuelve
+a ejecutar las pruebas. Y...
+
+00:03:13.036 --> 00:03:15.876 align:middle
+Impresionante: ¡pasan! Bueno...
+
+00:03:16.246 --> 00:03:22.156 align:middle
+por supuesto que la prueba ha pasado: ¡hemos
+codificado el resultado que queríamos! Pero,
+
+00:03:22.846 --> 00:03:28.006 align:middle
+técnicamente, eso es lo que dice
+TDD: escribe la menor cantidad de
+
+00:03:28.006 --> 00:03:30.816 align:middle
+código posible para que tu prueba pase. Si
+
+00:03:31.376 --> 00:03:36.196 align:middle
+tu método es demasiado simple después de hacer
+esto, significa que te faltan más pruebas -como
+
+00:03:36.396 --> 00:03:41.556 align:middle
+para dinosaurios pequeños o medianos-
+que te obligarían a mejorar el método.
+
+00:03:42.316 --> 00:03:43.926 align:middle
+Lo veremos en un momento. Pero
+
+00:03:44.526 --> 00:03:47.116 align:middle
+seamos un poco más realistas. Digamos:
+
+00:03:47.116 --> 00:03:56.516 align:middle
+if ($this->length >= 10)
+{, luego return 'Large'. Ejecuta
+
+00:03:57.376 --> 00:04:02.526 align:middle
+las pruebas una vez más para asegurarte
+de que siguen pasando: Y... ¡sí!
+
+00:04:02.696 --> 00:04:05.836 align:middle
+¡Seguimos estando bien!
+A continuación, vamos a
+
+00:04:06.816 --> 00:04:09.786 align:middle
+terminar este método a la manera de TDD:
+
+00:04:10.086 --> 00:04:13.476 align:middle
+escribiendo primero más pruebas para las
+características que faltan. Luego pasaremos
+
+00:04:13.876 --> 00:04:19.746 align:middle
+al último paso -y el más divertido-
+de TDD: ¡la refactorización!
