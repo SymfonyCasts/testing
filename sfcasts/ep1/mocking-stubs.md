@@ -1,10 +1,10 @@
 # Mocking: Stubs
 
-Let's take a quick look back at `GithubService` to see *exactly* what it's
-doing. First, the constructor requires an `HttpClientInterface` object that we use
-to call GitHub. In return, we get back a `ResponseInterface` that has an array
-of issue's for the `dino-park` repository. Next we call the `toArray()` method
-on the response, and iterate over each issue to see if the title contains the 
+Let's take a quick look back at `GithubService` to see *exactly* what it's doing.
+First, the constructor requires an `HttpClientInterface` object that we use to
+call GitHub. In return, we get back a `ResponseInterface` that has an array of
+issue's for the `dino-park` repository. Next we call the `toArray()` method on
+the response, and iterate over each issue to see if the title contains the 
 `$dinosaurName`, so we can get its status label.
 
 To get our tests to pass, we need to *teach* our fake `httpClient` that when we
@@ -24,15 +24,15 @@ We *could* run our tests now, but they would fail. We taught our mock client
 *what* it should return when we call the `request()` method. *But*, *now* we need
 to teach our `$mockResponse` what *it* needs to do when we call the `toArray()`
 method. So right above, lets teach the `$mockResponse` that when we call,
-`method('toArray')` and it `willReturn()` an array of issues. Because that's what GitHub
-returns when we call the API.
+`method('toArray')` and it `willReturn()` an array of issues. Because that's what 
+GitHub returns when we call the API.
 
 For each issue, GitHub gives us the issue's "title", and among other things,
 an array of "labels". So let's mimic GitHub and make this array include one
 issue that has `'title' => 'Daisy'`.
 !!!!!!!!!! Zoom back to the Github Issues to "see" which dino's we can use.....!!!!!!!!!!!!!!!!!!!
-And, for the test, we'll pretend she sprained her ankle so add a `labels` keey set to
-an array, that includes `'name' => 'Status: Sick'`
+And, for the test, we'll pretend she sprained her ankle so add a `labels` key set
+to an array, that includes `'name' => 'Status: Sick'`
 
 !!!!!!!!!! Zoom back to the Github Issues to "circling" Maverick!!!!!!!!!!!!!!!!!!!
 Let's also create a healthy dino so we can assert that our parsing checks *that*
@@ -49,10 +49,11 @@ Fingers crossed, let's try it:
 ./vendor/bin/phpunit
 ```
 
-And... Awesome! They *are* passing! And the best part about it, we're
-no longer calling GitHub's API when we run our tests! Imagine the panic we would
-cause if we had to lock down the park because our tests failed due to the api being
-offline... or just someone changing the labels up on GitHub, Ya... I don't want that headache either...
+And... Awesome! They *are* passing! And the best part about it, we're no longer 
+calling GitHub's API when we run our tests! Imagine the panic we would cause if 
+we had to lock down the park because our tests failed due to the api being 
+offline... or just someone changing the labels up on GitHub, Ya... I don't want 
+that headache either...
 
 ## Stubs? Mocks?
 
