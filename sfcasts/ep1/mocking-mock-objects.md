@@ -16,7 +16,7 @@ Over in the terminal, run our tests...
 ```
 
 And... Awesome! We've just added an assertion to our mock client that requires the
-`request` method is called *exactly* one time. Let's take it a step further and
+`request` method to be called *exactly* one time. Let's take it a step further and
 add `->with()` to the `$mockHttpClient`. For the arguments, pass in `GET` and the
 URL for GitHub: `https://api.github.com/repos/SymfonyCasts/dino-park/`.
 
@@ -31,8 +31,8 @@ And... Huh! We have 2 failures:
 > Failed asserting that two strings are equal
 
 
-Hmm... Ah Ha! My copy and paste skills, are a bit weak... I missed part
-of the URL here at the end. Add `/issue`.
+Hmm... Ah Ha! My copy and paste skills, are a bit weak... I missed `/issue`
+at the end of the URL. Go ahead and add that.
 
 I think that should do the trick, let's find out...
 
@@ -58,7 +58,7 @@ Hm... Yup, we have two failures because:
 > request() was not expected to be called.
 
 That's really nifty! Change the `expects()` back to `once()` and just to be sure
-we're didn't break anything - run our tests again.
+we didn't break anything - run the tests again.
 
 ```terminal-silent
 ./vendor/bin/phpunit
@@ -68,15 +68,15 @@ And... Awesome!
 
 We *could* call `expects()` on our `$mockResponse` to make sure that `toArray()`
 *is* being called in our service. But, we already have other tests in place that
-would fail if we *didn't* call that method. Let's just pick and choose our battles.
-We can always add that later if we need to.
+would fail if we *didn't* call that method. Let's just pick and choose our battles,
+we can always add that later if we need to.
 
-Now that are service is fully tested and we have the up most confidence that it
-is working. Open the `MainController` and for the `index()`, add argument:
-`GithubService $github`. Symfony will automatically find our service
-and inject it into this method anytime it's called.
+Now that are service is fully tested, let's update the dashboard in realtime. On
+`MainController::index()`, add argument: `GithubService $github`. Anytime someone
+visit's the dashboard, Symfony will automatically find our service and inject it
+into this method.
 
-Right below the dino's array, add a `foreach()` loop and for `$dinos as $dino`,
+Right below the `$dinos` array, add a `foreach()` loop and for `$dinos as $dino`,
 say `$dino->setHealth()` by calling `$github->getHealthReport()` using
 `$dino->getName()`.
 
@@ -87,11 +87,11 @@ And... What!
 > getDinoStatusFromLabels must be HealthStatus, null returned
 
 Hmm... What is going on here. I can't really tell *why* we're getting this error.
-In a future tutorial, we'll actually be able to add a test for this, but for now
-it looks like one of our dino's has a status label that we didn't account for.
-Let's take a peak back at the issues on GitHub and... HA! There's the problem.
-Of course... `Dennis` has a `Status: Hungry` label.
+In a future tutorial, we'll actually be able to add a functional test for this, 
+but for now it looks like one of our dino's has a status label that we don't 
+know about. Let's take a peak back at the issues on GitHub and... HA! "Dennis"
+is causing problems yet again. Apparently he's a bit hungry...
 
-In our `HealthStatus` enum, we *don't* have a case for `Hungry`. Go figure. Next
-up, we'll see how we can provide a better exception when this happens since it's
-best to leave the investigative work to GenLab...
+In our `HealthStatus` enum, we *don't* have a case for `Hungry` status labels. 
+Go figure. Next up, we'll see how we can provide a better exception when this 
+happens since its best to leave the investigative work to GenLab...
