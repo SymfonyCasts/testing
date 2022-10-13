@@ -71,7 +71,7 @@ We *could* call `expects()` on our `$mockResponse` to make sure that `toArray()`
 would fail if we *didn't* call that method. Let's just pick and choose our battles,
 we can always add that later if we need to.
 
-Now that are service is fully tested, let's update the dashboard in realtime. On
+Now that `GithubService` is fully tested, let's keep the dashboard updated in realtime. On
 `MainController::index()`, add argument: `GithubService $github`. Anytime someone
 visit's the dashboard, Symfony will automatically find our service and inject it
 into this method.
