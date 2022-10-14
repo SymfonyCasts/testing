@@ -1,0 +1,239 @@
+WEBVTT
+
+00:00:01.066 --> 00:00:03.816 align:middle
+Antes de pasar al último paso de TDD,
+
+00:00:03.986 --> 00:00:06.946 align:middle
+creo que debemos añadir un par de
+pruebas más de descripción del tamaño
+
+00:00:06.946 --> 00:00:08.846 align:middle
+de los dinosaurios medianos y pequeños.
+
+00:00:09.476 --> 00:00:15.626 align:middle
+En nuestro DinosaurTest::class copia nuestro
+método testDino10MetersOrGreaterIsLarge
+
+00:00:15.626 --> 00:00:20.806 align:middle
+y renómbralo a
+testDinoBetween5And9MetersIsMedium().
+
+00:00:21.816 --> 00:00:28.816 align:middle
+Dentro, cambia el length de nuestro $dino de
+10 a 5, utiliza Medium para el valor esperado,
+
+00:00:29.136 --> 00:00:31.426 align:middle
+y actualiza también el mensaje a Medium.
+
+00:00:32.876 --> 00:00:36.866 align:middle
+Por último, pega de nuevo el método
+para nuestra pequeña prueba del dino,
+
+00:00:37.606 --> 00:00:41.856 align:middle
+utilizando el nombre
+testDinoUnder5MetersIsSmall() . Establece
+
+00:00:42.476 --> 00:00:46.106 align:middle
+la longitud en 4, afirma que Small es
+
+00:00:46.106 --> 00:00:50.206 align:middle
+idéntico a getSizeDescription()
+y actualiza también el mensaje.
+
+00:00:51.876 --> 00:00:57.586 align:middle
+De vuelta a nuestro terminal,
+ejecuta de nuevo las pruebas: Y...
+
+00:00:57.586 --> 00:00:58.876 align:middle
+¡fallan!
+
+00:00:59.176 --> 00:01:01.876 align:middle
+Pero no porque nuestro método
+devuelva un resultado erróneo.
+
+00:01:02.206 --> 00:01:07.466 align:middle
+Están fallando debido a un error de tipo en
+getSizeDescription(): El valor devuelto debe ser
+
+00:01:07.466 --> 00:01:11.056 align:middle
+de tipo cadena y no se devuelve ninguna.
+
+00:01:12.176 --> 00:01:17.386 align:middle
+¿Recuerdas que antes ejecutamos nuestra prueba
+del dinosaurio grande antes de escribir el método
+
+00:01:17.386 --> 00:01:20.836 align:middle
+y no vimos nuestro mensaje "se supone
+que esto es un dinosaurio grande"?
+
+00:01:21.276 --> 00:01:23.286 align:middle
+Pues aquí tampoco lo vemos...
+
+00:01:23.646 --> 00:01:26.496 align:middle
+Eso es porque PHP lanzó un error...
+
+00:01:26.706 --> 00:01:33.996 align:middle
+y por eso el mensaje getSizeDescription() explota antes
+de que PHPUnit pueda ejecutar el método assertSame().
+
+00:01:34.726 --> 00:01:39.896 align:middle
+No es un gran problema y aún podemos utilizar el seguimiento
+de la pila para ver exactamente dónde han ido mal las cosas.
+
+00:01:41.246 --> 00:01:43.656 align:middle
+Muy bien, volvamos a la clase Dinosaur.
+
+00:01:44.236 --> 00:01:52.866 align:middle
+Vamos a arreglar estas pruebas añadiendo if
+($this->length) es menor que 5, return 'Small'.
+
+00:01:52.866 --> 00:02:00.776 align:middle
+Y if ($this->length) es menor
+que 10, return 'Medium' Volvemos a
+
+00:02:00.776 --> 00:02:05.016 align:middle
+nuestro terminal y ejecutamos
+la prueba de nuevo: Y...
+
+00:02:05.016 --> 00:02:06.806 align:middle
+bien, bien, bien...
+
+00:02:06.806 --> 00:02:08.446 align:middle
+están pasando.
+
+00:02:09.016 --> 00:02:12.696 align:middle
+Así que pasemos al último paso de TDD...
+
+00:02:12.696 --> 00:02:13.616 align:middle
+¡y uno muy divertido!
+
+00:02:13.826 --> 00:02:15.416 align:middle
+Refactorizar nuestro código.
+
+00:02:16.046 --> 00:02:20.216 align:middle
+Mirando nuestro método getSizeDescription(),
+creo que podemos limpiarlo un poco.
+
+00:02:20.476 --> 00:02:25.016 align:middle
+Y la gran noticia es que, como hemos
+cubierto nuestro método con pruebas,
+
+00:02:25.016 --> 00:02:29.646 align:middle
+si estropeamos algo durante la
+refactorización, ¡las pruebas nos lo dirán!
+
+00:02:30.026 --> 00:02:32.096 align:middle
+¡Podemos ser imprudentes!
+
+00:02:32.546 --> 00:02:38.146 align:middle
+También significa que antes no teníamos que
+preocuparnos de escribir un código perfecto.
+
+00:02:38.316 --> 00:02:40.506 align:middle
+Sólo teníamos que hacer
+que nuestras pruebas pasaran.
+
+00:02:40.946 --> 00:02:43.446 align:middle
+Ahora podemos mejorar las cosas...
+
+00:02:44.246 --> 00:02:48.406 align:middle
+Cambiemos esta condición intermedia
+a if ($this->length) es mayor
+
+00:02:48.406 --> 00:02:52.006 align:middle
+o igual que 5, devuelve Medium.
+
+00:02:52.616 --> 00:02:57.046 align:middle
+Podemos eliminar por completo esta última
+condición y devolver simplemente Small.
+
+00:02:57.686 --> 00:02:59.006 align:middle
+¡Eso me gusta!
+
+00:02:59.596 --> 00:03:03.316 align:middle
+Para ver si hemos metido la pata, vuelve al
+terminal y ejecuta de nuevo nuestras pruebas.
+
+00:03:04.066 --> 00:03:05.596 align:middle
+Y... ¡lo hemos conseguido!
+
+00:03:06.116 --> 00:03:10.296 align:middle
+Eso es TDD: escribir la prueba,
+ver que la prueba falla,
+
+00:03:10.436 --> 00:03:14.816 align:middle
+escribir código sencillo para ver que la prueba
+pasa, y luego refactorizar nuestro código.
+
+00:03:15.306 --> 00:03:16.496 align:middle
+Aclarar y repetir. TDD
+
+00:03:17.206 --> 00:03:22.586 align:middle
+es interesante porque, al escribir
+primero nuestra prueba, nos obliga a
+
+00:03:22.586 --> 00:03:25.036 align:middle
+pensar exactamente en cómo
+debe funcionar una función...
+
+00:03:25.626 --> 00:03:29.496 align:middle
+En lugar de escribir código
+a ciegas y ver qué sale.
+
+00:03:30.286 --> 00:03:33.506 align:middle
+También nos ayuda a centrarnos
+en lo que tenemos que codificar...
+
+00:03:33.606 --> 00:03:35.846 align:middle
+Sin hacer las cosas demasiado rebuscadas.
+
+00:03:36.506 --> 00:03:38.406 align:middle
+Sí, yo también soy culpable de eso...
+
+00:03:38.406 --> 00:03:41.506 align:middle
+Consigue que tus pruebas
+pasen, luego refactoriza...
+
+00:03:41.736 --> 00:03:43.156 align:middle
+No hace falta nada más.
+
+00:03:43.646 --> 00:03:48.016 align:middle
+Y ahora que tenemos nuestro nuevo y elegante
+método -construido mediante los poderes de TDD-
+
+00:03:48.476 --> 00:03:51.166 align:middle
+¡celebremos su uso en el sitio!
+
+00:03:52.326 --> 00:03:59.176 align:middle
+Cierra nuestro terminal y pasa a nuestra
+plantilla: templates/main/index.html.twig.
+
+00:04:00.026 --> 00:04:06.366 align:middle
+En lugar de mostrar los dinos con dino.length,
+cámbialo por dino.sizeDescription.
+
+00:04:06.996 --> 00:04:09.696 align:middle
+Guárdalo, vuelve a nuestro navegador y...
+
+00:04:09.696 --> 00:04:12.696 align:middle
+actualiza. Espectacular.
+
+00:04:12.696 --> 00:04:18.226 align:middle
+Tenemos grande, mediano y pequeño para el
+tamaño del dinosaurio en lugar de un número.
+
+00:04:18.946 --> 00:04:23.136 align:middle
+¡No hay forma de que Bob vuelva a pasearse
+accidentalmente por el recinto del T-Rex!
+
+00:04:24.356 --> 00:04:28.216 align:middle
+Acabamos de utilizar TDD para hacer nuestra
+aplicación un poco más amigable para los humanos. A
+
+00:04:28.776 --> 00:04:33.486 align:middle
+continuación, utilizaremos algunos de los principios
+de TDD que hemos aprendido aquí para limpiar
+
+00:04:33.486 --> 00:04:36.506 align:middle
+nuestras pruebas con los
+proveedores de datos de PHPUnit

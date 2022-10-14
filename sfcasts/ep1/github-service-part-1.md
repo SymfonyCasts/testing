@@ -1,64 +1,74 @@
 # Create a GitHub Service Test
 
-All right. So now that a dinosaur object is able to persist the health status and
-tell us if the dinosaurs are able to accept visitors, we need to go ahead and get
-these, uh, labels for each of our S and the GitHub repo and pull 'em into our app.
-Instead up on our objects accordingly, to do that, we're going to create a new GitHub
-service that will use Symfony's HTTP client to call up, uh, GitHub's API, fetch those
-issues and figure out which1s apply to our dinosaurs. First thing we're going to do
-is create a new unit, uh, service directory inside. We're going to create a new
-GitHub service test, and of course, this needs to extend, uh, PHP units test case,
-and now let's create a new public function test get test. Dang it. Test get health
-report returns, correct health status for D all right, and this isn't going to return
-anything. Now inside let's do service = new GitHub service. And of course this
-doesn't exist yet, but that's okay. And then for the test, we want to self assert
-same that our expected status matches our service get health report. And we're going
-to pass in the Dino's name to get that report. Now, obviously we're going to be using
-a data provider. So let's go ahead and write that out.
+Now that we can see if a `Dinosaur` is accepting visitors on our dashboard, we
+need to keep the dashboard updated in real-time by using the health status labels
+that GenLab has applied to several dino issues on GitHub. To do that we'll create
+a service that will grab those labels using GitHub's API.
 
-And this would be public function, Dino name provider, cause that's how we Fe our,
-uh, uh, health reports. This is going to return to generator, and now we're going to
-yield sick Dino, and this will return of course, health status.
+## Test for our Service First
 
-Oops,
+To test our new service... which doesn't exist yet, inside of `tests/Unit/` create
+a new `Service/` directory and then a new class: `GithubServiceTest`... which will
+extend `TestCase`. I'm creating this in a `Service/` sub-directory because I'm
+planning to put the class in the `src/Service/` directory. Add method
+`testGetHealthReportReturnsCorrectHealthStatusForDino` and inside,
+`$service = new GithubService()`. Yup, that doesn't exist yet either...
 
-This will return health status, uh, sick. And let's take a quick peek back on GitHub
-to see what the Dino's name but was sick. And that was Daisy. She has a sprained her
-leg. So Daisy, and then for our healthy Dino, we're going to yield healthy Dino, and
-this will be health status healthy. And I believe we're going to use, uh, yes,
-Maverick. He has a test blood at noon, so let's come back here, Maverick, and there's
-our data provider. Now back up here, let's go ahead and tell our test method, user
-provider. And we're going to do that with a at data provider annotation and the data
-provider is Dino name provider.
+Our service will return a `HealthStatus` enum that's created from the health status
+label on GitHub, so we'll `assertSame()` that `$expectedStatus` is identical to
+`$service->getHealthReport()` and then pass `$dinoName`. Yup, we'll be using a
+data provider for this test... where we accept the *name* of the dino to check
+for their expected health status.
 
-Oops,
+Let's go create that: `public function dinoNameProvider()` that returns a
+`\Generator`. Our first dataset for the provider will have the key `Sick Dino`,
+which returns an array with `HealthStatus::SICK` and `Daisy` for the dino's name...
+because when we checked GitHub a minute ago, Daisy was sick!
 
-Let's come back here and expand that out. And then of course we need to pass the
-health status and this is our expected, expected status and a string, which is the
-dinos name.
+Next up is a  `Healthy Dino` with `HealthStatus::HEALTHY` who happens to be the
+one and only `Maverick`. Up on the test method, add a `@dataProvider` annotation
+so the test uses `dinoNameProvider`... and then add `HealthStatus $expectedStatus`
+and `string $dinoName` arguments.
 
-All cool. We have our test set up. Let's go ahead and move to your terminal vendor,
-then PHP unit, and we have two errors. GitHub service test test get health report
-returns, correct health status for Dino with dataset sick Dino, uh, is given us an
-error because the class GitHub service is not found. Of course we're getting the same
-thing for our healthy Dino as well, which is to be expected. So let's go fix that
-back in our code. Let's come up here to our source directory, create a new folder and
-we'll call this service and inside create a new PHP class GI service. All right, our
-new service let's create our new public function, GI health report. And this of
-course accepts a string dinosaur name, and it's going to return a health status
-status. I'm going to keep saying status. All right. Now, instead the method we're
-going to first call GitHub's API. We're going to first call GitHubs, uh, API. Then
-we're going to filter the issues. And last we are always going to return a health
-status of healthy or sick. Now let's go back to our test. Oops, let's go back to our
-test and we need to add the use statement for our GitHub service. So the best way to
-do this is chop off the last couple of letters and there we go. GitHub service app
-service. That's the one we want. And PHP storm adds the use statement for us.
+Let's do this! Find your terminal and run:
 
-We can go back to our terminal and let's run the test one more time. Make sure that
-yes, instead of two failures, we only have one. Our GitHub service test test GitHub
-test get health report returns, correct health status for Dino with data set sick
-Dino, it failed to asserting that two variables reference the same object. And it's
-of course doing that because we are only returning a healthy status for get health
-reports. Now that we have this kind of wired up, let's go ahead and implement the
-service.
+```terminal
+./vendor/bin/phpunit
+```
 
+And... Yup! Just as we expected, we have two errors because:
+
+> The GithubService class cannot be found
+
+## Create the service that will call GitHub
+
+To fix that, find a teammate and ask them nicely to create this class for you!
+TDD - team-driven-development!
+
+I'm kidding: we got this! Inside of `src/`, create a new `Service/` directory. Then
+we'll need the new class: `GithubService` and inside, add a method: `getHealthReport()`
+which takes a `string $dinosaurName` and gives back a `HealthStatus` object.
+
+Here's the plan: we'll call GitHub's API to get the list of issues for the `dino-park`
+repository. Then we'll filter those issues to pick the one that matches `$dinosaurName`.
+Finally, we'll return `GithubStatus::HEALTHY`, unless the issue has a `Status: Sick`
+label.
+
+## Add the use statement in our test
+
+Before we dive into *writing* that method, jump back into our test and chop off the
+last couple of letters for `GithubService`. With a little PHPStorm Magic... as soon
+as I type the letter `i` and hit enter, the use statement is automatically added
+to the test. Thank you JetBrains!
+
+Let's see how the tests are looking:
+
+```terminal-silent
+./vendor/bin/phpunit
+```
+
+And... Ha! Instead of two failures, we now only have one...
+
+> Sick Dino failed asserting that the two variables reference the same object.
+
+Coming up next, we'll add some logic to our `GithubService` to make this test pass!

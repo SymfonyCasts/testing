@@ -75,7 +75,7 @@ seeing what comes out. It also helps us focus on *what* we need to code... Witho
 making things too fancy. Yes, I'm guilty of that too... Get your tests to pass,
 then refactor... Nothing more is needed.
 
-# Use the Size Description in our Controller
+## Use the Size Description in our Controller
 
 And now that we have our fancy new method - built via the powers of TDD - let's
 celebrate by *using* it on the site!

@@ -1,0 +1,334 @@
+WEBVTT
+
+00:00:01.106 --> 00:00:07.556 align:middle
+Como recordatorio, la clase es actualmente bastante
+simple: pasamos algunos datos al constructor...
+
+00:00:08.066 --> 00:00:10.726 align:middle
+y luego podemos leer esos datos
+mediante algunos métodos.
+
+00:00:11.156 --> 00:00:14.826 align:middle
+En lugar de "esperar" que todo esto
+funcione, ¡vamos a asegurarnos de
+
+00:00:14.826 --> 00:00:19.316 align:middle
+que nuestra clase Dinosaur está realmente
+libre de errores con algunas pruebas!
+
+00:00:19.806 --> 00:00:24.046 align:middle
+En DinosaurTest, elimina estas
+dos pruebas y sustitúyelas
+
+00:00:24.046 --> 00:00:28.466 align:middle
+por public function testCanGetAndSetData().
+
+00:00:29.246 --> 00:00:33.816 align:middle
+Dentro... vamos a jugar
+literalmente con el objeto
+
+00:00:33.876 --> 00:00:37.126 align:middle
+instanciándolo y probando algunos métodos.
+
+00:00:37.746 --> 00:00:40.316 align:middle
+Así que, $dino = new Dinosaur()....
+
+00:00:41.836 --> 00:00:43.266 align:middle
+y pasa algunos datos.
+
+00:00:43.266 --> 00:00:50.506 align:middle
+Para el nombre, eh - usemos Big Eaty:
+es nuestro residente Tyrannosaurus
+
+00:00:51.296 --> 00:00:54.376 align:middle
+que resulta tener 15 metros de longitud.
+
+00:00:54.376 --> 00:00:58.806 align:middle
+Y Big Eaty vive actualmente en Paddock A. Ahora
+
+00:00:58.806 --> 00:01:02.006 align:middle
+que tenemos nuestro objeto Dinosaur,
+podemos escribir algunas afirmaciones
+
+00:01:03.406 --> 00:01:09.486 align:middle
+self::assertSame() que Big Eaty es
+idéntico a $dino->getName(),
+
+00:01:11.546 --> 00:01:16.876 align:middle
+assertSame() que Tyrannosaurus es
+idéntico a $dino->getGenus(),
+
+00:01:19.236 --> 00:01:25.656 align:middle
+assertSame() que 15 es idéntico a getLength(),
+y por último, pero no menos importante,
+
+00:01:26.036 --> 00:01:32.476 align:middle
+assertSame() que Big Eaty sigue en Paddock
+A cuando llamamos a getEnclosure().
+
+00:01:33.346 --> 00:01:35.286 align:middle
+y que no anda suelto por la isla.
+
+00:01:36.266 --> 00:01:37.136 align:middle
+¡Vamos a probarlo!
+
+00:01:37.286 --> 00:01:39.136 align:middle
+Vuelve a tu terminal y
+ejecuta: ./vendor/bin/phpunit
+
+00:01:39.366 --> 00:01:42.656 align:middle
+Y... ¡SÍ!
+
+00:01:42.656 --> 00:01:47.226 align:middle
+Tenemos una prueba con
+cuatro afirmaciones. Pero...
+
+00:01:48.026 --> 00:01:54.206 align:middle
+volviendo a mirar nuestra clase Dinosaur, en
+realidad no estamos haciendo gran cosa aquí. Estamos
+
+00:01:54.516 --> 00:01:59.776 align:middle
+requiriendo unos cuantos argumentos en nuestro
+constructor, estableciéndolos en propiedades, y
+
+00:01:59.896 --> 00:02:02.716 align:middle
+exponiendo esas propiedades
+con métodos getter. Nada
+
+00:02:03.016 --> 00:02:05.476 align:middle
+complejo en absoluto. Así que,
+
+00:02:06.246 --> 00:02:12.366 align:middle
+aunque nuestro DinosaurTest es perfectamente
+aceptable, no es el más útil. Porque
+
+00:02:12.646 --> 00:02:16.986 align:middle
+las probabilidades de que estos
+métodos tengan un error son bajas. Y
+
+00:02:17.256 --> 00:02:23.636 align:middle
+además, si hubiera un fallo, probablemente
+lo detectaremos al probar otras partes de
+
+00:02:23.636 --> 00:02:25.586 align:middle
+nuestra aplicación que
+los llaman. La cuestión
+
+00:02:26.116 --> 00:02:31.026 align:middle
+es que, aunque puedes hacer lo que quieras,
+probablemente ésta no sea una prueba que
+
+00:02:31.026 --> 00:02:32.986 align:middle
+yo escribiría en un proyecto real. Mi
+
+00:02:33.696 --> 00:02:37.396 align:middle
+regla general es: si un método
+asusta, merece una prueba. Y
+
+00:02:37.646 --> 00:02:41.576 align:middle
+si no estás seguro, siempre es
+seguro añadir una prueba. Por
+
+00:02:42.246 --> 00:02:47.166 align:middle
+cierto: el orden de los argumentos de
+los métodos assert es importante. El
+
+00:02:47.846 --> 00:02:53.386 align:middle
+primer argumento debe ser siempre
+el esperado -como Big Eaty - y
+
+00:02:54.246 --> 00:02:59.256 align:middle
+el segundo debe ser el valor real que
+obtenemos -como $dino->getName()-. Esto
+
+00:03:00.106 --> 00:03:03.286 align:middle
+no es un gran problema para las aserciones
+que estamos utilizando aquí... aunque
+
+00:03:03.876 --> 00:03:08.406 align:middle
+si lo inviertes, el mensaje
+de error será confuso.
+
+00:03:09.316 --> 00:03:14.446 align:middle
+Es más importante para otras aserciones,
+como assertGreaterThan(). .. que
+
+00:03:15.896 --> 00:03:20.726 align:middle
+podemos utilizar para probar que
+$dino->getLength() es mayor que 10. Cuando
+
+00:03:22.406 --> 00:03:25.836 align:middle
+probamos esto ¡Si! Un fallo
+
+00:03:25.896 --> 00:03:31.706 align:middle
+en DinosaurTest: Falló la afirmación
+de que 10 es mayor que 15. ¡Ups!
+
+00:03:31.866 --> 00:03:35.786 align:middle
+Mirando hacia atrás en
+nuestro DinosaurTest, esta
+
+00:03:36.066 --> 00:03:42.526 align:middle
+prueba falló porque pasamos primero el valor
+real en lugar de nuestro valor esperado. Antes de
+
+00:03:43.056 --> 00:03:47.966 align:middle
+limpiar esto, vamos a pasar un tercer
+argumento opcional: Se supone que Dino
+
+00:03:48.426 --> 00:03:51.466 align:middle
+es mayor de 10 metros. Para
+
+00:03:52.176 --> 00:03:56.356 align:middle
+ver qué hace esto, vuelve a ejecutar
+las pruebas: Y... ¡qué bien!
+
+00:03:56.356 --> 00:04:01.556 align:middle
+La prueba sigue fallando, pero
+ahora también vemos el mensaje, que
+
+00:04:01.956 --> 00:04:06.946 align:middle
+a veces puede ayudarnos a entender más
+rápidamente qué ha fallado y por qué. Todos los
+
+00:04:07.896 --> 00:04:12.676 align:middle
+métodos de afirmación tienen este argumento
+"mensaje" y me gusta utilizarlo cuando
+
+00:04:12.676 --> 00:04:16.416 align:middle
+una prueba compleja podría necesitar
+un poco más de explicación.
+
+00:04:17.656 --> 00:04:22.766 align:middle
+Quiero volver al nombre de nuestro primer
+método de prueba: testCanGetAndSetData. En el
+
+00:04:23.586 --> 00:04:27.846 align:middle
+PHP estándar, intentamos crear
+métodos que sean descriptivos... pero
+
+00:04:28.236 --> 00:04:30.936 align:middle
+no necesariamente superlargos... ya que
+
+00:04:31.366 --> 00:04:33.376 align:middle
+necesitaremos llamarlos
+en nuestro código. Buenos
+
+00:04:34.246 --> 00:04:38.786 align:middle
+ejemplos son getGenus() y getName() en
+la clase Dinosaur. Pero cuando se trata
+
+00:04:39.616 --> 00:04:45.226 align:middle
+de hacer pruebas, mantener las cosas
+cortas no es una ventaja. Compruébalo:
+
+00:04:45.226 --> 00:04:49.426 align:middle
+Cambio el nombre de nuestro método
+de prueba a testDinosaur()... y
+
+00:04:49.716 --> 00:04:52.286 align:middle
+vuelvo a ejecutar nuestras pruebas. PHPUnit
+
+00:04:52.556 --> 00:04:54.386 align:middle
+nos dice que
+
+00:04:54.836 --> 00:05:00.166 align:middle
+DinosaurTest::testDinosaur() falló al
+afirmar que 10 es mayor que 15. Vale...
+
+00:05:00.736 --> 00:05:04.406 align:middle
+¿pero qué estamos probando? El
+
+00:05:05.126 --> 00:05:08.546 align:middle
+nombre del método - testDinosaur()
+- no nos dice nada... ¡sobre todo
+
+00:05:09.116 --> 00:05:14.076 align:middle
+porque estamos dentro de una clase
+llamada DinosaurTest! Sí, lo entiendo
+
+00:05:14.626 --> 00:05:17.726 align:middle
+: ¡estamos probando dinosaurios! El nombre de
+
+00:05:18.346 --> 00:05:21.086 align:middle
+cada método de prueba es tu oportunidad de
+
+00:05:21.086 --> 00:05:26.416 align:middle
+describir exactamente lo que estás probando, e incluso a
+veces el porqué. Vuelve a cambiar el nombre de la prueba
+
+00:05:27.236 --> 00:05:30.966 align:middle
+a testCanGetAndSetData(), que
+
+00:05:31.356 --> 00:05:35.616 align:middle
+explica mucho mejor el propósito
+de esta prueba. Observa
+
+00:05:36.296 --> 00:05:38.796 align:middle
+que casi se lee como una frase. ¡ Eso es
+
+00:05:39.186 --> 00:05:40.616 align:middle
+estupendo! Y
+
+00:05:41.446 --> 00:05:45.706 align:middle
+algunas personas incluso van más
+allá incluyendo la palabra "eso",
+
+00:05:45.896 --> 00:05:49.826 align:middle
+como testItCanGetAndSetData(). La
+
+00:05:50.806 --> 00:05:56.046 align:middle
+cuestión es: sé descriptivo, no hay nada
+malo en los nombres largos de las pruebas. Deja
+
+00:05:57.216 --> 00:06:00.176 align:middle
+que te muestre otro truco genial con PHPUnit.
+
+00:06:01.066 --> 00:06:03.626 align:middle
+Vuelve al terminal y ejecuta de
+nuevo nuestras pruebas... pero
+
+00:06:04.006 --> 00:06:08.306 align:middle
+esta vez pasa una bandera
+--testdox: Y... ¡Wooah!
+
+00:06:09.016 --> 00:06:12.296 align:middle
+La salida es diferente. Lo
+
+00:06:12.576 --> 00:06:17.026 align:middle
+más importante es que ha convertido el nombre del
+método en una frase legible para los humanos... lo cual
+
+00:06:17.216 --> 00:06:19.516 align:middle
+es menor, pero genial. Por
+
+00:06:20.126 --> 00:06:25.176 align:middle
+cierto, el ejecutable phpunit tiene muchas
+más opciones y argumentos disponibles. Ejecuta
+
+00:06:25.596 --> 00:06:28.226 align:middle
+PHPUnit con la bandera help para verlos.
+
+00:06:29.086 --> 00:06:32.256 align:middle
+Hablaremos de las más útiles a lo
+largo del tutorial. Antes de continuar
+
+00:06:32.256 --> 00:06:36.126 align:middle
+, tenemos que limpiar nuestra prueba. Elimina
+
+00:06:36.746 --> 00:06:38.946 align:middle
+esta aserción testGreaterThan()... y
+
+00:06:38.946 --> 00:06:44.356 align:middle
+vuelve a ejecutar nuestras pruebas: Y... ¡SÍ!
+
+00:06:44.526 --> 00:06:47.356 align:middle
+Todas nuestras pruebas pasan.
+A continuación, vamos a
+
+00:06:48.206 --> 00:06:52.336 align:middle
+ponernos filosóficos y a echar un vistazo al
+
+00:06:52.336 --> 00:06:56.186 align:middle
+Desarrollo Dirigido por
+Pruebas o, simplemente, a TDD

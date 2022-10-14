@@ -38,7 +38,14 @@ need their medicine, or have escaped. Wait, What?! Hopefully, GitHub doesn't go 
 when *that* happens.
 
 And that's where we come in! We've already built the first version of the Dinotopia Status
-app. Looking at the code behind this, it's pretty simple: one controller, one `Dinosaur` class...
+app. Looking at the code behind this, it's pretty simple: one controller
+
+[[[ code('8077dc53c3') ]]]
+
+one `Dinosaur` class...
+
+[[[ code('922f8aa370') ]]]
+
 and exactly *zero* tests. *Our* job is to fix that. We're also going to *add* a feature
 where we read each dino's status from GitHub and render it. That'll help Bob avoid going
 into the enclosure of Big Eaty - our resident T-Rex - when his status is "Hungry". Those

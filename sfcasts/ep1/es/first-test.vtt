@@ -1,0 +1,328 @@
+WEBVTT
+
+00:00:01.266 --> 00:00:03.166 align:middle
+Ya tenemos esta clase Dinosaur...
+
+00:00:03.376 --> 00:00:04.936 align:middle
+y es bastante sencilla.
+
+00:00:04.936 --> 00:00:10.346 align:middle
+Pero cuando se trata de dinosaurios, los errores en
+nuestro código pueden ser, mmm, un poco dolorosos.
+
+00:00:10.716 --> 00:00:13.726 align:middle
+¡Así que vamos a añadir
+algunas pruebas básicas!
+
+00:00:14.656 --> 00:00:17.396 align:middle
+Mmmm... ¿dónde ponemos esta nueva prueba?
+
+00:00:18.286 --> 00:00:22.226 align:middle
+Técnicamente, podemos poner nuestras pruebas
+en cualquier lugar de nuestro proyecto.
+
+00:00:22.376 --> 00:00:29.866 align:middle
+Pero cuando instalamos symfony/test-pack, Flex
+creó un directorio tests/ que, sin sorpresa,
+
+00:00:30.076 --> 00:00:33.036 align:middle
+es el lugar recomendado
+para poner nuestras pruebas.
+
+00:00:33.556 --> 00:00:38.396 align:middle
+Recuerda que, en este tutorial, sólo
+estamos tratando con pruebas unitarias.
+
+00:00:38.876 --> 00:00:43.666 align:middle
+Así que, dentro de tests/, crea
+un nuevo directorio llamado Unit.
+
+00:00:44.476 --> 00:00:47.776 align:middle
+Y como nuestro Dinosaur::class vive en el
+espacio de nombres Entity - crea al mismo tiempo
+
+00:00:48.116 --> 00:00:52.106 align:middle
+un directorio Entity dentro de él.
+
+00:00:52.656 --> 00:00:56.486 align:middle
+Toda esta organización
+es técnicamente opcional:
+
+00:00:56.916 --> 00:01:00.326 align:middle
+puedes organizar el directorio
+tests/ como quieras.
+
+00:01:00.786 --> 00:01:05.296 align:middle
+Pero, poner todas nuestras pruebas unitarias
+en un directorio Unit es simplemente...
+
+00:01:06.076 --> 00:01:09.746 align:middle
+bonito. Y la razón por la que
+hemos creado el directorio Entity
+
+00:01:09.746 --> 00:01:14.856 align:middle
+es porque queremos que la estructura de archivos dentro
+de Unit refleje la estructura de nuestro directorio src/.
+
+00:01:15.746 --> 00:01:19.516 align:middle
+Es una buena práctica que mantiene
+nuestras pruebas organizadas.
+
+00:01:20.466 --> 00:01:24.076 align:middle
+Por último, crea una nueva
+clase llamada DinosaurTest.
+
+00:01:25.676 --> 00:01:32.366 align:middle
+¡Utilizar ese sufijo Test tiene sentido: estamos
+probando Dinosaur, así que la llamamos DinosaurTest!
+
+00:01:32.886 --> 00:01:39.786 align:middle
+Pero también es un requisito: PHPUnit
+-nuestra biblioteca de pruebas- lo requiere.
+
+00:01:40.396 --> 00:01:47.046 align:middle
+También requiere que cada clase
+extienda TestCase: Ahora vamos a
+
+00:01:47.046 --> 00:01:50.316 align:middle
+escribir una prueba sencilla para
+asegurarnos de que todo funciona.
+
+00:01:50.906 --> 00:01:56.966 align:middle
+Dentro de nuestra clase DinosaurTest,
+añadamos public function testIsWorks()...
+
+00:01:57.436 --> 00:02:01.216 align:middle
+¡donde crearemos la prueba
+más emocionante de todas!
+
+00:02:02.096 --> 00:02:04.966 align:middle
+Si te gustan los tipos de retorno -¡a mí sí!
+
+00:02:05.306 --> 00:02:06.516 align:middle
+- utiliza void...
+
+00:02:06.866 --> 00:02:14.796 align:middle
+aunque eso es opcional Dentro de la clase
+self::assertEquals(42, 42): ¡Eso es todo!
+
+00:02:14.796 --> 00:02:23.416 align:middle
+No es una prueba muy interesante -si nuestro
+ordenador piensa que 42 no es igual a 42,
+
+00:02:23.896 --> 00:02:27.476 align:middle
+tenemos problemas mayores- pero es suficiente.
+
+00:02:27.906 --> 00:02:29.426 align:middle
+¿Cómo ejecutamos la prueba?
+
+00:02:30.256 --> 00:02:31.956 align:middle
+Ejecutando PHPUnit.
+
+00:02:32.746 --> 00:02:34.386 align:middle
+En tu terminal, ejecuta: ./vendor/bin/phpunit
+
+00:02:34.536 --> 00:02:38.516 align:middle
+Y... ¡impresionante!
+
+00:02:38.516 --> 00:02:44.956 align:middle
+PHPUnit vio una prueba -para nuestro
+único método de prueba- y una aserción.
+
+00:02:45.976 --> 00:02:50.486 align:middle
+También podríamos decir bin/phpunit
+para ejecutar nuestras pruebas, que
+
+00:02:50.926 --> 00:02:55.666 align:middle
+es básicamente un atajo para
+ejecutar vendor/bin/phpunit. Pero,
+
+00:02:56.746 --> 00:02:58.856 align:middle
+seguro que tienes curiosidad... ¿Qué es...
+
+00:02:59.506 --> 00:03:01.886 align:middle
+una aserción?
+
+00:03:02.466 --> 00:03:08.506 align:middle
+Volviendo a DinosaurTest, la única aserción
+se refiere al método assertEquals(), que
+
+00:03:08.896 --> 00:03:12.546 align:middle
+proviene de la clase TestCase de PHPUnit. Si
+
+00:03:12.546 --> 00:03:19.396 align:middle
+el valor real -42- no coincide con el valor
+esperado, la prueba fallaría. PHPUnit
+
+00:03:19.836 --> 00:03:22.856 align:middle
+tiene un montón de métodos
+de aserción más... y
+
+00:03:23.846 --> 00:03:29.296 align:middle
+podemos verlos todos yendo a
+https://phpunit.readthedocs.io. Está
+
+00:03:29.676 --> 00:03:34.596 align:middle
+lleno de cosas buenas, incluyendo
+una sección de "Aserciones". Y...
+
+00:03:34.796 --> 00:03:35.846 align:middle
+¡vaya! Míralas
+
+00:03:35.846 --> 00:03:36.906 align:middle
+todas...
+
+00:03:37.606 --> 00:03:40.856 align:middle
+Hablaremos de las aserciones más
+importantes a lo largo de la serie. Pero
+
+00:03:41.236 --> 00:03:43.596 align:middle
+por ahora, ¡volvamos a la prueba! Porque
+
+00:03:43.716 --> 00:03:50.656 align:middle
+tengo una pregunta: ¿cómo sabe
+PHPUnit que esto es un test? Cuando
+
+00:03:51.796 --> 00:03:56.376 align:middle
+llamamos a vendor/bin/phpunit, PHPUnit
+hace tres cosas. Primero, busca
+
+00:03:57.006 --> 00:03:59.916 align:middle
+su archivo de configuración, que
+
+00:04:00.126 --> 00:04:07.366 align:middle
+es phpunit.xml.dist: Dentro,
+encuentra testsuites... y
+
+00:04:08.046 --> 00:04:14.516 align:middle
+la parte directory dice: ¡Hey PHPUnit: ve a buscar
+pruebas dentro de un directorio tests/! En segundo lugar,
+
+00:04:15.516 --> 00:04:19.406 align:middle
+encuentra ese directorio y busca recursivamente
+
+00:04:19.406 --> 00:04:22.666 align:middle
+todas las clases que terminen
+con la palabra Test. En
+
+00:04:23.446 --> 00:04:25.626 align:middle
+este caso, DinosaurTest. Por último,
+
+00:04:26.166 --> 00:04:32.376 align:middle
+una vez que encuentra una clase de prueba, obtiene
+una lista de todos sus métodos públicos. Entonces...
+
+00:04:32.686 --> 00:04:38.676 align:middle
+¿estoy diciendo que PHPUnit ejecutará cada
+método público como una prueba? ¡Vamos a
+
+00:04:39.206 --> 00:04:40.126 align:middle
+averiguarlo! Crea
+
+00:04:40.916 --> 00:04:48.566 align:middle
+un nuevo public function
+itWorksTheSame(): void Dentro vamos a
+
+00:04:48.566 --> 00:04:53.286 align:middle
+self::assertSame() que 42
+es igual a 42. assertSame()
+
+00:04:54.136 --> 00:05:01.526 align:middle
+es muy similar a assertEquals() y veremos
+la diferencia en un minuto. Ahora,
+
+00:05:02.006 --> 00:05:06.606 align:middle
+vuelve a tu terminal y ejecutamos de
+nuevo estas pruebas: ¿Eh? PHPUnit
+
+00:05:06.916 --> 00:05:10.506 align:middle
+sigue diciendo que sólo hay
+una prueba y una aserción. Pero
+
+00:05:10.916 --> 00:05:16.666 align:middle
+dentro de nuestra clase de prueba,
+tenemos dos pruebas y dos aserciones. El
+
+00:05:17.306 --> 00:05:24.256 align:middle
+problema es que PHPUnit sólo ejecuta los métodos
+públicos que llevan como prefijo la palabra test.
+
+00:05:25.606 --> 00:05:31.526 align:middle
+Podrías poner la anotación @test encima del
+método, pero eso no es muy común. Así que
+
+00:05:31.796 --> 00:05:37.266 align:middle
+evitemos ser raros y cambiemos esto
+por testItWorksTheSame(). Ahora,
+
+00:05:38.776 --> 00:05:45.376 align:middle
+cuando ejecutemos la prueba ¡PHPUnit
+ve 2 pruebas y 2 aserciones! ¡Shweeeet!
+
+00:05:45.686 --> 00:05:51.586 align:middle
+¿Qué aspecto tiene
+cuando falla una prueba? ¡
+
+00:05:52.446 --> 00:05:53.296 align:middle
+Averigüémoslo! Cambia
+
+00:05:54.126 --> 00:05:58.456 align:middle
+nuestro 42 esperado por una cadena
+dentro de testItWorks()... y
+
+00:05:58.926 --> 00:06:01.576 align:middle
+haz lo mismo dentro de
+testItWorksTheSame(). Sí,
+
+00:06:02.566 --> 00:06:05.746 align:middle
+uno de ellos no funciona. Esta vez,
+
+00:06:06.976 --> 00:06:10.496 align:middle
+cuando lo probemos: ¡Oh, no! ¡ Un fallo
+
+00:06:10.616 --> 00:06:11.876 align:middle
+! DinosaurTest::testItWorksTheSame()
+
+00:06:12.406 --> 00:06:19.726 align:middle
+falló al afirmar que 42 es
+idéntico a 42. Así que...
+
+00:06:20.336 --> 00:06:27.316 align:middle
+assertEquals() pasó, pero
+assertSame() falló. Eso es
+
+00:06:27.896 --> 00:06:31.816 align:middle
+porque assertEquals() equivale a hacer un if
+
+00:06:31.816 --> 00:06:36.906 align:middle
+42 == 42: utilizando el
+doble signo de igualdad. Pero
+
+00:06:37.656 --> 00:06:44.876 align:middle
+assertSame() equivale a 42 ===
+42: con tres signos iguales. Y
+
+00:06:45.706 --> 00:06:52.006 align:middle
+como la cadena 42 no es
+triplemente igual al entero 42, esa
+
+00:06:52.396 --> 00:06:55.846 align:middle
+prueba falla y PHPUnit nos
+grita. Bien, ¡ ya tenemos
+
+00:06:57.026 --> 00:07:00.546 align:middle
+nuestras primeras pruebas! Aunque...
+
+00:07:00.966 --> 00:07:06.386 align:middle
+probar que la respuesta a la vida el
+universo y todo es igual a la respuesta a la
+
+00:07:06.386 --> 00:07:08.786 align:middle
+vida el universo y todo... no es
+
+00:07:08.786 --> 00:07:10.266 align:middle
+muy interesante. Así que
+
+00:07:10.576 --> 00:07:15.016 align:middle
+lo siguiente: vamos a escribir
+pruebas reales para la clase Dinosaur
