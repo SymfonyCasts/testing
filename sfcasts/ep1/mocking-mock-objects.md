@@ -40,7 +40,7 @@ I think that should do the trick, let's find out...
 ./vendor/bin/phpunit
 ```
 
-Umm... Yes! We're green all day... But best of all, we are 100% certain that we
+Umm... Yes! We're green all day... But best of all, the tests confirm we
 are using the correct URL and HTTP Method when we call GitHub.
 
 But... What if we actually wanted to call GitHub *more* that just once? Or not at all?
