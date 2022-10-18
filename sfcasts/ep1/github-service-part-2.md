@@ -46,7 +46,7 @@ status label? Hmm... at the beginning of this method, set the default `$health`
 to `HealthStatus::HEALTHY` - because GenLab would *never* forget to put a
 `Sick` label on a dino that isn't feeling well.
 
-So... I think we did it! Let's run our tests to be sure.
+Hmm... Welp, I think we did it! Let's run our tests to be sure.
 
 ```terminal
 ./vendor/bin/phpunit
