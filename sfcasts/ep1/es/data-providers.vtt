@@ -1,0 +1,200 @@
+WEBVTT
+
+00:00:02.286 --> 00:00:04.606 align:middle
+Tratamos nuestro código fuente
+como un ciudadano de primera clase.
+
+00:00:05.306 --> 00:00:09.506 align:middle
+Eso significa, entre otras cosas,
+que evitamos la duplicación.
+
+00:00:10.256 --> 00:00:13.256 align:middle
+¿Por qué no hacer lo
+mismo con nuestras pruebas?
+
+00:00:13.256 --> 00:00:16.126 align:middle
+Nuestras tres pruebas para el tamaño son...
+
+00:00:16.666 --> 00:00:17.426 align:middle
+repetitivas.
+
+00:00:18.056 --> 00:00:23.826 align:middle
+Prueban lo mismo sólo que con una entrada
+ligeramente diferente y una afirmación distinta.
+
+00:00:24.726 --> 00:00:26.396 align:middle
+¿Hay alguna forma de mejorar esto?
+
+00:00:26.886 --> 00:00:31.046 align:middle
+Absolutamente: gracias a los
+Proveedores de Datos de PHPUnit.
+
+00:00:32.676 --> 00:00:38.466 align:middle
+Desplázate al final de DinosaurTest y añade
+public function sizeDescriptionProvider().
+
+00:00:40.446 --> 00:00:47.316 align:middle
+Dentro, yield un array con
+[10, 'Large'], luego yield [5,
+
+00:00:47.566 --> 00:00:52.656 align:middle
+'Medium'] , y finalmente yield [4, 'Small'].
+
+00:00:54.076 --> 00:00:59.666 align:middle
+Yield no es más que una forma elegante de devolver arrays
+utilizando la función Generador incorporada de PHP.
+
+00:01:00.536 --> 00:01:07.776 align:middle
+Como verás en un minuto, estos valores -como 10 y
+large - se convertirán en argumentos de nuestra prueba.
+
+00:01:09.086 --> 00:01:17.846 align:middle
+Muy bien, arriba en nuestro método de prueba, añade
+un argumento int $length y luego string $expectedSize.
+
+00:01:19.576 --> 00:01:24.616 align:middle
+Ahora, en lugar de que la longitud
+de Big Eaty sea 10, utiliza $length.
+
+00:01:25.246 --> 00:01:30.146 align:middle
+Y para nuestra afirmación, utiliza
+$expectedSize en lugar de Large.
+
+00:01:30.906 --> 00:01:35.536 align:middle
+Ya no necesitamos las pruebas mediana y
+pequeña, así que podemos eliminarlas.
+
+00:01:36.756 --> 00:01:40.266 align:middle
+De acuerdo Vuelve a tu terminal y ejecuta
+nuestras pruebas: ./vendor/bin/phpunit
+
+00:01:40.706 --> 00:01:45.766 align:middle
+--testdox Uh oh... ¡ Nuestra
+
+00:01:46.156 --> 00:01:48.256 align:middle
+prueba está fallando porque!
+
+00:01:48.256 --> 00:01:52.886 align:middle
+Dice: ArgumentCountError - Se han proporcionado
+muy pocos argumentos. se han pasado 0
+
+00:01:53.276 --> 00:01:56.366 align:middle
+y se esperaban exactamente 2. Oops,
+
+00:01:57.096 --> 00:02:01.626 align:middle
+nunca le dijimos a nuestro método de
+prueba que utilizara el proveedor de datos.
+
+00:02:02.366 --> 00:02:10.046 align:middle
+Vuelve a nuestro test y añade un DocBlock con
+@dataProvider sizeDescriptionProvider. Cuando
+
+00:02:11.386 --> 00:02:14.066 align:middle
+se publique PHPUnit 10, podremos
+
+00:02:14.066 --> 00:02:18.526 align:middle
+utilizar un elegante atributo #[DataProvider]
+en lugar de esta anotación. ¡ Vuelve
+
+00:02:19.826 --> 00:02:20.836 align:middle
+al terminal! Ejecuta
+
+00:02:21.276 --> 00:02:23.976 align:middle
+de nuevo las pruebas: Y... ¡Sí!
+
+00:02:24.266 --> 00:02:26.936 align:middle
+¡Nuestras pruebas están pasando! En
+
+00:02:26.936 --> 00:02:33.586 align:middle
+la salida, vemos que cada prueba se ejecutó
+con los conjuntos de datos 0, 1 y 2. Ésos
+
+00:02:34.316 --> 00:02:36.436 align:middle
+son los arrays del proveedor de datos.
+
+00:02:37.166 --> 00:02:38.846 align:middle
+Podemos arreglar esto un poco... porque
+
+00:02:39.026 --> 00:02:44.616 align:middle
+no va a ser muy útil después si PHPUnit nos dice
+que el conjunto de datos 2 ha fallado. ¿Cuál
+
+00:02:45.066 --> 00:02:46.256 align:middle
+es ese?
+
+00:02:47.256 --> 00:02:50.856 align:middle
+Vuelve a nuestra prueba y, aquí abajo,
+después de la primera sentencia yield, añade
+
+00:02:51.446 --> 00:02:54.966 align:middle
+la clave de mensaje '10 Meter
+Large Dino' =>. Copia
+
+00:02:56.386 --> 00:03:03.136 align:middle
+y pega esto para nuestro dino mediano con 5 en lugar de 10 y esto
+tiene que ser Medium. Haz lo mismo para nuestro dino pequeño con
+
+00:03:04.576 --> 00:03:08.256 align:middle
+4 y Small . De vuelta
+
+00:03:09.946 --> 00:03:14.286 align:middle
+a nuestro terminal, veamos ahora
+nuestras pruebas: Y... ¡Genial
+
+00:03:14.286 --> 00:03:15.556 align:middle
+!
+
+00:03:16.006 --> 00:03:19.526 align:middle
+Ahora tenemos que el dino de
+10 metros o más es grande con
+
+00:03:19.736 --> 00:03:26.866 align:middle
+Dino grande de 10 metros Esto se ve mucho
+mejor que ver el conjunto de datos 0... aunque
+
+00:03:27.556 --> 00:03:29.566 align:middle
+tenemos que arreglar una cosa más. El
+
+00:03:30.436 --> 00:03:33.396 align:middle
+nombre del método de prueba
+ya no tiene sentido. Cámbialo
+
+00:03:34.336 --> 00:03:39.616 align:middle
+por
+testDinoHasCorrectSizeDescriptionFromLength(). Y,
+
+00:03:40.856 --> 00:03:46.666 align:middle
+mirando nuestra afirmación, el argumento
+del mensaje ya no es muy útil... así que
+
+00:03:46.776 --> 00:03:48.046 align:middle
+eliminémoslo. Por último,
+
+00:03:49.836 --> 00:03:52.406 align:middle
+aunque no es necesario...
+
+00:03:52.806 --> 00:03:57.206 align:middle
+Podemos utilizar array o \Generator como
+tipo de retorno para el proveedor de datos.
+
+00:03:58.126 --> 00:04:03.596 align:middle
+Optemos por \Generator; al fin y al cabo, puede que algún
+día los necesitemos para las vallas del parque... Para
+
+00:04:04.536 --> 00:04:10.846 align:middle
+asegurarnos de que esto no rompe nada, prueba las
+pruebas una vez más: Ummm... ¡Impresionante!
+
+00:04:11.076 --> 00:04:14.756 align:middle
+¡Cheques verdes por todas partes! Y
+
+00:04:15.466 --> 00:04:21.336 align:middle
+ahí lo tienes, con un poco de cariño, nuestras pruebas
+están ahora bien ordenadas... A continuación, vamos a
+
+00:04:22.236 --> 00:04:25.706 align:middle
+averiguar cómo podemos obtener el
+estado de salud de nuestro Dino
+
+00:04:25.706 --> 00:04:27.916 align:middle
+desde GitHub y utilizarlo en nuestra aplicación..
