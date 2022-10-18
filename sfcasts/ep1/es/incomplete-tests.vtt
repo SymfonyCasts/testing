@@ -1,0 +1,291 @@
+WEBVTT
+
+00:00:01.156 --> 00:00:05.616 align:middle
+Bob acaba de decirnos que necesita mostrar qué
+dinos aceptan la comida en nuestra aplicación...
+
+00:00:06.166 --> 00:00:08.236 align:middle
+Quiero decir que aceptan visitantes.
+
+00:00:08.916 --> 00:00:13.626 align:middle
+GenLab tiene protocolos estrictos: los visitantes
+del parque pueden visitar a los dinos sanos...
+
+00:00:14.046 --> 00:00:16.496 align:middle
+pero si están enfermos, no se admiten visitas.
+
+00:00:17.376 --> 00:00:23.656 align:middle
+Para ayudar a mostrar esto, necesitamos almacenar el
+estado de salud de cada dino y tener una forma fácil
+
+00:00:23.656 --> 00:00:26.996 align:middle
+de averiguar si esto significa
+que aceptan visitas o no...
+
+00:00:27.876 --> 00:00:31.856 align:middle
+Empecemos por añadir un método -
+isAcceptingVisitors() a Dinosaur.
+
+00:00:32.546 --> 00:00:37.136 align:middle
+Pero lo haremos a la manera de
+TDD, escribiendo primero el test.
+
+00:00:38.216 --> 00:00:44.776 align:middle
+En DinosaurTest añade public function
+testIsAcceptingVisitorsByDefault().
+
+00:00:46.476 --> 00:00:52.016 align:middle
+Dentro, $dino = new Dinosaur()
+y llamémosle Dennis.
+
+00:00:53.856 --> 00:00:59.346 align:middle
+Si simplemente instanciamos un Dinosaur y no
+hacemos nada más, la política de GenLab establece
+
+00:00:59.346 --> 00:01:02.776 align:middle
+que está bien visitar ese D inosaurio.
+
+00:01:03.546 --> 00:01:08.606 align:middle
+Así que assertTrue() que
+Dennis isAcceptingVisitors().
+
+00:01:10.276 --> 00:01:16.656 align:middle
+Debajo de esta prueba, añade otra llamada
+testIsNotAcceptingVisitorsIfSick().
+
+00:01:18.586 --> 00:01:24.326 align:middle
+Y por ahora, seamos perezosos y digamos
+simplemente $this->markTestIncomplete().
+
+00:01:25.706 --> 00:01:27.806 align:middle
+Bien, probemos las pruebas:
+./vendor/bin/phpunit
+
+00:01:28.446 --> 00:01:33.926 align:middle
+--testdox Y... ¡no hay
+
+00:01:34.096 --> 00:01:35.496 align:middle
+sorpresa! Nuestra
+
+00:01:35.726 --> 00:01:40.266 align:middle
+primera prueba nueva falla: Llamada a un método
+indefinido. Pero nuestra siguiente prueba
+
+00:01:41.316 --> 00:01:47.646 align:middle
+tiene este extraño círculo ∅ porque
+hemos marcado la prueba como incompleta.
+
+00:01:48.566 --> 00:01:51.176 align:middle
+A veces utilizo esto cuando sé que
+tengo que escribir una prueba...
+
+00:01:51.586 --> 00:01:54.256 align:middle
+Pero aún no estoy preparado para hacerlo.
+
+00:01:54.436 --> 00:02:01.806 align:middle
+PHPUnit también tiene un método markSkipped() que puede
+usarse para omitir pruebas bajo ciertas condiciones,
+
+00:02:02.176 --> 00:02:05.216 align:middle
+como si una prueba debe ejecutarse en PHP 8.1.
+
+00:02:06.186 --> 00:02:08.616 align:middle
+En cualquier caso, volvamos
+a la codificación...
+
+00:02:09.766 --> 00:02:14.556 align:middle
+En nuestra clase Dinosaur, añadimos
+un método isAcceptingVisitors()
+
+00:02:14.946 --> 00:02:19.756 align:middle
+que devuelve un bool, y en su
+interior devolveremos true.
+
+00:02:20.926 --> 00:02:23.296 align:middle
+Veamos qué ocurre ahora al
+ejecutar nuestras pruebas...
+
+00:02:23.826 --> 00:02:25.536 align:middle
+Y... ¡Sí!
+
+00:02:26.086 --> 00:02:27.916 align:middle
+Is accepting visitors by default...
+
+00:02:28.226 --> 00:02:29.636 align:middle
+¡ahora está pasando!
+
+00:02:30.566 --> 00:02:33.646 align:middle
+Todavía tenemos una prueba
+incompleta como recordatorio,
+
+00:02:34.266 --> 00:02:36.886 align:middle
+pero no está haciendo que falle
+todo nuestro conjunto de pruebas.
+
+00:02:37.736 --> 00:02:38.966 align:middle
+Vamos a terminar eso ahora.
+
+00:02:40.246 --> 00:02:45.356 align:middle
+Si echamos un vistazo a las cuestiones en GitHub, GenLab
+está utilizando etiquetas para identificar la "salud"
+
+00:02:45.476 --> 00:02:48.316 align:middle
+de cada dino: "Enfermo" frente a "Sano".
+
+00:02:48.756 --> 00:02:53.136 align:middle
+Muy pronto, vamos a leer estas etiquetas
+y a utilizarlas en nuestra aplicación.
+
+00:02:54.106 --> 00:02:58.886 align:middle
+Para prepararnos para ello, necesitamos una forma
+de almacenar la salud actual de cada Dinosaur.
+
+00:03:00.156 --> 00:03:07.946 align:middle
+Dentro de la prueba, elimina markAsIncomplete()
+y crea un $dino llamado Bumpy...
+
+00:03:08.696 --> 00:03:10.596 align:middle
+que es un triceratops.
+
+00:03:11.606 --> 00:03:21.336 align:middle
+Ahora llama a $dino->setHealth('Sick') y luego a
+assertFalse() que es un Bumpy isAcceptingVisitors().
+
+00:03:21.756 --> 00:03:24.466 align:middle
+Está malhumorado cuando está enfermo.
+
+00:03:25.256 --> 00:03:33.586 align:middle
+Pero, no nos sorprende, PHPStorm nos dice Método setHealth()
+no encontrado dentro de Dinosaurio Así que... vamos a
+
+00:03:33.586 --> 00:03:40.556 align:middle
+saltarnos la prueba y vamos directamente a
+Dinosaur para añadir un método setHealth()
+
+00:03:40.646 --> 00:03:44.316 align:middle
+que acepte un argumento string $health...
+
+00:03:44.826 --> 00:03:46.396 align:middle
+y devuelva void.
+
+00:03:48.206 --> 00:03:51.046 align:middle
+Dentro, digamos $this->health = $health...
+
+00:03:52.476 --> 00:03:57.516 align:middle
+entonces, arriba, añade una propiedad private
+string $health que por defecto sea Healthy.
+
+00:03:58.276 --> 00:04:01.986 align:middle
+¡Genial! Ahora sólo tenemos que
+actualizar isAcceptingVisitors()
+
+00:04:01.986 --> 00:04:06.186 align:middle
+para que devuelva $this->health
+=== $healthy en lugar de true.
+
+00:04:06.276 --> 00:04:09.646 align:middle
+Cruza los dedos para que
+nuestras pruebas pasen ahora...
+
+00:04:10.726 --> 00:04:12.426 align:middle
+Y... ¡Misión cumplida!
+
+00:04:13.266 --> 00:04:17.656 align:middle
+Ahora que las pruebas pasan, estoy pensando que
+deberíamos refactorizar el método setHealth()
+
+00:04:17.856 --> 00:04:19.726 align:middle
+para que sólo permita Sick o Healthy...
+
+00:04:20.056 --> 00:04:21.726 align:middle
+y no algo como Dancing...
+
+00:04:22.506 --> 00:04:29.096 align:middle
+Dentro de src/, crea un nuevo directorio
+Enum/ y luego una nueva clase: HealthStatus.
+
+00:04:29.216 --> 00:04:33.656 align:middle
+Para la plantilla, selecciona
+Enum y haz clic en OK.
+
+00:04:34.556 --> 00:04:37.876 align:middle
+Necesitamos que HealthStatus esté
+respaldado por un : string...
+
+00:04:38.666 --> 00:04:47.016 align:middle
+Y nuestro primer case HEALTHY devolverá
+Healthy, luego case SICK devolverá Sick.
+
+00:04:48.596 --> 00:04:54.106 align:middle
+En la propiedad Dinosaur::$health,
+por defecto, HealthStatus::HEALTHY.
+
+00:04:55.266 --> 00:04:58.066 align:middle
+Y cambia el tipo de propiedad a HealthStatus.
+
+00:04:59.546 --> 00:05:07.376 align:middle
+Abajo en isAcceptingVisitors(), devuelve true
+si $this->health === HealthStatus::HEALTHY.
+
+00:05:08.306 --> 00:05:12.876 align:middle
+Abajo en setHealth(), cambia el tipo
+de argumento de string a HealthStatus.
+
+00:05:14.276 --> 00:05:18.726 align:middle
+Lo último que hay que hacer es utilizar
+HealthStatus::SICK en nuestra prueba.
+
+00:05:20.176 --> 00:05:21.826 align:middle
+¡A ver si rompemos algo!
+
+00:05:22.666 --> 00:05:24.036 align:middle
+Y... ¡Ya!
+
+00:05:24.406 --> 00:05:26.236 align:middle
+No hemos roto nada...
+
+00:05:26.546 --> 00:05:28.456 align:middle
+Sólo estoy un poco sorprendido.
+
+00:05:29.486 --> 00:05:34.586 align:middle
+Para cumplir los deseos de Bob, abre
+la plantilla main/index.html.twig
+
+00:05:34.956 --> 00:05:38.166 align:middle
+y añade un encabezamiento
+Accepting Visitors a la tabla.
+
+00:05:40.166 --> 00:05:46.136 align:middle
+En el bucle dino, crea un nuevo <td>
+y llama a dino.acceptingVisitors.
+
+00:05:47.096 --> 00:05:52.436 align:middle
+Mostraremos Yes si es verdadero
+o No si obtenemos falso.
+
+00:05:54.016 --> 00:05:56.696 align:middle
+En el navegador, actualiza
+la página de estado...
+
+00:05:57.216 --> 00:05:58.136 align:middle
+Y... ¡WooHoo!
+
+00:05:58.136 --> 00:06:02.106 align:middle
+Todos nuestros dinos
+están aceptando visitas...
+
+00:06:02.406 --> 00:06:05.336 align:middle
+¡porque no hemos puesto ninguno
+como "enfermo" en nuestro código!
+
+00:06:05.956 --> 00:06:12.336 align:middle
+Pero... Ya sabemos, por haber mirado antes en GitHub,
+que algunos de nuestros dinos están enfermos.
+
+00:06:13.116 --> 00:06:18.556 align:middle
+Lo siguiente: vamos a utilizar la API de GitHub para
+leer las etiquetas de nuestro repositorio de GitHub
+
+00:06:18.756 --> 00:06:24.856 align:middle
+y establecer la salud real de cada Dinosaur para
+que nuestro panel se actualice en tiempo real
