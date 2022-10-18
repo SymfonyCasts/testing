@@ -15,8 +15,8 @@ composer require symfony/http-client
 Inside of `GithubService`, instantiate an HTTP client with
 `$client = HttpClient::create()`. To make a request, call `$client->request()`.
 This needs 2 things. 1st: what HTTP method to use, like `GET` or `POST`. In this
-case, it should be `GET`. 2nd: the URL, which I'll paste in for GitHub, to fetch 
-all the "issues" from the `dino-park` repository.
+case, it should be `GET`. 2nd: the URL, which I'll paste in. This will fetch all 
+of the "issues" from the `dino-park` repository via GitHub's API.
 
 ## Parse the HTTP Response
 
