@@ -5,17 +5,25 @@ and then we can *read* that data via some methods. Instead of just "hoping" this
 let's go ahead and make sure that our `Dinosaur` class is *really* bug-free with some tests!
 
 In `DinosaurTest`, remove these two tests and replace them with
-`public function testCanGetAndSetData()`. Inside... we're literally going to play with
-the object by instantiating it and trying some methods.
+`public function testCanGetAndSetData()`:
+
+[[[ code ('75b6e2188d')]]]
+
+Inside... we're literally going to play with the object by instantiating it and trying some methods.
 
 So, `$dino = new Dinosaur()`.... and pass in some data.
 For the name, eh - let's use `Big Eaty`: he's our resident `Tyrannosaurus` who happens to
-be `15` meters in length. And Big Eaty is currently living in `Paddock A`. Now
-that we have our `Dinosaur` object, we can write a few assertions. `self::assertSame()`
+be `15` meters in length. And Big Eaty is currently living in `Paddock A`:
+
+[[[ code('072fb358a9') ]]]
+
+Now that we have our `Dinosaur` object, we can write a few assertions. `self::assertSame()`
 that `Big Eaty` is identical to `$dino->getName()`, `assertSame()` that `Tyrannosaurus` is
 identical to `$dino->getGenus()`, `assertSame()` that `15` is identical to `getLength()`,
 and last but not least, `assertSame()` that Big Eaty is *still* in `Paddock A` when we
-call `getEnclosure()`... and not running wild around the island.
+call `getEnclosure()`... and not running wild around the island:
+
+[[[ code('431cb38e37') ]]]
 
 Let's try it! Move back to your terminal and run:
 
@@ -51,6 +59,8 @@ you reverse this, the error message will be confusing.
 It *is* more important for other assertions, like `assertGreaterThan()`... which we
 can use to test that `$dino->getLength()` is greater than `10`.
 
+[[[ code('78cbac661b') ]]]
+
 When we try this:
 
 ```terminal-silent
@@ -70,6 +80,8 @@ Before we clean this up, let's pass a 3rd *optional* argument:
 
 > Dino is supposed to be bigger than 10 meters.
 
+[[[ code('f22586ee8b') ]]]
+
 To see what this does, run the tests again:
 
 ```terminal-silent
@@ -84,6 +96,9 @@ test could use a bit more explanation.
 ## Naming Conventions
 
 I want to circle back to the *name* of our first test method: `testCanGetAndSetData`.
+
+[[[ code('c7532cd075') ]]]
+
 In standard PHP, we try to create methods that are descriptive... but not necessarily
 *super* long... since we'll need to call them in our code. Good examples
 are `getGenus()` and `getName()` in the `Dinosaur` class. But when it comes to testing,
@@ -130,6 +145,9 @@ Run PHPUnit with the `help` flag to see them.
 We'll talk about the most useful of these throughout the tutorial.
 
 Before we keep going, we need to cleanup our test. Remove this `testGreaterThan()` assertion...
+
+[[[ code('e6fec8277d') ]]]
+
 and run our tests again:
 
 ```terminal-silent

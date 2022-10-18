@@ -9,7 +9,11 @@ a service that will grab those labels using GitHub's API.
 
 To test our new service... which doesn't exist yet, inside of `tests/Unit/` create
 a new `Service/` directory and then a new class: `GithubServiceTest`... which will
-extend `TestCase`. I'm creating this in a `Service/` sub-directory because I'm
+extend `TestCase`:
+
+[[[ code('c21565ec8c') ]]]
+
+I'm creating this in a `Service/` sub-directory because I'm
 planning to put the class in the `src/Service/` directory. Add method
 `testGetHealthReportReturnsCorrectHealthStatusForDino` and inside,
 `$service = new GithubService()`. Yup, that doesn't exist yet either...
@@ -30,6 +34,8 @@ one and only `Maverick`. Up on the test method, add a `@dataProvider` annotation
 so the test uses `dinoNameProvider`... and then add `HealthStatus $expectedStatus`
 and `string $dinoName` arguments.
 
+[[[ code('71aa11b21e') ]]]
+
 Let's do this! Find your terminal and run:
 
 ```terminal
@@ -49,6 +55,8 @@ I'm kidding: we got this! Inside of `src/`, create a new `Service/` directory. T
 we'll need the new class: `GithubService` and inside, add a method: `getHealthReport()`
 which takes a `string $dinosaurName` and gives back a `HealthStatus` object.
 
+[[[ code('0db5295d46') ]]]
+
 Here's the plan: we'll call GitHub's API to get the list of issues for the `dino-park`
 repository. Then we'll filter those issues to pick the one that matches `$dinosaurName`.
 Finally, we'll return `HealthStatus::HEALTHY`, unless the issue has a `Status: Sick`
@@ -60,6 +68,8 @@ Before we dive into *writing* that method, jump back into our test and chop off 
 last couple of letters for `GithubService`. With a little PHPStorm Magic... as soon
 as I type the letter `i` and hit enter, the use statement is automatically added
 to the test. Thank you JetBrains!
+
+[[[ code('f4ec616f0c') ]]]
 
 Let's see how the tests are looking:
 

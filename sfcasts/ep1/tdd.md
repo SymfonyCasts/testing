@@ -26,11 +26,18 @@ even though it doesn't exist yet. Yes, I know that's weird... but it's kinda awe
 ## Step 1: Write a test for the Feature
 
 Add `public function` and let's first test that a dinosaur that's over 10 meters
-or greater is large. Inside, say `$dino = new Dinosaur()`, give him a name,
+or greater is large:
+
+[[[ code('5ce160fd51') ]]]
+
+Inside, say `$dino = new Dinosaur()`, give him a name,
 let's use Big Eaty again, since he's a cool dude, and set his length to 10.
 
 Then, `assertSame()` that `Large` will be identical to `$dino->getSizeDescription()`.
 For our failure message, let's use `This is supposed to be a Large Dinosaur`.
+
+[[[ code('45edace3e2') ]]]
+
 Yes, we're *literally* testing a method that doesn't exist yet. That's TDD.
 
 
@@ -54,8 +61,11 @@ explain why in just a minute.
 Time for step 3 of TDD: write simple code to make this test pass.
 This part, taken literally, can get kinda funny. Watch:
 back in our `Dinosaur` class add a new `public function getSizeDescription()`
-which will return a `string`. Inside... `return 'Large'`. Yup, that's it!
-Move back to your terminal and re-run the tests.
+which will return a `string`. Inside... `return 'Large'`:
+
+[[[ code('c6d7d5f8cc') ]]]
+
+Yup, that's it! Move back to your terminal and re-run the tests.
 
 ```terminal-silent
 ./vendor/bin/phpunit --testdox
@@ -69,8 +79,11 @@ dinosaurs - that would force you to *improve* the method. We'll see that in a
 minute.
 
 But let's be a *bit* more realistic. Say:
-`if ($this->length >= 10) {`, then `return 'Large'`. Run the tests *one*
-more time to make sure they're still passing:
+`if ($this->length >= 10) {`, then `return 'Large'`:
+
+[[[ code('109038eb53') ]]]
+
+Run the tests *one* more time to make sure they're still passing:
 
 ```terminal-silent
 ./vendor/bin/phpunit --testdox

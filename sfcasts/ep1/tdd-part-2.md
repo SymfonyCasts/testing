@@ -15,6 +15,8 @@ using the name `testDinoUnder5MetersIsSmall()`. Set the
 length to `4`, assert that `Small` is identical to `getSizeDescription()` and *also*
 update the message.
 
+[[[ code('ebded3950d') ]]]
+
 Back in our terminal, run the tests again:
 
 ```terminal-silent
@@ -34,8 +36,13 @@ so the `getSizeDescription()` message explodes *before* PHPUnit can run the
 see exactly where things went wrong.
 
 Alrighty, back to the `Dinosaur` class. Lets fix these tests by adding
-`if ($this->length)` is less than `5`, `return 'Small'`. And
-`if ($this->length)` is less than `10`, `return 'Medium'`
+`if ($this->length)` is less than `5`, `return 'Small'`:
+
+[[[ code('f69c71ac08') ]]]
+
+And `if ($this->length)` is less than `10`, `return 'Medium'`
+
+[[[ code('987634ca95') ]]]
 
 Back to our terminal, run the test again:
 
@@ -57,7 +64,9 @@ We just needed to make our tests pass. NOW we can improve things...
 
 Let's change this middle condition to `if ($this->length)` is greater than or equal
 to `5`, return `Medium`. We can get rid of this last conditional altogether and
-just return `Small`.
+just return `Small`:
+
+[[[ code('145e07489e') ]]]
 
 I like that! To see if we messed up, move back to the terminal and run our
 tests again.
@@ -83,6 +92,9 @@ celebrate by *using* it on the site!
 Close up our terminal and move to our template: `templates/main/index.html.twig`.
 Instead of showing the dino's with `dino.length`, change this to
 `dino.sizeDescription`. Save it, go back to our browser and... refresh.
+
+[[[ code('004503ef83') ]]]
+
 Awesome. We have large, medium, and small for the dinosaur's size instead of a number.
 No way Bob will accidentally wander into the T-Rex enclosure again!
 

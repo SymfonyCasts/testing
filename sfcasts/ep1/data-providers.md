@@ -10,14 +10,25 @@ a way to improve this? Absolutely: thanks to PHPUnit Data Providers.
 
 Move to the bottom of `DinosaurTest` and add
 `public function sizeDescriptionProvider()`. Inside, `yield` an array with `[10, 'Large']`,
-then `yield [5, 'Medium']`, and finally `yield [4, 'Small']`. Yield is just a fancy
-way of returning arrays using PHP's built-in Generator function. As you'll see in
-a minute, these values - like `10` and `large` will become *arguments* to our test.
+then `yield [5, 'Medium']`, and finally `yield [4, 'Small']`:
+
+[[[ code('004503ef83') ]]]
+
+Yield is just a fancy way of returning arrays using PHP's built-in Generator function. 
+As you'll see in a minute, these values - like `10` and `large` 
+will become *arguments* to our test.
 
 Alrighty, up in our test method, add an `int $length` argument and then
-`string $expectedSize`. Now instead of Big Eaty's length being `10`, use
-`$length`. And for our assertion, use `$expectedSize` instead of `Large`. We do not
-need the medium and small tests anymore, so we can remove *both* of them.
+`string $expectedSize`:
+
+[[[ code('9c18fe2527') ]]]
+
+Now instead of Big Eaty's length being `10`, use `$length`. And for our assertion, 
+use `$expectedSize` instead of `Large`:
+
+[[[ code('b79f48e5de') ]]]
+
+We do not need the medium and small tests anymore, so we can remove *both* of them.
 
 Ok! Move back to your terminal and run our tests:
 
@@ -32,9 +43,12 @@ Uh oh... Our test is failing because! It says:
 ## Tell our test to use the Data Provider
 
 Oops, we never told our test method to *use* the data provider. Move back into our
-test and add a DocBlock with `@dataProvider sizeDescriptionProvider`. When PHPUnit
-10 gets released, we'll be able to use a fancy `#[DataProvider]` attribute instead of this
-annotation.
+test and add a DocBlock with `@dataProvider sizeDescriptionProvider`:
+
+[[[ code('b79f48e5de') ]]]
+
+When PHPUnit 10 gets released, we'll be able to use a fancy `#[DataProvider]` attribute 
+instead of this annotation.
 
 Back to the terminal! Run the tests again:
 
@@ -54,7 +68,9 @@ one is that?
 Move back to our test and, down here after the first `yield` statement, add the message
 key `'10 Meter Large Dino' =>`. Copy and paste this for our medium dino with `5`
 instead of `10` and this needs to be `Medium`. Do the same for our small dino
-with `4` and `Small`.
+with `4` and `Small`:
+
+[[[ code('dc69fe001b') ]]]
 
 Back in our terminal, let's see our tests now:
 
@@ -73,11 +89,15 @@ Change it to `testDinoHasCorrectSizeDescriptionFromLength()`.
 And, looking at our assertion, the message argument isn't very useful anymore... so let's
 remove it.
 
+[[[ code('dc69fe001b') ]]]
+
 # Return Types Everywhere!
 
 Finally, although not required... We can use either `array` or
 `\Generator` as the return type for the data provider. Let's go with
 `\Generator`- after all, we may need those for the park fences one day...
+
+[[[ code('af4164141c') ]]]
 
 To make sure this didn't break anything, try the tests one more time:
 
