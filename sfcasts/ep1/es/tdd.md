@@ -1,6 +1,6 @@
 # TDD - Desarrollo dirigido por pruebas
 
-Muy bien. Así que uno de los problemas es que cuando Bob, nuestro guardabosques, ve el tamaño de los dinosaurios... no puede recordar si están en metros... o en centímetros... lo que supone una gran diferencia cuando entras en una jaula.
+Muy bien. Así que uno de los problemas es que cuando Bob, nuestro guardabosques, ve el tamaño de los dinosaurios... no puede recordar si están en metros... o en centímetros... lo que supone una gran diferencia cuando se entra en una jaula.
 
 Una forma mejor sería utilizar simplemente palabras como pequeño, mediano o grande. Así que... ¡hagamos eso!
 
@@ -16,7 +16,7 @@ Así que, para obtener el texto Pequeño, Mediano o Grande, creo que deberíamos
 
 Añade `public function` y probemos primero que un dinosaurio de más de 10 metros es grande. Dentro, di `$dino = new Dinosaur()`, dale un nombre, vamos a utilizar de nuevo a Big Eaty, ya que es un tipo genial, y establece su longitud en 10.
 
-Entonces, `assertSame()` que `Large` será idéntico a `$dino->getSizeDescription()`. Para nuestro mensaje de fallo, utilicemos `This is supposed to be a Large Dinosaur`. Sí, estamos probando literalmente un método que aún no existe. Eso es TDD.
+Entonces, `assertSame()` que `Large` será idéntico a `$dino->getSizeDescription()`. Para nuestro mensaje de fallo, utilizaremos `This is supposed to be a Large Dinosaur`. Sí, estamos probando literalmente un método que aún no existe. Eso es TDD.
 
 ## Paso 2: Ejecuta la prueba y observa cómo falla
 
@@ -30,7 +30,7 @@ Y... ¡genial! 2 pruebas, 4 aserciones y 1 error. Nuestra nueva prueba ha fallad
 
 ## Paso 3: Escribir código sencillo para que pase
 
-Es hora del paso 3 de TDD: escribir código sencillo para hacer que esta prueba pase. Esta parte, tomada al pie de la letra, puede ser un poco divertida. Observa: en nuestra clase `Dinosaur` añade un nuevo `public function getSizeDescription()`que devolverá un `string`. Dentro... `return 'Large'`. Sí, ¡ya está! Vuelve a tu terminal y vuelve a ejecutar las pruebas.
+Es la hora del paso 3 de TDD: escribir código sencillo para hacer que esta prueba pase. Esta parte, tomada al pie de la letra, puede ser un poco divertida. Observa: en nuestra clase `Dinosaur` añade un nuevo `public function getSizeDescription()`que devolverá un `string`. Dentro... `return 'Large'`. Sí, ¡ya está! Vuelve a tu terminal y vuelve a ejecutar las pruebas.
 
 ```terminal-silent
 ./vendor/bin/phpunit --testdox
@@ -38,7 +38,7 @@ Es hora del paso 3 de TDD: escribir código sencillo para hacer que esta prueba 
 
 Y... Impresionante: ¡pasan! Bueno... por supuesto que la prueba ha pasado: ¡hemos codificado el resultado que queríamos! Pero, técnicamente, eso es lo que dice TDD: escribe la menor cantidad de código posible para que tu prueba pase. Si tu método es demasiado simple después de hacer esto, significa que te faltan más pruebas -como para dinosaurios pequeños o medianos- que te obligarían a mejorar el método. Lo veremos en un momento.
 
-Pero seamos un poco más realistas. Digamos:`if ($this->length >= 10) {`, luego `return 'Large'`. Ejecuta las pruebas una vez más para asegurarte de que siguen pasando:
+Pero somos un poco más realistas. Digamos:`if ($this->length >= 10) {`, luego `return 'Large'`. Ejecuta las pruebas una vez más para asegurarte de que siguen pasando:
 
 ```terminal-silent
 ./vendor/bin/phpunit --testdox
