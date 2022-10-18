@@ -4,8 +4,8 @@ Our tests are passing, the dino's are wandering, and life is great! But... let's
 think about this for a second. In `GithubService`, when we test `getHealthReport()`,
 we're able to control the `$response` that we get back from `request()` by using
 a stub. That's great, but it might also be nice to ensure that the service is only
-calling GitHub one time *and* that it's using the right HTTP method with the correct URL.
-Could we do that? Absolutely!
+calling GitHub one time *and* that it's using the right HTTP method with the 
+correct URL. Could we do that? Absolutely!
 
 ## Expect a Method to Be Called
 
@@ -22,8 +22,7 @@ Over in the terminal, run our tests...
 
 And... Awesome! We've just added an assertion to our mock client that requires the
 `request` method be called *exactly* once. Let's take it a step further and
-add `->with()` passing `GET`... and then
-I'll paste the URL to the GitHub API.
+add `->with()` passing `GET`... and then I'll paste the URL to the GitHub API.
 
 Try the tests again...
 
@@ -35,20 +34,19 @@ And... Huh! We have 2 failures:
 
 > Failed asserting that two strings are equal
 
-Hmm... Ah Ha! My copy and paste skills are a bit weak. I missed `/issue`
-at the end of the URL. Add that. Let's see if that was the trick:
+Hmm... Ah Ha! My copy and paste skills are a bit weak. I missed `/issue` at the
+end of the URL. Add that. Let's see if that was the trick:
 
 ```terminal-silent
 ./vendor/bin/phpunit
 ```
 
-Umm... Yes! We're green all day. But best of all, the tests confirm we're
-using the correct URL and HTTP method when we call GitHub.
+Umm... Yes! We're green all day. But best of all, the tests confirm we're using
+the correct URL and HTTP method when we call GitHub.
 
-But... What if we actually wanted to call GitHub *more* that just once? Or... we wanted
-to assert that it was not called at all?
-PHPUnit has us covered. There are a handful of other methods we can all. For example,
-change `once()` to `never()`.
+But... What if we actually wanted to call GitHub *more* that just once? Or... we 
+wanted to assert that it was not called at all? PHPUnit has us covered. There are
+a handful of other methods we can call. For example, change `once()` to `never()`.
 
 And watch what happens now:
 
@@ -81,9 +79,8 @@ something is called or its arguments if that is *not* so important.
 ## Using GitHubService in our App
 
 Now that `GithubService` is fully tested, we can celebrate by *using* it to drive
-our dashboard! On
-`MainController::index()`, add an argument: `GithubService $github` to autowire
-the new service.
+our dashboard! On `MainController::index()`, add an argument: 
+`GithubService $github` to autowire the new service.
 
 Next, right below the `$dinos` array, `foreach()` over `$dinos as $dino` and, inside
 say `$dino->setHealth()` passing `$github->getHealthReport($dino->getName())`.
@@ -98,12 +95,12 @@ What's going on here? By the way, the fact that our unit test passes but our
 page fails *can* sometimes happen and in a future tutorial, we'll write a
 functional test to make sure this page actually loads.
 
-The error isn't very obvious, but I think one of our dino's has a status label that we don't 
-know about. Let's peek back at the issues on GitHub and... HA! "Dennis"
+The error isn't very obvious, but I think one of our dino's has a status label
+that we don't know about. Let's peek back at the issues on GitHub and... HA! "Dennis"
 is causing problems yet again. Apparently he's a bit hungry...
 
 In our `HealthStatus` enum, we *don't* have a case for `Hungry` status labels.
 Go figure. Is a hungry dinosaur accepting visitors? I don't know - I guess it
-depends on if you ask the visitor or the dino. Anywas, `Hungry` is *not* a
-status we expected. So next, let's throw a clear exception if we run into
-an unknown status and test for that exception.
+depends on if you ask the visitor or the dino. Anyways, `Hungry` is *not* a status 
+we expected. So next, let's throw a clear exception if we run into an unknown 
+status and test for that exception.
