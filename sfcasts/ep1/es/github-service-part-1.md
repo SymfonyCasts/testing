@@ -1,17 +1,48 @@
-# Muy bien. Así que ahora que un objeto dinosaurio es capaz de persistir el estado de salud y
+# Crea una prueba de servicio en GitHub
 
-decirnos si los dinosaurios son capaces de aceptar visitas, tenemos que seguir adelante y obtener estas, eh, etiquetas para cada uno de nuestros S y el repositorio de GitHub y tirar de ellos en nuestra aplicación. En lugar de en nuestros objetos en consecuencia, para hacer eso, vamos a crear un nuevo servicio de GitHub que utilizará el cliente HTTP de Symfony para llamar, eh, la API de GitHub, obtener esas cuestiones y averiguar cuales1s se aplican a nuestros dinosaurios. Lo primero que vamos a hacer es crear una nueva unidad, eh, directorio de servicios dentro. Vamos a crear una nueva prueba de servicio de GitHub, y por supuesto, esto tiene que extender, eh, el caso de prueba de las unidades de PHP, y ahora vamos a crear una nueva función pública de prueba get. Maldita sea. La prueba get health report devuelve, el estado de salud correcto para D todo bien, y esto no va a devolver nada. Ahora dentro hagamos service = new GitHub service. Y por supuesto esto no existe todavía, pero no pasa nada. Y luego, para la prueba, queremos autoafirmar lo mismo que nuestro estado esperado coincide con el informe de salud de nuestro servicio. Y vamos a pasar el nombre del Dino para obtener ese informe. Ahora, obviamente vamos a utilizar un proveedor de datos. Así que vamos a escribirlo.
+Ahora que podemos ver si un `Dinosaur` está aceptando visitas en nuestro tablero, necesitamos mantener el tablero actualizado en tiempo real utilizando las etiquetas de estado de salud que GenLab ha aplicado a varios temas de dino en GitHub. Para ello, crearemos un servicio que obtendrá esas etiquetas utilizando la API de GitHub.
 
-Y esto sería función pública, proveedor de nombre de Dino, porque así es como Fe nuestros, uh, uh, informes de salud. Esto va a volver al generador, y ahora vamos a rendir Dino enfermo, y esto devolverá, por supuesto, el estado de salud.
+## Prueba de nuestro servicio primero
 
-Uy,
+Para probar nuestro nuevo servicio... que aún no existe, dentro de `tests/Unit/` crea un nuevo directorio `Service/` y luego una nueva clase: `GithubServiceTest`... que extenderá `TestCase`. Lo estoy creando en un subdirectorio `Service/` porque pienso poner la clase en el directorio `src/Service/`. Añade el método`testGetHealthReportReturnsCorrectHealthStatusForDino` y dentro,`$service = new GithubService()`. Sí, eso tampoco existe todavía...
 
-Esto devolverá el estado de salud, eh, enfermo. Y echemos un vistazo rápido en GitHub para ver cómo se llamaba el Dino enfermo. Y esa era Daisy. Tiene un esguince en la pierna. Así que Daisy, y luego para nuestro Dino sano, vamos a producir Dino sano, y este será el estado de salud sano. Y creo que vamos a utilizar, sí, a Maverick. Tiene una prueba de sangre a mediodía, así que volvamos aquí, Maverick, y ahí está nuestro proveedor de datos. Ahora volvamos aquí, vamos a decirle a nuestro método de prueba, proveedor de usuarios. Y vamos a hacerlo con una anotación de proveedor de datos at y el proveedor de datos es Dino name provider.
+Nuestro servicio devolverá un enum `HealthStatus` creado a partir de la etiqueta de estado de salud en GitHub, así que `assertSame()` que `$expectedStatus` es idéntico a`$service->getHealthReport()` y luego pasaremos `$dinoName`. Sí, utilizaremos un proveedor de datos para esta prueba... en el que aceptamos el nombre del dino para comprobar su estado de salud previsto.
 
-Uy,
+Vamos a crearlo: `public function dinoNameProvider()` que devuelve un`\Generator`. Nuestro primer conjunto de datos para el proveedor tendrá la clave `Sick Dino`, que devuelve una matriz con `HealthStatus::SICK` y `Daisy` para el nombre del dino... porque cuando comprobamos GitHub hace un minuto, ¡Daisy estaba enferma!
 
-Volvamos aquí y ampliemos eso. Y luego, por supuesto, tenemos que pasar el estado de salud y este es nuestro estado esperado, esperado y una cadena, que es el nombre del dino.
+A continuación, un `Healthy Dino` con `HealthStatus::HEALTHY` que resulta ser el único `Maverick`. Arriba, en el método de prueba, añade una anotación `@dataProvider` para que la prueba utilice `dinoNameProvider`... y luego añade los argumentos `HealthStatus $expectedStatus`y `string $dinoName`.
 
-Todo genial. Ya tenemos nuestra prueba configurada. Sigamos adelante y vayamos a nuestro proveedor de terminales, luego a la unidad PHP, y tenemos dos errores. La prueba del servicio GitHub devuelve el informe de salud, el estado de salud correcto para Dino con el conjunto de datos Dino enfermo, eh, nos da un error porque no se encuentra la clase servicio GitHub. Por supuesto, también obtenemos lo mismo para nuestro Dino sano, lo cual es de esperar. Así que vamos a arreglar eso en nuestro código. Subamos aquí a nuestro directorio fuente, creemos una nueva carpeta y llamaremos a este servicio y dentro crearemos una nueva clase PHP servicio GI. Muy bien, nuestro nuevo servicio vamos a crear nuestra nueva función pública, informe de salud GI. Y esto, por supuesto, acepta un nombre de dinosaurio de cadena, y va a devolver un estado de salud. Voy a seguir diciendo estado. Muy bien. Ahora, en lugar del método vamos a llamar primero a la API de GitHub. Vamos a llamar primero a la API de GitHubs. Luego vamos a filtrar los temas. Y por último vamos a devolver siempre un estado de salud de sano o enfermo. Ahora volvamos a nuestra prueba. Oops, volvamos a nuestra prueba y tenemos que añadir la declaración de uso para nuestro servicio GitHub. Así que la mejor manera de hacerlo es cortar el último par de letras y ahí lo tenemos Servicio de GitHub servicio de aplicación. Ese es el que queremos. Y PHP storm añade la declaración de uso por nosotros.
+¡Hagamos esto! Busca tu terminal y ejecuta:
 
-Podemos volver a nuestro terminal y ejecutar la prueba una vez más. Asegúrate de que sí, en lugar de dos fallos, sólo tenemos uno. Nuestra prueba del servicio de GitHub prueba GitHub obtener informe de salud devuelve, el estado de salud correcto para Dino con los datos del conjunto enfermo Dino, falló al afirmar que dos variables hacen referencia al mismo objeto. Y, por supuesto, lo hace porque sólo estamos devolviendo un estado de salud para los informes de salud get. Ahora que ya tenemos todo esto, vamos a implementar el servicio.
+```terminal
+./vendor/bin/phpunit
+```
+
+Y... ¡Sí! Tal y como esperábamos, tenemos dos errores porque
+
+> No se encuentra la clase GithubService
+
+## Crea el servicio que llamará a GitHub
+
+Para solucionarlo, busca a un compañero de equipo y pídele amablemente que cree esta clase por ti! TDD - ¡desarrollo dirigido por el equipo!
+
+Estoy bromeando: ¡lo tenemos! Dentro de `src/`, crea un nuevo directorio `Service/`. Entonces necesitaremos la nueva clase: `GithubService` y dentro, añade un método `getHealthReport()`
+que tome un `string $dinosaurName` y devuelva un objeto `HealthStatus`.
+
+Este es el plan: llamaremos a la API de GitHub para obtener la lista de incidencias del repositorio `dino-park`. Luego filtraremos esas incidencias para elegir la que coincida con `$dinosaurName`. Finalmente, devolveremos `GithubStatus::HEALTHY`, a menos que la incidencia tenga una etiqueta `Status: Sick`.
+
+## Añade la declaración de uso en nuestra prueba
+
+Antes de sumergirnos en la escritura de ese método, vuelve a nuestra prueba y corta el último par de letras de `GithubService`. Con un poco de magia de PHPStorm... en cuanto escribo la letra `i` y pulso intro, la declaración de uso se añade automáticamente a la prueba. ¡Gracias JetBrains!
+
+Veamos cómo quedan las pruebas:
+
+```terminal-silent
+./vendor/bin/phpunit
+```
+
+Y... ¡Ja! En lugar de dos fallos, ahora sólo tenemos uno...
+
+> Sick Dino ha fallado al afirmar que las dos variables hacen referencia al mismo objeto.
+
+A continuación, añadiremos algo de lógica a nuestro `GithubService` para hacer que esta prueba pase
