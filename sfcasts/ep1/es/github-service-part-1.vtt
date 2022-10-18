@@ -1,0 +1,184 @@
+WEBVTT
+
+00:00:01.026 --> 00:00:05.286 align:middle
+Ahora que podemos ver si un Dinosaur está
+aceptando visitas en nuestro tablero,
+
+00:00:05.636 --> 00:00:11.416 align:middle
+necesitamos mantener el tablero actualizado en tiempo
+real utilizando las etiquetas de estado de salud
+
+00:00:11.636 --> 00:00:15.326 align:middle
+que GenLab ha aplicado a
+varios temas de dino en GitHub.
+
+00:00:16.096 --> 00:00:21.596 align:middle
+Para ello, crearemos un servicio que tomará
+esas etiquetas utilizando la API de GitHub.
+
+00:00:22.656 --> 00:00:23.946 align:middle
+Para probar nuestro nuevo servicio...
+
+00:00:24.176 --> 00:00:31.256 align:middle
+que aún no existe, dentro de tests/Unit/
+crea un nuevo directorio Service/
+
+00:00:31.816 --> 00:00:35.326 align:middle
+y luego una nueva clase: GithubServiceTest...
+
+00:00:36.106 --> 00:00:38.756 align:middle
+que extenderá TestCase.
+
+00:00:39.576 --> 00:00:43.496 align:middle
+Lo estoy creando en un
+subdirectorio Service/ porque pienso
+
+00:00:43.496 --> 00:00:46.126 align:middle
+poner la clase en el directorio src/Service/.
+
+00:00:46.926 --> 00:00:52.036 align:middle
+Añade el método
+testGetHealthReportReturnsCorrectHealthStatusForDino
+
+00:00:52.036 --> 00:00:58.396 align:middle
+y dentro, $service = new GithubService(). Sí,
+
+00:00:59.086 --> 00:01:01.656 align:middle
+eso tampoco existe todavía... Nuestro
+
+00:01:02.286 --> 00:01:07.896 align:middle
+servicio devolverá un enum HealthStatus creado
+a partir de la etiqueta de estado de salud en
+
+00:01:07.896 --> 00:01:15.986 align:middle
+GitHub, así que assertSame() que
+$expectedStatus es idéntico a
+
+00:01:15.986 --> 00:01:21.596 align:middle
+$service->getHealthReport() y
+luego pasaremos $dinoName. Sí,
+
+00:01:22.506 --> 00:01:25.996 align:middle
+utilizaremos un proveedor de datos
+para esta prueba... en el que
+
+00:01:26.416 --> 00:01:32.626 align:middle
+aceptamos el nombre del dino para
+comprobar su estado de salud previsto.
+
+00:01:33.266 --> 00:01:40.896 align:middle
+Vamos a crearlo: public function dinoNameProvider()
+que devuelve un \Generator. Nuestro
+
+00:01:41.796 --> 00:01:47.786 align:middle
+primer conjunto de datos para el proveedor tendrá
+la clave Sick Dino, que devuelve un array con
+
+00:01:47.786 --> 00:01:53.086 align:middle
+HealthStatus::SICK y Daisy para
+el nombre del dino... ¡porque
+
+00:01:53.606 --> 00:01:57.776 align:middle
+cuando comprobamos GitHub hace un minuto,
+Daisy estaba enferma! A continuación,
+
+00:02:00.336 --> 00:02:05.846 align:middle
+un Healthy Dino con HealthStatus::HEALTHY que
+
+00:02:06.316 --> 00:02:09.876 align:middle
+resulta ser el único Maverick. Arriba,
+
+00:02:12.476 --> 00:02:20.476 align:middle
+en el método de prueba, añade una anotación @dataProvider
+para que la prueba utilice dinoNameProvider... y
+
+00:02:22.606 --> 00:02:31.816 align:middle
+luego añade los argumentos HealthStatus
+$expectedStatus y string $dinoName. ¡
+
+00:02:32.586 --> 00:02:33.686 align:middle
+Hagamos esto! Busca
+
+00:02:34.146 --> 00:02:35.636 align:middle
+tu terminal y ejecuta:
+./vendor/bin/phpunit Y...
+
+00:02:35.806 --> 00:02:39.656 align:middle
+¡Sí! Tal
+
+00:02:39.656 --> 00:02:47.986 align:middle
+y como esperábamos, tenemos dos errores porque No
+se encuentra la clase GithubService Para solucionarlo
+
+00:02:48.706 --> 00:02:54.866 align:middle
+, busca a un compañero de equipo y pídele
+amablemente que cree esta clase por ti TDD -
+
+00:02:55.426 --> 00:02:58.236 align:middle
+¡desarrollo dirigido por
+el equipo! Es una broma:
+
+00:02:59.376 --> 00:03:01.926 align:middle
+¡lo tenemos! Dentro de
+
+00:03:02.546 --> 00:03:05.986 align:middle
+src/, crea un nuevo
+directorio Service/. Entonces
+
+00:03:07.046 --> 00:03:13.296 align:middle
+necesitaremos la nueva clase: GithubService y
+dentro, añadir un método: getHealthReport() que
+
+00:03:13.806 --> 00:03:18.786 align:middle
+tome un string $dinosaurName y
+
+00:03:19.246 --> 00:03:23.596 align:middle
+devuelva un objeto HealthStatus. Este es el
+
+00:03:24.536 --> 00:03:31.086 align:middle
+plan: llamaremos a la API de GitHub para obtener la
+lista de incidencias del repositorio dino-park. Luego
+
+00:03:31.706 --> 00:03:37.016 align:middle
+filtraremos esas incidencias para elegir la
+que coincida con $dinosaurName. Finalmente,
+
+00:03:37.776 --> 00:03:45.786 align:middle
+devolveremos GithubStatus::HEALTHY, a menos que la
+incidencia tenga una etiqueta Status: Sick. Antes de
+
+00:03:46.576 --> 00:03:50.866 align:middle
+sumergirnos en la escritura de ese
+método, vuelve a nuestra prueba y corta
+
+00:03:50.866 --> 00:03:54.166 align:middle
+el último par de letras
+de GithubService. Con un
+
+00:03:54.576 --> 00:03:57.006 align:middle
+poco de magia de PHPStorm ... en
+
+00:03:57.306 --> 00:04:00.286 align:middle
+cuanto escriba la letra i y pulse intro, la
+
+00:04:00.836 --> 00:04:04.186 align:middle
+declaración de uso se añadirá
+automáticamente a la prueba. ¡ Gracias
+
+00:04:04.776 --> 00:04:06.756 align:middle
+JetBrains! Veamos
+
+00:04:07.106 --> 00:04:11.336 align:middle
+cómo quedan las pruebas: Y... ¡Ja! En lugar
+
+00:04:11.336 --> 00:04:15.476 align:middle
+de dos fallos, ahora sólo
+tenemos uno... Sick Dino ha
+
+00:04:16.056 --> 00:04:21.556 align:middle
+fallado al afirmar que las dos variables
+hacen referencia al mismo objeto.
+
+00:04:22.426 --> 00:04:28.116 align:middle
+A continuación, añadiremos algo de lógica a nuestro
+GithubService para hacer que esta prueba pase
