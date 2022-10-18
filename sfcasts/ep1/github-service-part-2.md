@@ -15,9 +15,8 @@ composer require symfony/http-client
 Inside of `GithubService`, instantiate an HTTP client with
 `$client = HttpClient::create()`. To make a request, call `$client->request()`.
 This needs 2 things. 1st: what HTTP method to use, like `GET` or `POST`. In this
-case, it should be `GET`. 2nd: the URL. Use
-`https://api.github.com/repos/SymfonyCasts/dino-park/issues` to fetch all the
-"issues" from the `dino-park` repository.
+case, it should be `GET`. 2nd: the URL, which I'll paste in. This will fetch all 
+of the "issues" from the `dino-park` repository via GitHub's API.
 
 ## Parse the HTTP Response
 
@@ -47,7 +46,7 @@ status label? Hmm... at the beginning of this method, set the default `$health`
 to `HealthStatus::HEALTHY` - because GenLab would *never* forget to put a
 `Sick` label on a dino that isn't feeling well.
 
-So... I think we did it! Let's run our tests to be sure.
+Hmm... Welp, I think we did it! Let's run our tests to be sure.
 
 ```terminal
 ./vendor/bin/phpunit
