@@ -51,7 +51,7 @@ which takes a `string $dinosaurName` and gives back a `HealthStatus` object.
 
 Here's the plan: we'll call GitHub's API to get the list of issues for the `dino-park`
 repository. Then we'll filter those issues to pick the one that matches `$dinosaurName`.
-Finally, we'll return `GithubStatus::HEALTHY`, unless the issue has a `Status: Sick`
+Finally, we'll return `HealthStatus::HEALTHY`, unless the issue has a `Status: Sick`
 label.
 
 ## Add the use statement in our test
