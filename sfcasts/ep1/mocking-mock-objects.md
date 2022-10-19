@@ -44,7 +44,7 @@ end of the URL. Add that. Let's see if that was the trick:
 Umm... Yes! We're green all day. But best of all, the tests confirm we're using
 the correct URL and HTTP method when we call GitHub.
 
-But... What if we actually wanted to call GitHub *more* that just once? Or... we 
+But... What if we actually wanted to call GitHub *more* than just once? Or... we 
 wanted to assert that it was not called at all? PHPUnit has us covered. There are
 a handful of other methods we can call. For example, change `once()` to `never()`.
 
