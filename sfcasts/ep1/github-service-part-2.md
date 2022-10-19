@@ -18,6 +18,8 @@ This needs 2 things. 1st: what HTTP method to use, like `GET` or `POST`. In this
 case, it should be `GET`. 2nd: the URL, which I'll paste in. This will fetch all 
 of the "issues" from the `dino-park` repository via GitHub's API.
 
+[[[ code('0478d205da') ]]]
+
 ## Parse the HTTP Response
 
 Ok, now what? Looking back at the `dino-park` repo, GitHub will return a JSON 
@@ -31,9 +33,13 @@ check if the issue title contains the `$dinosaurName`. So
 `if (str_contains($issue['title'], $dinosaurName))` then we'll `// Do Something`
 with that issue.
 
+[[[ code('959cf1b0b7') ]]]
+
 At this point, we've found the issue for our dinosaur. Woo! Now we need to
 loop over each label to see if we can find the health status. To help, I'll
 paste in a private method: you can copy this from the code block on this page.
+
+[[[ code('fe4184164d') ]]]
 
 This takes an array of labels... and when it finds one that starts with `Status:`,
 it returns the correct `HealthStatus` enum based on that label.
@@ -41,10 +47,14 @@ it returns the correct `HealthStatus` enum based on that label.
 Now instead of `// Do Something`, say
 `$health = $this->getDinoStatusFromLabels()` and pass the labels with `$issue['labels']`.
 
+[[[ code('60e1f49c5b') ]]]
+
 And now we can return `$health`. But... what if an issue doesn't *have* a health
 status label? Hmm... at the beginning of this method, set the default `$health`
 to `HealthStatus::HEALTHY` - because GenLab would *never* forget to put a
 `Sick` label on a dino that isn't feeling well.
+
+[[[ code('58effa5196') ]]]
 
 Hmm... Welp, I think we did it! Let's run our tests to be sure.
 
@@ -65,6 +75,8 @@ Right after we call the `request()` method, add `$this->logger->info()` and pass
 `Request Dino Issues` for the message and also an array with extra context. How 
 about a `dino` key set to `$dinosaurName` and `responseStatus` to
 `$response->getStatusCode()`.
+
+[[[ code('70f55f1a16') ]]]
 
 Cool! That *shouldn't* have broken anything in our class, but let's run the tests
 to be sure:
