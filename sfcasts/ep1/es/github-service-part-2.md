@@ -1,29 +1,63 @@
-# Ahora que tenemos nuestro servicio, necesitaremos una forma de llamar a la API de GitHub desde
+# Servicio GitHub: Implementación
 
-nuestro servicio. Así podremos obtener la lista de incidencias de nuestro repositorio Dyna park en GitHub. Vamos a utilizar el cliente HTTP de Symfony para ello. Así que vete a tu terminal. Y vamos a componer requerir el cliente HTTP de Symfony. Ahora que tenemos eso, vamos a usarlo en una envoltura. Así que lo primero que tenemos que hacer es, inicializar el cliente y podemos hacerlo creando una variable cliente que = cliente HTTP, y vamos a crearla a continuación. Vamos a hacer bien. Sí, a continuación vamos a llamar a la, eh, API de GitHub. Así que lo haremos con cliente, eh,
+Ahora que tenemos una idea de lo que necesitamos que haga el `GithubService`, vamos a añadir la lógica interna que obtendrá las incidencias del repositorio `dino-park` utilizando la API de GitHub.
 
-Piensa en
+## Añade el cliente y haz una petición
 
-Correcto. Experto en la llamada, obtener la API de GitHub con su cliente. Así que haremos la petición del cliente y el método de petición del cliente HTTP acepta dos argumentos. El primero es el método, y esto se refiere al método HTTP, como get o post que vamos a utilizar en este caso, vamos a utilizar GI. Y el siguiente argumento para el método de petición es la URL. Y esto es la URL real a la que vamos a llamar para recuperar la lista de incidencias de nuestro repositorio Dyna park. Muy bien,
+Para hacer peticiones HTTP, en tu terminal, instala el Cliente HTTP de Symfony con:
 
-Al, cuando llamamos a la re eh, cuando llamamos a la ruta de la API de GitHub, GitHub nos va a devolver una lista de J O pero ¿qué aspecto tiene? Volvamos a nuestro navegador rápidamente, echemos un vistazo a estos temas de Symfony o a los temas de Dino park. Y podemos ver que tenemos cuatro temas en total dentro de este repositorio. Y tenemos a los dentistas terminando sus rutinas de ejercicio diarias. Big ed tiene un dolor de muelas. Maverick tiene un pinchazo al mediodía y Daisy se ha torcido la pierna. Cada uno de ellos tiene una etiqueta de estado junto a él, y esto es lo que necesitamos. Esto es lo que vamos a utilizar para establecer la salud en los objetos Dino. Así, por ejemplo, Daisy se ha torcido la pierna y su estado es enfermo, mientras que Maverick tiene un vuelo de prueba a mediodía. Su estado es saludable. Así que volvamos a nuestro, volvamos a nuestro servicio y el, cuando llamemos a petición del cliente, que va a devolver un objeto de respuesta, un objeto de respuesta HTTP. Así que vamos a establecer la petición del cliente sobre la respuesta = petición del cliente, y luego aquí abajo, tenemos que filtrar nuestras cuestiones. Así que para hacerlo,
+```terminal
+composer require symfony/http-client
+```
 
-Uy,
+Dentro de `GithubService`, instala un cliente HTTP con`$client = HttpClient::create()`. Para hacer una petición, llama a `$client->request()`. Esto necesita 2 cosas. 1ª: qué método HTTP utilizar, como `GET` o `POST`. En este caso, debería ser `GET`. 2ª: la URL, que pegaré. Esto recuperará todos los "issues" del repositorio `dino-park` a través de la API de GitHub.
 
-Uh, así que para hacer eso, vamos a, uh, crear un bucle de cuatro cada y el cliente HTTP de Symfony tiene una manera realmente genial, uh, de convertir J en un Rayo para nosotros automáticamente llamando a response to array. Y luego vamos a hacer, eh, para cada sí, para cada respuesta a array como cuestión
+[[[ code('0478d205da') ]]]
 
-Uy,
+## Analiza la respuesta HTTP
 
-Como issue y dentro de lo que tenemos que asegurarnos es que la cadena que el no, y dentro, tenemos que asegurarnos de que si la cadena contiene nuestro título emitido y que va a ser el título coincide con el nombre del dinosaurio que nos han proporcionado aquí en nuestro, eh, método de informe de salud GI, entonces tendremos que hacer algo con, eh, este tema de GitHub, ¿verdad? Entonces, ¿qué vamos a hacer con eso? Bueno, voy a copiar en un poco de, eh, voy a copiar en un método privado y voy a poner eso justo debajo de aquí, justo ahí, ponerlo justo debajo de nuestro método de servicio.
+Bien, ¿y ahora qué? Mirando el repositorio `dino-park`, GitHub devolverá una respuesta JSON que contiene las incidencias que vemos aquí. Cada incidencia tiene un título con el nombre de un dino y si la incidencia tiene una etiqueta adjunta, también la obtendremos de vuelta. Así que, pon `$client->request()` en una nueva variable `$response`. A continuación, `foreach()`sobre `$response->toArray()` como `$issue`. Lo bueno de utilizar el cliente HTTP de Symfony es que no tenemos que molestarnos en transformar el JSON de GitHub en una matriz - `toArray()` hace ese trabajo pesado por nosotros. Dentro de este bucle, comprobamos si el título de la incidencia contiene el `$dinosaurName`. Así que`if (str_contains($issue['title'], $dinosaurName))` entonces `// Do Something`con esa incidencia.
 
-Para.
+[[[ code('959cf1b0b7') ]]]
 
-Ah, vamos. Muy bien. Así que voy a copiar en un método privado y lo que esto está haciendo. Va a tomar un array de nuestras etiquetas que, eh, existen en nuestro objeto issue. Y va a hacer un bucle sobre ellas, cogiendo el nombre de la etiqueta. Si el nombre de la etiqueta empieza por estado, o si el nombre de la etiqueta no empieza por estado, va a continuar sobre, eh, el array. Si empieza por estado, recortará ese estado, eliminará los espacios en blanco y nos dará la etiqueta. Eso es una estupidez. Eh,
+Llegados a este punto, hemos encontrado la incidencia de nuestro dinosaurio. ¡Vaya! Ahora tenemos que hacer un bucle sobre cada etiqueta para ver si podemos encontrar el estado de salud. Para ayudarte, voy a pegar un método privado: puedes copiarlo del bloque de código de esta página.
 
-Voy a tener que retroceder y pegar esto una vez más. Muy bien. Así que voy a pegar un método privado aquí. Y lo que este método va a hacer es obtener el estado de Dyna a partir de las etiquetas, que acepta una matriz de etiquetas que vamos a obtener de nuestra cuestión, eh, de nuestra cuestión de GitHub. Y nos va a dar un estado de salud y un lado. Todo lo que hace es repasar la matriz de etiquetas, buscar etiquetas que empiecen por la palabra estado, eliminarlas y luego intentar obtener un estado de salud, eh, intentar devolver un objeto de estado de salud a partir del estado, eh, del nombre de la etiqueta. Así que aquí arriba en nuestro, para cada bucle, eh, en nuestro método de informe de salud GI, vamos a seguir adelante y a hacer algo. Vamos a, eh, salud = este estado del dinosaurio GI a partir de las etiquetas, y tenemos que devolver, o tenemos que pasarle el, eh, array de etiquetas de nuestro objeto issue.
+[[[ code('fe4184164d') ]]]
 
-Bien,
+Esto toma una matriz de etiquetas... y cuando encuentra una que empieza por `Status:`, devuelve el enum correcto `HealthStatus` basado en esa etiqueta.
 
-Ahora, en lugar de devolver sólo salud todo el tiempo, vamos a devolver la variable salud, que debería ser un estado de salud de nuestro método privado. Y por si acaso, uno, el asunto no tiene ninguna etiqueta en él o dos, no puede encontrar una, etiqueta de estado de salud. Vamos a subir aquí a la parte superior y vamos a poner salud = estado de salud saludable. Esto se debe a que siempre que un dinosaurio no tenga una etiqueta de enfermo, tenemos que asumir que el dinosaurio está sano. Vuelve a su terminal y probemos esta unidad de PHP del vendedor. Impresionante. Tenemos ocho pruebas y 11 aserciones. Nuestro servicio está funcionando de maravilla. Vamos a hacer una última cosa aquí. Y eso es en la parte superior de nuestro servicio GitHub. Queremos registrar todas estas peticiones HTTP que hacemos a GitHub. Esto será muy útil en producción. Así que vamos a crear una construcción de función pública, y vamos a crear una interfaz de registro privada y la llamaremos logger. Y entonces, eh, justo antes de un bucle de cuatro cada después de llamar al respo o después de llamar a la, eh, API de GitHub, vamos a seguir adelante y
+Ahora, en lugar de `// Do Something`, decimos`$health = $this->getDinoStatusFromLabels()` y pasamos las etiquetas con `$issue['labels']`.
 
-Sigamos adelante y hagamos este logger. Queremos registrar como info y nuestro mensaje será petición Dino issues. Y vamos a añadir un poco de contexto extra de cont a este mensaje. Y pasando un array, que contendrá el nombre del Dino. Así que Dino, eh, para la clave y el nombre es el nombre del dinosaurio en lo que siempre sabemos, que, eh, Dino que estábamos tratando de obtener, eh, una cuestión de. Y luego debajo de eso, vamos a tirar el estado de la respuesta. Ah, vamos a lanzar el estado de la respuesta que se nos devolvió desde nuestra, eh, petición HTTP. Así que la respuesta obtener el código de estado, y vamos a volver, eh, volver a su terminal. Vamos a ejecutar esta prueba una vez más. Oh no, tenemos dos errores ahora. Así que ambos de nuestra prueba de servicio GitHub obtener informe de salud devuelve, el estado de salud correcto para Dino con conjuntos de datos, Dino enfermo y un Dino saludable son ambos diciendo que tenemos un error de recuento de argumentos, dos pocos argumentos a la función en la construcción de servicio GitHub, cero pase. Y exactamente uno se esperaba mirando nuestro, servicio aquí. Eso es porque se supone que debemos pasar desde nuestra prueba una instancia de registro, y no lo estamos haciendo todavía. Así que a continuación te mostraremos cómo hacerlo. Y arreglaremos esto.
+[[[ code('60e1f49c5b') ]]]
+
+Y ahora podemos devolver `$health`. Pero... ¿qué pasa si un número no tiene una etiqueta de estado de salud? Hmm... al principio de este método, establece el valor por defecto `$health`a `HealthStatus::HEALTHY` - porque GenLab nunca se olvidaría de poner una etiqueta`Sick` en un dino que no se encuentra bien.
+
+[[[ code('58effa5196') ]]]
+
+Hmm... Bueno, ¡creo que lo hemos conseguido! Hagamos nuestras pruebas para estar seguros.
+
+```terminal
+./vendor/bin/phpunit
+```
+
+Y... ¡Vaya! Tenemos 8 pruebas, 11 aserciones, ¡y todas pasan! ¡Shweeet!
+
+## Registra todas nuestras peticiones
+
+¡Un último reto! Para ayudar a la depuración, quiero registrar un mensaje cada vez que hagamos una petición a la API de GitHub.
+
+¡No hay problema! Sólo tenemos que conseguir el servicio de registro. Añade un constructor con`private LoggerInterface $logger` para añadir un argumento y una propiedad de una sola vez. Justo después de llamar al método `request()`, añade `$this->logger->info()` y pasa`Request Dino Issues` para el mensaje y también un array con contexto extra. ¿Qué tal una clave `dino` establecida en `$dinosaurName` y `responseStatus` en`$response->getStatusCode()`.
+
+[[[ code('70f55f1a16') ]]]
+
+¡Genial! Eso no debería haber roto nada en nuestra clase, pero vamos a ejecutar las pruebas para estar seguros:
+
+```terminal-silent
+./vendor/bin/phpunit
+```
+
+Y... ¡Ay! ¡Sí que hemos roto algo!
+
+> Se han pasado muy pocos argumentos al constructor de GithubService. se esperaban 0 pasados 1.
+
+¡Por supuesto! Cuando añadimos el argumento `LoggerInterface` a `GithubService`, nunca actualizamos nuestro test para pasarlo. Te mostraré cómo podemos hacerlo a continuación utilizando una de las super habilidades de PHPUnit: el mocking.
