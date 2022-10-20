@@ -12,7 +12,7 @@ Move to the bottom of `DinosaurTest` and add
 `public function sizeDescriptionProvider()`. Inside, `yield` an array with `[10, 'Large']`,
 then `yield [5, 'Medium']`, and finally `yield [4, 'Small']`:
 
-[[[ code('004503ef83') ]]]
+[[[ code('fa183eb1dc') ]]]
 
 Yield is just a fancy way of returning arrays using PHP's built-in Generator function. 
 As you'll see in a minute, these values - like `10` and `large` 
@@ -45,7 +45,7 @@ Uh oh... Our test is failing because! It says:
 Oops, we never told our test method to *use* the data provider. Move back into our
 test and add a DocBlock with `@dataProvider sizeDescriptionProvider`:
 
-[[[ code('b79f48e5de') ]]]
+[[[ code('20801d2e3a') ]]]
 
 When PHPUnit 10 gets released, we'll be able to use a fancy `#[DataProvider]` attribute 
 instead of this annotation.
