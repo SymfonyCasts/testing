@@ -1,46 +1,43 @@
 # Filtering Out Hungry Dino's
 
-Instead of seeing our dinos on the dashboard, we're seeing a TypeError:
+Instead of seeing our dinos on the dashboard, we're seeing a `TypeError` for the
+`GithubService`:
 
-> `GithubService::getDinoStatusFromLabels()` Return value must be of type
-`App\Enum\HealthStatus`, `null` returned
+> Return value must be of type `App\Enum\HealthStatus`, `null` returned
 
 Which isn't doing a good job at telling us *what* the problem really is. Thanks
-to the Stack Trace that Symfony is giving us, we see this is being caused by a
-`Status: Hungry` label and here on GitHub, Dennis is hungry again after finishing
+to the stack trace provided by Symfony, this looks like it's being caused by a
+`Status: Hungry` label. On GitHub, Dennis is hungry again after finishing
 his daily exercise routine.
 
 ## Our Enum Is Hungry Too
 
 Looking at `HealthStatus`, we don't have a case for hungry dinos. So add
-`case HUNGRY` that returns `Hungry`... and then refresh to see if we fixed the
-problem.
+`case HUNGRY` that returns `Hungry`... then refresh the dashboard.
 
 And... Ya! No more errors...
 
 But, wait... It says that `Dennis` is *not* accepting visitors. He isn't *sick*,
-just *hungry*. GenLab said only sick dino's should not be on exhibit. Beside, who
+just *hungry*. GenLab said only sick dino's should not be on exhibit. Besides, who
 doesn't want to see what happens to the goat?
 
 ## Test Hungry Dinos Can Have Visitors
 
-In `DinosaurTest`, we need to test that hungry dino's *can* have visitors.
+In `DinosaurTest`, we need to assert that hungry dino's *can* have visitors.
 Hmm... I think we might be able to use `testIsNotAcceptingVisitorsIfSick()` for this.
-Yup, that's what we'll do. Below, add a
-`healthStatusProvider()` that returns `\Generator` and for the first dataset
-`yield 'Sick dino is not accepting visitors'`. In the array say `HealthStatus::SICK`,
-and `false`. Next, `yield 'Hungry dino is accepting visitors'` with
-`HealthStatus::HUNGRY` and `true`. Above the test method, add the `@dataProvider`
-annotation so we can use `healthStatusProvider()`.
-We should also
-rename the test method name to `testIsAcceptingVisitorsBasedOnHealthStatus` and
-the arguments `HealthStatus $healthStatus` then `bool $expectedStatus`.
-Inside we'll set the health using `$healthStatus` then replace `assertFalse()` with
-`assertSame($expectedStatus)` is identical to `$dino->isAcceptingVisitors()`.
+Yup, that's what we'll do. Below, add a `healthStatusProvider()` that returns 
+`\Generator` and for the first dataset `yield 'Sick dino is not accepting visitors'`. 
+In the array say `HealthStatus::SICK`, and `false`. Next, `yield 'Hungry dino is accepting visitors'` with
+`[HealthStatus::HUNGRY, true]`. Above, add the `@dataProvider` annotation so we
+can use `healthStatusProvider()`. While we're here, rename the method to
+`testIsAcceptingVisitorsBasedOnHealthStatus` then add the arguments
+`HealthStatus $healthStatus` and `bool $expectedStatus`. Inside set the health with
+`$healthStatus` then replace `assertFalse()` with `assertSame($expectedStatus)`
+is identical to `$dino->isAcceptingVisitors()`.
 
 ## Filtering Tests
 
-Alrighty, let's see if that did the trick. But this time say:
+Alrighty, let's see if that did the trick. Run:
 
 ```terminal
 ./vendor/bin/phpunit --filter testIsAcceptingVisitorsBasedOnHealthStatus
@@ -56,8 +53,8 @@ Anywho, Hungry dino is not accepting visitors is failing because:
 
 > Failed asserting that false is true.
 
-Looking at `isAcceptingVisitors()` in `Dinosaur` class. We need to return
-`$this->health` does not equal `HealthStatus::SICK`.
+Looking at `Dinosaur::isAcceptingVisitors()`, to account for hungry dino's,
+we need to return `$this->health` does not equal `HealthStatus::SICK`.
 
 Let's see what happens when we run:
 
