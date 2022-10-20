@@ -1,4 +1,4 @@
-# Hungry Dino's
+# Filtering Out Hungry Dino's
 
 Instead of seeing our dinos on the dashboard, we're seeing a TypeError:
 
