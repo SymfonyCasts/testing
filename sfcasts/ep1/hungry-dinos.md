@@ -1,11 +1,11 @@
 # Filtering Out Hungry Dino's
 
-Instead of seeing our dinos on the dashboard, we're seeing a `TypeError` for the
+Instead of seeing our dinos on the dashboard, we're seeing a `TypeError` for
 `GithubService`:
 
-> Return value must be of type `App\Enum\HealthStatus`, `null` returned
+> Return value must be of type `HealthStatus`, `null` returned
 
-Which isn't doing a good job at telling us *what* the problem really is. Thanks
+Which isn't doing a good job of telling us *what* the problem really is. Thanks
 to the stack trace provided by Symfony, this looks like it's being caused by a
 `Status: Hungry` label. On GitHub, Dennis is hungry again after finishing
 his daily exercise routine.
@@ -27,17 +27,19 @@ In `DinosaurTest`, we need to assert that hungry dino's *can* have visitors.
 Hmm... I think we might be able to use `testIsNotAcceptingVisitorsIfSick()` for this.
 Yup, that's what we'll do. Below, add a `healthStatusProvider()` that returns 
 `\Generator` and for the first dataset `yield 'Sick dino is not accepting visitors'`. 
-In the array say `HealthStatus::SICK`, and `false`. Next, `yield 'Hungry dino is accepting visitors'` with
-`[HealthStatus::HUNGRY, true]`. Above, add the `@dataProvider` annotation so we
-can use `healthStatusProvider()`. While we're here, rename the method to
-`testIsAcceptingVisitorsBasedOnHealthStatus` then add the arguments
-`HealthStatus $healthStatus` and `bool $expectedStatus`. Inside set the health with
-`$healthStatus` then replace `assertFalse()` with `assertSame($expectedStatus)`
-is identical to `$dino->isAcceptingVisitors()`.
+In the array say `HealthStatus::SICK`, and `false`. Next, 
+`yield 'Hungry dino is accepting visitors'` with `[HealthStatus::HUNGRY, true]`.
+Above, add the `@dataProvider` annotation so we can use `healthStatusProvider()`.
+While we're here, rename the method to `testIsAcceptingVisitorsBasedOnHealthStatus` 
+then add the arguments `HealthStatus $healthStatus` and `bool $expectedStatus`. 
+Inside set the health with `$healthStatus` then replace `assertFalse()` with 
+`assertSame($expectedStatus)` is identical to `$dino->isAcceptingVisitors()`.
+
+Phew, that was a lot of work.
 
 ## Filtering Tests
 
-Alrighty, let's see if that did the trick. Run:
+Let's see if that did the trick. Run:
 
 ```terminal
 ./vendor/bin/phpunit --filter testIsAcceptingVisitorsBasedOnHealthStatus
@@ -73,4 +75,4 @@ from having visitors, run:
 Um... Yes! All dots and no errors. Shweet! We didn't wreck the park. Take a look
 at the dashboard, refresh, and ya! Dennis is able to eat his lunch with park guests
 once again. Though, we still need to be proactive and customize the exception for
-status labels that we don't know about. We'll do that next.
+status labels that we don't know about. Let's do that next.
