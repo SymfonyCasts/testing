@@ -1,75 +1,79 @@
 # Hungry Dino's
 
-All right. So we're using our service and our controller now, but we're getting this
-type error
+Instead of seeing our dinos on the dashboard, we're seeing a TypeError:
 
-And our GitHub service get Dyna status from labels. Method is the return value must
-be of type E uh, enum health status, but no is returned instead. And we can see here
-based on the exception, uh, output that Symfony's given us is that when our service
-tries to guess the name, uh, of the health status from the label, it's returning
-null, obviously instead of actually giving us healthy or sick, if we look at our
-issues, I think it's because Dennis finished his daily exercise routine and his
-status is hungry. We know we have the status, sick, I status healthy labels accounted
-for, but I don't think we have hungry in there.
+> `GithubService::getDinoStatusFromLabels()` Return value must be of type
+`App\Enum\HealthStatus`, `null` returned
 
+Which isn't doing a good job at telling us *what* the problem really is. Thanks
+to the Stack Trace that Symfony is giving us, we see this is being caused by a
+`Status: Hungry` label and here on GitHub, Dennis is hungry again after finishing
+his daily exercise routine.
 
-In `HealthStatus`, add a new case for `HUNGRY` that returns `Hungry`. Back to the
-browser to see if the app is working. And... Ya! No more errors...
+## Our Enum Is Hungry Too
 
-But, wait... It says that `Dennis` is *not* accepting visitors. He isn't sick,
-just hungry. GenLab said only sick dino's should not be on exhibit. Beside, who
+Looking at `HealthStatus`, we don't have a case for hungry dinos. So add
+`case HUNGRY` that returns `Hungry`... and then refresh to see if we fixed the
+problem.
+
+And... Ya! No more errors...
+
+But, wait... It says that `Dennis` is *not* accepting visitors. He isn't *sick*,
+just *hungry*. GenLab said only sick dino's should not be on exhibit. Beside, who
 doesn't want to see what happens to the goat?
 
-Back in `DinosaurTest`, let's see here - we need add a test to ensure hungry dino's
-can have visitors. Hmm... I think we can modify our existing
-`testIsNotAcceptingVisitorsIfSick()` test, to *also* test hungry dino's *can* have
-visitors. Add a new data provider called `healthStatusProvider()` that returns a
-`\Generator`. For our first dataset, `yield Sick dino is not accepting visitors`
-and return an array with `HealthStatus::SICK`, and we will assert `false` is the
-same as `isAcceptingVisitors()`.
+## Test Hungry Dinos Can Have Visitors
 
-Next we'll `yield Hungry dino is accepting visitors` and for the array,
-`HealthStatus::HUNGRY` and we will expect `true`. Now we can add the `@dataProvider`
-annotation to tell our test to use the `healthStatusProvider()`. We should also
-rename the test method name to... `testIsAcceptingVisitorsBasedOnHealthStatus` and
-add a `HealthStatus $healthStatus` argument and finally `bool $expectedStatus`.
-Inside we'll set the health using `$healthStatus` then replace `assertFalse` with
+In `DinosaurTest`, we need to test that hungry dino's *can* have visitors.
+Hmm... I think we might be able to use `testIsNotAcceptingVisitorsIfSick()` for this.
+Yup, that's what we'll do. Below, add a
+`healthStatusProvider()` that returns `\Generator` and for the first dataset
+`yield 'Sick dino is not accepting visitors'`. In the array say `HealthStatus::SICK`,
+and `false`. Next, `yield 'Hungry dino is accepting visitors'` with
+`HealthStatus::HUNGRY` and `true`. Above the test method, add the `@dataProvider`
+annotation so we can use `healthStatusProvider()`.
+We should also
+rename the test method name to `testIsAcceptingVisitorsBasedOnHealthStatus` and
+the arguments `HealthStatus $healthStatus` then `bool $expectedStatus`.
+Inside we'll set the health using `$healthStatus` then replace `assertFalse()` with
 `assertSame($expectedStatus)` is identical to `$dino->isAcceptingVisitors()`.
 
-Alrighty, to the terminal we shall go. This time when we run out tests, add a
-`filter` flag along with the test name:
+## Filtering Tests
+
+Alrighty, let's see if that did the trick. But this time say:
 
 ```terminal
 ./vendor/bin/phpunit --filter testIsAcceptingVisitorsBasedOnHealthStatus
 ```
 
 And... Wooah! PHPUnit only ran 2 tests! With the `filter` flag, we're telling
-PHPUnit that we only want to run tests that match the pattern we provider. We can
+PHPUnit that we only want to run tests that match the *pattern* provided. We can
 use the complete or partial name of a test class, method, or anything in between.
-That comes in really handy when you have a large test suite and you only need to
-run a select number of tests. Anywho, our Hungry dino is not accepting visitors
-test is failing because:
+This comes in really handy when you have a large test suite and you only need to
+run a select number of tests.
+
+Anywho, Hungry dino is not accepting visitors is failing because:
 
 > Failed asserting that false is true.
 
-Take a look at the `isAcceptingVisitors()` method in the `Dinosaur` class. Because,
-we've added `HUNGRY` as a `HealthStatus`, we need to return `$this->health` does
-not equal `HealthStatus::SICK`.
+Looking at `isAcceptingVisitors()` in `Dinosaur` class. We need to return
+`$this->health` does not equal `HealthStatus::SICK`.
 
-Let's see if that did the trick. Run:
+Let's see what happens when we run:
 
 ```terminal
 ./vendor/bin/phpunit --filter "Hungry dino is accepting visitors"
 ```
 
-And... boom! Our hungry dino test is now passing! As you see, we can also use
-data provider keys with the `filter` flag. But let's make sure that all of our tests
-are passing by running:
+And... boom! Our hungry dino test is now passing, ha! Yup, we can use data provider
+keys with the `filter` flag too. But to make sure we didn't stop healthy dino's
+from having visitors, run:
 
 ```terminal
 ./vendor/bin/phpunit
 ```
 
-And... Yes! We're all green!
-
-COMINIG UP NEXT WE'LLL DO WHAT???
+Um... Yes! All dots and no errors. Shweet! We didn't wreck the park. Take a look
+at the dashboard, refresh, and ya! Dennis is able to eat his lunch with park guests
+once again. Though, we still need to be proactive and customize the exception for
+status labels that we don't know about. We'll do that next.
