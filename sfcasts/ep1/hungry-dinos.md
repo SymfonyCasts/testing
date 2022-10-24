@@ -6,9 +6,9 @@ Instead of seeing our dinos on the dashboard, we're seeing a `TypeError` for
 > Return value must be of type `HealthStatus`, `null` returned
 
 That's not doing a great job of telling us *what* the problem really is. Thanks
-to the stack trace, it looks like it's being caused by a
-`Status: Hungry` label. Yup! On GitHub, it looks like Dennis is hungry again after finishing
-his daily exercise routine.
+to the stack trace, it looks like it's being caused by a `Status: Hungry` label.
+Yup! On GitHub, it looks like Dennis is hungry again after finishing his daily 
+exercise routine.
 
 ## Our Enum Is Hungry Too
 
@@ -18,8 +18,8 @@ Looking at `HealthStatus`, we don't have a case for hungry dinos. So add
 And... Ya! No more errors...
 
 But, wait... It says that `Dennis` is *not* accepting visitors. He isn't *sick*,
-just *hungry*. GenLab said only sick dino's should *not* be on exhibit. Besides, who
-doesn't want to see what happens to the goat?
+just *hungry*. GenLab said only sick dino's should *not* be on exhibit. Besides, 
+who doesn't want to see what happens to the goat?
 
 ## Test Hungry Dinos Can Have Visitors
 
@@ -46,10 +46,9 @@ Let's see if that did the trick. Run:
 ```
 
 See what I did there? To focus on *just* this test, we can add the `--filter`
-set to
-the complete or partial name of a test class, method, or anything in between.
-This comes in really handy when you have a large test suite and only want to
-run one or a few tests.
+set to the complete or partial name of a test class, method, or anything in between.
+This comes in really handy when you have a large test suite and only want to run
+one or a few tests.
 
 Anywho, Hungry dino is not accepting visitors is failing:
 
@@ -75,5 +74,5 @@ from having visitors, run:
 Um... Yes! All dots and no errors. Shweet! We didn't wreck the park. Take a look
 at the dashboard, refresh, and ya! Dennis is able to eat his lunch with park guests
 once again. Though, I think we should be proactive and throw a more clear exception
-in case we ever see any future
-status labels that we don't know about. Let's do that next.
+in case we ever see any future status labels that we don't know about. Let's do 
+that next.
