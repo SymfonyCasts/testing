@@ -41,4 +41,4 @@ is probably a better option.
 But, what's the actual benefit to using these preconfigured mocks? Ha... check out
 this diff of `GithubService`. We removed 11 lines of code by using the "built-in" 
 mocks in just one test. Imagine how many lines of code we could remove by using 
-it in all of our tests.
+it in all of our tests. Hm... I think that's exactly what we'll do next.
