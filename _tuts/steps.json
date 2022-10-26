@@ -274,7 +274,27 @@
             "id": "mock-response-use-symfonys-mock-http-client-and-response-object",
             "name": "Mock Response: use symfonys mock http client and response object",
             "description": null
+        },
+        {
+            "id": "setup-teardown",
+            "name": "Setup Teardown",
+            "description": null
+        },
+        {
+            "id": "setup-teardown-step-2",
+            "name": "Setup Teardown: step 2",
+            "description": null
+        },
+        {
+            "id": "refactor-test-with-dataprovider",
+            "name": "refactor test with dataprovider",
+            "description": null
+        },
+        {
+            "id": "setup-teardown-implement-teardown",
+            "name": "Setup TearDown: implement teardown",
+            "description": null
         }
     ],
-    "sha": "e4727ae440d829aea67cfd48eddcd6e2f5261f19"
+    "sha": "13c4140cd63faaefe3a1dbecb663e7d34bf1fdcc"
 }

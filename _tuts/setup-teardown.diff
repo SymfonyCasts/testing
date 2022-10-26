@@ -1,0 +1,29 @@
+diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
+index 1b30aab..4578cff 100644
+--- a/tests/Unit/Service/GithubServiceTest.php
++++ b/tests/Unit/Service/GithubServiceTest.php
+@@ -13,6 +13,10 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
+ 
+ class GithubServiceTest extends TestCase
+ {
++    private LoggerInterface $mockLogger;
++    private MockHttpClient $mockHttpClient;
++    private MockResponse $mockResponse;
++
+     /**
+      * @dataProvider dinoNameProvider
+      */
+@@ -78,4 +82,13 @@ class GithubServiceTest extends TestCase
+ 
+         $service->getHealthReport('Maverick');
+     }
++
++    private function getService(array $responseData): GithubService
++    {
++        $this->mockResponse = new MockResponse(json_encode($responseData));
++
++        $this->mockHttpClient->setResponseFactory($this->mockResponse);
++
++        return new GithubService($this->mockHttpClient, $this->mockLogger);
++    }
+ }
