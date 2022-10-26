@@ -1,57 +1,74 @@
-Let's continue on the trend of refactoring or test. And if we look at this test
-method, we create a mock response object, a mock HTTP client. We are mocking the
-logger interface and then we create a GitHub service. I think what we can do, if we
-look up here in our other test method, we are doing the same thing, just different
-objects. Let's try out this test a little bit and add private logger interface, mock
-logger and blow. Create a private T mock HTTP client and mock HTB client. Then
-private mock spots. Mock spots coming back down here to the bottom. Let's add a at a
-new public function and we will call it create it hub service and it will take an
-array of response data. Oops. We'll take an array of response data. You'll give us
-back a GitHub service. Then inside, say this mock response = oops = new mock
-response. And we will JSON and code response data. Next we will this mock http
-client, we will set the response,
+# Setup and Tearing It Down
 
-Oops,
+Let's continue on with refactoring our test. In the test method, we create a `MockResponse`,
+`MockHttpClient`, and instantiate `GitHubService` with a mock `LoggerInterface`.
+We're doing the same thing in this test above. Didn't Ryan say to DRY out our
+code in another tutorial? Fine... I suppose we'll listen to him.
 
-Nope, I'm not going to do that. This mock response. Then finally we'll return a new
-GitHub service with this mock HTTP client and this mock logger. Right now we just
-have to init, uh, instantiate the mock HTP client and the logger. So back to the top.
-We're going to do that with a built in, uh, a method that test case gives us called
-setup. Inside setup. Say this mock logger = this create, oops, this create mock
-logger interface. Then below this mock http client = new mock http client. Yeah, that
-sounds good. Okay. Now back in our test method, we can cut a response and then we
-will say, service = this. Create get held service. Passing in our response data and
-yes, move to the terminal refresh and yes. Oops, no. Yeah, lyric. And then we'll do
-vendor pin PHP unit and Awesome. All of our tests are still passing, but look how
-much code we removed. Well, okay, let's see, what am I doing now? Well, oh yeah,
-yeah, yeah. We're going to remove some more stuff. Okay, so now we've done that.
-Let's come up here to our first test method and we're going to do the same thing. So
+Start by adding a `private LoggerInterface $mockLogger` property, followed by
+`private MockHttpClient $mockHttpClient` and then `private MockResponse $mockresponse`.
+At the bottom of the test, create a `private function createGithubService()` that
+requires an `array $responseData` and returns `GithubService`. Inside, say
+`$this->mockResponse = new MockResponse()` that `json_encode()`'s the `$responseData`.
 
-It's
+Since we'll be creating the `MockResponse` *after* we instantiate the `MockHttpClient`,
+which you'll see in a second,
+we'll need a way to pass in our response to the client without using the client's
+constructor. To do that say `$this->mockHttpClient->setResponseFactory($this->mockResponse)`
+and finally return a `new GithubService()` with `$this->mockHttpClient` & `$this->mockLogger`.
 
-Cut out the response here and say, Service = this criteria of service. Let's keep
-doing that. Pass in the response data and then down here, let's go ahead and remove
-the service altogether. We still have one problem. So before we were adding in, uh,
-expectation that this, that the request method was called one time. We still want to
-do that. We were also making sure that get, uh, http method was passed in along with
-the url. So let's do that first. We will a search, same that one to the same as this.
-Um, mock HTT you provide. Get request count. Then we can remove this. Actually, no, I
-don't want to do that. Keep that. Yeah, yeah, yeah.
+We *could* add a constructor to instantiate our mocks and set them on the properties,
+but we want to make sure that we have a fresh mock every time a test runs. How?
+At the top add `protected function setUp()` then inside say `$this->mockLogger = $this->createMock()`
+with `LoggerInterface`. Next, create a `MockHttpClient()` on `$this->mockHttpClient`.
 
-There's
+Back in the test method, cut the response array then we'll say `$service = $this->createGithubService()`
+and then paste the array.
 
-Too much back and forth. Then will a search same that get was the, this mock spot?
-Oops. No. Stop doing that was the mock response. Get request url. I'm screwing this
-part up. And start from the top insert. That should start from the top again. Assert
-that get is the same as this mock response get request method. And then last thing we
-want to do is a copy the URL here. Hey, hush. Copy the URL and then we'll do a
-search. Same that the, uh, stop, right? Well a search. Same. Geez, Jesus.
+Move to the terminal to see if our tests are passing...
 
-Okay.
+```terminal
+./vendor/bin/phpunit
+```
 
-Well the search, same that the URL is the same as this mock response hip request url.
-We can go ahead and remove these. Then scroll back up here to the top and in our use
-statements, let's go ahead and remove our two interfaces as well. Cool. Move back
-into the tests and run vendor bend PHP unit again and, Great. We have 10 tests and 20
-assertions. Cool. Hey, what, what up? Oh, okay. Sorry, I was recording. I couldn't
-open the door. Me, I know.
+And... Ya! Everything is looking good!
+
+But... Why *didn't* just use the constructor to initialize the properties? Welp,
+we want to make sure we aren't re-using our mocks in each test. PHPUnit calls the
+`setUp()` *before* it calls each test method which gives us fresh mocks at the start
+of each test *and* let's us keep our code to a minimum. But what goes up must come down,
+which is what the `tearDown()` method does at *end* of each test case. We don't have
+a need for that here since we are just creating "simple" objects. In the next tutorial
+when we need to close database connections, `tearDown()` will do that spectacularly.
+
+In addition to `setUp()` and `tearDown()`, PHPUnit also has methods, like `setUpBeforeClass()` and
+`tearDownAfterClass()`, that it invokes at different stages of a test. We'll get
+more into those as they become relevant. And if you were wondering, all of these
+methods are actually called "Fixture Methods" that let you control the known state
+of your test.
+
+Anyhow, let's get back to refactoring. For the first test in this class, cut out
+the response array, select all of this "dead code" and add
+`$service = $this->createGithubService()` then paste the array. Then we can remove
+the `$service` variable below. But, now we need to figure out how to keep these
+expectations that we were using on the old `$mockHttpClient`. Being able to test
+that we only call GitHub once with the `GET` HTTP Method and that we're using the
+right URL, is pretty valuable.
+
+So below, `assertSame()` that `1` identical to `$this->mockHttpClient->getRequestCount()`
+then we can `assertSame()` that `GET` is identical to `$this->mockResponse->getRequestMethod()`.
+Finally we can copy and paste the URL into `assertSame()` and call `getRequestUrl()` on
+the `mockResponse`. Remove the old `$mockHttpClient` then use statements that we're
+no longer using up top.
+
+Alrighty, time to check the fences...
+
+```terminal-silent
+./vendor/bin/phpunit
+```
+
+And... Wow! Everything is still green!
+
+Welp, there you have it... Coming soon, we'll store our dino's in the database and write
+a few tests to make sure they stay there. See you soon!
+
