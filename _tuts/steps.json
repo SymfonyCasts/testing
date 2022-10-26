@@ -276,18 +276,18 @@
             "description": null
         },
         {
-            "id": "setup-teardown",
-            "name": "Setup Teardown",
+            "id": "setup-teardown-get-service",
+            "name": "Setup TearDown: get service",
             "description": null
         },
         {
-            "id": "setup-teardown-step-2",
-            "name": "Setup Teardown: step 2",
+            "id": "setup-teardown-cleanup-the-test-and-setup",
+            "name": "Setup TearDown: cleanup the test and setup",
             "description": null
         },
         {
-            "id": "refactor-test-with-dataprovider",
-            "name": "refactor test with dataprovider",
+            "id": "setup-teardown-use-mockhttpclient-with-provider-test",
+            "name": "Setup TearDown: use MockHttpClient with provider test",
             "description": null
         },
         {
@@ -296,5 +296,5 @@
             "description": null
         }
     ],
-    "sha": "13c4140cd63faaefe3a1dbecb663e7d34bf1fdcc"
+    "sha": "38308351f019da64e14b5b04be16415ccdcec690"
 }
