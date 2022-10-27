@@ -1,8 +1,8 @@
 # Testing Exceptional Exceptions
 
-Do you remember when we were seeing this exception because our app *didn't* understand
-Maverick "ungry" stats? Welp, we've fixed that, but we still need to take
-care of one minor detail. Next time GenLab throws us a curve ball, like setting 
+Do you remember when we were seeing this exception because our app *didn't* 
+understand Maverick "ungry" stats? Welp, we've fixed that, but we still need to 
+take care of one minor detail. Next time GenLab throws us a curve ball, like setting 
 "Status: Antsy" on a dino, `GithubService` should throw a *clear* exception
 that mentions the label.
 
@@ -19,20 +19,20 @@ and paste. Then `if (null === $health)` we'll `throw new \RuntimeException()` wi
 the message, `sprintf('%s is an unknown status label!')` passing in `$status`.
 Below return `$health`.
 
-But, if the issue *doesn't* have a status label, we still need to return a `HealthStatus`.
-So above, replace `$status` with `$health = HealthStatus::HEALTHY`, because unless
-GenLab adds a "Status: Sick" label, all of our dinos *are* healthy.
+But, if the issue *doesn't* have a status label, we still need to return a 
+`HealthStatus`. So above, replace `$status` with `$health = HealthStatus::HEALTHY`,
+because unless GenLab adds a "Status: Sick" label, all of our dinos *are* healthy.
 
 ## Is the exception thrown?
 
-Now, normally we write tests for *return* values. But you can also write tests to verify
-that the correct *exception* is thrown. So let do that in `GithubServiceTest`. Hmm... This first test
-has a lot of the logic we'll need. Copy that and paste it at the bottom.
-Change the name to `testExceptionThrownWithUnknownLabel` and remove the arguments.
-Inside, take out the assertion leaving just the call to
+Now, normally we write tests for *return* values. But you can also write tests to
+verify that the correct *exception* is thrown. So let do that in `GithubServiceTest`.
+Hmm... This first test has a lot of the logic we'll need. Copy that and paste it 
+at the bottom. Change the name to `testExceptionThrownWithUnknownLabel` and 
+remove the arguments. Inside, take out the assertion leaving just the call to
 `$service->getHealthReport()`. And instead of `$dinoName`, pass in `Maverick`. 
-For `$mockResponse`, remove Daisy from `willReturn()` and change Mavericks label from
-`Healthy` to `Drowsy`.
+For `$mockResponse`, remove Daisy from `willReturn()` and change Mavericks label 
+from `Healthy` to `Drowsy`.
 
 Alrighty, lets give this a shot:
 
@@ -47,8 +47,8 @@ And... Ouch! `GithubServiceTest` failed because of a:
 This is actually *good* news. It means `GithubService` is doing *exactly* what we
 want it to do. But, how do we make this test pass?
 
-Right before we call `getHealthReport()`, add `$this->exceptException()`
-passing in `\RuntimeException::class`.
+Right before we call `getHealthReport()`, add `$this->exceptException()` passing
+in `\RuntimeException::class`.
 
 Try the tests again:
 
@@ -79,8 +79,8 @@ Along with `expectExceptionMessage()`, PHPUnit has expectations for the exceptio
 code, object, and even has the ability to pass a regex to match the message.
 By the way, all of these `expect` methods are just like the `assert` methods. 
 The big difference is that they must be called *before* the action you're testing
-rather than after. And just like assertions, if we change
-the expected message from `Drowsy` to `Sleepy` and run the test:
+rather than after. And just like assertions, if we change the expected message 
+from `Drowsy` to `Sleepy` and run the test:
 
 ```terminal-silent
 ./vendor/bin/phpunit
