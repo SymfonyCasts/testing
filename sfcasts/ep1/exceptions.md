@@ -1,7 +1,7 @@
 # Testing Exceptional Exceptions
 
 Do you remember when we were seeing this exception because our app *didn't* 
-understand Maverick "ungry" stats? Welp, we've fixed that, but we still need to 
+understand Maverick's "hungry" status? Welp, we've fixed that, but we still need to 
 take care of one minor detail. Next time GenLab throws us a curve ball, like setting 
 "Status: Antsy" on a dino, `GithubService` should throw a *clear* exception
 that mentions the label.
@@ -26,7 +26,7 @@ because unless GenLab adds a "Status: Sick" label, all of our dinos *are* health
 ## Is the exception thrown?
 
 Now, normally we write tests for *return* values. But you can also write tests to
-verify that the correct *exception* is thrown. So let do that in `GithubServiceTest`.
+verify that the correct *exception* is thrown. So let's do that in `GithubServiceTest`.
 Hmm... This first test has a lot of the logic we'll need. Copy that and paste it 
 at the bottom. Change the name to `testExceptionThrownWithUnknownLabel` and 
 remove the arguments. Inside, take out the assertion leaving just the call to
