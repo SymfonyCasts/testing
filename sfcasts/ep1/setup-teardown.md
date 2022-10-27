@@ -71,6 +71,12 @@ Alrighty, time to check the fences...
 
 And... Wow! Everything is still green!
 
-Welp, there you have it... Coming soon, we'll store our dino's in the database and write
-a few tests to make sure they stay there. See you soon!
+Welp, there you have it... We've helped Bob improve Dinotopia by adding a few
+small features to the app. But more importantly, we're able to test that those
+features are working as we intended. Is there more work to be done? Absolutely!
+We're going to take our app to the next level by adding a persistence layer to
+store our dinos and learn how to write tests for that too. 
 
+We hope you've enjoyed your time here at the park. If you have any questions,
+suggestions, or want to ride with Big Eaty in a Jeep - just leave us a comment. 
+We look forward to hearing from you and hope to see you again in the next episode.
