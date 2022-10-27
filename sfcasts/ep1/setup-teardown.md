@@ -1,11 +1,11 @@
 # Setup and Tearing It Down
 
-Let's continue on with refactoring our test. In the test method, we create a `MockResponse`,
+Let's continue refactoring our test. In the test method, we create a `MockResponse`,
 `MockHttpClient`, and instantiate `GitHubService` with a mock `LoggerInterface`.
 We're doing the same thing in this test above. Didn't Ryan say to DRY out our
 code in another tutorial? Fine... I suppose we'll listen to him.
 
-We'll start by adding three `private` properties to our class. First, a
+Start by adding three `private` properties to our class: a
 `LoggerInterface $mockLogger`, followed by `MockHttpClient $mockHttpClient` and finally
 `MockResponse $mockresponse`. At the bottom of the test, create a 
 `private function createGithubService()` that requires `array $responseData` then
@@ -14,17 +14,19 @@ returns `GithubService`. Inside, say
 
 Since we'll be creating the `MockResponse` *after* we instantiate the `MockHttpClient`,
 which you'll see in a second, we need to pass our response to the client without 
-using the client's constructor. To do that say 
-`$this->mockHttpClient->setResponseFactory($this->mockResponse)` and finally 
+using the client's constructor. To do that, we can say 
+`$this->mockHttpClient->setResponseFactory($this->mockResponse)`. Finally 
 return a `new GithubService()` with `$this->mockHttpClient` and `$this->mockLogger`.
 
-We *could* use a constructor to instantiate our mocks and set them on their properties,
-but we want to make sure that we have a fresh mock every time a test runs. How?
-At the top add `protected function setUp()` and inside say 
-`$this->mockLogger = $this->createMock(LoggerInterface::class)`. Next, create a 
-`MockHttpClient()` on `$this->mockHttpClient`.
+We *could* use a constructor to instantiate our mocks and set them on those properties.
+But PHPUnit will only instantiate our test class *once*, no matter how many test methods
+it has. And we want to make sure we have fresh mock objects for *each* test run. How
+can we do that?
+At the top, add `protected function setUp()`. Inside, say 
+`$this->mockLogger = $this->createMock(LoggerInterface::class)` then
+`$this->mockHttpClient = new MockHttpClient()`.
 
-Down in the test method, cut the response array, then we'll say 
+Down in the test method, cut the response array, then say 
 `$service = $this->createGithubService()` and paste the array.
 
 Let's see how our tests are doing in the terminal...
@@ -35,32 +37,33 @@ Let's see how our tests are doing in the terminal...
 
 And... Ya! Everything is looking good!
 
-But... Why *didn't* we just use the constructor to initialize the properties? Welp,
-we want to make sure we aren't re-using our mocks in each test. PHPUnit calls the
-`setUp()` *before* it calls each test method which gives us fresh mocks at the start
-of each test. But what goes up must come down, which is what the `tearDown()` method 
-does at *end* of each test case. We don't have a need for that here since we are 
-just creating relatively "simple" objects. In the next tutorial when we need to
-say, close database connections, `tearDown()` will do that spectacularly.
+The idea is pretty simple: if your test class has a method called `setUp()`, PHPUnit
+will call it before *each* test method, which gives us fresh mocks at the start
+of every test. Need to do something *after* each test? Same thing: create a method
+called `tearDown()`. This isn't as common... but you might do it if you want to
+clean up some filesystem changes that were made during the test. In our case, there's
+no need.
 
-In addition to `setUp()` and `tearDown()`, PHPUnit also has methods, like
-`setUpBeforeClass()` and `tearDownAfterClass()` that it invokes at different stages
-in the life of a test. We'll get more into those as they become relevant in future
-tutorials. And if you were wondering, all of these methods are actually called 
-"Fixture Methods" that help control the known state of your test.
+In addition to `setUp()` and `tearDown()`, PHPUnit also has a few other methods, like
+`setUpBeforeClass()` and `tearDownAfterClass()`. These are called once per *class*,
+and we'll get more into those as they become relevant in future
+tutorials. And if you were wondering, these methods are called 
+"Fixture Methods" because they help setup any "fixtures" to get your environment
+into a known state for your test.
 
 Anyhow, let's get back to refactoring. For the first test in this class, cut out
-the response array, select all of this "dead code", and add
+the response array, select all of this "dead code", add
 `$service = $this->createGithubService()` then paste in the array. We can remove
-the `$service` variable below. But, now we need to figure out how to keep these
+the `$service` variable below. But now we need to figure out how to keep these
 expectations that we were using on the old `$mockHttpClient`. Being able to test
 that we only call GitHub *once* with the `GET` HTTP Method and that we're using the
 right URL, is pretty valuable.
 
-So below, `assertSame()` that `1` identical to `$this->mockHttpClient->getRequestCount()`
-then we can `assertSame()` that `GET` is identical to `$this->mockResponse->getRequestMethod()`.
-Finally, we can copy and paste the URL into `assertSame()` and call `getRequestUrl()` on
-the `mockResponse`. Remove the old `$mockHttpClient`, and the `use` statements 
+Fortunately, those mock classes have special code *just* for this.
+Below, `assertSame()` that `1` is identical to `$this->mockHttpClient->getRequestCount()`
+then `assertSame()` that `GET` is identical to `$this->mockResponse->getRequestMethod()`.
+Finally, copy and paste the URL into `assertSame()` and call `getRequestUrl()` on
+`mockResponse`. Remove the old `$mockHttpClient`... and the `use` statements 
 that we're no longer using up top.
 
 Alrighty, time to check the fences...
@@ -75,8 +78,12 @@ Welp, there you have it... We've helped Bob improve Dinotopia by adding a few
 small features to the app. But more importantly, we're able to test that those
 features are working as we intended. Is there more work to be done? Absolutely!
 We're going to take our app to the next level by adding a persistence layer to
-store our dinos and learn how to write tests for that too. 
+store dinos in the database and learn how to write tests for that too. These
+tests, where you use *real* database connections or make *real* API calls, instead
+of mocking, are sometimes called integration tests. That's the topic of the next
+tutorial in this series.
 
-We hope you've enjoyed your time here at the park. If you have any questions,
-suggestions, or want to ride with Big Eaty in a Jeep - just leave us a comment. 
-We look forward to hearing from you and hope to see you again in the next episode.
+I hope you enjoyed your time here at the park - and thanks for keeping your arms
+and legs inside the vehicle at all times. If you have any questions,
+suggestions, or want to ride with Big Eaty in the Jeep - just leave us a comment. 
+Alright, see you in the next episode!
