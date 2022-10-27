@@ -2,28 +2,27 @@
 
 Let's continue refactoring our test. In the test method, we create a `MockResponse`,
 `MockHttpClient`, and instantiate `GitHubService` with a mock `LoggerInterface`.
-We're doing the same thing in this test above. Didn't Ryan say to DRY out our
-code in another tutorial? Fine... I suppose we'll listen to him.
+We're doing the same thing in this test above. Didn't Ryan say to DRY out our code
+in another tutorial? Fine... I suppose we'll listen to him.
 
 Start by adding three `private` properties to our class: a
-`LoggerInterface $mockLogger`, followed by `MockHttpClient $mockHttpClient` and finally
-`MockResponse $mockresponse`. At the bottom of the test, create a 
+`LoggerInterface $mockLogger`, followed by `MockHttpClient $mockHttpClient` and
+finally `MockResponse $mockresponse`. At the bottom of the test, create a 
 `private function createGithubService()` that requires `array $responseData` then
-returns `GithubService`. Inside, say
-`$this->mockResponse = new MockResponse()` that `json_encode()`'s the `$responseData`.
+returns `GithubService`. Inside, say `$this->mockResponse = new MockResponse()` 
+that `json_encode()`'s the `$responseData`.
 
 Since we'll be creating the `MockResponse` *after* we instantiate the `MockHttpClient`,
 which you'll see in a second, we need to pass our response to the client without 
 using the client's constructor. To do that, we can say 
-`$this->mockHttpClient->setResponseFactory($this->mockResponse)`. Finally 
-return a `new GithubService()` with `$this->mockHttpClient` and `$this->mockLogger`.
+`$this->mockHttpClient->setResponseFactory($this->mockResponse)`. Finally return
+a `new GithubService()` with `$this->mockHttpClient` and `$this->mockLogger`.
 
 We *could* use a constructor to instantiate our mocks and set them on those properties.
-But PHPUnit will only instantiate our test class *once*, no matter how many test methods
-it has. And we want to make sure we have fresh mock objects for *each* test run. How
-can we do that?
-At the top, add `protected function setUp()`. Inside, say 
-`$this->mockLogger = $this->createMock(LoggerInterface::class)` then
+But PHPUnit will only instantiate our test class *once*, no matter how many test
+methods it has. And we want to make sure we have fresh mock objects for *each* 
+test run. How can we do that? At the top, add `protected function setUp()`. Inside,
+say `$this->mockLogger = $this->createMock(LoggerInterface::class)` then
 `$this->mockHttpClient = new MockHttpClient()`.
 
 Down in the test method, cut the response array, then say 
@@ -46,10 +45,9 @@ no need.
 
 In addition to `setUp()` and `tearDown()`, PHPUnit also has a few other methods, like
 `setUpBeforeClass()` and `tearDownAfterClass()`. These are called once per *class*,
-and we'll get more into those as they become relevant in future
-tutorials. And if you were wondering, these methods are called 
-"Fixture Methods" because they help setup any "fixtures" to get your environment
-into a known state for your test.
+and we'll get more into those as they become relevant in future tutorials. And if 
+you were wondering, these methods are called "Fixture Methods" because they help
+setup any "fixtures" to get your environment into a known state for your test.
 
 Anyhow, let's get back to refactoring. For the first test in this class, cut out
 the response array, select all of this "dead code", add
@@ -59,8 +57,8 @@ expectations that we were using on the old `$mockHttpClient`. Being able to test
 that we only call GitHub *once* with the `GET` HTTP Method and that we're using the
 right URL, is pretty valuable.
 
-Fortunately, those mock classes have special code *just* for this.
-Below, `assertSame()` that `1` is identical to `$this->mockHttpClient->getRequestCount()`
+Fortunately, those mock classes have special code *just* for this. Below, 
+`assertSame()` that `1` is identical to `$this->mockHttpClient->getRequestCount()`
 then `assertSame()` that `GET` is identical to `$this->mockResponse->getRequestMethod()`.
 Finally, copy and paste the URL into `assertSame()` and call `getRequestUrl()` on
 `mockResponse`. Remove the old `$mockHttpClient`... and the `use` statements 
@@ -84,6 +82,6 @@ of mocking, are sometimes called integration tests. That's the topic of the next
 tutorial in this series.
 
 I hope you enjoyed your time here at the park - and thanks for keeping your arms
-and legs inside the vehicle at all times. If you have any questions,
-suggestions, or want to ride with Big Eaty in the Jeep - just leave us a comment. 
-Alright, see you in the next episode!
+and legs inside the vehicle at all times. If you have any questions, suggestions, 
+or want to ride with Big Eaty in the Jeep - just leave us a comment. Alright,
+see you in the next episode!
