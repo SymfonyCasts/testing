@@ -56,8 +56,6 @@ But... What if we actually wanted to call GitHub *more* than just once? Or... we
 wanted to assert that it was not called at all? PHPUnit has us covered. There are
 a handful of other methods we can call. For example, change `once()` to `never()`.
 
-[[[ ]]]
-
 And watch what happens now:
 
 ```terminal-silent
