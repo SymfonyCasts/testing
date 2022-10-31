@@ -31,7 +31,7 @@ In the array say `HealthStatus::SICK`, and `false`. Next,
 `yield 'Hungry dino is accepting visitors'` with `[HealthStatus::HUNGRY, true]`.
 Above, add the `@dataProvider` annotation so we can use `healthStatusProvider()`.
 While we're here, rename the method to `testIsAcceptingVisitorsBasedOnHealthStatus` 
-then add the arguments `HealthStatus $healthStatus` and `bool $expectedStatus`. 
+then add the arguments `HealthStatus $healthStatus` and `bool $expectedVisitorStatus`. 
 Inside set the health with `$healthStatus` then replace `assertFalse()` with 
 `assertSame($expectedStatus)` is identical to `$dino->isAcceptingVisitors()`.
 
