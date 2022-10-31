@@ -1,0 +1,222 @@
+WEBVTT
+
+00:00:01.026 --> 00:00:05.516 align:middle
+Echemos un vistazo rápido a GithubService
+para ver qué hace exactamente.
+
+00:00:05.596 --> 00:00:10.896 align:middle
+En primer lugar, el constructor
+requiere un objeto HttpClientInterface
+
+00:00:10.926 --> 00:00:12.726 align:middle
+que utilizamos para llamar a GitHub.
+
+00:00:13.226 --> 00:00:17.946 align:middle
+A cambio, obtenemos un
+ResponseInterface que tiene una matriz
+
+00:00:17.946 --> 00:00:20.136 align:middle
+de asuntos para el repositorio dino-park.
+
+00:00:20.886 --> 00:00:26.596 align:middle
+A continuación, llamamos al método toArray() en la
+respuesta, e iteramos sobre cada cuestión para ver
+
+00:00:26.596 --> 00:00:31.086 align:middle
+si el título contiene el $dinosaurName, de
+modo que podamos obtener su etiqueta de estado.
+
+00:00:32.506 --> 00:00:37.636 align:middle
+Para que nuestras pruebas pasen, tenemos
+que enseñar a nuestro falso httpClient
+
+00:00:37.776 --> 00:00:40.166 align:middle
+que cuando llamemos al método request(),
+
+00:00:40.526 --> 00:00:45.926 align:middle
+debe devolver un objeto ResponseInterface
+que contenga datos que nosotros controlamos.
+
+00:00:46.756 --> 00:00:48.926 align:middle
+Así que... vamos a hacerlo.
+
+00:00:48.926 --> 00:00:57.516 align:middle
+Justo después de $mockHttpClient, di
+$mockResponse = $this->createMock() usando
+
+00:00:57.516 --> 00:01:00.656 align:middle
+ResponseInterface::class para
+el nombre de la clase. Abajo
+
+00:01:02.076 --> 00:01:05.506 align:middle
+en $mockHttpClient, llama,
+
+00:01:05.996 --> 00:01:10.546 align:middle
+->method('request') que
+willReturn($mockResponse).
+
+00:01:12.276 --> 00:01:17.266 align:middle
+Esto le dice a nuestro cliente simulado que, oye, cada vez
+que llamemos al método request() en nuestro simulacro, tienes
+
+00:01:17.666 --> 00:01:20.696 align:middle
+que devolver este $mockResponse.
+
+00:01:20.696 --> 00:01:21.766 align:middle
+¡¡¡¡¡¡¡¡¡!!!!!!!!! Este capítulo
+es lo suficientemente corto, podríamos?
+
+00:01:21.766 --> 00:01:22.066 align:middle
+¡¡¡¡¡¡¡¡¡ejecutar
+las pruebas !!!!!!!!!
+
+00:01:22.066 --> 00:01:25.086 align:middle
+Ahora podríamos ejecutar
+nuestras pruebas, pero fallarían.
+
+00:01:25.626 --> 00:01:29.976 align:middle
+Hemos enseñado a nuestro cliente simulado lo que
+debe devolver cuando llamamos al método request().
+
+00:01:30.386 --> 00:01:35.346 align:middle
+Pero ahora tenemos que enseñar a nuestro $mockResponse
+lo que debe hacer cuando llamemos al método
+
+00:01:35.346 --> 00:01:37.196 align:middle
+toArray().
+
+00:01:37.286 --> 00:01:43.006 align:middle
+Así que, justo encima, vamos a enseñarle al
+$mockResponse que cuando llamemos, method('toArray')
+
+00:01:43.736 --> 00:01:46.476 align:middle
+y él willReturn() un array de temas.
+
+00:01:47.016 --> 00:01:49.926 align:middle
+Porque eso es lo que GitHub
+devuelve cuando llamamos a la API.
+
+00:01:50.406 --> 00:01:54.646 align:middle
+Para cada incidencia, GitHub nos
+da el "título" de la incidencia
+
+00:01:54.766 --> 00:01:57.456 align:middle
+y, entre otras cosas, un array de "etiquetas".
+
+00:01:58.106 --> 00:02:03.856 align:middle
+Así que imitemos a GitHub y hagamos que esta matriz
+incluya una incidencia que tenga 'title' => 'Daisy'.
+
+00:02:03.856 --> 00:02:03.923 align:middle
+¡¡¡¡¡¡¡¡¡¡!!!!!!!!!!
+
+00:02:03.923 --> 00:02:09.436 align:middle
+¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡Vuelve a los temas de Github para "ver"
+qué dinos podemos utilizar.....!!!!!!!!!!!!!!!!!!! ¡¡¡¡¡¡¡¡¡¡
+
+00:02:09.476 --> 00:02:16.196 align:middle
+Y, para la prueba, fingiremos que se ha torcido el tobillo,
+así que añade un conjunto de claves labels a un array,
+
+00:02:16.196 --> 00:02:18.636 align:middle
+que incluya 'name' =>
+'Status: Sick'!!!!!!!!!!
+
+00:02:18.636 --> 00:02:23.966 align:middle
+¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡Vuelve a los temas
+de Github para "rodear" a Maverick!!!!!!!!!!!!!!!!!!!
+
+00:02:23.966 --> 00:02:27.936 align:middle
+Creemos también un dino
+sano para poder afirmar
+
+00:02:29.246 --> 00:02:32.776 align:middle
+que nuestro análisis sintáctico
+también lo comprueba correctamente.
+
+00:02:32.776 --> 00:02:36.996 align:middle
+Copia este tema y pégalo a continuación.
+
+00:02:37.276 --> 00:02:41.556 align:middle
+Cambia Daisy por Maverick y pon
+su etiqueta en Status: Healthy.
+
+00:02:41.776 --> 00:02:52.296 align:middle
+Perfecto Nuestras afirmaciones ya esperan que
+Daisy esté enfermo y que Maverick esté sano.
+
+00:02:52.526 --> 00:02:57.496 align:middle
+Así que, si nuestras pruebas pasan, significa que toda
+nuestra lógica de análisis de etiquetas es correcta.
+
+00:02:57.496 --> 00:02:59.826 align:middle
+Cruzando los dedos, vamos a
+probarlo: ./vendor/bin/phpunit
+
+00:02:59.826 --> 00:03:01.026 align:middle
+Y... ¡Impresionante!
+
+00:03:01.026 --> 00:03:02.416 align:middle
+¡Pasan las pruebas! Y
+
+00:03:02.416 --> 00:03:08.936 align:middle
+lo mejor de todo, ¡ya no llamamos a la API de
+GitHub cuando ejecutamos nuestras pruebas! Imagina
+
+00:03:08.936 --> 00:03:12.146 align:middle
+el pánico que causaríamos si tuviéramos
+que bloquear el parque porque nuestras pruebas
+
+00:03:12.686 --> 00:03:16.676 align:middle
+fallaran porque la api
+estuviera desconectada... o
+
+00:03:16.676 --> 00:03:20.256 align:middle
+simplemente porque alguien cambiara
+las etiquetas en GitHub, Ya... Yo
+
+00:03:20.706 --> 00:03:23.766 align:middle
+tampoco quiero ese dolor
+de cabeza... ¿Recuerdas
+
+00:03:23.766 --> 00:03:27.676 align:middle
+cuando hablábamos de los diferentes
+nombres de los mocks? Pues bien,
+
+00:03:27.676 --> 00:03:33.506 align:middle
+tanto mockResponse como mockHttpClient
+se llaman ahora oficialmente stubs ... Es
+
+00:03:33.506 --> 00:03:35.206 align:middle
+una forma elegante de decir
+objetos falsos en los que
+
+00:03:35.206 --> 00:03:38.826 align:middle
+opcionalmente tomamos el control de
+los valores que devuelven. Eso es
+
+00:03:38.826 --> 00:03:41.986 align:middle
+exactamente lo que estamos haciendo
+con el método willReturn(). De nuevo,
+
+00:03:41.986 --> 00:03:43.726 align:middle
+la terminología no es demasiado
+importante, pero ahí tienes. Estos
+
+00:03:43.726 --> 00:03:44.406 align:middle
+son stubs. Y
+
+00:03:44.406 --> 00:03:48.426 align:middle
+sí, cada vez que enseño esto,
+tengo que buscar estos términos para
+
+00:03:48.426 --> 00:03:50.786 align:middle
+recordar qué significan exactamente. A
+
+00:03:51.646 --> 00:03:56.536 align:middle
+continuación, vamos a convertir nuestros
+"stubs" en auténticos objetos simulados,
+
+00:03:56.586 --> 00:04:00.366 align:middle
+probando también los datos
+que se pasan al simulacro
