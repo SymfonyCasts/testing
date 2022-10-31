@@ -12,7 +12,7 @@ correct URL. Could we do that? Absolutely!
 In `GithubServiceTest` where we configure the `$mockHttpClient`, add `->expects()`,
 and pass `self::once()`.
 
-[[[ code('29a7f614df') ]]]
+[[[ code('d4cd801092') ]]]
 
 Over in the terminal, run our tests...
 
@@ -26,7 +26,7 @@ And... Awesome! We've just added an assertion to our mock client that requires t
 `request` method be called *exactly* once. Let's take it a step further and
 add `->with()` passing `GET`... and then I'll paste the URL to the GitHub API.
 
-[[[ code('bac0a55cb7') ]]]
+[[[ code('47a458cb01') ]]]
 
 Try the tests again...
 
@@ -41,7 +41,7 @@ And... Huh! We have 2 failures:
 Hmm... Ah Ha! My copy and paste skills are a bit weak. I missed `/issue` at the
 end of the URL. Add that. 
 
-[[[ code('9d90eb1aab') ]]]
+[[[ code('4d846bbca3') ]]]
 
 Let's see if that was the trick:
 
