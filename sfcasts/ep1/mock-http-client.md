@@ -14,7 +14,7 @@ just use the real thing.
 Looking back at Symfony's HTTP Client, we *were* able to mock both the client
 *and* the response to control its behavior. *But*, because needing to do this
 sort of thing is so common, Symfony's HTTP Client comes with some special classes
-that can do the mocking *for* us. Well, it comes with two real classes specifically 
+that can do the mocking *for* us. It comes with two real classes specifically 
 made for *testing*: `MockHttpClient` & `MockResponse`. Using PHPUnit's mock system 
 is fine, but these exist to make our life even easier.
 
