@@ -12,8 +12,13 @@ exercise routine.
 
 ## Our Enum Is Hungry Too
 
-Looking at `HealthStatus`, we don't have a case for hungry dinos. So add
-`case HUNGRY` that returns `Hungry`... then refresh the dashboard.
+Looking at `HealthStatus`, we don't have a case for hungry dinos:
+
+[[[ code('f206435c2b') ]]]
+
+So add `case HUNGRY` that returns `Hungry`... then refresh the dashboard.
+
+[[[ code('6155f75ab1') ]]]
 
 And... Ya! No more errors...
 
@@ -28,12 +33,20 @@ Hmm... I think we might be able to use `testIsNotAcceptingVisitorsIfSick()` for 
 Yup, that's what we'll do. Below, add a `healthStatusProvider()` that returns 
 `\Generator` and for the first dataset `yield 'Sick dino is not accepting visitors'`. 
 In the array say `HealthStatus::SICK`, and `false`. Next, 
-`yield 'Hungry dino is accepting visitors'` with `[HealthStatus::HUNGRY, true]`.
+`yield 'Hungry dino is accepting visitors'` with `[HealthStatus::HUNGRY, true]`:
+
+[[[ code('6ad9401fac') ]]]
+
 Above, add the `@dataProvider` annotation so we can use `healthStatusProvider()`.
 While we're here, rename the method to `testIsAcceptingVisitorsBasedOnHealthStatus` 
-then add the arguments `HealthStatus $healthStatus` and `bool $expectedVisitorStatus`. 
+then add the arguments `HealthStatus $healthStatus` and `bool $expectedVisitorStatus`:
+
+[[[ code('62a155f67d') ]]]
+
 Inside set the health with `$healthStatus` then replace `assertFalse()` with 
-`assertSame($expectedStatus)` is identical to `$dino->isAcceptingVisitors()`.
+`assertSame($expectedStatus)` is identical to `$dino->isAcceptingVisitors()`:
+
+[[[ code('2180c8cad5') ]]]
 
 Phew, that was a lot of work!
 
@@ -55,7 +68,9 @@ Anywho, Hungry dino is not accepting visitors is failing:
 > Failed asserting that false is true.
 
 Looking at `Dinosaur::isAcceptingVisitors()`, to account for hungry dino's,
-we need to return `$this->health` does not equal `HealthStatus::SICK`.
+we need to return `$this->health` does not equal `HealthStatus::SICK`:
+
+[[[ code('326a577dd2') ]]]
 
 Let's see what happens when we run:
 

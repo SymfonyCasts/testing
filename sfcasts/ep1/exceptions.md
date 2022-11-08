@@ -21,7 +21,9 @@ Below return `$health`.
 
 But, if the issue *doesn't* have a status label, we still need to return a 
 `HealthStatus`. So above, replace `$status` with `$health = HealthStatus::HEALTHY`,
-because unless GenLab adds a "Status: Sick" label, all of our dinos *are* healthy.
+because unless GenLab adds a "Status: Sick" label, all of our dinos *are* healthy:
+
+[[[ code('f5d532b43b') ]]]
 
 ## Is the exception thrown?
 
@@ -32,7 +34,9 @@ at the bottom. Change the name to `testExceptionThrownWithUnknownLabel` and
 remove the arguments. Inside, take out the assertion leaving just the call to
 `$service->getHealthReport()`. And instead of `$dinoName`, pass in `Maverick`. 
 For `$mockResponse`, remove Daisy from `willReturn()` and change Mavericks label 
-from `Healthy` to `Drowsy`.
+from `Healthy` to `Drowsy`:
+
+[[[ code('ebc5d64297') ]]]
 
 Alrighty, lets give this a shot:
 
@@ -48,7 +52,9 @@ This is actually *good* news. It means `GithubService` is doing *exactly* what w
 want it to do. But, how do we make this test pass?
 
 Right before we call `getHealthReport()`, add `$this->exceptException()` passing
-in `\RuntimeException::class`.
+in `\RuntimeException::class`:
+
+[[[ code('850d2f4772') ]]]
 
 Try the tests again:
 
@@ -62,7 +68,9 @@ Um... awesome sauce! We're green!
 
 But, hmm... If we manage to dork up our code on accident, a `RuntimeException`
 *could* be coming from someplace else. To make sure we're testing the *correct*
-exception, say `$this->exceptExceptionMessage('Drowsy is an unknown status label!')`.
+exception, say `$this->exceptExceptionMessage('Drowsy is an unknown status label!')`:
+
+[[[ code('4d4c4bdcac') ]]]
 
 Then run our spell checker again:
 

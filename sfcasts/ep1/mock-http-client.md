@@ -23,10 +23,14 @@ Check it out: instead of *creating* a mock for `$mockResponse`, instantiate a
 response. Grab Maverick's issue below and paste that into the array. Since 
 `MockResponse` is already configured, remove the `$mockResponse` bits below.
 
+[[[ code('fe13320af2') ]]]
+
 For the client, remove `$mockHttpClient` and below, instantiate a new 
 `MockHttpClient()` passing in `$mockResponse` instead. Since we're not doing 
 anything with `$mockLogger`, cut `createMock()`, remove the variable, and paste 
 that as an argument to `GithubService()`.
+
+[[[ code('288873b40c') ]]]
 
 Wow, this is looking better already! But, let's see what happens when we run the
 tests:

@@ -7,16 +7,23 @@ in another tutorial? Fine... I suppose we'll listen to him.
 
 Start by adding three `private` properties to our class: a
 `LoggerInterface $mockLogger`, followed by `MockHttpClient $mockHttpClient` and
-finally `MockResponse $mockresponse`. At the bottom of the test, create a 
-`private function createGithubService()` that requires `array $responseData` then
-returns `GithubService`. Inside, say `$this->mockResponse = new MockResponse()` 
-that `json_encode()`'s the `$responseData`.
+finally `MockResponse $mockresponse`:
+
+[[[ code('ef02047cf4') ]]]
+
+At the bottom of the test, create a `private function createGithubService()` 
+that requires `array $responseData` then returns `GithubService`. Inside, 
+say `$this->mockResponse = new MockResponse()` that `json_encode()`'s the `$responseData`:
+
+[[[ code('1562c787cd') ]]]
 
 Since we'll be creating the `MockResponse` *after* we instantiate the `MockHttpClient`,
 which you'll see in a second, we need to pass our response to the client without 
 using the client's constructor. To do that, we can say 
 `$this->mockHttpClient->setResponseFactory($this->mockResponse)`. Finally return
 a `new GithubService()` with `$this->mockHttpClient` and `$this->mockLogger`.
+
+[[[ code('e17536efdd') ]]]
 
 We *could* use a constructor to instantiate our mocks and set them on those properties.
 But PHPUnit will only instantiate our test class *once*, no matter how many test
@@ -25,8 +32,12 @@ test run. How can we do that? At the top, add `protected function setUp()`. Insi
 say `$this->mockLogger = $this->createMock(LoggerInterface::class)` then
 `$this->mockHttpClient = new MockHttpClient()`.
 
+[[[ code('0a9d5b26d9') ]]]
+
 Down in the test method, cut the response array, then say 
 `$service = $this->createGithubService()` and paste the array.
+
+[[[ code('c487d18a05') ]]]
 
 Let's see how our tests are doing in the terminal...
 
@@ -52,10 +63,13 @@ setup any "fixtures" to get your environment into a known state for your test.
 Anyhow, let's get back to refactoring. For the first test in this class, cut out
 the response array, select all of this "dead code", add
 `$service = $this->createGithubService()` then paste in the array. We can remove
-the `$service` variable below. But now we need to figure out how to keep these
-expectations that we were using on the old `$mockHttpClient`. Being able to test
-that we only call GitHub *once* with the `GET` HTTP Method and that we're using the
-right URL, is pretty valuable.
+the `$service` variable below:
+
+[[[ code('130ec24080') ]]]
+
+But now we need to figure out how to keep these expectations that we were using on 
+the old `$mockHttpClient`. Being able to test that we only call GitHub *once* with 
+the `GET` HTTP Method and that we're using the right URL, is pretty valuable.
 
 Fortunately, those mock classes have special code *just* for this. Below, 
 `assertSame()` that `1` is identical to `$this->mockHttpClient->getRequestCount()`
@@ -63,6 +77,8 @@ then `assertSame()` that `GET` is identical to `$this->mockResponse->getRequestM
 Finally, copy and paste the URL into `assertSame()` and call `getRequestUrl()` on
 `mockResponse`. Remove the old `$mockHttpClient`... and the `use` statements 
 that we're no longer using up top.
+
+[[[ code('f6e3e73d18') ]]]
 
 Alrighty, time to check the fences...
 
