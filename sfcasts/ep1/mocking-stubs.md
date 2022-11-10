@@ -23,7 +23,6 @@ that hey, anytime we call the `request()` method on our mock, you need to return
 
 [[[ code('db50103536') ]]]
 
-!!!!!!!!! This chapter is short enough, we could? run the tests !!!!!!!!!
 We *could* run our tests now, but they would fail. We taught our mock client
 *what* it should return when we call the `request()` method. *But*, *now* we need
 to teach our `$mockResponse` what *it* needs to do when we call the `toArray()`
@@ -36,11 +35,10 @@ GitHub returns when we call the API.
 For each issue, GitHub gives us the issue's "title", and among other things,
 an array of "labels". So let's mimic GitHub and make this array include one
 issue that has `'title' => 'Daisy'`.
-!!!!!!!!!! Zoom back to the Github Issues to "see" which dino's we can use.....!!!!!!!!!!!!!!!!!!!
-And, for the test, we'll pretend she sprained her ankle so add a `labels` key set
-to an array, that includes `'name' => 'Status: Sick'`
 
-!!!!!!!!!! Zoom back to the Github Issues to "circling" Maverick!!!!!!!!!!!!!!!!!!!
+And, for the test, we'll pretend she sprained her ankle so add a `labels` key set
+to an array, that includes `'name' => 'Status: Sick'`.
+
 Let's also create a healthy dino so we can assert that our parsing checks *that*
 correctly too. Copy this issue and paste it below. Change `Daisy` to `Maverick`
 and set his label to `Status: Healthy`.
