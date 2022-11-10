@@ -51,7 +51,7 @@ And... Ouch! `GithubServiceTest` failed because of a:
 This is actually *good* news. It means `GithubService` is doing *exactly* what we
 want it to do. But, how do we make this test pass?
 
-Right before we call `getHealthReport()`, add `$this->exceptException()` passing
+Right before we call `getHealthReport()`, add `$this->expectException()` passing
 in `\RuntimeException::class`:
 
 [[[ code('850d2f4772') ]]]
@@ -68,7 +68,7 @@ Um... awesome sauce! We're green!
 
 But, hmm... If we manage to dork up our code on accident, a `RuntimeException`
 *could* be coming from someplace else. To make sure we're testing the *correct*
-exception, say `$this->exceptExceptionMessage('Drowsy is an unknown status label!')`:
+exception, say `$this->expectExceptionMessage('Drowsy is an unknown status label!')`:
 
 [[[ code('4d4c4bdcac') ]]]
 
