@@ -1,33 +1,69 @@
-# De acuerdo.
+# Probando Excepciones Excepcionales
 
-De acuerdo. Así que creo que la mejor manera de manejar, eh, para que nos demos cuenta si el laboratorio gen crea alguna etiqueta de estado nueva que aún no conocemos, como por ejemplo el estado de somnolencia, es lanzar una excepción en nuestro código.
+¿Recuerdas cuando veíamos esta excepción porque nuestra aplicación no entendía el estado de "hambre" de Maverick? Bueno, ya lo hemos arreglado, pero todavía tenemos que ocuparnos de un pequeño detalle. La próxima vez que GenLab nos lance una bola curva, como poner "Estado: Antsy" en un dino, `GithubService` debería lanzar una excepción clara que mencione la etiqueta.
 
-Vamos a
+## ¿Dónde podemos lanzar una excepción?
 
-Volver aquí a nuestra clase de servicio GitHub. Y vamos a tomarnos un descanso de TDD por un momento. Así que mirando nuestra función, llamamos a la API de GitHub. Recorremos la lista de asuntos. Y si el título de la cuestión contiene el nombre de nuestro dinosaurio, llamamos al estado de Dino GI desde el método de etiquetas,
+Para ello, vamos a hacer una pausa en TDD por un momento. En`getDinoStatusFromLabels()`, si una etiqueta tiene el prefijo "Estado:", lo cortamos, ponemos lo que queda en `$status`, y lo pasamos a `tryFrom()` para poder devolver un `HealthStatus`. Creo que éste sería un buen punto para lanzar una excepción si `tryFrom()` devuelve `null`.
 
-Con permiso.
+Corta `HealthStatus::tryFrom($status)` del retorno y justo encima añade `$health =` y pega. Entonces `if (null === $health)` lo haremos `throw new \RuntimeException()` con el mensaje, `sprintf('%s is an unknown status label!')` pasando por `$status`. Abajo devuelve `$health`.
 
-Y pasamos el array de etiquetas de esa incidencia a este método. Así que mirando aquí en nuestro método, tomamos ese array de etiquetas. Y si la etiqueta no empieza por estado, seguimos adelante. Si no, eliminamos el prefijo de estado y lo recortamos. Así que creo que este es el punto en el que deberíamos lanzar una excepción.
+Pero, si el asunto no tiene una etiqueta de estado, todavía tenemos que devolver un`HealthStatus`. Así que arriba, sustituye `$status` por `$health = HealthStatus::HEALTHY`, porque a menos que GenLab añada una etiqueta de "Estado: Enfermo", todos nuestros dinos están sanos:
 
-Vamos a
+[[[ code('f5d532b43b') ]]]
 
-Crear un vamos a seguir adelante y vamos a copiar. Cortaremos el, eh, bloque de estado de salud aquí mismo de nuestro retorno y lo pegaremos justo debajo de nuestro filtro. De acuerdo. Y luego diremos si o no, diremos salud = estado de salud, prueba de nuestro estado y ahora nuestro bloque TRIR, o, o prueba de método. Uh, le pasamos una cadena e internamente este método intenta hacer coincidir nuestro valor, como sano, enfermo o, uh, hambriento con esta cadena. Y si lo hace nos devuelve o enumera, si no lo hace va a devolver. No. Así que lo que podemos hacer aquí es que si no = salud, lanzaremos una nueva excepción en tiempo de ejecución y le daremos a esta excepción un mensaje. Así que hagamos el sprint F y queremos que diga si la etiqueta es una etiqueta de estado desconocida, signo de exclamación, y ahora tenemos que pasar la etiqueta de GitHub. Y sigamos adelante y cerremos esa línea. Genial. Aquí abajo a la declaración de retorno, podemos seguir adelante y, y devolver la salud. Pero si el tema no tiene etiquetas o la matriz está vacía, todavía tenemos que devolver un estado de salud. Así que en lugar de utilizar la variable de estado, vamos a cambiar esto a salud = estado de salud saludable, porque recuerda, a menos que el laboratorio de ginebra nos diga que Diana estaba enferma, siempre consumimos que están sanos. Genial. Ahora que tenemos esto, vamos a escribir una prueba, a nuestra clase de prueba de servicio GI up, y tenemos que desplazarnos hacia abajo
+## ¿Se lanza la excepción?
 
-Hmm.
+Ahora bien, normalmente escribimos pruebas para los valores de retorno. Pero también puedes escribir pruebas para verificar que se lanza la excepción correcta. Así que hagamos eso en `GithubServiceTest`. Hmm... Esta primera prueba tiene gran parte de la lógica que necesitaremos. Cópiala y pégala en la parte inferior. Cambia el nombre a `testExceptionThrownWithUnknownLabel` y elimina los argumentos. Dentro, quita la aserción dejando sólo la llamada a`$service->getHealthReport()`. Y en lugar de `$dinoName`, pasa a `Maverick`. 
+Para `$mockResponse`, quita la margarita de `willReturn()` y cambia la etiqueta Mavericks de `Healthy` a `Drowsy`:
 
-Nuestro método de prueba existente aquí. Tiene mucho del mismo código que vamos a necesitar para, eh, probar y exceptuar. Así que vamos a copiar este método de prueba. Vamos a copiar este método de prueba y a desplazarnos hacia abajo hasta la parte inferior. Y lo pegaremos aquí debajo de nuestro proveedor de datos. Genial. Vamos a cambiar el nombre de esto a, uh, excepción de prueba, lanzada con etiqueta desconocida, y no vamos a utilizar un proveedor de datos. Así que podemos seguir adelante y eliminar ambos argumentos de nuestro método de prueba. Y ahora vamos a desplazarnos hasta nuestra aserción, que no vamos a necesitar. Así que vamos a eliminar esta aserción. Uh, todavía necesitamos llamar a obtener el informe de salud y <affirmative>, cambiaremos este nombre Dino por Maverick ya que no estamos usando un proveedor de datos, echemos un vistazo a nuestra respuesta. Y cada vez que llamamos al método a array, estamos devolviendo un array de asuntos de GitHub y sólo necesitamos uno. Así que vamos a eliminar a Daisy y nos quedaremos con Maverick. Y para esta, etiquetas, vamos a cambiar el estado saludable por el estado somnoliento. Genial. Ahora volvamos a nuestro terminal y vendamos la unidad PHP.</affirmative>
+[[[ code('ebc5d64297') ]]]
 
-Impresionante prueba de servicio de GitHub, la excepción de prueba lanzada con una etiqueta desconocida tiene una excepción en tiempo de ejecución. Drowsy es una etiqueta de estado desconocida. Esto es genial. Nuestra aplicación lanzará una excepción. Ahora bien, si no reconoce una etiqueta de estado, pero ¿cómo nos aseguramos de que nuestra prueba pasa cuando estamos probando que sí lanza una excepción?
+Muy bien, vamos a intentarlo:
 
-Hmm.
+```terminal
+./vendor/bin/phpunit
+```
 
-Vuelve a tu prueba y desplázate aquí abajo justo antes de llamar al método de obtención del informe de salud. Vamos a añadir una, esta excepción esperada, esta excepción esperada y el método de excepción esperada toma una cadena, que es una excepción. En este caso, es una excepción de tiempo de ejecución que estamos lanzando. Así que haremos la clase de excepción en tiempo de ejecución
+Y... Ouch! `GithubServiceTest` falló debido a una:
 
-Mover
+> Excepción de tiempo de ejecución: ¡Drowsy es una etiqueta de estado desconocida!
 
-Volvemos a nuestro proveedor de pruebas, bend PHP, unit trait. Tenemos 10 pruebas, 16 aserciones, y todas están pasando. Vamos a añadir en uno más a, eh, aserción para que sepamos nuestra, nuestra aplicación sólo se lanza en la excepción de una etiqueta de estado desconocido. Y no porque hayamos estropeado alguna otra parte de nuestro código y eso esté lanzando una excepción en tiempo de ejecución. Así que justo aquí abajo, podemos hacer esta excepción de espera, y en realidad podemos probar un mensaje, un código, un mensaje coincide o un objeto. Vamos a utilizar el mensaje. Y ahora nuestro mensaje en este caso es drowsy es una etiqueta de estado desconocida.
+En realidad, esto es una buena noticia. Significa que `GithubService` está haciendo exactamente lo que queremos que haga. Pero, ¿cómo hacemos que esta prueba pase?
 
-Ah,
+Justo antes de llamar a `getHealthReport()`, añade `$this->expectException()` pasando por `\RuntimeException::class`:
 
-Volvamos a un terminal. Vamos a ejecutar nuestra prueba. Una vez más con la unidad vendor bend PHP y genial. Tenemos 10 pruebas y 17 aserciones. No lo necesitamos aquí, pero podríamos comprobar, eh, el código de estado de la excepción si fuera importante, eh, utilizando expect, esperar código de excepción y pasando su código, igual que hicimos con el mensaje aquí. Una última cosa sobre la excepción, las aserciones, todas ellas excepto los métodos expect. Uh, en nuestra prueba, se tratan igual que las aserciones. Si esperamos que se lance una excepción o un mensaje y nunca se lanza, nuestras pruebas van a fallar. Ejecuta de nuevo nuestra prueba. <laugh>por supuesto que se levantan excepción de prueba de servicio, lanzada con unlabel es fall</laugh> ida. <laugh>Afirmando que el mensaje de excepción drowsy es una etiqueta de estado desconocida contiene sleepy es una etiqueta de estado desconocida. Más o menos sabíamos que eso iba a pasar. Sigamos adelante y lo arreglaremos rápidamente y deberíamos estar listos, cambiaremos eso a somnoliento, y estaremos listos para seguir adelante. Te mostraré un pequeño truco bastante ingenioso sobre cómo podemos limpiar algunos de estos mocks aquí con, eh, algunos de los poderes incorporados del cliente HTTP de Symfony.</laugh> 
+[[[ code('850d2f4772') ]]]
+
+Vuelve a probar las pruebas:
+
+```terminal-silent
+./vendor/bin/phpunit
+```
+
+¡Impresionante salsa! ¡Estamos en verde!
+
+## Evita las erratas en el mensaje de excepción
+
+Pero... Si conseguimos estropear nuestro código por accidente, un `RuntimeException`podría venir de otro sitio. Para asegurarnos de que estamos comprobando la excepción correcta, di `$this->expectExceptionMessage('Drowsy is an unknown status label!')`:
+
+[[[ code('4d4c4bdcac') ]]]
+
+Luego vuelve a ejecutar nuestro corrector ortográfico:
+
+```terminal-silent
+./vendor/bin/phpunit
+```
+
+Y... ¡AH! Hemos añadido otra aserción que está pasando y no tenemos ninguna errata en nuestro mensaje. ¡Guau!
+
+## Prueba algo más que el mensaje de excepción
+
+Junto con `expectExceptionMessage()`, PHPUnit tiene expectativas para el código de la excepción, el objeto, e incluso tiene la capacidad de pasar una regex para que coincida con el mensaje. Por cierto, todos estos métodos de `expect` son iguales a los de `assert`. 
+La gran diferencia es que deben llamarse antes de la acción que estás probando y no después. Y al igual que las aserciones, si cambiamos el mensaje esperado de `Drowsy` a `Sleepy` y ejecutamos la prueba:
+
+```terminal-silent
+./vendor/bin/phpunit
+```
+
+Hmm... ¡Sí! Veremos que la prueba falla porque `Drowsy` no es `Sleepy`. Volvamos a cambiarlo en la prueba... ¡Y ahí lo tienes! ¡Las puertas de Dinotopia ya están abiertas y Bob es mucho más feliz ahora que nuestra aplicación se actualiza en tiempo real con GenLab! Para celebrarlo, hagamos nuestra vida un poco más fácil utilizando un toque de magia HttpClient para refactorizar nuestro test.
