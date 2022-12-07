@@ -49,7 +49,7 @@ Veamos si eso ha servido de algo. Ejecuta:
 
 En cualquier caso, el dino hambriento no acepta a los visitantes y falla:
 
-> Fallo al afirmar que false es verdadero.
+> Fallo al afirmar que falso es verdadero.
 
 Mirando `Dinosaur::isAcceptingVisitors()`, para tener en cuenta a los dinos hambrientos, tenemos que devolver `$this->health` no es igual a `HealthStatus::SICK`:
 
@@ -67,4 +67,4 @@ Y... ¡boom! Nuestra prueba del dino hambriento pasa ahora, ¡ja! Sí, también 
 ./vendor/bin/phpunit
 ```
 
-Um... ¡Sí! Todos los puntos y ningún error. ¡Genial! No hemos destrozado el parque. Echa un vistazo al tablero de mandos, actualiza y ¡ya! Dennis puede volver a comer con los clientes del parque. Aunque creo que deberíamos ser proactivos y lanzar una excepción más clara por si alguna vez vemos alguna etiqueta de estado futura que no conozcamos. Hagamos eso a continuación.
+Um... ¡Sí! Todos los puntos y ningún error. ¡Genial! No hemos destrozado el parque. Echa un vistazo al tablero de control, actualízalo y ¡ya! Dennis puede volver a comer con los clientes del parque. Aunque creo que deberíamos ser proactivos y lanzar una excepción más clara por si alguna vez vemos alguna etiqueta de estado futura que no conozcamos. Hagamos eso a continuación.
