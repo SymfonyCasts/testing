@@ -166,10 +166,10 @@ de datos con la bandera . Pero filter
 
 00:03:10.446 --> 00:03:14.876 align:middle
 para asegurarnos de que no impedimos que los dinos
-sanos tengan visitas, ejecuta Um... ./vendor/bin/phpunit
+sanos tengan visitas, ejecuta ./vendor/bin/phpunit
 
 00:03:14.876 --> 00:03:18.736 align:middle
-¡Sí! Todos los
+Um... ¡Sí! Todos los
 
 00:03:18.736 --> 00:03:22.386 align:middle
 puntos y ningún error. ¡Genial! No hemos
@@ -191,6 +191,7 @@ lanzar una excepción más clara por si
 
 00:03:39.556 --> 00:03:43.096 align:middle
 alguna vez vemos alguna etiqueta de estado futura
-que no conozcamos. Hagamos eso a continuación
+que no conozcamos.
 
 00:03:43.566 --> 00:03:44.826 align:middle
+Hagamos eso a continuación.
