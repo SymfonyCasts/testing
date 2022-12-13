@@ -137,8 +137,8 @@ tienes un gran conjunto de pruebas
 y sólo quieres ejecutar una o unas pocas.
 
 00:02:33.226 --> 00:02:39.636 align:middle
-En cualquier caso, el dino hambriento no acepta visitantes
-y falla: Fallo al afirmar que falso es verdadero.
+En cualquier caso, el dino hambriento no acepta a
+los visitantes y falla: Fallo al afirmar que falso es verdadero.
 
 00:02:41.236 --> 00:02:45.496 align:middle
 Mirando Dinosaur::isAcceptingVisitors(),
@@ -153,8 +153,8 @@ Veamos qué ocurre cuando lo
 ejecutamos: ./vendor/bin/phpunit --filter
 
 00:02:53.446 --> 00:03:00.886 align:middle
-"Hungry dino is
-accepting visitors" Y... ¡boom!
+"Hungry dino is accepting visitors" 
+Y... ¡boom!
 
 00:03:00.886 --> 00:03:05.116 align:middle
 Nuestra prueba del dino
