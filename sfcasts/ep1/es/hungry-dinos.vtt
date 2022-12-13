@@ -115,11 +115,10 @@ Veamos si ha funcionado.
 Ejecuta: ./vendor/bin/phpunit
 
 00:02:08.676 --> 00:02:14.216 align:middle
---filter
-testIsAcceptingVisitorsBasedOnHealthStatus ¿Ves
+--filter testIsAcceptingVisitorsBasedOnHealthStatus
 
 00:02:14.216 --> 00:02:15.106 align:middle
-lo que he hecho?
+¿Ves lo que he hecho?
 
 00:02:15.766 --> 00:02:22.516 align:middle
 Para centrarnos sólo en esta prueba, podemos añadir
@@ -131,10 +130,10 @@ método o de cualquier cosa.
 
 00:02:26.436 --> 00:02:29.626 align:middle
 Esto resulta muy útil cuando
-tienes un gran conjunto de pruebas
+tienes un conjunto de pruebas grande
 
 00:02:29.626 --> 00:02:33.226 align:middle
-y sólo quieres ejecutar una o unas pocas.
+y sólo quieres ejecutar una o unas pocas pruebas.
 
 00:02:33.226 --> 00:02:39.636 align:middle
 En cualquier caso, el dino hambriento no acepta a
