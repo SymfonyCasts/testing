@@ -22,12 +22,12 @@ Pero, espera... Dice que `Dennis` no acepta visitas. No está enfermo, sólo tie
 
 ## Prueba Los dinos hambrientos pueden tener visitas
 
-En `DinosaurTest`, tenemos que afirmar que los dinos hambrientos pueden tener visitas. Hmm... Creo que podríamos utilizar `testIsNotAcceptingVisitorsIfSick()` para esto. Sí, eso es lo que haremos. A continuación, añade un `healthStatusProvider()` que devuelva`\Generator` y para el primer conjunto de datos `yield 'Sick dino is not accepting visitors'`. 
-En el array di `HealthStatus::SICK`, y `false`. A continuación,`yield 'Hungry dino is accepting visitors'` con `[HealthStatus::HUNGRY, true]`:
+En `DinosaurTest`, tenemos que afirmar que los dinos hambrientos pueden recibir visitas. Hmm... Creo que podríamos utilizar `testIsNotAcceptingVisitorsIfSick()` para esto. Sí, eso es lo que haremos. A continuación, añade un `healthStatusProvider()` que devuelva`\Generator` y para el primer conjunto de datos `yield 'Sick dino is not accepting visitors'`. 
+En el array di `HealthStatus::SICK`, y `false`. A continuación, `yield 'Hungry dino is accepting visitors'` con `[HealthStatus::HUNGRY, true]`:
 
 [[[ code('6ad9401fac') ]]]
 
-Arriba, añade la anotación `@dataProvider` para que podamos utilizar `healthStatusProvider()`. Mientras estamos aquí, cambia el nombre del método a `testIsAcceptingVisitorsBasedOnHealthStatus` y luego añade los argumentos `HealthStatus $healthStatus` y `bool $expectedVisitorStatus`:
+Arriba, añade la anotación `@dataProvider` para que podamos utilizar `healthStatusProvider()`. Ya que estamos aquí, cambia el nombre del método a `testIsAcceptingVisitorsBasedOnHealthStatus` y añade los argumentos `HealthStatus $healthStatus` y `bool $expectedVisitorStatus`:
 
 [[[ code('62a155f67d') ]]]
 
@@ -35,11 +35,11 @@ Dentro pon la salud con `$healthStatus` y luego sustituye `assertFalse()` por`as
 
 [[[ code('2180c8cad5') ]]]
 
-¡Uf, eso ha sido un montón de trabajo!
+¡Uf, eso ha sido mucho trabajo!
 
 ## Pruebas de filtrado
 
-Veamos si eso ha servido de algo. Ejecuta:
+Veamos si ha funcionado.. Ejecuta:
 
 ```terminal
 ./vendor/bin/phpunit --filter testIsAcceptingVisitorsBasedOnHealthStatus
