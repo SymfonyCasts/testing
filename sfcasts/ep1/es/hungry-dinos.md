@@ -45,7 +45,7 @@ Veamos si eso ha servido de algo. Ejecuta:
 ./vendor/bin/phpunit --filter testIsAcceptingVisitorsBasedOnHealthStatus
 ```
 
-¿Ves lo que he hecho? Para centrarnos sólo en esta prueba, podemos añadir el conjunto `--filter`al nombre completo o parcial de una clase de prueba, un método o cualquier otra cosa. Esto resulta muy útil cuando tienes un conjunto de pruebas grande y sólo quieres ejecutar una o unas pocas pruebas.
+¿Ves lo que he hecho? Para centrarnos sólo en esta prueba, podemos añadir el conjunto `--filter` al nombre completo o parcial de una clase de prueba, de un método o de cualquier otra cosa. Esto resulta muy útil cuando tienes un conjunto de pruebas grande y sólo quieres ejecutar una o unas pocas pruebas.
 
 En cualquier caso, el dino hambriento no acepta a los visitantes y falla:
 
