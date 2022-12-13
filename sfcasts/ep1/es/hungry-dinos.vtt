@@ -137,11 +137,11 @@ tienes un gran conjunto de pruebas
 y sólo quieres ejecutar una o unas pocas.
 
 00:02:33.226 --> 00:02:39.636 align:middle
-En cualquier caso, el dino hambriento no acepta visitas
-y falla: Fallo al afirmar que falso es verdadero. Si
+En cualquier caso, el dino hambriento no acepta visitantes
+y falla: Fallo al afirmar que falso es verdadero.
 
 00:02:41.236 --> 00:02:45.496 align:middle
-miramos Dinosaur::isAcceptingVisitors(),
+Mirando Dinosaur::isAcceptingVisitors(),
 para tener en cuenta a los dinos hambrientos,
 
 00:02:45.776 --> 00:02:50.526 align:middle
@@ -150,10 +150,10 @@ no es igual a HealthStatus::SICK:
 
 00:02:51.516 --> 00:02:53.446 align:middle
 Veamos qué ocurre cuando lo
-ejecutamos: ./vendor/bin/phpunit
+ejecutamos: ./vendor/bin/phpunit --filter
 
 00:02:53.446 --> 00:03:00.886 align:middle
---filter "Hungry dino is
+"Hungry dino is
 accepting visitors" Y... ¡boom!
 
 00:03:00.886 --> 00:03:05.116 align:middle
@@ -162,14 +162,14 @@ hambriento pasa ahora, ¡ja! Sí,
 
 00:03:05.516 --> 00:03:10.026 align:middle
 también podemos utilizar claves de proveedores
-de datos con la bandera . Pero filter
+de datos con la bandera filter. Pero
 
 00:03:10.446 --> 00:03:14.876 align:middle
 para asegurarnos de que no impedimos que los dinos
-sanos tengan visitas, ejecuta ./vendor/bin/phpunit
+sanos tengan visitas, ejecuta Um... ./vendor/bin/phpunit
 
 00:03:14.876 --> 00:03:18.736 align:middle
-Um... ¡Sí! Todos los
+¡Sí! Todos los
 
 00:03:18.736 --> 00:03:22.386 align:middle
 puntos y ningún error. ¡Genial! No hemos
@@ -194,4 +194,4 @@ alguna vez vemos alguna etiqueta de estado futura
 que no conozcamos.
 
 00:03:43.566 --> 00:03:44.826 align:middle
-Hagamos eso a continuación.
+Hagamos eso a continuación
