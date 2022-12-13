@@ -2,11 +2,11 @@ WEBVTT
 
 00:00:01.056 --> 00:00:05.356 align:middle
 En lugar de ver nuestros dinos en el tablero,
-estamos viendo un TypeError para GithubService: El
+vemos un TypeError para GithubService:
 
 00:00:05.886 --> 00:00:11.026 align:middle
-valor de retorno debe ser del tipo HealthStatus,
-null devuelto Eso no está haciendo un gran trabajo
+El valor devuelto debe ser del tipo HealthStatus,
+null devuelto Eso no hace un gran trabajo
 
 00:00:11.026 --> 00:00:13.306 align:middle
 para decirnos cuál es realmente el problema.
@@ -16,7 +16,7 @@ Gracias al seguimiento de la pila, parece que está
 siendo causado por una etiqueta Status: Hungry.
 
 00:00:19.376 --> 00:00:23.076 align:middle
-Sí En GitHub, parece que
+¡Sí! En GitHub, parece que
 Dennis vuelve a tener hambre
 
 00:00:23.076 --> 00:00:25.406 align:middle
@@ -32,7 +32,7 @@ Así que añade case HUNGRY
 que devuelve Hungry...
 
 00:00:33.016 --> 00:00:34.366 align:middle
-y luego actualiza el panel de control.
+y luego refresca el tablero.
 
 00:00:35.226 --> 00:00:36.656 align:middle
 Y... ¡Ya!
@@ -80,7 +80,7 @@ y para el primer conjunto de datos yield
 En el array di HealthStatus::SICK, y false.
 
 00:01:23.506 --> 00:01:29.186 align:middle
-A continuació n, yield 'Hungry dino is accepting
+A continuación, yield 'Hungry dino is accepting
 visitors' con [HealthStatus::HUNGRY, true]:
 
 00:01:30.026 --> 00:01:34.626 align:middle
