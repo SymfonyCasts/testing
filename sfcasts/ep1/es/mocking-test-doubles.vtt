@@ -1,0 +1,273 @@
+WEBVTT
+
+00:00:01.086 --> 00:00:06.876 align:middle
+Así que ahora mismo, las pruebas fallan porque
+necesitamos pasar una instancia de LoggerInterface
+
+00:00:06.876 --> 00:00:09.416 align:middle
+al GithubService dentro de nuestra prueba.
+
+00:00:09.976 --> 00:00:13.176 align:middle
+Podríamos crear un registrador y pasarlo.
+
+00:00:13.566 --> 00:00:15.976 align:middle
+Pero... Eso puede ser un poco peliagudo.
+
+00:00:16.506 --> 00:00:19.136 align:middle
+Instanciar un objeto logger
+puede ser sencillo...
+
+00:00:19.136 --> 00:00:20.556 align:middle
+pero, ¿y si no lo es?
+
+00:00:21.306 --> 00:00:26.336 align:middle
+¿Y si tuviéramos que instanciar un objeto
+con 5 argumentos constructores necesarios...
+
+00:00:26.806 --> 00:00:32.596 align:middle
+y algunos de ellos son para otros objetos
+que también son complicados de crear.
+
+00:00:33.076 --> 00:00:40.806 align:middle
+¡Un caos! Afortunadamente, PHPUnit nos cubre la
+espalda: ¡con sus súper habilidades de mocking!
+
+00:00:42.146 --> 00:00:46.796 align:middle
+Dentro de GithubServiceTest
+crea una variable $mockLogger
+
+00:00:46.796 --> 00:00:51.876 align:middle
+con el valor
+$this->createMock(LoggerInterface::class).
+
+00:00:52.776 --> 00:00:56.206 align:middle
+Pásala al servicio GithubService.
+
+00:00:57.546 --> 00:01:00.296 align:middle
+Veamos ahora qué ocurre
+cuando ejecutamos las pruebas.
+
+00:01:00.766 --> 00:01:04.316 align:middle
+./vendor/bin/phpunit Y...
+
+00:01:04.316 --> 00:01:07.656 align:middle
+¡HA! ¡Todas nuestras pruebas vuelven a pasar!
+
+00:01:08.596 --> 00:01:13.746 align:middle
+Así que... ¿Qué es eso de la magia negra
+de createMock() que estamos utilizando?
+
+00:01:14.376 --> 00:01:18.646 align:middle
+createMock() nos permite pasar una
+clase o interfaz y obtener de vuelta una
+
+00:01:18.706 --> 00:01:21.306 align:middle
+instancia "falsa" de esa clase o interfaz.
+
+00:01:21.976 --> 00:01:23.766 align:middle
+Este objeto se llama simulacro.
+
+00:01:24.616 --> 00:01:27.556 align:middle
+Ahora ya sé lo que vas a preguntar...
+
+00:01:27.946 --> 00:01:33.906 align:middle
+¿Qué ocurre con el mensaje cuando llamamos al
+método info() en el simulacro LoggerInterface?
+
+00:01:34.416 --> 00:01:36.686 align:middle
+Pues nada...
+
+00:01:37.216 --> 00:01:43.556 align:middle
+Internamente, PHPUnit crea básicamente una
+clase falsa que implementa LoggerInterface...
+
+00:01:44.046 --> 00:01:47.496 align:middle
+excepto que todos los métodos están vacíos.
+
+00:01:48.226 --> 00:01:51.726 align:middle
+No hacen nada y no devuelven nada.
+
+00:01:52.386 --> 00:01:55.996 align:middle
+A menos que le digamos que haga algo diferente.
+
+00:01:56.236 --> 00:01:57.586 align:middle
+Pronto hablaremos de ello.
+
+00:01:58.326 --> 00:02:03.136 align:middle
+Por cierto, este falso registrador se
+llama en realidad doble de prueba. De hecho
+
+00:02:03.926 --> 00:02:07.816 align:middle
+, nos encontraremos con algunos nombres diferentes
+para los simulacros, como dobles de prueba
+
+00:02:08.026 --> 00:02:11.616 align:middle
+, stubs y objetos simulados...
+
+00:02:12.276 --> 00:02:20.906 align:middle
+Todos estos nombres significan efectivamente lo
+mismo: objetos falsos que sustituyen a los reales.
+
+00:02:21.646 --> 00:02:25.486 align:middle
+Hay algunas diferencias sutiles
+entre los distintos nombres
+
+00:02:25.826 --> 00:02:27.646 align:middle
+y te iremos dando pistas a lo largo del camino.
+
+00:02:28.886 --> 00:02:31.466 align:middle
+Todavía tenemos un pequeño
+problema con nuestra prueba.
+
+00:02:31.996 --> 00:02:35.626 align:middle
+Cada vez que la ejecutamos,
+llamamos a la API real de GitHub.
+
+00:02:36.526 --> 00:02:39.286 align:middle
+Esto es un mal mojo...
+
+00:02:40.026 --> 00:02:48.016 align:middle
+En una prueba unitaria, nunca debes utilizar servicios
+reales, como llamadas a la API o a la base de datos.
+
+00:02:48.546 --> 00:02:55.286 align:middle
+¿Por qué? El objetivo de una prueba unitaria es
+comprobar que el código dentro de GithubService funciona.
+
+00:02:55.696 --> 00:03:02.546 align:middle
+Y, en el mejor de los casos, lo haríamos independientemente
+de cualquier otra capa de nuestra aplicación porque...
+
+00:03:02.666 --> 00:03:05.416 align:middle
+simplemente no podemos
+controlar su comportamiento.
+
+00:03:05.546 --> 00:03:11.386 align:middle
+Por ejemplo, ¿qué pasaría si la API de
+GitHub está desconectada por mantenimiento?
+
+00:03:11.636 --> 00:03:17.026 align:middle
+O, mañana, GenLab cambia
+Daisy de enfermo a sano
+
+00:03:17.576 --> 00:03:21.776 align:middle
+En este momento, ¡ambas cosas
+harían que nuestras pruebas fallaran!
+
+00:03:22.246 --> 00:03:24.076 align:middle
+¡Pero no deberían!
+
+00:03:24.946 --> 00:03:31.356 align:middle
+La prueba unitaria para GithubService sólo
+debería fallar si contiene un error en su código,
+
+00:03:31.866 --> 00:03:34.616 align:middle
+como que no esté analizando
+las etiquetas correctamente.
+
+00:03:35.276 --> 00:03:36.636 align:middle
+¿Cuál es la solución?
+
+00:03:37.216 --> 00:03:39.066 align:middle
+Simular el HttpClient.
+
+00:03:39.556 --> 00:03:45.276 align:middle
+Pero... no podemos hacerlo mientras estemos
+creando el cliente dentro de GitHubService.
+
+00:03:45.646 --> 00:03:53.896 align:middle
+En su lugar, en el constructor, añade un
+argumento private HttpClientInterface $httpClient.
+
+00:03:54.686 --> 00:04:00.666 align:middle
+Luego llama al método request() en
+$this->httpClient en lugar de $client.
+
+00:04:01.966 --> 00:04:08.076 align:middle
+Como ahora estamos utilizando la inyección de
+dependencias, podemos eliminar la estática $client entera,
+
+00:04:08.386 --> 00:04:11.026 align:middle
+junto con la declaración use anterior.
+
+00:04:12.376 --> 00:04:16.356 align:middle
+Aparte de las pruebas unitarias, ésta es
+simplemente una forma mejor de escribir tu código.
+
+00:04:17.056 --> 00:04:23.956 align:middle
+En la prueba, empieza dando a
+GithubService un cliente http sin mocking -
+
+00:04:24.146 --> 00:04:29.616 align:middle
+HttpClient::create() - sólo para asegurarte
+de que todo funciona como se espera.
+
+00:04:30.906 --> 00:04:33.856 align:middle
+Prueba las pruebas: Y...
+
+00:04:33.916 --> 00:04:36.956 align:middle
+¡guay! No hemos roto nada...
+
+00:04:37.806 --> 00:04:40.726 align:middle
+Ahora podemos imitar el HttpClient.
+
+00:04:40.726 --> 00:04:48.096 align:middle
+Debajo de $mockLogger añade,
+$mockClient = $this->createMock()
+
+00:04:48.436 --> 00:04:53.056 align:middle
+y pasa en HttpClientInterface::class.
+
+00:04:54.016 --> 00:04:56.846 align:middle
+Ahora pasa esto a nuestro servicio.
+
+00:04:58.116 --> 00:05:00.136 align:middle
+Volvemos al terminal para
+ejecutar nuestras pruebas: Y...
+
+00:05:00.136 --> 00:05:11.806 align:middle
+¡Uf! Nuestra prueba de Sick Dino ha fallado
+afirmando que las dos variables son iguales Hmm...
+
+00:05:11.806 --> 00:05:18.256 align:middle
+Para Sick Dino, estamos esperando un HealthStatus::SICK
+para Daisy. En nuestro servicio, estamos
+
+00:05:18.976 --> 00:05:25.306 align:middle
+llamando al método request() en nuestro
+simulacro, haciendo una entrada en el registro, y
+
+00:05:25.566 --> 00:05:29.706 align:middle
+luego haciendo un bucle sobre el array
+que se devolvió en nuestra respuesta...
+
+00:05:30.216 --> 00:05:32.556 align:middle
+¡AH! Ese es el problema.
+
+00:05:33.106 --> 00:05:38.746 align:middle
+Recuerda: cada vez que PHPUnit crea un
+objeto falso, elimina toda la lógica
+
+00:05:38.746 --> 00:05:41.336 align:middle
+de cada método dentro de ese falso.
+
+00:05:42.026 --> 00:05:45.176 align:middle
+Sí, ¡estamos haciendo un bucle sobre nada!
+
+00:05:46.286 --> 00:05:52.646 align:middle
+En este caso, tenemos que enseñar al
+simulacro HttpClient a devolver una respuesta
+
+00:05:52.646 --> 00:05:56.896 align:middle
+que contenga una cuestión coincidente
+con una etiqueta Status: Sick.
+
+00:05:57.326 --> 00:06:01.856 align:middle
+Eso nos permitiría afirmar que nuestra
+lógica de análisis de etiquetas es correcta.
+
+00:06:02.516 --> 00:06:04.136 align:middle
+¿Cómo lo hacemos?
+
+00:06:04.426 --> 00:06:05.836 align:middle
+Es lo que viene a continuación
