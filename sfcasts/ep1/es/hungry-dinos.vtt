@@ -1,0 +1,196 @@
+WEBVTT
+
+00:00:01.056 --> 00:00:05.356 align:middle
+En lugar de ver nuestros dinos en el tablero,
+vemos un TypeError para GithubService:
+
+00:00:05.886 --> 00:00:11.026 align:middle
+El valor devuelto debe ser del tipo HealthStatus,
+null devuelto Eso no hace un gran trabajo
+
+00:00:11.026 --> 00:00:13.306 align:middle
+para decirnos cuál es realmente el problema.
+
+00:00:13.306 --> 00:00:18.686 align:middle
+Gracias al seguimiento de la pila, parece que está
+siendo causado por una etiqueta Status: Hungry.
+
+00:00:19.376 --> 00:00:23.076 align:middle
+¡Sí! En GitHub, parece que
+Dennis vuelve a tener hambre
+
+00:00:23.076 --> 00:00:25.406 align:middle
+después de terminar su
+rutina diaria de ejercicios.
+
+00:00:25.996 --> 00:00:29.556 align:middle
+Mirando HealthStatus, no tenemos
+un caso de dinos hambrientos:
+
+00:00:29.916 --> 00:00:32.426 align:middle
+Así que añade case HUNGRY
+que devuelve Hungry...
+
+00:00:33.016 --> 00:00:34.366 align:middle
+y luego refresca el tablero.
+
+00:00:35.226 --> 00:00:36.656 align:middle
+Y... ¡Ya!
+
+00:00:36.816 --> 00:00:38.126 align:middle
+No hay más errores...
+
+00:00:38.796 --> 00:00:39.636 align:middle
+Pero, espera...
+
+00:00:39.896 --> 00:00:43.716 align:middle
+Dice que Dennis no acepta visitas.
+
+00:00:44.016 --> 00:00:46.586 align:middle
+No está enfermo, sólo tiene hambre.
+
+00:00:47.396 --> 00:00:50.586 align:middle
+GenLab dijo que sólo los dinos enfermos
+no deberían estar en exposición.
+
+00:00:50.856 --> 00:00:53.656 align:middle
+Además, ¿quién no quiere
+ver lo que le pasa a la cabra?
+
+00:00:53.656 --> 00:00:59.406 align:middle
+En DinosaurTest, tenemos que afirmar que los
+dinos hambrientos pueden recibir visitas.
+
+00:01:00.316 --> 00:01:05.516 align:middle
+Hmm... Creo que podríamos utilizar
+testIsNotAcceptingVisitorsIfSick() para esto.
+
+00:01:06.056 --> 00:01:07.906 align:middle
+Sí, eso es lo que haremos. A
+
+00:01:08.526 --> 00:01:12.286 align:middle
+continuación, añade un
+healthStatusProvider() que devuelva \Generator
+
+00:01:13.486 --> 00:01:17.956 align:middle
+y para el primer conjunto de datos yield
+'Sick dino is not accepting visitors'.
+
+00:01:18.626 --> 00:01:22.456 align:middle
+En el array di HealthStatus::SICK, y false.
+
+00:01:23.506 --> 00:01:29.186 align:middle
+A continuación, yield 'Hungry dino is accepting
+visitors' con [HealthStatus::HUNGRY, true]:
+
+00:01:30.026 --> 00:01:34.626 align:middle
+Arriba, añade la anotación @dataProvider para
+que podamos utilizar healthStatusProvider() . Ya
+
+00:01:35.216 --> 00:01:37.086 align:middle
+que estamos aquí, cambia el nombre del método
+
+00:01:37.086 --> 00:01:42.996 align:middle
+a testIsAcceptingVisitorsBasedOnHealthStatus
+y añade los argumentos HealthStatus
+
+00:01:42.996 --> 00:01:47.616 align:middle
+$healthStatus y bool $expectedVisitorStatus:
+
+00:01:48.806 --> 00:01:53.746 align:middle
+Dentro pon la salud con $healthStatus
+y luego sustituye assertFalse()
+
+00:01:53.746 --> 00:01:59.956 align:middle
+por assertSame($expectedStatus) es
+idéntico a $dino->isAcceptingVisitors():
+
+00:01:59.996 --> 00:02:03.196 align:middle
+¡Uf, eso ha sido mucho trabajo!
+
+00:02:03.696 --> 00:02:05.066 align:middle
+Veamos si ha funcionado.
+
+00:02:05.666 --> 00:02:08.676 align:middle
+Ejecuta: ./vendor/bin/phpunit
+
+00:02:08.676 --> 00:02:14.216 align:middle
+--filter testIsAcceptingVisitorsBasedOnHealthStatus
+
+00:02:14.216 --> 00:02:15.106 align:middle
+¿Ves lo que he hecho?
+
+00:02:15.766 --> 00:02:22.516 align:middle
+Para centrarnos sólo en esta prueba, podemos añadir
+el conjunto --filter al nombre completo o parcial
+
+00:02:22.516 --> 00:02:25.816 align:middle
+de una clase de prueba, de un
+método o de cualquier cosa.
+
+00:02:26.436 --> 00:02:29.626 align:middle
+Esto resulta muy útil cuando
+tienes un conjunto de pruebas grande
+
+00:02:29.626 --> 00:02:33.226 align:middle
+y sólo quieres ejecutar una o unas pocas pruebas.
+
+00:02:33.226 --> 00:02:39.636 align:middle
+En cualquier caso, el dino hambriento no acepta a
+los visitantes y falla: Fallo al afirmar que falso es verdadero.
+
+00:02:41.236 --> 00:02:45.496 align:middle
+Mirando Dinosaur::isAcceptingVisitors(),
+para tener en cuenta a los dinos hambrientos,
+
+00:02:45.776 --> 00:02:50.526 align:middle
+tenemos que devolver $this->health
+no es igual a HealthStatus::SICK:
+
+00:02:51.516 --> 00:02:53.446 align:middle
+Veamos qué ocurre cuando lo
+ejecutamos: ./vendor/bin/phpunit --filter
+
+00:02:53.446 --> 00:03:00.886 align:middle
+"Hungry dino is accepting visitors" 
+Y... ¡boom!
+
+00:03:00.886 --> 00:03:05.116 align:middle
+Nuestra prueba del dino
+hambriento pasa ahora, ¡ja! Sí,
+
+00:03:05.516 --> 00:03:10.026 align:middle
+también podemos utilizar claves de proveedores
+de datos con la bandera filter. Pero
+
+00:03:10.446 --> 00:03:14.876 align:middle
+para asegurarnos de que no impedimos que los dinos
+sanos tengan visitas, ejecuta Um... ./vendor/bin/phpunit
+
+00:03:14.876 --> 00:03:18.736 align:middle
+¡Sí! Todos los
+
+00:03:18.736 --> 00:03:22.386 align:middle
+puntos y ningún error. ¡Genial! No hemos
+
+00:03:22.486 --> 00:03:25.886 align:middle
+destrozado el parque. Echa un
+
+00:03:26.836 --> 00:03:30.136 align:middle
+vistazo al panel de control,
+actualízalo y ¡ya! Dennis
+
+00:03:30.936 --> 00:03:34.566 align:middle
+puede volver a comer con los
+clientes del parque. Aunque
+
+00:03:35.106 --> 00:03:39.516 align:middle
+creo que deberíamos ser proactivos y
+lanzar una excepción más clara por si
+
+00:03:39.556 --> 00:03:43.096 align:middle
+alguna vez vemos alguna etiqueta de estado futura
+que no conozcamos.
+
+00:03:43.566 --> 00:03:44.826 align:middle
+Hagamos eso a continuación
