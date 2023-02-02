@@ -22,7 +22,16 @@ class GithubServiceTest extends TestCase
 
         $mockResponse
             ->method('toArray')
-            ->willReturn([])
+            ->willReturn([
+                [
+                    'title' => 'Daisy',
+                    'labels' => [['name' => 'Status: Sick']],
+                ],
+                [
+                    'title' => 'Maverick',
+                    'labels' => [['name' => 'Status: Healthy']],
+                ],
+            ])
         ;
 
         $mockHttpClient
