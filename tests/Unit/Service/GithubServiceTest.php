@@ -17,6 +17,12 @@ class GithubServiceTest extends TestCase
     private MockHttpClient $mockHttpClient;
     private MockResponse $mockResponse;
 
+    protected function setUp(): void
+    {
+        $this->mockLogger = $this->createMock(LoggerInterface::class);
+        $this->mockHttpClient = new MockHttpClient();
+    }
+
     /**
      * @dataProvider dinoNameProvider
      */
@@ -67,15 +73,12 @@ class GithubServiceTest extends TestCase
 
     public function testExceptionThrownWithUnknownLabel(): void
     {
-        $mockResponse = new MockResponse(json_encode([
-                [
-                    'title' => 'Maverick',
-                    'labels' => [['name' => 'Status: Drowsy']],
-                ],
-            ]));
-
-        $mockHttpClient = new MockHttpClient($mockResponse);
-        $service = new GithubService($mockHttpClient, $this->createMock(LoggerInterface::class));
+        $service = $this->createGithubService([
+            [
+                'title' => 'Maverick',
+                'labels' => [['name' => 'Status: Drowsy']],
+            ],
+        ]);
 
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Drowsy is an unknown status label!');
