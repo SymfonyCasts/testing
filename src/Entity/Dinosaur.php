@@ -39,6 +39,8 @@ class Dinosaur
 
     public function getSizeDescription(): string
     {
+        if ($this->length >= 10) {
             return 'Large';
+        }
     }
 }
