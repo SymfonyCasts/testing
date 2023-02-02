@@ -3,6 +3,7 @@
 namespace App\Tests\Unit\Service;
 
 use App\Enum\HealthStatus;
+use App\Service\GithubService;
 use PHPUnit\Framework\TestCase;
 
 class GithubServiceTest extends TestCase
