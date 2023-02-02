@@ -18,7 +18,8 @@ class DinosaurTest extends TestCase
 
         self::assertGreaterThan(
             $dino->getLength(),
-            10
+            10,
+            message: 'Dino is supposed to be bigger than 10 meters!'
         );
 
         self::assertSame('Big Eaty', $dino->getName());
