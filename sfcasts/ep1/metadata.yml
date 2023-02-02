@@ -14,3 +14,4 @@ chapters:
     - hungry-dinos
     - exceptions
     - mock-http-client
+    - setup-teardown
