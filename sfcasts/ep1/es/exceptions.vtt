@@ -1,0 +1,224 @@
+WEBVTT
+
+00:00:01.016 --> 00:00:02.986 align:middle
+¿Recuerdas cuando veíamos esta excepción
+
+00:00:02.986 --> 00:00:06.206 align:middle
+porque nuestra aplicación no entendía
+el estado de "hambre" de Maverick?
+
+00:00:06.756 --> 00:00:11.226 align:middle
+Bueno, ya lo hemos arreglado, pero todavía
+tenemos que ocuparnos de un pequeño detalle.
+
+00:00:11.836 --> 00:00:16.356 align:middle
+La próxima vez que GenLab nos lance una bola
+curva, como poner "Estado: Antsy" en un dino,
+
+00:00:16.756 --> 00:00:20.376 align:middle
+GithubService debería lanzar una
+excepción clara que mencione la etiqueta.
+
+00:00:20.806 --> 00:00:24.516 align:middle
+Para ello, vamos a hacer una
+pausa en el TDD por un momento.
+
+00:00:25.306 --> 00:00:30.466 align:middle
+En getDinoStatusFromLabels(), si una etiqueta
+tiene el prefijo "Estado:", lo cortamos,
+
+00:00:30.666 --> 00:00:36.266 align:middle
+ponemos lo que queda en $status, y lo pasamos a
+tryFrom() para poder devolver un HealthStatus.
+
+00:00:37.076 --> 00:00:41.506 align:middle
+Creo que éste sería un buen punto para lanzar
+una excepción si tryFrom() devuelve null.
+
+00:00:42.546 --> 00:00:49.026 align:middle
+Corta HealthStatus::tryFrom($status) del
+retorno y justo encima añade $health = y pega.
+
+00:00:49.706 --> 00:00:54.756 align:middle
+Entonces if (null === $health) vamos a throw
+new \RuntimeException() con el mensaje,
+
+00:00:54.806 --> 00:01:00.196 align:middle
+sprintf('%s is an unknown status
+label!') pasando a $status.
+
+00:01:00.996 --> 00:01:02.106 align:middle
+Abajo devuelve $health.
+
+00:01:03.016 --> 00:01:08.466 align:middle
+Pero, si el asunto no tiene una etiqueta de estado,
+todavía tenemos que devolver un HealthStatus.
+
+00:01:09.236 --> 00:01:13.656 align:middle
+Así que arriba, sustituye $status
+por $health = HealthStatus::HEALTHY,
+
+00:01:13.906 --> 00:01:18.496 align:middle
+porque a menos que GenLab añada una etiqueta de
+"Estado: Enfermo", todos nuestros dinos están sanos:
+
+00:01:19.266 --> 00:01:22.626 align:middle
+Ahora bien, normalmente escribimos
+pruebas para los valores de retorno.
+
+00:01:22.936 --> 00:01:26.376 align:middle
+Pero también puedes escribir pruebas para
+verificar que se lanza la excepción correcta.
+
+00:01:26.946 --> 00:01:29.096 align:middle
+Así que hagamos eso en GithubServiceTest.
+
+00:01:30.106 --> 00:01:34.116 align:middle
+Hmm... Esta primera prueba tiene gran
+parte de la lógica que necesitaremos.
+
+00:01:34.646 --> 00:01:36.266 align:middle
+Cópiala y pégala en la parte inferior.
+
+00:01:37.726 --> 00:01:38.346 align:middle
+Cambia el nombre
+
+00:01:38.346 --> 00:01:42.936 align:middle
+a testExceptionThrownWithUnknownLabel
+y elimina los argumentos.
+
+00:01:44.106 --> 00:01:48.616 align:middle
+Dentro, quita la aserción dejando sólo la
+llamada a $service->getHealthReport().
+
+00:01:49.126 --> 00:01:51.816 align:middle
+Y en lugar de $dinoName, pasa a Maverick.
+
+00:01:53.186 --> 00:01:56.506 align:middle
+Para $mockResponse, quita
+la margarita de willReturn()
+
+00:01:56.506 --> 00:01:59.256 align:middle
+y cambia la etiqueta
+Mavericks de Healthy a Drowsy:
+
+00:02:00.446 --> 00:02:02.466 align:middle
+Muy bien, vamos a intentarlo:
+./vendor/bin/phpunit
+
+00:02:02.876 --> 00:02:05.706 align:middle
+Y... ¡Ay!
+
+00:02:05.796 --> 00:02:09.936 align:middle
+GithubServiceTest falló debido a
+una: RuntimeException: ¡ Drowsy
+
+00:02:10.036 --> 00:02:12.126 align:middle
+es una etiqueta de estado
+desconocida! En realidad, esto
+
+00:02:12.726 --> 00:02:14.846 align:middle
+es una buena noticia.
+
+00:02:15.176 --> 00:02:19.226 align:middle
+Significa que GithubService está haciendo
+exactamente lo que queremos que haga. Pero,
+
+00:02:19.996 --> 00:02:22.286 align:middle
+¿cómo hacemos que esta prueba pase? Justo
+
+00:02:23.146 --> 00:02:25.076 align:middle
+antes de llamar a getHealthReport(), añade
+
+00:02:25.326 --> 00:02:30.786 align:middle
+$this->expectException() pasando
+por \RuntimeException::class:
+
+00:02:32.036 --> 00:02:34.986 align:middle
+Vuelve a probar las pruebas: ¡Impresionante
+
+00:02:34.986 --> 00:02:36.296 align:middle
+salsa! ¡ Estamos en
+
+00:02:36.596 --> 00:02:38.156 align:middle
+verde! Pero...
+
+00:02:39.116 --> 00:02:40.776 align:middle
+Si conseguimos
+
+00:02:41.276 --> 00:02:43.566 align:middle
+estropear nuestro código por accidente, un
+
+00:02:43.816 --> 00:02:47.276 align:middle
+RuntimeException podría
+venir de otro sitio. Para
+
+00:02:48.106 --> 00:02:50.816 align:middle
+asegurarnos de que estamos
+probando la excepción correcta, di
+
+00:02:51.236 --> 00:02:56.476 align:middle
+$this->expectExceptionMessage('Drowsy
+is an unknown status label!'): Luego
+
+00:02:57.816 --> 00:03:01.336 align:middle
+vuelve a ejecutar nuestro corrector
+ortográfico: Y... ¡AH! Hemos
+
+00:03:01.336 --> 00:03:04.756 align:middle
+añadido otra aserción que está pasando y
+
+00:03:04.806 --> 00:03:07.286 align:middle
+no tenemos ninguna errata en
+nuestro mensaje. ¡WooHoo!
+
+00:03:07.456 --> 00:03:14.286 align:middle
+Junto con expectExceptionMessage(), PHPUnit tiene
+expectativas para el código de la excepción, el objeto,
+
+00:03:14.516 --> 00:03:18.216 align:middle
+e incluso tiene la capacidad de pasar una
+regex para que coincida con el mensaje. Por
+
+00:03:19.106 --> 00:03:23.776 align:middle
+cierto, todos estos métodos de
+expect son iguales a los de assert. La
+
+00:03:24.196 --> 00:03:28.666 align:middle
+gran diferencia es que deben llamarse antes
+de la acción que estás probando y no
+
+00:03:28.666 --> 00:03:29.536 align:middle
+después. Y
+
+00:03:30.136 --> 00:03:34.356 align:middle
+al igual que las aserciones, si
+cambiamos el mensaje esperado de Drowsy a
+
+00:03:34.356 --> 00:03:37.706 align:middle
+Sleepy y ejecutamos la prueba: Hmm... ¡Sí!
+
+00:03:37.706 --> 00:03:41.466 align:middle
+Veremos que la prueba falla
+porque Drowsy no es Sleepy.
+
+00:03:42.536 --> 00:03:44.126 align:middle
+Volvamos a cambiarlo en la prueba... ¡ Y
+
+00:03:44.626 --> 00:03:45.596 align:middle
+ahí lo tienes! ¡ Las puertas de Dinotopia
+
+00:03:46.196 --> 00:03:49.596 align:middle
+ya están abiertas y Bob es
+mucho más feliz ahora que
+
+00:03:49.596 --> 00:03:52.526 align:middle
+nuestra aplicación se actualiza
+en tiempo real con GenLab! Para
+
+00:03:53.246 --> 00:03:57.336 align:middle
+celebrarlo, hagamos nuestra vida un
+poco más fácil utilizando un toque de
+
+00:03:57.336 --> 00:04:00.636 align:middle
+magia HttpClient para refactorizar nuestro test
