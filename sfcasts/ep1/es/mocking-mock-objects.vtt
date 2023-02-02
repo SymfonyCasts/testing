@@ -1,0 +1,247 @@
+WEBVTT
+
+00:00:01.016 --> 00:00:05.536 align:middle
+Nuestros exámenes están pasando, los dinos
+están deambulando, ¡y la vida es genial!
+
+00:00:05.946 --> 00:00:08.176 align:middle
+Pero... pensemos en esto un segundo.
+
+00:00:08.946 --> 00:00:11.866 align:middle
+En GithubService, cuando probamos
+getHealthReport(), podemos
+
+00:00:11.946 --> 00:00:16.856 align:middle
+controlar el $response que nos
+devuelve request() mediante un stub.
+
+00:00:17.476 --> 00:00:20.596 align:middle
+Eso está muy bien, pero
+también estaría bien asegurarse
+
+00:00:20.596 --> 00:00:23.656 align:middle
+de que el servicio sólo llama a GitHub una vez
+
+00:00:23.956 --> 00:00:28.836 align:middle
+y que utiliza el método HTTP
+correcto con la URL correcta.
+
+00:00:29.646 --> 00:00:30.506 align:middle
+¿Podemos hacerlo?
+
+00:00:31.296 --> 00:00:32.246 align:middle
+Por supuesto
+
+00:00:32.746 --> 00:00:37.146 align:middle
+En GithubServiceTest donde
+configuramos el $mockHttpClient,
+
+00:00:37.516 --> 00:00:41.136 align:middle
+añadimos ->expects(),
+y pasamos self::once().
+
+00:00:41.676 --> 00:00:44.116 align:middle
+En el terminal, ejecuta nuestras pruebas...
+
+00:00:44.226 --> 00:00:47.386 align:middle
+./vendor/bin/phpunit Y...
+
+00:00:47.606 --> 00:00:51.606 align:middle
+¡Impresionante! Acabamos de añadir
+una aserción a nuestro cliente simulado
+
+00:00:51.606 --> 00:00:55.846 align:middle
+que requiere que el método request
+sea llamado exactamente una vez.
+
+00:00:56.676 --> 00:01:00.826 align:middle
+Vayamos un paso más allá y añadamos
+->with() pasando por GET...
+
+00:01:01.006 --> 00:01:03.766 align:middle
+y luego pegaremos la URL de la API de GitHub.
+
+00:01:04.826 --> 00:01:06.076 align:middle
+Vuelve a probar las pruebas...
+
+00:01:06.866 --> 00:01:08.366 align:middle
+Y... ¡Huh!
+
+00:01:08.986 --> 00:01:14.506 align:middle
+Tenemos 2 fallos: Fallo al afirmar
+que dos cadenas son iguales Hmm...
+
+00:01:15.056 --> 00:01:18.186 align:middle
+¡Ah Ha! Mis habilidades para
+copiar y pegar son un poco débiles.
+
+00:01:18.486 --> 00:01:21.246 align:middle
+Me faltó /issue al final de la URL.
+
+00:01:22.166 --> 00:01:26.646 align:middle
+Añade eso. Veamos si ese era el truco: Umm...
+
+00:01:26.646 --> 00:01:29.696 align:middle
+¡Sí! Estamos en verde todo el día.
+
+00:01:30.186 --> 00:01:34.946 align:middle
+Pero lo mejor de todo es que las pruebas confirman que
+estamos utilizando la URL y el método HTTP correctos
+
+00:01:35.116 --> 00:01:37.906 align:middle
+cuando llamamos a GitHub.
+
+00:01:38.596 --> 00:01:42.526 align:middle
+Pero... ¿Y si quisiéramos
+llamar a GitHub más de una vez?
+
+00:01:42.666 --> 00:01:45.686 align:middle
+O... ¿queríamos afirmar que
+no se ha llamado en absoluto?
+
+00:01:46.146 --> 00:01:47.676 align:middle
+PHPUnit nos tiene cubiertos.
+
+00:01:48.016 --> 00:01:49.956 align:middle
+Hay un puñado de otros
+métodos que podemos llamar.
+
+00:01:50.126 --> 00:01:52.596 align:middle
+Por ejemplo, cambia once() por never().
+
+00:01:52.596 --> 00:01:56.376 align:middle
+Y observa lo que ocurre ahora: Hmm...
+
+00:01:56.376 --> 00:02:02.326 align:middle
+Sí, tenemos dos fallos porque:
+no se esperaba llamar a request().
+
+00:02:03.026 --> 00:02:04.366 align:middle
+¡Eso es realmente ingenioso!
+
+00:02:05.436 --> 00:02:07.996 align:middle
+Vuelve a cambiar expects() por once() y,
+
+00:02:07.996 --> 00:02:11.146 align:middle
+para asegurarnos de que no hemos roto
+nada, vuelve a ejecutar las pruebas.
+
+00:02:11.566 --> 00:02:13.486 align:middle
+Y... ¡Impresionante!
+
+00:02:14.216 --> 00:02:18.176 align:middle
+Podríamos llamar a expects() en nuestro
+$mockResponse para asegur arnos de que
+
+00:02:18.176 --> 00:02:22.256 align:middle
+toArray() se llama exactamente
+una vez en nuestro servicio.
+
+00:02:22.666 --> 00:02:24.436 align:middle
+Pero, ¿realmente nos importa?
+
+00:02:24.846 --> 00:02:28.576 align:middle
+Si no se llama en absoluto,
+nuestra prueba fallaría sin duda.
+
+00:02:28.906 --> 00:02:32.546 align:middle
+Y si se llama dos veces, ¡no pasa nada!
+
+00:02:33.186 --> 00:02:37.566 align:middle
+El uso de ->expects() y ->with() son formas
+estupendas de añadir afirmaciones adicionales...
+
+00:02:37.796 --> 00:02:38.806 align:middle
+cuando las necesites.
+
+00:02:39.106 --> 00:02:42.836 align:middle
+Pero no es necesario microgestionar
+cuántas veces se llama a algo
+
+00:02:43.036 --> 00:02:46.596 align:middle
+o sus argumentos si eso no es tan importante.
+
+00:02:48.036 --> 00:02:53.696 align:middle
+Ahora que GithubService está totalmente probado, ¡podemos
+celebrarlo utilizándolo para manejar nuestro panel de control!
+
+00:02:54.196 --> 00:02:57.186 align:middle
+En MainController::index(), añade un argumento
+
+00:02:57.416 --> 00:03:01.126 align:middle
+GithubService $github para autoconectar
+el nuevo servicio. A continuación
+
+00:03:01.746 --> 00:03:07.376 align:middle
+, justo debajo de la matriz $dinos,
+foreach() sobre $dinos as $dino y,
+
+00:03:07.376 --> 00:03:14.906 align:middle
+dentro digamos de $dino->setHealth() pasando por
+$github->getHealthReport($dino->getName()).
+
+00:03:16.116 --> 00:03:18.296 align:middle
+Al navegador y actualiza...
+
+00:03:18.936 --> 00:03:20.936 align:middle
+Y... ¿Qué?
+
+00:03:21.586 --> 00:03:28.396 align:middle
+getDinoStatusFromLabels() debe ser HealthStatus,
+null devuelto ¿Qué está pasando aquí? Por
+
+00:03:29.346 --> 00:03:35.866 align:middle
+cierto, el hecho de que nuestra prueba unitaria pase
+pero nuestra página falle puede ocurrir a veces
+
+00:03:35.906 --> 00:03:39.096 align:middle
+y en un futuro tutorial,
+escribiremos una prueba funcional
+
+00:03:39.096 --> 00:03:41.326 align:middle
+para asegurarnos de que esta
+página realmente se carga.
+
+00:03:42.166 --> 00:03:45.386 align:middle
+El error no es muy evidente, pero creo que uno
+
+00:03:45.386 --> 00:03:48.476 align:middle
+de nuestros dinos tiene una
+etiqueta de estado que desconocemos.
+
+00:03:49.336 --> 00:03:52.136 align:middle
+Volvamos a echar un vistazo a
+los problemas en GitHub y...
+
+00:03:52.136 --> 00:03:56.346 align:middle
+¡HA! "Dennis" vuelve a causar problemas.
+
+00:03:56.746 --> 00:03:58.716 align:middle
+Al parecer, está un poco hambriento...
+
+00:03:59.606 --> 00:04:04.736 align:middle
+En nuestro enum HealthStatus, no tenemos un
+caso para las etiquetas de estado Hungry.
+
+00:04:05.706 --> 00:04:06.496 align:middle
+Imagínate.
+
+00:04:06.876 --> 00:04:09.596 align:middle
+¿Es un dinosaurio hambriento
+que acepta visitas?
+
+00:04:09.816 --> 00:04:14.716 align:middle
+No lo sé, supongo que depende de si
+le preguntas al visitante o al dino.
+
+00:04:15.276 --> 00:04:19.126 align:middle
+En cualquier caso, Hungry no
+es un estado que esperemos.
+
+00:04:19.626 --> 00:04:22.566 align:middle
+Así que, a continuación, vamos
+a lanzar una excepción clara si
+
+00:04:22.566 --> 00:04:25.916 align:middle
+nos encontramos con un estado
+desconocido y a probar esa excepción
