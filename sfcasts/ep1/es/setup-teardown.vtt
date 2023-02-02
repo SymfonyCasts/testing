@@ -1,0 +1,296 @@
+WEBVTT
+
+00:00:01.006 --> 00:00:02.686 align:middle
+Sigamos refactorizando nuestra prueba.
+
+00:00:03.576 --> 00:00:07.796 align:middle
+En el método de prueba, creamos
+un MockResponse, MockHttpClient,
+
+00:00:07.926 --> 00:00:11.516 align:middle
+e instanciamos GitHubService con
+un simulacro de LoggerInterface.
+
+00:00:12.066 --> 00:00:13.996 align:middle
+Hacemos lo mismo en esta prueba de arriba.
+
+00:00:14.636 --> 00:00:17.706 align:middle
+¿No dijo Ryan que había que DRY
+out nuestro código en otro tutorial?
+
+00:00:18.296 --> 00:00:20.676 align:middle
+Bien... Supongo que le haremos caso.
+
+00:00:21.576 --> 00:00:27.996 align:middle
+Comienza añadiendo tres propiedades private a
+nuestra clase: una LoggerInterface $mockLogger,
+
+00:00:28.586 --> 00:00:36.966 align:middle
+seguida de MockHttpClient $mockHttpClient y finalmente
+MockResponse $mockresponse . En la parte inferior de
+
+00:00:38.236 --> 00:00:42.986 align:middle
+la prueba, crea un private
+function createGithubService()
+
+00:00:43.096 --> 00:00:47.416 align:middle
+que requiera array $responseData
+y que devuelva GithubService.
+
+00:00:47.946 --> 00:00:52.516 align:middle
+En el interior, di $this->mockResponse
+= new MockResponse()
+
+00:00:52.636 --> 00:00:55.296 align:middle
+que json_encode()'s el $responseData.
+
+00:00:56.756 --> 00:01:02.216 align:middle
+Como crearemos el MockResponse después
+de instanciar el MockHttpClient,
+
+00:01:02.456 --> 00:01:06.296 align:middle
+que verás en un segundo, necesitamos
+pasar nuestra respuesta al cliente
+
+00:01:06.296 --> 00:01:08.386 align:middle
+sin utilizar el constructor del cliente.
+
+00:01:08.936 --> 00:01:09.816 align:middle
+Para ello,
+
+00:01:09.996 --> 00:01:15.986 align:middle
+podemos decir
+$this->mockHttpClient->setResponseFactory($this->mockResponse).
+
+00:01:16.026 --> 00:01:17.276 align:middle
+Finalmente
+
+00:01:18.236 --> 00:01:24.846 align:middle
+devuelve un new GithubService() con
+$this->mockHttpClient y $this->mockLogger.
+
+00:01:26.206 --> 00:01:31.006 align:middle
+Podríamos utilizar un constructor para instanciar
+nuestros mocks y establecerlos en esas propiedades. Pero
+
+00:01:31.256 --> 00:01:37.216 align:middle
+PHPUnit sólo instanciará nuestra clase de prueba una
+vez, sin importar cuántos métodos de prueba tenga. Y
+
+00:01:37.556 --> 00:01:42.126 align:middle
+queremos asegurarnos de que tenemos objetos simulados
+nuevos para cada prueba que se ejecute. ¿Cómo
+
+00:01:42.756 --> 00:01:43.896 align:middle
+podemos hacerlo? En la
+
+00:01:44.486 --> 00:01:47.386 align:middle
+parte superior, añade protected
+function setUp(). En el interior,
+
+00:01:47.786 --> 00:01:56.576 align:middle
+di $this->mockLogger = $this->createMock(LoggerInterface::class)
+y luego $this->mockHttpClient
+
+00:01:56.616 --> 00:02:01.266 align:middle
+= new MockHttpClient() . Abajo,
+
+00:02:02.316 --> 00:02:05.126 align:middle
+en el método de prueba, corta
+el array de respuesta, luego di
+
+00:02:05.906 --> 00:02:11.586 align:middle
+$service = $this->createGithubService()
+y pega el array.
+
+00:02:12.946 --> 00:02:15.046 align:middle
+Veamos cómo van nuestras pruebas en
+el terminal... ./vendor/bin/phpunit
+
+00:02:15.666 --> 00:02:18.426 align:middle
+Y... ¡Ya!
+
+00:02:18.676 --> 00:02:21.226 align:middle
+¡Todo va bien! La
+
+00:02:21.766 --> 00:02:25.626 align:middle
+idea es bastante sencilla: si tu clase de
+prueba tiene un método llamado setUp(), PHPUnit
+
+00:02:25.996 --> 00:02:29.246 align:middle
+lo llamará antes de cada
+método de prueba, lo que
+
+00:02:29.306 --> 00:02:32.866 align:middle
+nos proporciona mocks frescos al
+comienzo de cada prueba. ¿Necesitas
+
+00:02:33.446 --> 00:02:35.416 align:middle
+hacer algo después de cada prueba?
+
+00:02:35.826 --> 00:02:38.456 align:middle
+Lo mismo: crea un método
+llamado tearDown(). Esto
+
+00:02:38.926 --> 00:02:40.096 align:middle
+no es tan común... pero
+
+00:02:40.366 --> 00:02:41.716 align:middle
+podrías hacerlo si quieres limpiar
+
+00:02:41.716 --> 00:02:44.506 align:middle
+algunos cambios en el sistema de archivos
+que se hicieron durante la prueba. En
+
+00:02:44.986 --> 00:02:46.896 align:middle
+nuestro caso, no es necesario.
+
+00:02:47.696 --> 00:02:52.026 align:middle
+Además de setUp() y tearDown(), PHPUnit
+también tiene algunos otros métodos, como
+
+00:02:52.026 --> 00:02:55.456 align:middle
+setUpBeforeClass() y
+tearDownAfterClass(). Estos
+
+00:02:56.036 --> 00:02:59.896 align:middle
+se llaman una vez por clase, y
+hablaremos de ellos a medida que
+
+00:02:59.896 --> 00:03:02.246 align:middle
+sean relevantes en futuros tutoriales. Y
+
+00:03:02.666 --> 00:03:05.956 align:middle
+si te lo estás preguntando, estos métodos
+se llaman "Métodos de Fijación" porque
+
+00:03:05.956 --> 00:03:09.406 align:middle
+ayudan a configurar cualquier
+"fijación" para poner tu entorno en
+
+00:03:09.406 --> 00:03:11.416 align:middle
+un estado conocido para tu
+prueba. En cualquier caso,
+
+00:03:12.496 --> 00:03:14.816 align:middle
+volvamos a la refactorización. Para
+
+00:03:15.276 --> 00:03:20.586 align:middle
+la primera prueba de esta clase, recorta la matriz de
+respuesta, selecciona todo este "código muerto", añade
+
+00:03:20.586 --> 00:03:25.376 align:middle
+$service = $this->createGithubService()
+y luego pega la matriz.
+
+00:03:26.106 --> 00:03:28.366 align:middle
+Podemos eliminar la variable
+$service a continuación. Pero
+
+00:03:29.016 --> 00:03:32.026 align:middle
+ahora tenemos que averiguar cómo
+mantener estas expectativas que
+
+00:03:32.026 --> 00:03:35.026 align:middle
+estábamos utilizando en
+el antiguo $mockHttpClient.
+
+00:03:35.666 --> 00:03:40.346 align:middle
+Poder comprobar que sólo llamamos a
+GitHub una vez con el método HTTP GET y
+
+00:03:40.346 --> 00:03:44.066 align:middle
+que estamos utilizando la URL correcta,
+es bastante valioso. Afortunadamente,
+
+00:03:44.816 --> 00:03:49.276 align:middle
+esas clases simuladas tienen un código
+especial sólo para esto. A continuación,
+
+00:03:50.116 --> 00:03:53.606 align:middle
+assertSame() que 1 es idéntico a
+
+00:03:53.606 --> 00:04:01.066 align:middle
+$this->mockHttpClient->getRequestCount()
+luego assertSame() que GET es idéntico a
+
+00:04:01.066 --> 00:04:04.006 align:middle
+$this->mockResponse->getRequestMethod().
+Por último,
+
+00:04:04.836 --> 00:04:08.446 align:middle
+copia y pega la URL en assertSame() y
+
+00:04:08.946 --> 00:04:12.216 align:middle
+llama a getRequestUrl()
+en mockResponse. Elimina
+
+00:04:13.646 --> 00:04:15.786 align:middle
+la antigua $mockHttpClient... y
+
+00:04:16.326 --> 00:04:19.176 align:middle
+las declaraciones de use que ya
+no utilizamos arriba. Muy bien,
+
+00:04:20.076 --> 00:04:22.476 align:middle
+es hora de comprobar las vallas... Y...
+
+00:04:23.856 --> 00:04:25.526 align:middle
+¡Vaya! ¡ Todo
+
+00:04:25.526 --> 00:04:27.276 align:middle
+sigue en verde! Bueno,
+
+00:04:28.156 --> 00:04:29.576 align:middle
+ahí lo tienes... Hemos
+
+00:04:30.116 --> 00:04:34.466 align:middle
+ayudado a Bob a mejorar Dinotopia añadiendo algunas
+pequeñas funciones a la aplicación. Pero , lo que es
+
+00:04:34.866 --> 00:04:39.586 align:middle
+más importante, hemos podido comprobar que esas
+funciones funcionan como pretendíamos. ¿Hay
+
+00:04:40.006 --> 00:04:41.506 align:middle
+más trabajo por hacer? Por supuesto
+
+00:04:42.106 --> 00:04:42.946 align:middle
+Vamos a
+
+00:04:43.306 --> 00:04:47.526 align:middle
+llevar nuestra aplicación al siguiente nivel añadiendo
+una capa de persistencia para almacenar los dinos en
+
+00:04:47.526 --> 00:04:50.826 align:middle
+la base de datos y aprenderemos también
+a escribir pruebas para ello. Estas
+
+00:04:51.506 --> 00:04:57.026 align:middle
+pruebas, en las que utilizas conexiones reales a la base
+de datos o realizas llamadas reales a la API, en lugar
+
+00:04:57.176 --> 00:05:00.726 align:middle
+de burlas, se denominan a veces
+pruebas de integración. Ese es
+
+00:05:01.196 --> 00:05:03.836 align:middle
+el tema del próximo tutorial de esta serie.
+
+00:05:04.736 --> 00:05:08.036 align:middle
+Espero que hayas disfrutado de tu estancia en
+el parque, y gracias por mantener tus brazos y
+
+00:05:08.106 --> 00:05:10.876 align:middle
+piernas dentro del vehículo
+en todo momento. Si
+
+00:05:11.356 --> 00:05:15.376 align:middle
+tienes alguna pregunta o sugerencia,
+o quieres ir con Big Eaty en
+
+00:05:15.376 --> 00:05:17.286 align:middle
+el Jeep, déjanos un comentario. Muy bien,
+
+00:05:18.176 --> 00:05:20.236 align:middle
+¡nos vemos en el próximo episodio!
