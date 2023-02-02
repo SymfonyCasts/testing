@@ -1,5 +1,5 @@
 diff --git a/tests/Unit/Service/GithubServiceTest.php b/tests/Unit/Service/GithubServiceTest.php
-index bd9d7ba..d8efadc 100644
+index 1e11ec9..6dde59a 100644
 --- a/tests/Unit/Service/GithubServiceTest.php
 +++ b/tests/Unit/Service/GithubServiceTest.php
 @@ -8,8 +8,6 @@ use PHPUnit\Framework\TestCase;
@@ -41,7 +41,7 @@ index bd9d7ba..d8efadc 100644
 -        ;
 -
 -        $service = new GithubService($mockHttpClient, $mockLogger);
-+        $service = $this->getService([
++        $service = $this->createGithubService([
 +            [
 +                'title' => 'Daisy',
 +                'labels' => [['name' => 'Status: Sick']],
