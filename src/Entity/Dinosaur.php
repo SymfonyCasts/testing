@@ -49,4 +49,9 @@ class Dinosaur
 
         return 'Small';
     }
+
+    public function isAcceptingVisitors(): bool
+    {
+        return true;
+    }
 }
