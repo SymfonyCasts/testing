@@ -1,0 +1,149 @@
+WEBVTT
+
+00:00:01.076 --> 00:00:06.166 align:middle
+Tener la capacidad de simular objetos en las
+pruebas es súper impresionante, y un poco raro
+
+00:00:06.166 --> 00:00:08.086 align:middle
+y complejo al mismo tiempo.
+
+00:00:08.966 --> 00:00:14.046 align:middle
+Si tenemos objetos sencillos, como Dinosaur,
+deberíamos evitar las líneas de código adicionales
+
+00:00:14.046 --> 00:00:16.956 align:middle
+y limitarnos a instanciar un
+Dinosaur real para la prueba.
+
+00:00:17.526 --> 00:00:20.326 align:middle
+Después de todo, es bastante
+fácil controlar el comportamiento
+
+00:00:20.326 --> 00:00:22.916 align:middle
+de Dinosaur simplemente
+llamando a sus métodos reales.
+
+00:00:23.186 --> 00:00:25.196 align:middle
+No es necesario el simulacro.
+
+00:00:25.796 --> 00:00:31.546 align:middle
+Pero, para objetos más complejos, como
+HttpClient, utilizar el cliente r eal
+
+00:00:31.546 --> 00:00:32.666 align:middle
+puede ser un dolor de cabeza.
+
+00:00:33.406 --> 00:00:38.496 align:middle
+La regla general es utilizar simulacros
+para objetos complejos como los servicios...
+
+00:00:38.886 --> 00:00:43.856 align:middle
+pero para los objetos simples, como los modelos o
+las entidades, basta con utilizar el objeto real. Si
+
+00:00:44.916 --> 00:00:49.776 align:middle
+volvemos a ver el cliente HTTP de
+Symfony, podemos simular tanto el cliente
+
+00:00:49.956 --> 00:00:52.106 align:middle
+como la respuesta para
+controlar su comportamiento.
+
+00:00:52.706 --> 00:00:58.596 align:middle
+Pero, como la necesidad de hacer este tipo de cosas
+es tan común, el Cliente HTTP de Symfony viene
+
+00:00:58.596 --> 00:01:01.906 align:middle
+con algunas clases especiales que
+pueden hacer el mocking por nosotros.
+
+00:01:02.296 --> 00:01:09.306 align:middle
+Viene con dos clases reales hechas específicamente
+para las pruebas: MockHttpClient y MockResponse.
+
+00:01:10.066 --> 00:01:15.556 align:middle
+Utilizar el sistema de burlas de PHPUnit está bien, pero
+éstas existen para hacernos la vida aún más fácil.
+
+00:01:16.426 --> 00:01:20.356 align:middle
+Compruébalo: en lugar de crear
+un simulacro para $mockResponse,
+
+00:01:20.496 --> 00:01:24.586 align:middle
+instala un MockResponse()
+pasando por json_encode()
+
+00:01:24.766 --> 00:01:27.566 align:middle
+con un array para imitar la
+respuesta de la API de GitHub.
+
+00:01:28.296 --> 00:01:31.696 align:middle
+Coge la edición de Maverick que aparece
+a continuación y pégala en el array.
+
+00:01:32.696 --> 00:01:36.896 align:middle
+Como MockResponse ya está configurado, elimina los
+bits de $mockResponse que aparecen a continuación.
+
+00:01:37.616 --> 00:01:41.886 align:middle
+Para el cliente, elimina
+$mockHttpClient y abajo,
+
+00:01:41.946 --> 00:01:47.286 align:middle
+instala un nuevo MockHttpClient()
+pasando en su lugar $mockResponse. Como
+
+00:01:48.286 --> 00:01:53.456 align:middle
+no vamos a hacer nada con $mockLogger,
+corta createMock(), elimina la variable,
+
+00:01:53.666 --> 00:01:56.556 align:middle
+y pégala como argumento a GithubService().
+
+00:01:57.586 --> 00:02:00.476 align:middle
+Vaya, ¡esto ya tiene mejor pinta!
+
+00:02:00.996 --> 00:02:03.426 align:middle
+Pero, veamos qué ocurre cuando ejecutamos
+las pruebas: ./vendor/bin/phpunit
+
+00:02:03.996 --> 00:02:07.236 align:middle
+Y... ¡Woah!
+
+00:02:07.496 --> 00:02:11.106 align:middle
+¡Todas las pruebas se superan! Pero,
+
+00:02:11.496 --> 00:02:16.306 align:middle
+el recuento de aserciones bajó
+a "16" porque MockHttpClient y
+
+00:02:16.306 --> 00:02:20.156 align:middle
+MockResponse no realizan
+realmente ninguna aserción, como
+
+00:02:20.436 --> 00:02:22.486 align:middle
+el número de veces que se
+llama a un método. Así que...
+
+00:02:23.496 --> 00:02:27.506 align:middle
+¿cuál es el beneficio real de utilizar
+estas clases simuladas? ¿Por qué
+
+00:02:27.876 --> 00:02:30.326 align:middle
+no crear las nuestras a través
+de PHPUnit? Ja... Echa un
+
+00:02:30.946 --> 00:02:34.016 align:middle
+vistazo a este diff de GithubService. Hemos
+
+00:02:34.566 --> 00:02:39.126 align:middle
+eliminado 11 líneas de código utilizando los
+mocks "incorporados" en una sola prueba. Imagina
+
+00:02:39.636 --> 00:02:44.026 align:middle
+cuántas líneas de código podríamos eliminar
+utilizándolas en todas nuestras pruebas. Hm...
+
+00:02:44.486 --> 00:02:48.436 align:middle
+Creo que eso es exactamente
+lo que haremos a continuación
