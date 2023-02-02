@@ -11,6 +11,7 @@
                 <th>Genus</th>
                 <th>Size</th>
                 <th>Enclosure</th>
+                <th>Accepting Visitors</th>
             </tr>
             </thead>
             <tbody>
@@ -20,6 +21,7 @@
                     <td>{{ dino.genus }}</td>
                     <td>{{ dino.sizeDescription }}</td>
                     <td>{{ dino.enclosure }}</td>
+                    <td>{{ dino.acceptingVisitors ? 'Yes' : 'No' }}</td>
                 </tr>
             {% endfor %}
             </tbody>
