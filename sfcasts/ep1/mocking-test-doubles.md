@@ -15,6 +15,8 @@ Inside the `GithubServiceTest` create a `$mockLogger` variable set to
 `$this->createMock(LoggerInterface::class)`. Pass *this* into
 the `GithubService` service.
 
+[[[ code('16bc592495') ]]]
+
 Let's see what happens when we run the tests now.
 
 ```terminal
@@ -63,15 +65,22 @@ What's the solution? Mock the `HttpClient`.
 
 But... we can't do that as long as we're creating the client *inside* of 
 `GitHubService`. Instead, in the constructor, add a 
-`private HttpClientInterface $httpClient` argument. Then call the `request()` 
-method on `$this->httpClient` instead of `$client`. Since we're *now* using 
-dependency injection, we can remove the static `$client` entire, along with the 
-`use` statement above.
+`private HttpClientInterface $httpClient` argument. 
+
+[[[ code('7d5a55c8fb') ]]]
+
+Then call the `request()` method on `$this->httpClient` instead of `$client`. 
+Since we're *now* using dependency injection, we can remove the static `$client` 
+entire, along with the `use` statement above.
+
+[[[ code('cf1edb2cab') ]]]
 
 Apart from unit testing, this is just a better way to write your code.
 
 In the test, start by giving the `GithubService` an http client *without*
 mocking - `HttpClient::create()` - just to make sure everything is working as expected.
+
+[[[ code('0948ad2237') ]]]
 
 Try the tests:
 
@@ -86,6 +95,8 @@ And... cool! We didn't break anything...
 *Now* we can mock the `HttpClient`. Below `$mockLogger` add,
 `$mockClient = $this->createMock()` and pass in `HttpClientInterface::class`. 
 Now pass *this* to our service.
+
+[[[ code('5f69f21efb') ]]]
 
 Back to the terminal to run our tests:
 
