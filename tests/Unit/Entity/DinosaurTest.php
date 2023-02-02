@@ -16,6 +16,11 @@ class DinosaurTest extends TestCase
             enclosure: 'Paddock A',
         );
 
+        self::assertGreaterThan(
+            $dino->getLength(),
+            10
+        );
+
         self::assertSame('Big Eaty', $dino->getName());
         self::assertSame('Tyrannosaurus', $dino->getGenus());
         self::assertSame(15, $dino->getLength());
