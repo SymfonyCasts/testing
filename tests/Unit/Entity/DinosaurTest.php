@@ -55,4 +55,10 @@ class DinosaurTest extends TestCase
 
         self::assertFalse($dino->isAcceptingVisitors());
     }
+
+    public function healthStatusProvider(): \Generator
+    {
+        yield 'Sick dino is not accepting visitors' => [HealthStatus::SICK, false];
+        yield 'Hungry dino is accepting visitors' => [HealthStatus::HUNGRY, true];
+    }
 }
