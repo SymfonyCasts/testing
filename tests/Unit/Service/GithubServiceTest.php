@@ -84,6 +84,8 @@ class GithubServiceTest extends TestCase
 
         $service = new GithubService($mockHttpClient, $mockLogger);
 
+        $this->expectException(\RuntimeException::class);
+
         $service->getHealthReport('Maverick');
     }
 }
