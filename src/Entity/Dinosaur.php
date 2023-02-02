@@ -36,4 +36,9 @@ class Dinosaur
     {
         return $this->enclosure;
     }
+
+    public function getSizeDescription(): string
+    {
+            return 'Large';
+    }
 }
