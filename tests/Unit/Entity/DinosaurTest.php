@@ -45,4 +45,13 @@ class DinosaurTest extends TestCase
 
         self::assertTrue($dino->isAcceptingVisitors());
     }
+
+    public function testIsNotAcceptingVisitorsIfSick(): void
+    {
+        $dino = new Dinosaur('Bumpy');
+
+        $dino->setHealth('Sick');
+
+        self::assertFalse($dino->isAcceptingVisitors());
+    }
 }
