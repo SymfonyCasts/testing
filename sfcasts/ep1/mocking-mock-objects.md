@@ -10,7 +10,9 @@ correct URL. Could we do that? Absolutely!
 ## Expect a Method to Be Called
 
 In `GithubServiceTest` where we configure the `$mockHttpClient`, add `->expects()`,
-and pass `$this->once()`.
+and pass `self::once()`.
+
+[[[ code('d4cd801092') ]]]
 
 Over in the terminal, run our tests...
 
@@ -24,6 +26,8 @@ And... Awesome! We've just added an assertion to our mock client that requires t
 `request` method be called *exactly* once. Let's take it a step further and
 add `->with()` passing `GET`... and then I'll paste the URL to the GitHub API.
 
+[[[ code('47a458cb01') ]]]
+
 Try the tests again...
 
 ```terminal-silent
@@ -35,7 +39,11 @@ And... Huh! We have 2 failures:
 > Failed asserting that two strings are equal
 
 Hmm... Ah Ha! My copy and paste skills are a bit weak. I missed `/issue` at the
-end of the URL. Add that. Let's see if that was the trick:
+end of the URL. Add that. 
+
+[[[ code('4d846bbca3') ]]]
+
+Let's see if that was the trick:
 
 ```terminal-silent
 ./vendor/bin/phpunit
@@ -82,8 +90,12 @@ Now that `GithubService` is fully tested, we can celebrate by *using* it to driv
 our dashboard! On `MainController::index()`, add an argument: 
 `GithubService $github` to autowire the new service.
 
+[[[ code('d3adeb62ba') ]]]
+
 Next, right below the `$dinos` array, `foreach()` over `$dinos as $dino` and, inside
 say `$dino->setHealth()` passing `$github->getHealthReport($dino->getName())`.
+
+[[[ code('27580fbe41') ]]]
 
 To the browser and refresh...
 
