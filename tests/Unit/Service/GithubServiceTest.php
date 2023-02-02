@@ -59,7 +59,7 @@ class GithubServiceTest extends TestCase
         ];
     }
 
-    public function testExceptionThrownWithUnknownLabel(string $expectedStatus, string $dinoName): void
+    public function testExceptionThrownWithUnknownLabel(): void
     {
         $mockLogger = $this->createMock(LoggerInterface::class);
         $mockHttpClient = $this->createMock(HttpClientInterface::class);
@@ -88,6 +88,6 @@ class GithubServiceTest extends TestCase
 
         $service = new GithubService($mockHttpClient, $mockLogger);
 
-        self::assertSame($expectedStatus, $service->getHealthReport($dinoName));
+        $service->getHealthReport('Maverick');
     }
 }
