@@ -11,7 +11,7 @@ class DinosaurTest extends TestCase
         self::assertEquals(42, 42);
     }
 
-    public function itWorksTheSame(): void
+    public function testItWorksTheSame(): void
     {
         self::assertSame(42, 42);
     }
