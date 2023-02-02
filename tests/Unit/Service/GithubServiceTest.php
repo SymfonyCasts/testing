@@ -69,12 +69,8 @@ class GithubServiceTest extends TestCase
             ->method('toArray')
             ->willReturn([
                 [
-                    'title' => 'Daisy',
-                    'labels' => [['name' => 'Status: Sick']],
-                ],
-                [
                     'title' => 'Maverick',
-                    'labels' => [['name' => 'Status: Healthy']],
+                    'labels' => [['name' => 'Status: Drowsy']],
                 ],
             ])
         ;
