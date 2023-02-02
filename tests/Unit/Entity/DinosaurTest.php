@@ -32,7 +32,7 @@ class DinosaurTest extends TestCase
         self::assertSame($expectedSize, $dino->getSizeDescription());
     }
 
-    public function sizeDescriptionProvider()
+    public function sizeDescriptionProvider(): \Generator
     {
         yield '10 Meter Large Dino' => [10, 'Large'];
         yield '5 Meter Medium Dino' => [5, 'Medium'];
