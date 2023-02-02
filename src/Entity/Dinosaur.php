@@ -8,6 +8,7 @@ class Dinosaur
     private string $genus;
     private int $length;
     private string $enclosure;
+    private string $health = 'Healthy';
 
     public function __construct(string $name, string $genus = 'Unknown', int $length = 0, string $enclosure = 'Unknown')
     {
@@ -52,6 +53,11 @@ class Dinosaur
 
     public function isAcceptingVisitors(): bool
     {
-        return true;
+        return $this->health === 'Healthy';
+    }
+
+    public function setHealth(string $health): void
+    {
+        $this->health = $health;
     }
 }
