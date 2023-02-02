@@ -3,13 +3,28 @@
 namespace App\Entity;
 
 use App\Enum\HealthStatus;
+use App\Repository\DinosaurRepository;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity(repositoryClass: DinosaurRepository::class)]
 class Dinosaur
 {
+    #[ORM\Id, ORM\GeneratedValue, ORM\Column]
+    private int $id;
+
+    #[ORM\Column]
     private string $name;
+
+    #[ORM\Column]
     private string $genus;
+
+    #[ORM\Column]
     private int $length;
+
+    #[ORM\Column]
     private string $enclosure;
+
+    #[ORM\Column]
     private HealthStatus $health = HealthStatus::HEALTHY;
 
     public function __construct(string $name, string $genus = 'Unknown', int $length = 0, string $enclosure = 'Unknown')
@@ -18,6 +33,11 @@ class Dinosaur
         $this->genus = $genus;
         $this->length = $length;
         $this->enclosure = $enclosure;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getName(): string
