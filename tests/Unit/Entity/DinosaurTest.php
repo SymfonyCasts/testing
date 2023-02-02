@@ -3,6 +3,7 @@
 namespace App\Tests\Unit\Entity;
 
 use App\Entity\Dinosaur;
+use App\Enum\HealthStatus;
 use PHPUnit\Framework\TestCase;
 
 class DinosaurTest extends TestCase
@@ -50,7 +51,7 @@ class DinosaurTest extends TestCase
     {
         $dino = new Dinosaur('Bumpy');
 
-        $dino->setHealth('Sick');
+        $dino->setHealth(HealthStatus::SICK);
 
         self::assertFalse($dino->isAcceptingVisitors());
     }
