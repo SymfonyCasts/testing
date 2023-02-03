@@ -21,6 +21,27 @@ composer install
 You may alternatively need to run `php composer.phar install`, depending
 on how you installed Composer.
 
+**Start the database**
+
+Run:
+
+```
+docker-compose up --no-start
+```
+
+to configure the docker containers. You'll only need to do that once.
+
+Now you can run
+```
+docker-compose start
+```
+
+and then
+
+```
+symfony console doctrine:schema:update --force
+```
+
 **Start the Symfony web server**
 
 You can use Nginx or Apache, but Symfony's local web server
