@@ -39,7 +39,15 @@ docker-compose start
 and then
 
 ```
+symfony console doctrine:database:create
+```
+
+```
 symfony console doctrine:schema:update --force
+```
+
+```
+symfony console doctrine:fixtures:load
 ```
 
 **Start the Symfony web server**
