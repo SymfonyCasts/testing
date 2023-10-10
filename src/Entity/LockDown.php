@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\LockDownStatus;
 use App\Repository\LockDownRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,6 +20,9 @@ class LockDown
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $endedAt = null;
+
+    #[ORM\Column(type: Types::STRING, enumType: LockDownStatus::class)]
+    private ?LockDownStatus $status;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $reason = null;
@@ -40,16 +44,22 @@ class LockDown
         return $this;
     }
 
+    public function endLockDown(): static
+    {
+        $this->endedAt = new \DateTimeImmutable();
+        $this->status = LockDownStatus::ENDED;
+
+        return $this;
+    }
+
     public function getEndedAt(): ?\DateTimeImmutable
     {
         return $this->endedAt;
     }
 
-    public function setEndedAt(?\DateTimeImmutable $endedAt): static
+    public function getStatus(): ?LockDownStatus
     {
-        $this->endedAt = $endedAt;
-
-        return $this;
+        return $this->status;
     }
 
     public function getReason(): ?string
