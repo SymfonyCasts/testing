@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Dinosaur
 {
     #[ORM\Id, ORM\GeneratedValue, ORM\Column]
-    private int $id;
+    private ?int $id = null;
 
     #[ORM\Column]
     private string $name;
