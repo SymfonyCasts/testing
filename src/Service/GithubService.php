@@ -4,11 +4,16 @@ namespace App\Service;
 
 use App\Enum\HealthStatus;
 use Psr\Log\LoggerInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class GithubService
 {
-    public function __construct(private HttpClientInterface $httpClient, private LoggerInterface $logger)
+    public function __construct(
+        private HttpClientInterface $httpClient,
+        private LoggerInterface $logger,
+        private CacheInterface $cache,
+    )
     {
     }
 
@@ -16,17 +21,21 @@ class GithubService
     {
         $health = HealthStatus::HEALTHY;
 
-        $response = $this->httpClient->request(
-            method: 'GET',
-            url: 'https://api.github.com/repos/SymfonyCasts/dino-park/issues'
-        );
+        $data = $this->cache->get('dino_issues', function () use ($dinosaurName) {
+            $response = $this->httpClient->request(
+                method: 'GET',
+                url: 'https://api.github.com/repos/SymfonyCasts/dino-park/issues'
+            );
 
-        $this->logger->info('Request Dino Issues', [
-            'dino' => $dinosaurName,
-            'responseStatus' => $response->getStatusCode(),
-        ]);
+            $this->logger->info('Request Dino Issues', [
+                'dino' => $dinosaurName,
+                'responseStatus' => $response->getStatusCode(),
+            ]);
 
-        foreach ($response->toArray() as $issue) {
+            return $response->toArray();
+        });
+
+        foreach ($data as $issue) {
             if (str_contains($issue['title'], $dinosaurName)) {
                 $health = $this->getDinoStatusFromLabels($issue['labels']);
             }
