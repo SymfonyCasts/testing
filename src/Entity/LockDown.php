@@ -44,29 +44,26 @@ class LockDown
         return $this;
     }
 
-    public function endLockDown(): static
-    {
-        $this->endedAt = new \DateTimeImmutable();
-        $this->status = LockDownStatus::ENDED;
-
-        return $this;
-    }
-
-    public function lockDownIsOutOfControl(): static
-    {
-        $this->status = LockDownStatus::RUN_FOR_YOUR_LIFE;
-
-        return $this;
-    }
-
     public function getEndedAt(): ?\DateTimeImmutable
     {
         return $this->endedAt;
     }
 
-    public function getStatus(): ?LockDownStatus
+    public function getStatus(): LockDownStatus
     {
         return $this->status;
+    }
+
+    public function setStatus(LockDownStatus $status): static
+    {
+        $this->status = $status;
+        if ($status === LockDownStatus::ENDED) {
+            $this->endedAt = new \DateTimeImmutable();
+        } else {
+            $this->endedAt = null;
+        }
+
+        return $this;
     }
 
     public function getReason(): ?string
