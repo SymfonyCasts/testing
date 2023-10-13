@@ -22,7 +22,7 @@ class LockDown
     private ?\DateTimeImmutable $endedAt = null;
 
     #[ORM\Column(type: Types::STRING, enumType: LockDownStatus::class)]
-    private ?LockDownStatus $status;
+    private ?LockDownStatus $status = LockDownStatus::ACTIVE;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $reason = null;
@@ -48,6 +48,13 @@ class LockDown
     {
         $this->endedAt = new \DateTimeImmutable();
         $this->status = LockDownStatus::ENDED;
+
+        return $this;
+    }
+
+    public function lockDownIsOutOfControl(): static
+    {
+        $this->status = LockDownStatus::RUN_FOR_YOUR_LIFE;
 
         return $this;
     }
