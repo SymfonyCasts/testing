@@ -1,0 +1,24 @@
+diff --git a/tests/Integration/Service/LockDownHelperTest.php b/tests/Integration/Service/LockDownHelperTest.php
+index 194e4e0..05af17c 100644
+--- a/tests/Integration/Service/LockDownHelperTest.php
++++ b/tests/Integration/Service/LockDownHelperTest.php
+@@ -4,6 +4,7 @@ namespace App\Tests\Integration\Service;
+ 
+ use App\Enum\LockDownStatus;
+ use App\Factory\LockDownFactory;
++use App\Service\GithubService;
+ use App\Service\LockDownHelper;
+ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+ use Zenstruck\Foundry\Test\Factories;
+@@ -21,6 +22,11 @@ class LockDownHelperTest extends KernelTestCase
+             'status' => LockDownStatus::ACTIVE,
+         ]);
+ 
++        $githubService = $this->createMock(GithubService::class);
++        $githubService->expects($this->never())
++            ->method('clearLockDownAlerts');
++        self::getContainer()->set(GithubService::class, $githubService);
++
+         $lockDownHelper = self::getContainer()->get(LockDownHelper::class);
+         assert($lockDownHelper instanceof LockDownHelper);
+         $lockDownHelper->endCurrentLockDown();

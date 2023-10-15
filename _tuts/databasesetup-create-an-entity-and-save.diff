@@ -1,0 +1,31 @@
+diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
+index ed65621..7b0960e 100644
+--- a/tests/Integration/Repository/LockDownRepositoryTest.php
++++ b/tests/Integration/Repository/LockDownRepositoryTest.php
+@@ -2,7 +2,9 @@
+ 
+ namespace App\Tests\Integration\Repository;
+ 
++use App\Entity\LockDown;
+ use App\Repository\LockDownRepository;
++use Doctrine\ORM\EntityManagerInterface;
+ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+ 
+ class LockDownRepositoryTest extends KernelTestCase
+@@ -19,5 +21,16 @@ class LockDownRepositoryTest extends KernelTestCase
+     public function testIsInLockDownReturnsTrueIfMostRecentLockDownIsActive()
+     {
+         self::bootKernel();
++
++        $lockDown = new LockDown();
++        $lockDown->setReason('Dinos have organized their own lunch break');
++        $lockDown->setCreatedAt(new \DateTimeImmutable('-1 day'));
++
++        $entityManager = self::getContainer()->get(EntityManagerInterface::class);
++        assert($entityManager instanceof EntityManagerInterface);
++        $entityManager->persist($lockDown);
++        $entityManager->flush();
++
++        dd($lockDown->getId());
+     }
+ }

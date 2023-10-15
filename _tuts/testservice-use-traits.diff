@@ -1,0 +1,16 @@
+diff --git a/tests/Integration/Service/LockDownHelperTest.php b/tests/Integration/Service/LockDownHelperTest.php
+index 6ca12cb..a244be6 100644
+--- a/tests/Integration/Service/LockDownHelperTest.php
++++ b/tests/Integration/Service/LockDownHelperTest.php
+@@ -3,8 +3,10 @@
+ namespace App\Tests\Integration\Service;
+ 
+ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
++use Zenstruck\Foundry\Test\Factories;
++use Zenstruck\Foundry\Test\ResetDatabase;
+ 
+ class LockDownHelperTest extends KernelTestCase
+ {
+-
++    use ResetDatabase, Factories;
+ }

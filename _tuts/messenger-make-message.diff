@@ -1,0 +1,62 @@
+diff --git a/config/packages/messenger.yaml b/config/packages/messenger.yaml
+index 50943b6..58942a6 100644
+--- a/config/packages/messenger.yaml
++++ b/config/packages/messenger.yaml
+@@ -10,6 +10,7 @@ framework:
+             # sync: 'sync://'
+ 
+         routing:
++            App\Message\LockDownLiftedNotification: async
+             # Route your messages to the transports
+             # 'App\Message\YourMessage': async
+ 
+diff --git a/src/Message/LockDownLiftedNotification.php b/src/Message/LockDownLiftedNotification.php
+new file mode 100644
+index 0000000..918d03a
+--- /dev/null
++++ b/src/Message/LockDownLiftedNotification.php
+@@ -0,0 +1,23 @@
++<?php
++
++namespace App\Message;
++
++final class LockDownLiftedNotification
++{
++    /*
++     * Add whatever properties and methods you need
++     * to hold the data for this message class.
++     */
++
++//     private $name;
++
++//     public function __construct(string $name)
++//     {
++//         $this->name = $name;
++//     }
++
++//    public function getName(): string
++//    {
++//        return $this->name;
++//    }
++}
+diff --git a/src/MessageHandler/LockDownLiftedNotificationHandler.php b/src/MessageHandler/LockDownLiftedNotificationHandler.php
+new file mode 100644
+index 0000000..c6bfba1
+--- /dev/null
++++ b/src/MessageHandler/LockDownLiftedNotificationHandler.php
+@@ -0,0 +1,15 @@
++<?php
++
++namespace App\MessageHandler;
++
++use App\Message\LockDownLiftedNotification;
++use Symfony\Component\Messenger\Attribute\AsMessageHandler;
++
++#[AsMessageHandler]
++final class LockDownLiftedNotificationHandler
++{
++    public function __invoke(LockDownLiftedNotification $message)
++    {
++        // do something with your message
++    }
++}

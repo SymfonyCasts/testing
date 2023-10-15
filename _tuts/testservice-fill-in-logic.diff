@@ -1,0 +1,33 @@
+diff --git a/tests/Integration/Service/LockDownHelperTest.php b/tests/Integration/Service/LockDownHelperTest.php
+index a244be6..194e4e0 100644
+--- a/tests/Integration/Service/LockDownHelperTest.php
++++ b/tests/Integration/Service/LockDownHelperTest.php
+@@ -2,6 +2,9 @@
+ 
+ namespace App\Tests\Integration\Service;
+ 
++use App\Enum\LockDownStatus;
++use App\Factory\LockDownFactory;
++use App\Service\LockDownHelper;
+ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+ use Zenstruck\Foundry\Test\Factories;
+ use Zenstruck\Foundry\Test\ResetDatabase;
+@@ -9,4 +12,18 @@ use Zenstruck\Foundry\Test\ResetDatabase;
+ class LockDownHelperTest extends KernelTestCase
+ {
+     use ResetDatabase, Factories;
++
++    public function testEndCurrentLockdown()
++    {
++        self::bootKernel();
++
++        $lockDown = LockDownFactory::createOne([
++            'status' => LockDownStatus::ACTIVE,
++        ]);
++
++        $lockDownHelper = self::getContainer()->get(LockDownHelper::class);
++        assert($lockDownHelper instanceof LockDownHelper);
++        $lockDownHelper->endCurrentLockDown();
++        $this->assertSame(LockDownStatus::ENDED, $lockDown->getStatus());
++    }
+ }

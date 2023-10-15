@@ -1,0 +1,31 @@
+diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
+index 9658db2..43408b3 100644
+--- a/tests/Integration/Repository/LockDownRepositoryTest.php
++++ b/tests/Integration/Repository/LockDownRepositoryTest.php
+@@ -3,6 +3,8 @@
+ namespace App\Tests\Integration\Repository;
+ 
+ use App\Entity\LockDown;
++use App\Enum\LockDownStatus;
++use App\Factory\LockDownFactory;
+ use App\Repository\LockDownRepository;
+ use Doctrine\ORM\EntityManagerInterface;
+ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+@@ -24,14 +26,9 @@ class LockDownRepositoryTest extends KernelTestCase
+     {
+         self::bootKernel();
+ 
+-        $lockDown = new LockDown();
+-        $lockDown->setReason('Dinos have organized their own lunch break');
+-        $lockDown->setCreatedAt(new \DateTimeImmutable('-1 day'));
+-
+-        $entityManager = self::getContainer()->get(EntityManagerInterface::class);
+-        assert($entityManager instanceof EntityManagerInterface);
+-        $entityManager->persist($lockDown);
+-        $entityManager->flush();
++        LockDownFactory::createOne([
++            'status' => LockDownStatus::ACTIVE,
++        ]);
+ 
+         $this->assertTrue($this->getLockDownRepository()->isInLockdown());
+     }

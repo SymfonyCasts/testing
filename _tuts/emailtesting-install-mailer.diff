@@ -1,0 +1,418 @@
+diff --git a/.env b/.env
+index ad6c0b1..903aa48 100644
+--- a/.env
++++ b/.env
+@@ -28,3 +28,7 @@ APP_SECRET=d8fdffc8f11d8a5fe47728b16cc4c8f6
+ # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
+ DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=15&charset=utf8"
+ ###< doctrine/doctrine-bundle ###
++
++###> symfony/mailer ###
++# MAILER_DSN=null://null
++###< symfony/mailer ###
+diff --git a/composer.json b/composer.json
+index 1ba30f1..d0440cb 100644
+--- a/composer.json
++++ b/composer.json
+@@ -16,6 +16,7 @@
+         "symfony/flex": "^2",
+         "symfony/framework-bundle": "6.3.*",
+         "symfony/http-client": "6.3.*",
++        "symfony/mailer": "6.3.*",
+         "symfony/monolog-bundle": "^3.0",
+         "symfony/runtime": "6.3.*",
+         "symfony/security-csrf": "6.3.*",
+@@ -85,7 +86,8 @@
+     "extra": {
+         "symfony": {
+             "allow-contrib": false,
+-            "require": "6.3.*"
++            "require": "6.3.*",
++            "docker": true
+         }
+     }
+ }
+diff --git a/composer.lock b/composer.lock
+index 541cea3..afed98e 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "ca4f092d9f434e65df19a8d3d15ad4eb",
++    "content-hash": "d9eb1b6a14de7aee8a777d64f9734a3c",
+     "packages": [
+         {
+             "name": "doctrine/cache",
+@@ -1320,6 +1320,73 @@
+             },
+             "time": "2022-05-23T21:33:49+00:00"
+         },
++        {
++            "name": "egulias/email-validator",
++            "version": "4.0.2",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/egulias/EmailValidator.git",
++                "reference": "ebaaf5be6c0286928352e054f2d5125608e5405e"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/ebaaf5be6c0286928352e054f2d5125608e5405e",
++                "reference": "ebaaf5be6c0286928352e054f2d5125608e5405e",
++                "shasum": ""
++            },
++            "require": {
++                "doctrine/lexer": "^2.0 || ^3.0",
++                "php": ">=8.1",
++                "symfony/polyfill-intl-idn": "^1.26"
++            },
++            "require-dev": {
++                "phpunit/phpunit": "^10.2",
++                "vimeo/psalm": "^5.12"
++            },
++            "suggest": {
++                "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "4.0.x-dev"
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Egulias\\EmailValidator\\": "src"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Eduardo Gulias Davis"
++                }
++            ],
++            "description": "A library for validating emails against several RFCs",
++            "homepage": "https://github.com/egulias/EmailValidator",
++            "keywords": [
++                "email",
++                "emailvalidation",
++                "emailvalidator",
++                "validation",
++                "validator"
++            ],
++            "support": {
++                "issues": "https://github.com/egulias/EmailValidator/issues",
++                "source": "https://github.com/egulias/EmailValidator/tree/4.0.2"
++            },
++            "funding": [
++                {
++                    "url": "https://github.com/egulias",
++                    "type": "github"
++                }
++            ],
++            "time": "2023-10-06T06:47:41+00:00"
++        },
+         {
+             "name": "monolog/monolog",
+             "version": "3.4.0",
+@@ -3287,6 +3354,170 @@
+             ],
+             "time": "2023-09-30T06:37:04+00:00"
+         },
++        {
++            "name": "symfony/mailer",
++            "version": "v6.3.5",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/mailer.git",
++                "reference": "d89611a7830d51b5e118bca38e390dea92f9ea06"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/mailer/zipball/d89611a7830d51b5e118bca38e390dea92f9ea06",
++                "reference": "d89611a7830d51b5e118bca38e390dea92f9ea06",
++                "shasum": ""
++            },
++            "require": {
++                "egulias/email-validator": "^2.1.10|^3|^4",
++                "php": ">=8.1",
++                "psr/event-dispatcher": "^1",
++                "psr/log": "^1|^2|^3",
++                "symfony/event-dispatcher": "^5.4|^6.0",
++                "symfony/mime": "^6.2",
++                "symfony/service-contracts": "^2.5|^3"
++            },
++            "conflict": {
++                "symfony/http-client-contracts": "<2.5",
++                "symfony/http-kernel": "<5.4",
++                "symfony/messenger": "<6.2",
++                "symfony/mime": "<6.2",
++                "symfony/twig-bridge": "<6.2.1"
++            },
++            "require-dev": {
++                "symfony/console": "^5.4|^6.0",
++                "symfony/http-client": "^5.4|^6.0",
++                "symfony/messenger": "^6.2",
++                "symfony/twig-bridge": "^6.2"
++            },
++            "type": "library",
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Component\\Mailer\\": ""
++                },
++                "exclude-from-classmap": [
++                    "/Tests/"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Fabien Potencier",
++                    "email": "fabien@symfony.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Helps sending emails",
++            "homepage": "https://symfony.com",
++            "support": {
++                "source": "https://github.com/symfony/mailer/tree/v6.3.5"
++            },
++            "funding": [
++                {
++                    "url": "https://symfony.com/sponsor",
++                    "type": "custom"
++                },
++                {
++                    "url": "https://github.com/fabpot",
++                    "type": "github"
++                },
++                {
++                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
++                    "type": "tidelift"
++                }
++            ],
++            "time": "2023-09-06T09:47:15+00:00"
++        },
++        {
++            "name": "symfony/mime",
++            "version": "v6.3.5",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/mime.git",
++                "reference": "d5179eedf1cb2946dbd760475ebf05c251ef6a6e"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/mime/zipball/d5179eedf1cb2946dbd760475ebf05c251ef6a6e",
++                "reference": "d5179eedf1cb2946dbd760475ebf05c251ef6a6e",
++                "shasum": ""
++            },
++            "require": {
++                "php": ">=8.1",
++                "symfony/deprecation-contracts": "^2.5|^3",
++                "symfony/polyfill-intl-idn": "^1.10",
++                "symfony/polyfill-mbstring": "^1.0"
++            },
++            "conflict": {
++                "egulias/email-validator": "~3.0.0",
++                "phpdocumentor/reflection-docblock": "<3.2.2",
++                "phpdocumentor/type-resolver": "<1.4.0",
++                "symfony/mailer": "<5.4",
++                "symfony/serializer": "<6.2.13|>=6.3,<6.3.2"
++            },
++            "require-dev": {
++                "egulias/email-validator": "^2.1.10|^3.1|^4",
++                "league/html-to-markdown": "^5.0",
++                "phpdocumentor/reflection-docblock": "^3.0|^4.0|^5.0",
++                "symfony/dependency-injection": "^5.4|^6.0",
++                "symfony/property-access": "^5.4|^6.0",
++                "symfony/property-info": "^5.4|^6.0",
++                "symfony/serializer": "~6.2.13|^6.3.2"
++            },
++            "type": "library",
++            "autoload": {
++                "psr-4": {
++                    "Symfony\\Component\\Mime\\": ""
++                },
++                "exclude-from-classmap": [
++                    "/Tests/"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Fabien Potencier",
++                    "email": "fabien@symfony.com"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Allows manipulating MIME messages",
++            "homepage": "https://symfony.com",
++            "keywords": [
++                "mime",
++                "mime-type"
++            ],
++            "support": {
++                "source": "https://github.com/symfony/mime/tree/v6.3.5"
++            },
++            "funding": [
++                {
++                    "url": "https://symfony.com/sponsor",
++                    "type": "custom"
++                },
++                {
++                    "url": "https://github.com/fabpot",
++                    "type": "github"
++                },
++                {
++                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
++                    "type": "tidelift"
++                }
++            ],
++            "time": "2023-09-29T06:59:36+00:00"
++        },
+         {
+             "name": "symfony/monolog-bridge",
+             "version": "v6.3.1",
+@@ -3599,6 +3830,93 @@
+             ],
+             "time": "2023-01-26T09:26:14+00:00"
+         },
++        {
++            "name": "symfony/polyfill-intl-idn",
++            "version": "v1.28.0",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/symfony/polyfill-intl-idn.git",
++                "reference": "ecaafce9f77234a6a449d29e49267ba10499116d"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/ecaafce9f77234a6a449d29e49267ba10499116d",
++                "reference": "ecaafce9f77234a6a449d29e49267ba10499116d",
++                "shasum": ""
++            },
++            "require": {
++                "php": ">=7.1",
++                "symfony/polyfill-intl-normalizer": "^1.10",
++                "symfony/polyfill-php72": "^1.10"
++            },
++            "suggest": {
++                "ext-intl": "For best performance"
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-main": "1.28-dev"
++                },
++                "thanks": {
++                    "name": "symfony/polyfill",
++                    "url": "https://github.com/symfony/polyfill"
++                }
++            },
++            "autoload": {
++                "files": [
++                    "bootstrap.php"
++                ],
++                "psr-4": {
++                    "Symfony\\Polyfill\\Intl\\Idn\\": ""
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Laurent Bassin",
++                    "email": "laurent@bassin.info"
++                },
++                {
++                    "name": "Trevor Rowbotham",
++                    "email": "trevor.rowbotham@pm.me"
++                },
++                {
++                    "name": "Symfony Community",
++                    "homepage": "https://symfony.com/contributors"
++                }
++            ],
++            "description": "Symfony polyfill for intl's idn_to_ascii and idn_to_utf8 functions",
++            "homepage": "https://symfony.com",
++            "keywords": [
++                "compatibility",
++                "idn",
++                "intl",
++                "polyfill",
++                "portable",
++                "shim"
++            ],
++            "support": {
++                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.28.0"
++            },
++            "funding": [
++                {
++                    "url": "https://symfony.com/sponsor",
++                    "type": "custom"
++                },
++                {
++                    "url": "https://github.com/fabpot",
++                    "type": "github"
++                },
++                {
++                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
++                    "type": "tidelift"
++                }
++            ],
++            "time": "2023-01-26T09:30:37+00:00"
++        },
+         {
+             "name": "symfony/polyfill-intl-normalizer",
+             "version": "v1.28.0",
+diff --git a/config/packages/mailer.yaml b/config/packages/mailer.yaml
+new file mode 100644
+index 0000000..56a650d
+--- /dev/null
++++ b/config/packages/mailer.yaml
+@@ -0,0 +1,3 @@
++framework:
++    mailer:
++        dsn: '%env(MAILER_DSN)%'
+diff --git a/symfony.lock b/symfony.lock
+index 7e7f98b..27ea961 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -263,6 +263,18 @@
+     "symfony/http-kernel": {
+         "version": "v6.0.6"
+     },
++    "symfony/mailer": {
++        "version": "6.3",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "main",
++            "version": "4.3",
++            "ref": "2bf89438209656b85b9a49238c4467bff1b1f939"
++        },
++        "files": [
++            "config/packages/mailer.yaml"
++        ]
++    },
+     "symfony/maker-bundle": {
+         "version": "1.48",
+         "recipe": {

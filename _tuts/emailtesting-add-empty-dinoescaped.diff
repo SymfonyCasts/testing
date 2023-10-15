@@ -1,0 +1,15 @@
+diff --git a/src/Service/LockDownHelper.php b/src/Service/LockDownHelper.php
+index 18f2949..da929ec 100644
+--- a/src/Service/LockDownHelper.php
++++ b/src/Service/LockDownHelper.php
+@@ -28,4 +28,10 @@ class LockDownHelper
+ 
+         $this->githubService->clearLockDownAlerts();
+     }
++
++    public function dinoEscaped(): void
++    {
++        // TODO: create a LockDown & save
++        // send an email with subject like "RUUUUUUNNNNNN!!!!"
++    }
+ }

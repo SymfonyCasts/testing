@@ -1,0 +1,13 @@
+diff --git a/tests/Integration/Service/LockDownHelperTest.php b/tests/Integration/Service/LockDownHelperTest.php
+index 05af17c..a0e0249 100644
+--- a/tests/Integration/Service/LockDownHelperTest.php
++++ b/tests/Integration/Service/LockDownHelperTest.php
+@@ -23,7 +23,7 @@ class LockDownHelperTest extends KernelTestCase
+         ]);
+ 
+         $githubService = $this->createMock(GithubService::class);
+-        $githubService->expects($this->never())
++        $githubService->expects($this->once())
+             ->method('clearLockDownAlerts');
+         self::getContainer()->set(GithubService::class, $githubService);
+ 

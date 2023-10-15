@@ -1,0 +1,285 @@
+{
+    "steps": [
+        {
+            "id": "start",
+            "name": "start",
+            "description": null
+        },
+        {
+            "id": "repository-start-custom-query",
+            "name": "Repository: Start custom query",
+            "description": null
+        },
+        {
+            "id": "repository-create-test",
+            "name": "Repository: Create test",
+            "description": null
+        },
+        {
+            "id": "repository-extend-kerneltestcase",
+            "name": "Repository: Extend KernelTestCase",
+            "description": null
+        },
+        {
+            "id": "repository-fetch-service-and-dump",
+            "name": "Repository: Fetch service & dump",
+            "description": null
+        },
+        {
+            "id": "repository-write-a-basic-test",
+            "name": "Repository: Write a basic test",
+            "description": null
+        },
+        {
+            "id": "databasesetup-create-2nd-test",
+            "name": "DatabaseSetup: Create 2nd test",
+            "description": null
+        },
+        {
+            "id": "databasesetup-create-an-entity-and-save",
+            "name": "DatabaseSetup: Create an entity & save",
+            "description": null
+        },
+        {
+            "id": "databasesetup-create-private-method-to-fetch-service",
+            "name": "DatabaseSetup: Create private method to fetch service",
+            "description": null
+        },
+        {
+            "id": "databasesetup-finish-test",
+            "name": "DatabaseSetup: Finish test",
+            "description": null
+        },
+        {
+            "id": "databasesetup-finish-query",
+            "name": "DatabaseSetup: Finish query",
+            "description": null
+        },
+        {
+            "id": "cleandatabase-install-foundry",
+            "name": "CleanDatabase: Install Foundry",
+            "description": null
+        },
+        {
+            "id": "cleandatabase-refreshdatabase-trait",
+            "name": "CleanDatabase: RefreshDatabase trait",
+            "description": null
+        },
+        {
+            "id": "cleandatabase-silence-indirect-deprecations",
+            "name": "CleanDatabase: Silence indirect deprecations",
+            "description": null
+        },
+        {
+            "id": "factories-make-factory",
+            "name": "Factories: make:factory",
+            "description": null
+        },
+        {
+            "id": "factories-use-factory-in-test",
+            "name": "Factories: Use factory in test",
+            "description": null
+        },
+        {
+            "id": "factories-creating-more-lock-downs",
+            "name": "Factories: Creating more lock downs",
+            "description": null
+        },
+        {
+            "id": "factories-create-another-test",
+            "name": "Factories: Create another test",
+            "description": null
+        },
+        {
+            "id": "factories-adjust-body-of-test",
+            "name": "Factories: Adjust body of test",
+            "description": null
+        },
+        {
+            "id": "factories-adjust-repo-method-to-fix-test",
+            "name": "Factories: Adjust repo method to fix test",
+            "description": null
+        },
+        {
+            "id": "factories-use-new-code",
+            "name": "Factories: Use new code!",
+            "description": null
+        },
+        {
+            "id": "testservice-refactor-to-findmostrecent",
+            "name": "TestService: Refactor to findMostRecent()",
+            "description": null
+        },
+        {
+            "id": "testservice-add-lockdownhelper",
+            "name": "TestService: Add LockDownHelper",
+            "description": null
+        },
+        {
+            "id": "testservice-create-lockdownhelpertest",
+            "name": "TestService: Create LockDownHelperTest",
+            "description": null
+        },
+        {
+            "id": "testservice-use-traits",
+            "name": "TestService: Use traits",
+            "description": null
+        },
+        {
+            "id": "testservice-fill-in-logic",
+            "name": "TestService: Fill in logic",
+            "description": null
+        },
+        {
+            "id": "testservice-autowire-service",
+            "name": "TestService: Autowire service",
+            "description": null
+        },
+        {
+            "id": "testservice-finish-using-service",
+            "name": "TestService: Finish using service",
+            "description": null
+        },
+        {
+            "id": "partialmocking-add-method-to-githubservice",
+            "name": "PartialMocking: Add method to GithubService",
+            "description": null
+        },
+        {
+            "id": "partialmocking-call-this-from-lockdownhelper",
+            "name": "PartialMocking: Call this from LockDownHelper",
+            "description": null
+        },
+        {
+            "id": "partialmocking-start-a-2nd-test",
+            "name": "PartialMocking: Start a 2nd test",
+            "description": null
+        },
+        {
+            "id": "partialmocking-set-mock-into-the-container",
+            "name": "PartialMocking: Set mock into the container",
+            "description": null
+        },
+        {
+            "id": "partialmocking-change-to-once",
+            "name": "PartialMocking: Change to once()",
+            "description": null
+        },
+        {
+            "id": "emailtesting-add-empty-dinoescaped",
+            "name": "EmailTesting: Add empty dinoEscaped()",
+            "description": null
+        },
+        {
+            "id": "emailtesting-make-command",
+            "name": "EmailTesting: make:command",
+            "description": null
+        },
+        {
+            "id": "emailtesting-fill-in-command",
+            "name": "EmailTesting: Fill in command",
+            "description": null
+        },
+        {
+            "id": "emailtesting-create-private-method-in-test",
+            "name": "EmailTesting: Create private method in test",
+            "description": null
+        },
+        {
+            "id": "emailtesting-create-test-method",
+            "name": "EmailTesting: Create test method",
+            "description": null
+        },
+        {
+            "id": "emailtesting-assert-count-1",
+            "name": "EmailTesting: assert()->count(1)",
+            "description": null
+        },
+        {
+            "id": "emailtesting-save-record-in-service",
+            "name": "EmailTesting: Save record in service",
+            "description": null
+        },
+        {
+            "id": "emailtesting-assert-email-was-sent",
+            "name": "EmailTesting: Assert email was sent",
+            "description": null
+        },
+        {
+            "id": "emailtesting-install-mailer",
+            "name": "EmailTesting: install mailer",
+            "description": null
+        },
+        {
+            "id": "emailtesting-uncomment-mailer-dsn",
+            "name": "EmailTesting: Uncomment MAILER_DSN",
+            "description": null
+        },
+        {
+            "id": "emailtesting-send-email-from-service",
+            "name": "EmailTesting: Send email from service",
+            "description": null
+        },
+        {
+            "id": "zenstruck-mailer-install-it",
+            "name": "zenstruck\/mailer: Install it",
+            "description": null
+        },
+        {
+            "id": "zenstruck-mailer-use-it-in-the-test",
+            "name": "zenstruck\/mailer: Use it in the test",
+            "description": null
+        },
+        {
+            "id": "messenger-install-messenger",
+            "name": "Messenger: install messenger",
+            "description": null
+        },
+        {
+            "id": "messenger-install-messenger-test",
+            "name": "Messenger: install messenger-test",
+            "description": null
+        },
+        {
+            "id": "messenger-uncomment-test-config",
+            "name": "Messenger: Uncomment test config",
+            "description": null
+        },
+        {
+            "id": "messenger-change-test-config-to-test",
+            "name": "Messenger: Change test config to \"test\"",
+            "description": null
+        },
+        {
+            "id": "messenger-use-in-test",
+            "name": "Messenger: Use in test",
+            "description": null
+        },
+        {
+            "id": "messenger-make-message",
+            "name": "Messenger: make:message",
+            "description": null
+        },
+        {
+            "id": "messenger-dispatch-message",
+            "name": "Messenger: Dispatch message",
+            "description": null
+        },
+        {
+            "id": "messenger-send-email-from-within-handler",
+            "name": "Messenger: Send email from within handler",
+            "description": null
+        },
+        {
+            "id": "messenger-process-message-in-test",
+            "name": "Messenger: Process message in test",
+            "description": null
+        },
+        {
+            "id": "messenger-processorfail",
+            "name": "Messenger: processOrFail()",
+            "description": null
+        }
+    ],
+    "sha": "31cc85605efb5bb19c4207ed733e9085e3f0902b"
+}

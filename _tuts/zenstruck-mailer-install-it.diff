@@ -1,0 +1,122 @@
+diff --git a/composer.json b/composer.json
+index d0440cb..d3cb64d 100644
+--- a/composer.json
++++ b/composer.json
+@@ -33,7 +33,8 @@
+         "symfony/phpunit-bridge": "^6.2",
+         "symfony/stopwatch": "6.3.*",
+         "symfony/web-profiler-bundle": "6.3.*",
+-        "zenstruck/foundry": "^1.35"
++        "zenstruck/foundry": "^1.35",
++        "zenstruck/mailer-test": "^1.3"
+     },
+     "config": {
+         "allow-plugins": {
+diff --git a/composer.lock b/composer.lock
+index afed98e..b302bb0 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "d9eb1b6a14de7aee8a777d64f9734a3c",
++    "content-hash": "0e1ebc05a3ea1cf762dac9f45a5eac4a",
+     "packages": [
+         {
+             "name": "doctrine/cache",
+@@ -8276,6 +8276,71 @@
+                 }
+             ],
+             "time": "2023-08-10T14:39:33+00:00"
++        },
++        {
++            "name": "zenstruck/mailer-test",
++            "version": "v1.3.0",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/zenstruck/mailer-test.git",
++                "reference": "5818e269900c765f1f69f6c43a03a8f11104cc0f"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/zenstruck/mailer-test/zipball/5818e269900c765f1f69f6c43a03a8f11104cc0f",
++                "reference": "5818e269900c765f1f69f6c43a03a8f11104cc0f",
++                "shasum": ""
++            },
++            "require": {
++                "php": ">=8.0",
++                "symfony/framework-bundle": "^5.4|^6.0",
++                "symfony/mailer": "^5.4|^6.0",
++                "zenstruck/assert": "^1.0",
++                "zenstruck/callback": "^1.1"
++            },
++            "require-dev": {
++                "phpstan/phpstan": "^1.4",
++                "phpunit/phpunit": "^9.5.0",
++                "symfony/messenger": "^5.4|^6.0",
++                "symfony/phpunit-bridge": "^6.0",
++                "symfony/var-dumper": "^5.4|^6.0",
++                "symfony/yaml": "^5.4|^6.0",
++                "zenstruck/browser": "^1.0"
++            },
++            "type": "library",
++            "autoload": {
++                "psr-4": {
++                    "Zenstruck\\Mailer\\Test\\": "src/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Kevin Bond",
++                    "email": "kevinbond@gmail.com"
++                }
++            ],
++            "description": "Alternative, opinionated helpers for testing emails sent with symfony/mailer.",
++            "homepage": "https://github.com/zenstruck/mailer-test",
++            "keywords": [
++                "mailer",
++                "symfony",
++                "test"
++            ],
++            "support": {
++                "issues": "https://github.com/zenstruck/mailer-test/issues",
++                "source": "https://github.com/zenstruck/mailer-test/tree/v1.3.0"
++            },
++            "funding": [
++                {
++                    "url": "https://github.com/kbond",
++                    "type": "github"
++                }
++            ],
++            "time": "2023-02-03T19:58:51+00:00"
+         }
+     ],
+     "aliases": [],
+diff --git a/config/bundles.php b/config/bundles.php
+index 252eb88..b90a3a1 100644
+--- a/config/bundles.php
++++ b/config/bundles.php
+@@ -11,4 +11,5 @@ return [
+     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
+     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+     Zenstruck\Foundry\ZenstruckFoundryBundle::class => ['dev' => true, 'test' => true],
++    Zenstruck\Mailer\Test\ZenstruckMailerTestBundle::class => ['dev' => true, 'test' => true],
+ ];
+diff --git a/symfony.lock b/symfony.lock
+index 27ea961..f84c5b4 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -403,5 +403,8 @@
+         "files": [
+             "config/packages/zenstruck_foundry.yaml"
+         ]
++    },
++    "zenstruck/mailer-test": {
++        "version": "v1.3.0"
+     }
+ }

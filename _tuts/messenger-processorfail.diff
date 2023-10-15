@@ -1,0 +1,15 @@
+diff --git a/tests/Integration/Service/LockDownHelperTest.php b/tests/Integration/Service/LockDownHelperTest.php
+index c1923ca..954e4b2 100644
+--- a/tests/Integration/Service/LockDownHelperTest.php
++++ b/tests/Integration/Service/LockDownHelperTest.php
+@@ -44,9 +44,7 @@ class LockDownHelperTest extends KernelTestCase
+         $this->getLockDownHelper()->dinoEscaped();
+         LockDownFactory::repository()->assert()->count(1);
+ 
+-        $this->transport()->queue()->assertCount(1);
+-        $this->transport()->process();
+-
++        $this->transport()->processOrFail();
+         $this->mailer()->assertSentEmailCount(1);
+         $this->mailer()->assertEmailSentTo('staff@dinotopia.com', 'PARK LOCKDOWN');
+     }

@@ -1,0 +1,19 @@
+diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
+index 0a0bb2a..b170bb7 100644
+--- a/tests/Integration/Repository/LockDownRepositoryTest.php
++++ b/tests/Integration/Repository/LockDownRepositoryTest.php
+@@ -7,11 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+ 
+ class LockDownRepositoryTest extends KernelTestCase
+ {
+-    public function testIsInLockDownWithNoLockDownRows()
++    public function testIsInLockDownReturnsFalseWithNoRows()
+     {
+         self::bootKernel();
+ 
+         $lockDownRepository = self::getContainer()->get(LockDownRepository::class);
+-        dd($lockDownRepository);
++        assert($lockDownRepository instanceof LockDownRepository);
++        $this->assertFalse($lockDownRepository->isInLockdown());
+     }
+ }

@@ -1,0 +1,18 @@
+diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
+index 43408b3..c8331fd 100644
+--- a/tests/Integration/Repository/LockDownRepositoryTest.php
++++ b/tests/Integration/Repository/LockDownRepositoryTest.php
+@@ -27,8 +27,13 @@ class LockDownRepositoryTest extends KernelTestCase
+         self::bootKernel();
+ 
+         LockDownFactory::createOne([
++            'createdAt' => new \DateTimeImmutable('-1 day'),
+             'status' => LockDownStatus::ACTIVE,
+         ]);
++        LockDownFactory::createMany(5, [
++            'createdAt' => new \DateTimeImmutable('-2 day'),
++            'status' => LockDownStatus::ENDED,
++        ]);
+ 
+         $this->assertTrue($this->getLockDownRepository()->isInLockdown());
+     }

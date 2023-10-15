@@ -1,0 +1,13 @@
+diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
+index 516b37a..05014aa 100644
+--- a/tests/Integration/Repository/LockDownRepositoryTest.php
++++ b/tests/Integration/Repository/LockDownRepositoryTest.php
+@@ -29,7 +29,7 @@ class LockDownRepositoryTest extends KernelTestCase
+         $entityManager->persist($lockDown);
+         $entityManager->flush();
+ 
+-        dd($lockDown->getId());
++        $this->assertTrue($this->getLockDownRepository()->isInLockdown());
+     }
+ 
+     private function getLockDownRepository(): LockDownRepository

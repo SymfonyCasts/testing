@@ -1,0 +1,17 @@
+diff --git a/src/Service/GithubService.php b/src/Service/GithubService.php
+index a470a4d..50e13dd 100644
+--- a/src/Service/GithubService.php
++++ b/src/Service/GithubService.php
+@@ -44,6 +44,12 @@ class GithubService
+         return $health;
+     }
+ 
++    public function clearLockDownAlerts(): void
++    {
++        $this->logger->info('Cleaning lock down alerts on GitHub...');
++        // pretend like this makes an API call to GitHub
++    }
++
+     private function getDinoStatusFromLabels(array $labels): HealthStatus
+     {
+         $health = null;

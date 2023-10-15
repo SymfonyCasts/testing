@@ -1,0 +1,37 @@
+diff --git a/src/Repository/LockDownRepository.php b/src/Repository/LockDownRepository.php
+index 7baa7d4..4f6d5bf 100644
+--- a/src/Repository/LockDownRepository.php
++++ b/src/Repository/LockDownRepository.php
+@@ -21,28 +21,8 @@ class LockDownRepository extends ServiceEntityRepository
+         parent::__construct($registry, LockDown::class);
+     }
+ 
+-//    /**
+-//     * @return LockDown[] Returns an array of LockDown objects
+-//     */
+-//    public function findByExampleField($value): array
+-//    {
+-//        return $this->createQueryBuilder('l')
+-//            ->andWhere('l.exampleField = :val')
+-//            ->setParameter('val', $value)
+-//            ->orderBy('l.id', 'ASC')
+-//            ->setMaxResults(10)
+-//            ->getQuery()
+-//            ->getResult()
+-//        ;
+-//    }
+-
+-//    public function findOneBySomeField($value): ?LockDown
+-//    {
+-//        return $this->createQueryBuilder('l')
+-//            ->andWhere('l.exampleField = :val')
+-//            ->setParameter('val', $value)
+-//            ->getQuery()
+-//            ->getOneOrNullResult()
+-//        ;
+-//    }
++    public function isInLockdown(): bool
++    {
++        return false;
++    }
+ }

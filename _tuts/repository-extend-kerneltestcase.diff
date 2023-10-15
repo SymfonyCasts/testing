@@ -1,0 +1,16 @@
+diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
+index bec1ac6..f6d1392 100644
+--- a/tests/Integration/Repository/LockDownRepositoryTest.php
++++ b/tests/Integration/Repository/LockDownRepositoryTest.php
+@@ -2,9 +2,9 @@
+ 
+ namespace App\Tests\Integration\Repository;
+ 
+-use PHPUnit\Framework\TestCase;
++use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+ 
+-class LockDownRepositoryTest extends TestCase
++class LockDownRepositoryTest extends KernelTestCase
+ {
+     public function testIsInLockDownWithNoLockDownRows()
+     {

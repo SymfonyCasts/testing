@@ -1,0 +1,10 @@
+diff --git a/config/packages/messenger.yaml b/config/packages/messenger.yaml
+index f030c81..50943b6 100644
+--- a/config/packages/messenger.yaml
++++ b/config/packages/messenger.yaml
+@@ -19,4 +19,4 @@ when@test:
+             transports:
+                 # replace with your transport name here (e.g., my_transport: 'in-memory://')
+                 # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
+-                async: 'in-memory://'
++                async: 'test://'

@@ -1,0 +1,33 @@
+diff --git a/tests/Integration/Service/LockDownHelperTest.php b/tests/Integration/Service/LockDownHelperTest.php
+index bae632a..2dcf899 100644
+--- a/tests/Integration/Service/LockDownHelperTest.php
++++ b/tests/Integration/Service/LockDownHelperTest.php
+@@ -10,11 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+ use Zenstruck\Foundry\Test\Factories;
+ use Zenstruck\Foundry\Test\ResetDatabase;
+ use Zenstruck\Mailer\Test\InteractsWithMailer;
++use Zenstruck\Messenger\Test\InteractsWithMessenger;
+ 
+ class LockDownHelperTest extends KernelTestCase
+ {
+     use ResetDatabase, Factories;
+     use InteractsWithMailer;
++    use InteractsWithMessenger;
+ 
+     public function testEndCurrentLockdown()
+     {
+@@ -37,10 +39,14 @@ class LockDownHelperTest extends KernelTestCase
+     {
+         self::bootKernel();
+ 
++        $this->transport()->queue()->assertEmpty();
++
+         $this->getLockDownHelper()->dinoEscaped();
+         LockDownFactory::repository()->assert()->count(1);
+         $this->mailer()->assertSentEmailCount(1);
+         $this->mailer()->assertEmailSentTo('staff@dinotopia.com', 'PARK LOCKDOWN');
++
++        $this->transport()->queue()->assertCount(1);
+     }
+ 
+     private function getLockDownHelper(): LockDownHelper

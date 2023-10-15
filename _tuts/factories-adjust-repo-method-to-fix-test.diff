@@ -1,0 +1,28 @@
+diff --git a/src/Repository/LockDownRepository.php b/src/Repository/LockDownRepository.php
+index 2653cfb..df23ef1 100644
+--- a/src/Repository/LockDownRepository.php
++++ b/src/Repository/LockDownRepository.php
+@@ -24,11 +24,19 @@ class LockDownRepository extends ServiceEntityRepository
+ 
+     public function isInLockdown(): bool
+     {
+-        return $this->createQueryBuilder('lock_down')
+-            ->andWhere('lock_down.status != :endedStatus')
+-            ->setParameter('endedStatus', LockDownStatus::ENDED)
++        // find the most recent lock down
++        $lockDown = $this->createQueryBuilder('lock_down')
++            ->orderBy('lock_down.createdAt', 'DESC')
+             ->setMaxResults(1)
+             ->getQuery()
+-            ->getOneOrNullResult() !== null;
++            ->getOneOrNullResult();
++
++        if (!$lockDown) {
++            return false;
++        }
++
++        assert($lockDown instanceof LockDown);
++
++        return $lockDown->getStatus() !== LockDownStatus::ENDED;
+     }
+ }

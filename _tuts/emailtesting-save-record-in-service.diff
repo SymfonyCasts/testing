@@ -1,0 +1,25 @@
+diff --git a/src/Service/LockDownHelper.php b/src/Service/LockDownHelper.php
+index da929ec..acfdca2 100644
+--- a/src/Service/LockDownHelper.php
++++ b/src/Service/LockDownHelper.php
+@@ -2,6 +2,7 @@
+ 
+ namespace App\Service;
+ 
++use App\Entity\LockDown;
+ use App\Enum\LockDownStatus;
+ use App\Repository\LockDownRepository;
+ use Doctrine\ORM\EntityManagerInterface;
+@@ -31,7 +32,11 @@ class LockDownHelper
+ 
+     public function dinoEscaped(): void
+     {
+-        // TODO: create a LockDown & save
++        $lockDown = new LockDown();
++        $lockDown->setStatus(LockDownStatus::ACTIVE);
++        $lockDown->setReason('Dino escaped... NOT good...');
++        $this->entityManager->persist($lockDown);
++        $this->entityManager->flush();
+         // send an email with subject like "RUUUUUUNNNNNN!!!!"
+     }
+ }

@@ -1,0 +1,34 @@
+diff --git a/src/Service/LockDownHelper.php b/src/Service/LockDownHelper.php
+index e66ad1e..cb677a9 100644
+--- a/src/Service/LockDownHelper.php
++++ b/src/Service/LockDownHelper.php
+@@ -4,9 +4,11 @@ namespace App\Service;
+ 
+ use App\Entity\LockDown;
+ use App\Enum\LockDownStatus;
++use App\Message\LockDownLiftedNotification;
+ use App\Repository\LockDownRepository;
+ use Doctrine\ORM\EntityManagerInterface;
+ use Symfony\Component\Mailer\MailerInterface;
++use Symfony\Component\Messenger\MessageBusInterface;
+ use Symfony\Component\Mime\Email;
+ 
+ class LockDownHelper
+@@ -15,7 +17,8 @@ class LockDownHelper
+         private LockDownRepository $lockDownRepository,
+         private EntityManagerInterface $entityManager,
+         private GithubService $githubService,
+-        private MailerInterface $mailer
++        private MailerInterface $mailer,
++        private MessageBusInterface $messageBus,
+     )
+     {
+     }
+@@ -41,6 +44,7 @@ class LockDownHelper
+         $this->entityManager->persist($lockDown);
+         $this->entityManager->flush();
+         $this->sendEmailAlert();
++        $this->messageBus->dispatch(new LockDownLiftedNotification());
+     }
+ 
+     private function sendEmailAlert(): void

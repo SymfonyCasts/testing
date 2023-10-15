@@ -1,0 +1,18 @@
+diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
+index 05014aa..9658db2 100644
+--- a/tests/Integration/Repository/LockDownRepositoryTest.php
++++ b/tests/Integration/Repository/LockDownRepositoryTest.php
+@@ -6,9 +6,13 @@ use App\Entity\LockDown;
+ use App\Repository\LockDownRepository;
+ use Doctrine\ORM\EntityManagerInterface;
+ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
++use Zenstruck\Foundry\Test\Factories;
++use Zenstruck\Foundry\Test\ResetDatabase;
+ 
+ class LockDownRepositoryTest extends KernelTestCase
+ {
++    use ResetDatabase, Factories;
++
+     public function testIsInLockDownReturnsFalseWithNoRows()
+     {
+         self::bootKernel();

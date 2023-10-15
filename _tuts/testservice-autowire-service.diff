@@ -1,0 +1,21 @@
+diff --git a/src/Controller/MainController.php b/src/Controller/MainController.php
+index 6959394..c3273f2 100644
+--- a/src/Controller/MainController.php
++++ b/src/Controller/MainController.php
+@@ -6,6 +6,7 @@ use App\Entity\Dinosaur;
+ use App\Repository\DinosaurRepository;
+ use App\Repository\LockDownRepository;
+ use App\Service\GithubService;
++use App\Service\LockDownHelper;
+ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+ use Symfony\Component\HttpFoundation\Request;
+ use Symfony\Component\HttpFoundation\Response;
+@@ -29,7 +30,7 @@ class MainController extends AbstractController
+     }
+ 
+     #[Route('/lockdown/end', name: 'app_lockdown_end', methods: ['POST'])]
+-    public function endLockDown(Request $request)
++    public function endLockDown(Request $request, LockDownHelper $lockDownHelper)
+     {
+         if (!$this->isCsrfTokenValid('end-lockdown', $request->request->get('_token'))) {
+             throw $this->createAccessDeniedException('Invalid CSRF token');

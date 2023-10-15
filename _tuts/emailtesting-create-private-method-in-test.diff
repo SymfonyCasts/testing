@@ -1,0 +1,20 @@
+diff --git a/tests/Integration/Service/LockDownHelperTest.php b/tests/Integration/Service/LockDownHelperTest.php
+index a0e0249..11822b6 100644
+--- a/tests/Integration/Service/LockDownHelperTest.php
++++ b/tests/Integration/Service/LockDownHelperTest.php
+@@ -27,9 +27,12 @@ class LockDownHelperTest extends KernelTestCase
+             ->method('clearLockDownAlerts');
+         self::getContainer()->set(GithubService::class, $githubService);
+ 
+-        $lockDownHelper = self::getContainer()->get(LockDownHelper::class);
+-        assert($lockDownHelper instanceof LockDownHelper);
+-        $lockDownHelper->endCurrentLockDown();
++        $this->getLockDownHelper()->endCurrentLockDown();
+         $this->assertSame(LockDownStatus::ENDED, $lockDown->getStatus());
+     }
++
++    private function getLockDownHelper(): LockDownHelper
++    {
++        return self::getContainer()->get(LockDownHelper::class);
++    }
+ }

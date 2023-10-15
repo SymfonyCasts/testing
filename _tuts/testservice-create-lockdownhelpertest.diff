@@ -1,0 +1,16 @@
+diff --git a/tests/Integration/Service/LockDownHelperTest.php b/tests/Integration/Service/LockDownHelperTest.php
+new file mode 100644
+index 0000000..6ca12cb
+--- /dev/null
++++ b/tests/Integration/Service/LockDownHelperTest.php
+@@ -0,0 +1,10 @@
++<?php
++
++namespace App\Tests\Integration\Service;
++
++use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
++
++class LockDownHelperTest extends KernelTestCase
++{
++
++}

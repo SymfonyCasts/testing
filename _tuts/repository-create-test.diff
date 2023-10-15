@@ -1,0 +1,19 @@
+diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
+new file mode 100644
+index 0000000..bec1ac6
+--- /dev/null
++++ b/tests/Integration/Repository/LockDownRepositoryTest.php
+@@ -0,0 +1,13 @@
++<?php
++
++namespace App\Tests\Integration\Repository;
++
++use PHPUnit\Framework\TestCase;
++
++class LockDownRepositoryTest extends TestCase
++{
++    public function testIsInLockDownWithNoLockDownRows()
++    {
++
++    }
++}

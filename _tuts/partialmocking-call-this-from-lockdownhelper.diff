@@ -1,0 +1,20 @@
+diff --git a/src/Service/LockDownHelper.php b/src/Service/LockDownHelper.php
+index 71fea01..18f2949 100644
+--- a/src/Service/LockDownHelper.php
++++ b/src/Service/LockDownHelper.php
+@@ -11,6 +11,7 @@ class LockDownHelper
+     public function __construct(
+         private LockDownRepository $lockDownRepository,
+         private EntityManagerInterface $entityManager,
++        private GithubService $githubService
+     )
+     {
+     }
+@@ -24,5 +25,7 @@ class LockDownHelper
+ 
+         $lockDown->setStatus(LockDownStatus::ENDED);
+         $this->entityManager->flush();
++
++        $this->githubService->clearLockDownAlerts();
+     }
+ }

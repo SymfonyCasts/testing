@@ -1,0 +1,12 @@
+diff --git a/tests/Integration/Service/LockDownHelperTest.php b/tests/Integration/Service/LockDownHelperTest.php
+index 93052b4..f81c0a5 100644
+--- a/tests/Integration/Service/LockDownHelperTest.php
++++ b/tests/Integration/Service/LockDownHelperTest.php
+@@ -36,6 +36,7 @@ class LockDownHelperTest extends KernelTestCase
+         self::bootKernel();
+ 
+         $this->getLockDownHelper()->dinoEscaped();
++        LockDownFactory::repository()->assert()->count(1);
+     }
+ 
+     private function getLockDownHelper(): LockDownHelper

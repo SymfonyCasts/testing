@@ -1,0 +1,34 @@
+diff --git a/src/Service/LockDownHelper.php b/src/Service/LockDownHelper.php
+new file mode 100644
+index 0000000..71fea01
+--- /dev/null
++++ b/src/Service/LockDownHelper.php
+@@ -0,0 +1,28 @@
++<?php
++
++namespace App\Service;
++
++use App\Enum\LockDownStatus;
++use App\Repository\LockDownRepository;
++use Doctrine\ORM\EntityManagerInterface;
++
++class LockDownHelper
++{
++    public function __construct(
++        private LockDownRepository $lockDownRepository,
++        private EntityManagerInterface $entityManager,
++    )
++    {
++    }
++
++    public function endCurrentLockDown(): void
++    {
++        $lockDown = $this->lockDownRepository->findMostRecent();
++        if (!$lockDown) {
++            throw new \LogicException('There is no lock down to end');
++        }
++
++        $lockDown->setStatus(LockDownStatus::ENDED);
++        $this->entityManager->flush();
++    }
++}

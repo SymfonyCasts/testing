@@ -1,0 +1,130 @@
+diff --git a/composer.json b/composer.json
+index f2ebbc0..3c23116 100644
+--- a/composer.json
++++ b/composer.json
+@@ -35,7 +35,8 @@
+         "symfony/stopwatch": "6.3.*",
+         "symfony/web-profiler-bundle": "6.3.*",
+         "zenstruck/foundry": "^1.35",
+-        "zenstruck/mailer-test": "^1.3"
++        "zenstruck/mailer-test": "^1.3",
++        "zenstruck/messenger-test": "^1.7"
+     },
+     "config": {
+         "allow-plugins": {
+diff --git a/composer.lock b/composer.lock
+index 3c6d79c..a1c76c1 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "28369bd12a68e8e836bc67f54910807c",
++    "content-hash": "05ea9c0c1b8664ba199f87943e043f27",
+     "packages": [
+         {
+             "name": "doctrine/cache",
+@@ -8549,6 +8549,73 @@
+                 }
+             ],
+             "time": "2023-02-03T19:58:51+00:00"
++        },
++        {
++            "name": "zenstruck/messenger-test",
++            "version": "v1.7.3",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/zenstruck/messenger-test.git",
++                "reference": "3e856ce90acd357230cb0e56e7f0d6beab384332"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/zenstruck/messenger-test/zipball/3e856ce90acd357230cb0e56e7f0d6beab384332",
++                "reference": "3e856ce90acd357230cb0e56e7f0d6beab384332",
++                "shasum": ""
++            },
++            "require": {
++                "php": ">=8.0",
++                "symfony/deprecation-contracts": "^2.2|^3.0",
++                "symfony/framework-bundle": "^5.4|^6.0",
++                "symfony/messenger": "^5.4|^6.0",
++                "zenstruck/assert": "^1.0"
++            },
++            "conflict": {
++                "symfony/framework-bundle": "5.4.5|6.0.5"
++            },
++            "require-dev": {
++                "phpstan/phpstan": "^1.4",
++                "phpunit/phpunit": "^9.5.0",
++                "symfony/browser-kit": "^5.4|^6.0",
++                "symfony/phpunit-bridge": "^5.4|^6.0",
++                "symfony/yaml": "^5.4|^6.0"
++            },
++            "type": "symfony-bundle",
++            "autoload": {
++                "psr-4": {
++                    "Zenstruck\\Messenger\\Test\\": "src/"
++                }
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Kevin Bond",
++                    "email": "kevinbond@gmail.com"
++                }
++            ],
++            "description": "Assertions and helpers for testing your symfony/messenger queues.",
++            "homepage": "https://github.com/zenstruck/messenger-test",
++            "keywords": [
++                "Messenger",
++                "queue",
++                "symfony",
++                "test"
++            ],
++            "support": {
++                "issues": "https://github.com/zenstruck/messenger-test/issues",
++                "source": "https://github.com/zenstruck/messenger-test/tree/v1.7.3"
++            },
++            "funding": [
++                {
++                    "url": "https://github.com/kbond",
++                    "type": "github"
++                }
++            ],
++            "time": "2023-10-09T15:24:43+00:00"
+         }
+     ],
+     "aliases": [],
+diff --git a/config/bundles.php b/config/bundles.php
+index b90a3a1..f25deae 100644
+--- a/config/bundles.php
++++ b/config/bundles.php
+@@ -12,4 +12,5 @@ return [
+     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+     Zenstruck\Foundry\ZenstruckFoundryBundle::class => ['dev' => true, 'test' => true],
+     Zenstruck\Mailer\Test\ZenstruckMailerTestBundle::class => ['dev' => true, 'test' => true],
++    Zenstruck\Messenger\Test\ZenstruckMessengerTestBundle::class => ['test' => true],
+ ];
+diff --git a/symfony.lock b/symfony.lock
+index 637f20b..f536cd3 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -418,5 +418,14 @@
+     },
+     "zenstruck/mailer-test": {
+         "version": "v1.3.0"
++    },
++    "zenstruck/messenger-test": {
++        "version": "1.7",
++        "recipe": {
++            "repo": "github.com/symfony/recipes",
++            "branch": "main",
++            "version": "1.7",
++            "ref": "e0d2a904cd584d15bcbb4c4a011549840bc01daf"
++        }
+     }
+ }
