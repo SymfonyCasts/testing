@@ -11,9 +11,12 @@
                 <p>Lockdown initiated! The dinosaurs are loose! I'm having a bad day!</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-warning" data-dismiss="modal">
-                    End Lockdown
-                </button>
+                <form action="{{ path('app_lockdown_end') }}" method="POST">
+                    <input type="hidden" name="_token" value="{{ csrf_token('end-lockdown') }}">
+                    <button class="btn btn-warning" data-dismiss="modal">
+                        End Lockdown
+                    </button>
+                </form>
             </div>
         </div>
     </div>
