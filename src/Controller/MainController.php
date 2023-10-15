@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
-    #[Route(path: '/', name: 'main_controller', methods: ['GET'])]
+    #[Route(path: '/', name: 'app_homepage', methods: ['GET'])]
     public function index(GithubService $github, DinosaurRepository $repository): Response
     {
         $dinos = $repository->findAll();
