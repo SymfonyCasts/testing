@@ -1,5 +1,5 @@
 diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
-index 9658db2..43408b3 100644
+index 3641c48..d12a534 100644
 --- a/tests/Integration/Repository/LockDownRepositoryTest.php
 +++ b/tests/Integration/Repository/LockDownRepositoryTest.php
 @@ -3,6 +3,8 @@
@@ -27,5 +27,5 @@ index 9658db2..43408b3 100644
 +            'status' => LockDownStatus::ACTIVE,
 +        ]);
  
-         $this->assertTrue($this->getLockDownRepository()->isInLockdown());
+         $this->assertTrue($this->getLockDownRepository()->isInLockDown());
      }

@@ -1,5 +1,5 @@
 diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
-index ed65621..7b0960e 100644
+index 74d51f5..66c1987 100644
 --- a/tests/Integration/Repository/LockDownRepositoryTest.php
 +++ b/tests/Integration/Repository/LockDownRepositoryTest.php
 @@ -2,7 +2,9 @@

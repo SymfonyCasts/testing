@@ -1,5 +1,5 @@
 diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
-index 43408b3..c8331fd 100644
+index d12a534..513287b 100644
 --- a/tests/Integration/Repository/LockDownRepositoryTest.php
 +++ b/tests/Integration/Repository/LockDownRepositoryTest.php
 @@ -27,8 +27,13 @@ class LockDownRepositoryTest extends KernelTestCase
@@ -14,5 +14,5 @@ index 43408b3..c8331fd 100644
 +            'status' => LockDownStatus::ENDED,
 +        ]);
  
-         $this->assertTrue($this->getLockDownRepository()->isInLockdown());
+         $this->assertTrue($this->getLockDownRepository()->isInLockDown());
      }

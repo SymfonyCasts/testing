@@ -1,12 +1,12 @@
 diff --git a/src/Repository/LockDownRepository.php b/src/Repository/LockDownRepository.php
-index df23ef1..4190e0c 100644
+index d58d044..f18e19b 100644
 --- a/src/Repository/LockDownRepository.php
 +++ b/src/Repository/LockDownRepository.php
 @@ -22,21 +22,23 @@ class LockDownRepository extends ServiceEntityRepository
          parent::__construct($registry, LockDown::class);
      }
  
--    public function isInLockdown(): bool
+-    public function isInLockDown(): bool
 +    public function findMostRecent(): ?LockDown
      {
 -        // find the most recent lock down
@@ -18,7 +18,7 @@ index df23ef1..4190e0c 100644
              ->getOneOrNullResult();
 +    }
 +
-+    public function isInLockdown(): bool
++    public function isInLockDown(): bool
 +    {
 +        $lockDown = $this->findMostRecent();
  

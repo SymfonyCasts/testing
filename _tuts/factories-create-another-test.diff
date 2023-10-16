@@ -1,9 +1,9 @@
 diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
-index c8331fd..4f680e2 100644
+index 513287b..d1df628 100644
 --- a/tests/Integration/Repository/LockDownRepositoryTest.php
 +++ b/tests/Integration/Repository/LockDownRepositoryTest.php
 @@ -38,6 +38,20 @@ class LockDownRepositoryTest extends KernelTestCase
-         $this->assertTrue($this->getLockDownRepository()->isInLockdown());
+         $this->assertTrue($this->getLockDownRepository()->isInLockDown());
      }
  
 +    public function testIsInLockDownReturnsFalseIfMostRecentIsNotActive()
@@ -17,7 +17,7 @@ index c8331fd..4f680e2 100644
 +            'status' => LockDownStatus::ENDED,
 +        ]);
 +
-+        $this->assertTrue($this->getLockDownRepository()->isInLockdown());
++        $this->assertTrue($this->getLockDownRepository()->isInLockDown());
 +    }
 +
      private function getLockDownRepository(): LockDownRepository

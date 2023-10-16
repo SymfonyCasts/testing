@@ -1,5 +1,5 @@
 diff --git a/src/Repository/LockDownRepository.php b/src/Repository/LockDownRepository.php
-index 7baa7d4..4f6d5bf 100644
+index 7baa7d4..fe1bebd 100644
 --- a/src/Repository/LockDownRepository.php
 +++ b/src/Repository/LockDownRepository.php
 @@ -21,28 +21,8 @@ class LockDownRepository extends ServiceEntityRepository
@@ -30,7 +30,7 @@ index 7baa7d4..4f6d5bf 100644
 -//            ->getOneOrNullResult()
 -//        ;
 -//    }
-+    public function isInLockdown(): bool
++    public function isInLockDown(): bool
 +    {
 +        return false;
 +    }

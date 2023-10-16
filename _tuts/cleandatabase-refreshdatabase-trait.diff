@@ -1,5 +1,5 @@
 diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
-index 05014aa..9658db2 100644
+index 193c088..3641c48 100644
 --- a/tests/Integration/Repository/LockDownRepositoryTest.php
 +++ b/tests/Integration/Repository/LockDownRepositoryTest.php
 @@ -6,9 +6,13 @@ use App\Entity\LockDown;
