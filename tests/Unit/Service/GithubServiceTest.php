@@ -6,6 +6,7 @@ use App\Enum\HealthStatus;
 use App\Service\GithubService;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
@@ -77,6 +78,6 @@ class GithubServiceTest extends TestCase
 
         $this->mockHttpClient->setResponseFactory($this->mockResponse);
 
-        return new GithubService($this->mockHttpClient, $this->mockLogger);
+        return new GithubService($this->mockHttpClient, $this->mockLogger, new ArrayAdapter());
     }
 }
