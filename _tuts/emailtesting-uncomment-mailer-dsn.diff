@@ -1,0 +1,11 @@
+diff --git a/.env b/.env
+index 903aa48..93bb753 100644
+--- a/.env
++++ b/.env
+@@ -30,5 +30,5 @@ DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=15&ch
+ ###< doctrine/doctrine-bundle ###
+ 
+ ###> symfony/mailer ###
+-# MAILER_DSN=null://null
++MAILER_DSN=null://null
+ ###< symfony/mailer ###

@@ -1,0 +1,16 @@
+diff --git a/tests/Integration/Repository/LockDownRepositoryTest.php b/tests/Integration/Repository/LockDownRepositoryTest.php
+index d12a534..2ddd131 100644
+--- a/tests/Integration/Repository/LockDownRepositoryTest.php
++++ b/tests/Integration/Repository/LockDownRepositoryTest.php
+@@ -26,9 +26,10 @@ class LockDownRepositoryTest extends KernelTestCase
+     {
+         self::bootKernel();
+ 
+-        LockDownFactory::createOne([
++        $lockDown = LockDownFactory::createOne([
+             'status' => LockDownStatus::ACTIVE,
+         ]);
++        dd($lockDown->assertNotPersisted());
+ 
+         $this->assertTrue($this->getLockDownRepository()->isInLockDown());
+     }

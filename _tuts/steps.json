@@ -81,6 +81,16 @@
             "description": null
         },
         {
+            "id": "factories-dump-proxy",
+            "name": "Factories: dump proxy",
+            "description": null
+        },
+        {
+            "id": "factories-remove-dump",
+            "name": "Factories: remove dump",
+            "description": null
+        },
+        {
             "id": "factories-creating-more-lock-downs",
             "name": "Factories: Creating more lock downs",
             "description": null
@@ -151,8 +161,8 @@
             "description": null
         },
         {
-            "id": "partialmocking-start-a-2nd-test",
-            "name": "PartialMocking: Start a 2nd test",
+            "id": "delete-me-1",
+            "name": "delete me 1",
             "description": null
         },
         {
@@ -281,5 +291,5 @@
             "description": null
         }
     ],
-    "sha": "f0c8d87dcac3cf4c1c6302dfe354b93e502f2347"
+    "sha": "2a37ec73158da3fe45ceaa202bac1d9417aaaef4"
 }
