@@ -1,1 +1,10 @@
 chapters:
+    - integration-test
+    - kernel-test-case
+    - database-setup
+    - reset-database
+    - factory-seeding
+    - service-test
+    - partial-mocking
+    - emails
+    - messenger
