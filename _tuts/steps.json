@@ -161,11 +161,6 @@
             "description": null
         },
         {
-            "id": "delete-me-1",
-            "name": "delete me 1",
-            "description": null
-        },
-        {
             "id": "partialmocking-set-mock-into-the-container",
             "name": "PartialMocking: Set mock into the container",
             "description": null
