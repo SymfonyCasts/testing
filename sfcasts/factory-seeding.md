@@ -1,89 +1,132 @@
-# Factory Seeding
+# Factory Data Seeding
 
-Coming soon...
+I have a confession: I've been making us do *way* too much work!
 
-To seed the database at the start of this test, we're instantiating an entity,
-grabbing the EntityManager, and persisting and flushing it. And there's nothing wrong
-with that, but Foundry makes life a lot easier. So at your terminal, run bin console
-make factory. This is a command that comes from Foundry. And I'm going to select to
-generate them all. So you're going to have a factory for each class where you want to
-create dummy data for that class. We only need LockDownFactory right now, but that's
-fine. All right, now spin over and let's actually look at
-SourceFactoryLockDownFactory. I'm not going to talk much about these factory, too
-much about these factory classes. We talk more about them in our doctrine tutorial.
-But out of the box, this is going to help us create LockDown objects. And it's going
-to set createdAt to a random date time, reason to some random text, and status
-randomly to one of the Lock3 LockDown statuses. But of course, as you'll see, when we
-create a new object, we can take control and override any of those if we want. But
-out of the box, it gives us really great data. So using this in a test is absolutely
-delightful. So actually, let's create the object first before I delete it. We'll say
-LockDownFactory, colon, colon, create one. And then here, we can pass an array of the
-fields that we want to take control of. Now, the only thing we really care about is
-that this LockDown has an active status. That actually is the default status inside
-of our entity. But just to be explicit about it, I'm going to set status here to
-LockDownStatus, colon, colon, active. That'll just help make my test really obvious
-that we're creating an active LockDown. And now, that's it. We don't need to create
-this LockDown. We don't need the EntityManager. That takes care of saving that entire
-thing. Watch, when we run it, it passes. So I love that. Now, by the way, the
-LockDownRepository method actually will return the new LockDown object, which can
-often be handy. But it's actually wrapped in a special proxy object. So if we run the
-test now, you can see it's a proxy, and the LockDown is actually hiding inside of it.
-Why does Foundry do that? Well, if you go and find their documentation, you can
-search for ZenStruck and click into the documentation, they have a whole section
-about using this library inside of the tests. And they also have a spot here about
-the object proxy. Now, because you have this object proxy, what it allows you to do
-is you can really call all the normal methods that you would call on it, and those
-will work perfectly fine. But there are several additional methods you can call, like
-you can actually call PostSave or PostRemove to delete, or even PostRepository to get
-another proxy object that wraps the repository. So it looks and acts like your normal
-object. It just has some extra methods on it. And that's not really important right
-now. I just wanted you to be aware of it. If you do, for some reason, need the actual
-entity object itself, you can call ArrowObject to get it. But for now, I'm just going
-to delete all of that stuff. So the great thing now is that seeding the database is
-so easy. It keeps our tests short, readable, and we can even make them more
-complicated. So to try to trick my query, let's create many. And let's create,
-actually, I forgot the argument here. Let's create five other lockdowns with lockdown
-status ended. And now, just to make sure that we're kind of taking care of the
-newest, I'm going to make our active one a newDateTimeImmutable minus one day. And
-these new ones down here, we'll make these older. So we'll say they're minus two
-days. So our test should still pass, but we're kind of getting a little more
-complicated. So our test should still pass, but we're kind of getting a little more
-complicated. Make sure we don't get confused by the fact that there are older ended
-lockdowns. And we don't, the test still passes. All right, let's make another test to
-really make sure we've got our logic correct here. So I'm going to copy this test,
-duplicate it, and rename it to testIsInLockdownReturnsFalse if the mostRecent is not
-active. And check this out. I'm going to change things here. I'm going to make this
-first one status ended. And I'm gonna make this other, these other five all status
-active. And we're going to assertKatiePeriod. And we're going to pass, And I'm gonna
-make this other, these other five all status active. And we're going to assert that
-this returns false. Now that might be look confusing. And it kind of is. But what
-we're gonna do here is we're pretending that our business use case is that all we
-really care about looking at is the most recent lockdown in the database. If the most
-recent lockdown in the database is ended, we don't care if there are a bunch of other
-lockdowns. Maybe we, every new lockdown just basically invalidates all of the old
-ones. So not surprisingly, when we try running this, it fails. It fails. And the
-great thing is it was so easy to set up this failing test. And now we can go down to
-lock repository and fix it. So you see what we're looking for here is we're finding
-any lockdown with the ended status. And if we find one, we return. So now we're gonna
-do is we'll say lockdown equals, we're gonna find the most recent lockdown. I'm gonna
-take out the and where. And we'll change this to order by lockdown dot created at
-descending. So quite literally just find the first lockdown in the most recent
-lockdown, no matter what. And then if we don't have that, then we must not be in
-lockdown because the database is empty. And if we are, I'm gonna use my little assert
-thing down here just to help my editor. So assert lockdown is an instance of
-lockdown. And finally, we found the one most recent lockdown. So we can say return
-lockdown arrow get status does not equal lockdown status ended. So it's not ended.
-That means it is active when we are in lockdown. It's a little bit more complicated
-now. But it passes. And the key thing was, we're creating some really nice tests very
-easily and seeing the database. All right, I think we should celebrate by actually
-using this on our site. In our fixtures, which I have already loaded, we actually do
-have a lot active lockdown in there. So head over to main controller. And let's auto
-wire lockdown repository. Lockdown repository. And then we'll just throw a new
-variable in the template called is locked down, set to lockdown repository arrow is
-in lockdown. And then finally, in the template for this page, templates main index
-dot HTML twig, I already have a lockdown alert template. We're not using this yet.
-It's gonna be pretty sweet. I'm gonna say, if is locked down. And we're just going to
-include that. All right, moment of truth. Refresh. Run for your life. We are in
-lockdown. All right, so next, we need a way to turn a lockdown off right now. If I
-click this, it does nothing. And to help with that, we're going to use an integration
-test on a different class, a normal service that we create.
+To seed the database, we instantiate the entity, grab
+the EntityManager, then persist and flush it. There's nothing wrong with this, but
+Foundry is about to make our life a *lot* easier.
+
+## Generating the Factory
+
+At your terminal, run:
+
+```terminal
+php bin/console make:factory
+```
+
+This command comes from Foundry. I'll select to generate all the factories.
+
+The idea is that you'll create a factory for each entity that you want to create
+dummy data for, either in a test or for your normal fixtures. We only need
+`LockDownFactory`, but that's fine.
+
+Spin over and look at `src/Factory/LockDownFactory.php`. I'm not going to talk
+too much about these factory classes: we already cover them in our Doctrine tutorial.
+But this class will make it easy to create `LockDown` objects, even setting
+`createdAt` to a random `DateTime`, `reason` to some random text, and `status`
+randomly to one of the valid statuses, by default.
+
+## Using the Factory in a Test
+
+Using this in a test is a delight. Say `LockDownFactory::createOne()`.
+Here, we can pass an array of any field that we want to *explicitly* set. The only
+thing we care about is that this `LockDown` has an `ACTIVE` status. So, set
+`status` to `LockDownStatus::ACTIVE`.
+
+That's it! We don't need to create this `LockDown` and we don't need the
+EntityManager. That one call takes care of everything.
+
+Watch, when we run the test:
+
+```terminal-silent
+symfony php vendor/bin/phpunit tests/Integration/Repository/LockDownRepositoryTest.php
+```
+
+It passes! I love that.
+
+## Foundry Proxy Objects
+
+By the way, the `LockDownRepository` method returns the new `LockDown` object...
+which can often be handy. But it's actually wrapped in a special *proxy* object.
+So if we run the test now, you can see it's a proxy... and the `LockDown` is
+hiding inside.
+
+Why does Foundry do that? Well, if you go and find their documentation, they have
+a whole section about using this library inside of tests. One spot talks about
+the object proxy. The proxy allows you to call all the normal methods on your
+entity *plus* several additional methods, like `->save()`, `->remove()` or
+even `->repository()` to get another proxy object that wraps the repository.
+
+So it looks and acts like your normal object, but with some extra methods. That's
+not important for us right now, I just wanted you to be aware of it. If you do need
+the *real* entity object, you can call `->object()` to get it.
+
+## Adding More Objects
+
+Anyway, now that adding data is *so* simple, we can quickly make our test more robust.
+To see if we can trick my query, call `createMany()`... to create 5 `LockDown`
+objects with `LockDownStatus::ENDED`.
+
+To make sure our query looks only at the *newest* `LockDown`, for the active one,
+set its `createdAt` to `-1 day`. And for the `ENDED`, set these to something older.
+
+Let's see if our query is robust enough to still behave correctly.
+
+```terminal-silent
+symfony php vendor/bin/phpunit tests/Integration/Repository/LockDownRepositoryTest.php
+```
+
+It is!
+
+But... actually... management has some extra tricky rules around a lockdown.
+Copy this test, paste it, and rename it to
+`testIsInLockdownReturnsFalseIfTheMostRecentIsNotActive`.
+
+To explain management's weird rule, let me tweak the data. Make the first `LockDown`
+`ENDED`... then the next, older 5 status `ACTIVE`. Finally, `assertFalse()` at
+the bottom.
+
+That... might look confusing... and it kind of is. According to management, when
+determining if we're in lockdown, we should ONLY look at the MOST recent `LockDown`
+status. If there are older *active* lockdowns... those, apparently, don't matter.
+
+Not surprisingly, when we try the tests:
+
+```terminal-silent
+symfony php vendor/bin/phpunit tests/Integration/Repository/LockDownRepositoryTest.php
+```
+
+This one *fails*. But, look on the bright side: that test was super-fast to write!
+And now we can go into `LockDownRepository` to fix things. I'll fast-forward through
+some changes that fetch the most recent `LockDown` *regardless* of its status.
+
+If we *don't* find *any* lockdowns, return false. Else, I'll add an `assert()`
+to help my editor... then return true *if* the status does not equal
+`LockDownStatus::ENDED`.
+
+And now:
+
+```terminal-silent
+symfony php vendor/bin/phpunit tests/Integration/Repository/LockDownRepositoryTest.php
+```
+
+We're green!
+
+## Using the LockDown Feature
+
+We've been living in our terminal *so* long that I think we should celebrate by
+*using* this on our site. In the fixtures, I've added an active `LockDown` by
+default.
+
+Head over to `MainController`... and autowire `LockdownRepository $lockdownRepository`.
+Then throw a new variable in the template called `isLockedDown` set to
+`$lockdownRepository->isInLockdown()`.
+
+Finally, in the template - `templates/main/index.html.twig` - I already have a
+`_lockdownAlert.html.twig` template. If, `isLockedDown`, include that.
+
+Moment of truth. Refresh. Run for your life! We are in lockdown!
+
+Next: we need a way to turn a lockdown *off*. Because, if I click this, it... does
+nothing! To help with this new task, we're going to use an integration test on a
+different class: on one of our normal services.
