@@ -50,8 +50,6 @@ Empieza como siempre: extiende `TestCase` de PHPUnit. Llama al primer método`te
 
 Vale, sigamos fingiendo que vivimos en el mundo de las pruebas unitarias e intentemos probar esto... como hicimos en el tutorial anterior. Para ello, digamos`$repository = new LockDownRepository()`.
 
-[[[ code('') ]]]
-
 ## ¡Uh Oh, Instanciar este Objeto es Difícil!
 
 Pero, hmm. `LockDownRepository` extiende `ServiceEntityRepository`, que extiende otra clase de Doctrine. Si te fijas, para instanciarlo, necesitamos pasarle un `ManagerRegistry` de Doctrine. Y si mantienes pulsado "comando" o "control" y haces clic en esto... y vas a la clase base, se complica. Llama a`$registry->getManagerForClass()` para obtener el gestor de entidades... y se lo pasa al padre. Así que ya, vamos a necesitar burlarnos del registro... para que cuando se llame a `getManagerForClass()`, devuelva un gestor de entidades burlado.
