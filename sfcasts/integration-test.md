@@ -96,8 +96,6 @@ Ok, let's keep pretending that we're living in the world of unit testing and
 try to test this... like we did in the previous tutorial. To do that, say
 `$repository = new LockDownRepository()`.
 
-[[[ code('') ]]]
-
 ## Uh Oh, Instantiating this Object is Hard!
 
 But, hmm. `LockDownRepository` extends `ServiceEntityRepository`, which extends
