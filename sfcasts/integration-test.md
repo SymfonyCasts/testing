@@ -54,13 +54,21 @@ for this! It's called, creatively, `LockDown`... with `$createdAt`, `$endedAt`,
 and `$status` (which is an `Enum`). Inside the `Enum`, there are three cases: `ACTIVE`,
 `ENDED`, or `RUN_FOR_YOUR_LIFE`. Let's... try to avoid that last one...
 
+[[[ code('9e7e71425e') ]]]
+
+[[[ code('4fff40797d') ]]]
+
 On our `MainController` (our *homepage*), if the most recent lockdown record in the
 database has an `ACTIVE` or `RUN_FOR_YOUR_LIFE` status, we need to render a giant
 warning message on the screen.
 
+[[[ code('a921460f85') ]]]
+
 To help with this, open `src/Repository/LockDownRepository.php`. To figure
 out if we're in a lockdown, add a new method called `isInLockDown()` which will
 return a `bool`. For now, just `return false`.
+
+[[[ code('d4a708c7ce') ]]]
 
 ## Creating the Test
 
@@ -82,9 +90,13 @@ Start like we always do: extend `TestCase` from PHPUnit. Call the first method
 `testIsInLockDownWithNoLockdownRows()`. This will test that, if the lockdown
 table is empty, then the method should return `false`.
 
+[[[ code('c2ab2012a1') ]]]
+
 Ok, let's keep pretending that we're living in the world of unit testing and
 try to test this... like we did in the previous tutorial. To do that, say
 `$repository = new LockDownRepository()`.
+
+[[[ code('') ]]]
 
 ## Uh Oh, Instantiating this Object is Hard!
 
