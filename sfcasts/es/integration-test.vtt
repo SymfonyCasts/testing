@@ -1,0 +1,410 @@
+WEBVTT
+
+00:00:00.936 --> 00:00:03.816 align:middle
+¡Hola, gente!
+
+00:00:04.096 --> 00:00:09.016 align:middle
+Bienvenidos al segundo episodio de nuestra serie de
+pruebas, que trata sobre las pruebas de integración.
+
+00:00:09.526 --> 00:00:13.926 align:middle
+En el episodio 1, Anakin activó accidentalmente
+el piloto automático de un caza estelar...
+
+00:00:14.216 --> 00:00:17.296 align:middle
+¡lo que nos enseñó todo
+sobre las pruebas unitarias!
+
+00:00:17.956 --> 00:00:18.876 align:middle
+¡Qué suerte! Las pruebas unitarias
+
+00:00:18.876 --> 00:00:24.056 align:middle
+son la forma más pura de
+prueba, en la que pruebas clases
+
+00:00:24.146 --> 00:00:26.036 align:middle
+y los métodos de esas clases.
+
+00:00:26.356 --> 00:00:30.816 align:middle
+Y si una clase requiere otras
+clases, simulas esas dependencias.
+
+00:00:31.316 --> 00:00:33.886 align:middle
+Es genial y bonito...
+
+00:00:34.216 --> 00:00:37.096 align:middle
+y no conduce en absoluto al
+lado oscuro, te lo prometo.
+
+00:00:37.846 --> 00:00:43.646 align:middle
+En este tutorial, las cosas se complican, ¡pero
+también son más útiles en las situaciones adecuadas!
+
+00:00:44.096 --> 00:00:49.106 align:middle
+En lugar de simular dependencias,
+vamos a probar con servicios reales...
+
+00:00:49.266 --> 00:00:53.296 align:middle
+lo que a veces significa que nuestras
+pruebas harán que ocurran cosas reales,
+
+00:00:53.726 --> 00:00:56.066 align:middle
+¡como consultas reales a la base de datos!
+
+00:00:56.566 --> 00:00:59.726 align:middle
+Esto conlleva todo tipo de
+emocionantes complicaciones
+
+00:01:00.176 --> 00:01:02.056 align:middle
+Y vamos a sumergirnos en todas ellas.
+
+00:01:02.656 --> 00:01:06.826 align:middle
+Pero primero, ¡activemos nuestro propio piloto
+automático y pongamos en marcha nuestra aplicación!
+
+00:01:07.516 --> 00:01:11.406 align:middle
+Probar es divertido, así que descárgate el código
+del curso de esta página y codifica conmigo.
+
+00:01:12.026 --> 00:01:16.126 align:middle
+Después de descomprimir el archivo, encontrarás un
+directorio start/ con el mismo código que ves aquí,
+
+00:01:16.496 --> 00:01:19.526 align:middle
+incluido este ingenioso
+archivo README.md. Contiene
+
+00:01:20.186 --> 00:01:23.346 align:middle
+todas las instrucciones de configuración,
+incluida la configuración de la base de
+
+00:01:23.736 --> 00:01:26.526 align:middle
+datos, porque en este curso
+tenemos una base de datos.
+
+00:01:27.216 --> 00:01:33.016 align:middle
+Si estuviste con nosotros en el episodio uno -bienvenido de
+nuevo- y asegúrate de descargar el código de este curso
+
+00:01:33.196 --> 00:01:38.106 align:middle
+porque hemos cambiado algunas cosas, como añadir
+una base de datos y actualizar algunas dependencias.
+
+00:01:38.786 --> 00:01:44.796 align:middle
+Ah, y este tutorial utiliza PHPUnit
+9, aunque ya ha salido PHPUnit 10.
+
+00:01:45.256 --> 00:01:49.926 align:middle
+Eso está bien porque no hay muchos
+cambios de cara al usuario en PHPUnit 10.
+
+00:01:50.726 --> 00:01:53.946 align:middle
+El último paso del LÉEME es buscar
+tu terminal, entrar en el proyecto
+
+00:01:54.016 --> 00:02:02.166 align:middle
+y ejecutar symfony serve -d para iniciar un
+servidor web local en https://127.0.0.1:8000.
+
+00:02:02.756 --> 00:02:04.096 align:middle
+Haz clic en eso y...
+
+00:02:04.516 --> 00:02:05.696 align:middle
+¡aquí estamos!
+
+00:02:05.986 --> 00:02:11.566 align:middle
+Dinotopia: La aplicación en la que podemos ver
+el estado de los dinosaurios de nuestro parque.
+
+00:02:12.086 --> 00:02:15.606 align:middle
+Y ahora, estos dinosaurios
+proceden de la base de datos.
+
+00:02:16.326 --> 00:02:19.166 align:middle
+No es nada del otro mundo, pero
+tenemos una entidad Dinosaur.
+
+00:02:19.636 --> 00:02:23.996 align:middle
+Y dentro de nuestro único controlador,
+consultamos todos los dinosaurios...
+
+00:02:24.386 --> 00:02:26.246 align:middle
+y eso es lo que pasamos a la plantilla...
+
+00:02:26.516 --> 00:02:28.066 align:middle
+que es lo que vemos aquí.
+
+00:02:28.906 --> 00:02:30.976 align:middle
+Todo en la aplicación funciona de maravilla.
+
+00:02:31.486 --> 00:02:34.466 align:middle
+Bueno... excepto por ese pequeño problema.
+
+00:02:34.956 --> 00:02:41.646 align:middle
+Verás, a veces Big Eaty (que es nuestro
+T-Rex residente) se escapa, y no tenemos forma
+
+00:02:41.646 --> 00:02:44.096 align:middle
+de bloquear el parque y avisar a la gente.
+
+00:02:44.766 --> 00:02:49.566 align:middle
+Básicamente, a la dirección le preocupa
+que se coma a demasiados huéspedes.
+
+00:02:50.186 --> 00:02:54.596 align:middle
+Así que la primera función que vamos a
+construir es un sistema para iniciar un cierre...
+
+00:02:55.326 --> 00:02:57.656 align:middle
+¡y ya tenemos una entidad para ello!
+
+00:02:57.986 --> 00:03:00.736 align:middle
+Se llama, creativamente, LockDown...
+
+00:03:01.316 --> 00:03:05.456 align:middle
+con $createdAt, $endedAt,
+y $status (que es un Enum).
+
+00:03:06.316 --> 00:03:12.426 align:middle
+Dentro de Enum, hay tres casos:
+ACTIVE, ENDED, o RUN_FOR_YOUR_LIFE.
+
+00:03:12.926 --> 00:03:14.926 align:middle
+Vamos a... intentar evitar este último...
+
+00:03:15.686 --> 00:03:20.136 align:middle
+En nuestro MainController (nuestra página de
+inicio), si el registro de bloqueo más reciente
+
+00:03:20.136 --> 00:03:23.986 align:middle
+de la base de datos tiene un
+estado ACTIVE o RUN_FOR_YOUR_LIFE,
+
+00:03:24.346 --> 00:03:27.396 align:middle
+necesitamos mostrar un mensaje de
+advertencia gigante en la pantalla.
+
+00:03:28.146 --> 00:03:33.256 align:middle
+Para ello, abre
+src/Repository/LockDownRepository.php.
+
+00:03:33.256 --> 00:03:35.296 align:middle
+Para saber si estamos en un bloqueo,
+
+00:03:35.876 --> 00:03:40.066 align:middle
+añade un nuevo método llamado
+isInLockDown() que devolverá un bool.
+
+00:03:40.886 --> 00:03:42.906 align:middle
+Por ahora, sólo return false.
+
+00:03:43.756 --> 00:03:46.166 align:middle
+¡Utilicemos un poco de
+desarrollo dirigido por pruebas!
+
+00:03:46.756 --> 00:03:49.946 align:middle
+Antes de escribir esta consulta,
+añadamos una prueba para ella.
+
+00:03:50.626 --> 00:03:55.276 align:middle
+Aún no tenemos una prueba para la clase
+LockDownRepository, así que abre tests/.
+
+00:03:55.826 --> 00:03:58.856 align:middle
+En el primer tutorial,
+creamos un directorio Unit/
+
+00:03:59.106 --> 00:04:04.246 align:middle
+y emparejamos la estructura de directorios dentro de
+src/ para todas las clases que necesitamos probar.
+
+00:04:05.336 --> 00:04:08.796 align:middle
+Esta vez, crea un directorio
+llamado Integration/.
+
+00:04:08.796 --> 00:04:14.386 align:middle
+No es necesario que organices las cosas así,
+pero es bastante habitual tener pruebas unitarias
+
+00:04:14.386 --> 00:04:17.396 align:middle
+en un directorio y pruebas
+de integración en otro.
+
+00:04:18.126 --> 00:04:23.166 align:middle
+Aún no hemos hablado de lo que es una prueba
+de integración, pero lo veremos en un minuto.
+
+00:04:23.166 --> 00:04:27.026 align:middle
+Dentro de Integration/, seguiremos
+la estructura de directorios.
+
+00:04:27.616 --> 00:04:32.066 align:middle
+Crea un directorio Repository/ ya que
+esta clase vive en src/Repository/...
+
+00:04:32.616 --> 00:04:37.226 align:middle
+y dentro, una nueva clase PHP
+llamada LockDownRepositoryTest.
+
+00:04:38.326 --> 00:04:42.546 align:middle
+Empieza como siempre:
+extiende TestCase de PHPUnit.
+
+00:04:43.296 --> 00:04:48.136 align:middle
+Llama al primer método
+testIsInLockDownWithNoLockdownRows().
+
+00:04:48.916 --> 00:04:54.356 align:middle
+Esto probará que, si la tabla de bloqueo
+está vacía, el método debe devolver false.
+
+00:04:55.236 --> 00:04:58.356 align:middle
+Vale, sigamos fingiendo que vivimos en el mundo
+
+00:04:58.356 --> 00:05:00.676 align:middle
+de las pruebas unitarias e
+intentemos probar esto...
+
+00:05:00.676 --> 00:05:02.636 align:middle
+como hicimos en el tutorial anterior.
+
+00:05:03.256 --> 00:05:07.376 align:middle
+Para ello, digamos $repository
+= new LockDownRepository().
+
+00:05:08.286 --> 00:05:13.396 align:middle
+Pero, hmm. LockDownRepository
+extiende ServiceEntityRepository,
+
+00:05:13.746 --> 00:05:16.186 align:middle
+que extiende otra clase de Doctrine.
+
+00:05:16.846 --> 00:05:22.496 align:middle
+Si te fijas, para instanciarla, necesitamos
+pasarle un ManagerRegistry de Doctrine.
+
+00:05:23.156 --> 00:05:26.726 align:middle
+Y si mantienes pulsado "comando" o
+"control" y haces clic en esto...
+
+00:05:26.956 --> 00:05:29.886 align:middle
+y vas a la clase base, se complica.
+
+00:05:31.616 --> 00:05:35.866 align:middle
+Llama a $registry->getManagerForClass()
+para obtener el gestor de entidades...
+
+00:05:36.386 --> 00:05:38.436 align:middle
+y se lo pasa al padre.
+
+00:05:38.986 --> 00:05:42.466 align:middle
+Así que ya, vamos a necesitar
+burlarnos del registro...
+
+00:05:42.726 --> 00:05:48.896 align:middle
+para que cuando se llame a getManagerForClass(),
+devuelva un gestor de entidades simulado.
+
+00:05:49.756 --> 00:05:54.866 align:middle
+Dentro de nuestro repositorio, acabaremos
+llamando a $this->createQueryBuilder().
+
+00:05:55.556 --> 00:06:02.686 align:middle
+Si te sumerges en ella, utiliza la propiedad _em
+(que es ese gestor de entidades que pensamos burlar
+
+00:06:02.686 --> 00:06:07.776 align:middle
+) y llama a createQueryBuilder(),
+que devuelve un QueryBuilder.
+
+00:06:08.256 --> 00:06:14.436 align:middle
+Así que también tenemos que simular este método en
+EntityManager para que devuelva un QueryBuilder simulado.
+
+00:06:14.886 --> 00:06:16.036 align:middle
+¡Esto se está volviendo una locura!
+
+00:06:16.556 --> 00:06:20.466 align:middle
+Tenemos un simulacro, para devolver un
+simulacro, para devolver otro simulacro.
+
+00:06:21.106 --> 00:06:23.496 align:middle
+Y en última instancia, ¿qué
+afirmaríamos? ¿Aseguraríamos
+
+00:06:23.956 --> 00:06:27.356 align:middle
+que nuestro código llama
+al método ->andWhere()
+
+00:06:27.356 --> 00:06:29.486 align:middle
+en QueryBuilder con los argumentos correctos?
+
+00:06:30.086 --> 00:06:31.576 align:middle
+¿O vamos a...
+
+00:06:31.756 --> 00:06:35.696 align:middle
+hacer que el QueryBuilder genere
+una cadena de consulta real...
+
+00:06:36.116 --> 00:06:37.896 align:middle
+y luego comprobar que la cadena...
+
+00:06:38.056 --> 00:06:39.796 align:middle
+nos parece correcta?
+
+00:06:40.336 --> 00:06:42.776 align:middle
+No: no vamos a hacer nada de eso.
+
+00:06:43.306 --> 00:06:47.696 align:middle
+Lo que estamos viendo es una situación en la que
+una prueba unitaria no es la herramienta adecuada.
+
+00:06:48.046 --> 00:06:49.406 align:middle
+Y hay dos razones.
+
+00:06:50.016 --> 00:06:51.716 align:middle
+En primer lugar, ¡es demasiado compleja!
+
+00:06:52.116 --> 00:06:57.606 align:middle
+Crear una prueba unitaria requeriría una
+serie aparentemente interminable de simulacros.
+
+00:06:58.176 --> 00:07:01.736 align:middle
+Y segundo, ¡una prueba
+unitaria no sería útil!
+
+00:07:02.346 --> 00:07:05.956 align:middle
+Si estamos creando una consulta
+compleja dentro de LockDownRepository
+
+00:07:06.426 --> 00:07:11.566 align:middle
+, para que sea una prueba realmente útil,
+necesitamos ejecutar realmente esa consulta
+
+00:07:11.876 --> 00:07:16.306 align:middle
+y asegurarnos de que devuelve los resultados
+que esperamos de la base de datos.
+
+00:07:16.996 --> 00:07:21.536 align:middle
+Así que, en lugar de crear un nuevo
+LockDownRepository con un montón de mocks, vamos a
+
+00:07:21.996 --> 00:07:25.736 align:middle
+pedir a Symfony que nos proporcione
+el verdadero LockDownRepository:
+
+00:07:26.246 --> 00:07:28.696 align:middle
+el que utilizaríamos en
+nuestro código normal. El
+
+00:07:29.286 --> 00:07:32.266 align:middle
+que, cuando llamemos a un método
+en él desde nuestra prueba,
+
+00:07:32.756 --> 00:07:35.546 align:middle
+ejecutará una consulta
+real a la base de datos.
+
+00:07:36.056 --> 00:07:40.146 align:middle
+Eso se llama "prueba de integración", y
+te mostraré cómo hacerlo a continuación.
