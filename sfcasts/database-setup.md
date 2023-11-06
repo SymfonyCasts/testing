@@ -9,6 +9,8 @@ test is that we need the database to *not* be empty at the start. We need to ins
 an active lockdown into the database... so that when we finally call the method
 and it executes the query, it will find the record.
 
+[[[ code('034159241e') ]]]
+
 This is a common part of integration tests since they frequently talk to the
 database.
 
@@ -20,6 +22,8 @@ No problem! Let's create a lock down! Add `$lockDown = new LockDown()`,
 important yet. Oh, and we don't need to set the status because, if you
 look in the class, it defaults to `ACTIVE`.
 
+[[[ code('ad2b6aa68e') ]]]
+
 Saving this is simple too. Grab the `$entityManager` with
 `self::getContainer()->get(EntityManagerInterface::class)`. And I'll do
 our `assert()` trick with `$entityManager instanceof EntityManagerInterface`
@@ -27,6 +31,8 @@ to help my editor. Finish with the usual `$entityManager->persist($lockDown)` an
 `$entityManager->flush()`.
 
 To see if this is working, down here, `dd($lockDown->getId())`.
+
+[[[ code('a80db9ac16') ]]]
 
 Let's try it! Run *just* the tests from this file:
 
@@ -45,6 +51,8 @@ using Postgres, but that doesn't matter.
 
 *Normally*, when we set up our local environment, we customize `DATABASE_URL`
 here in `.env`... *or* we create a `.env.local` file and override it *there*.
+
+[[[ code('23a20ca312') ]]]
 
 And, in general, when we boot the kernel in our tests, everything works *exactly*
 the same as loading our app in the browser. It *does* boot our code in a Symfony
@@ -125,6 +133,8 @@ out that `dbname_suffix`! It's set to `_test`. You can ignore the
 `%env(default::TEST_TOKEN)%` bit. That relates to a library called ParaTest and,
 in our case, it will be empty. So *effectively*, it's just `_test`.
 
+[[[ code('2f8f4e37d5') ]]]
+
 So thanks to this config, in the `test` environment, it takes the `app` config,
 adds `_test` to it and ultimately uses a database called `app_test`.
 
@@ -162,7 +172,11 @@ then create a new private method: `private function getLockDownRepository()`. Pa
 add `return`, then the return type. Now we don't need the `assert()` because
 PHP will throw a big error if this returns something *else* for some reason.
 
+[[[ code('193ca88f68') ]]]
+
 Simplify things up here with `$this->getLockDownRepository()->isInLockDown()`.
+
+[[[ code('5271ef8d04') ]]]
 
 Try the test again to make sure it still passes...
 
@@ -175,8 +189,12 @@ It *does*. And *interestingly*, the ID is now `2`. More on that soon.
 Replace the dump with `$this->assertTrue()` that
 `$this->getLockDownRepository()->isInLockDown()`.
 
+[[[ code('3b9eeaeb94') ]]]
+
 Over in the repository, I'll paste in the real query. This looks for a lockdown
 that has *not* ended, and returns true or false.
+
+[[[ code('7e06e79218') ]]]
 
 Let's do this!
 
