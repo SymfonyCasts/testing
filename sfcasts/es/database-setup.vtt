@@ -1,0 +1,487 @@
+WEBVTT
+
+00:00:00.076 --> 00:00:02.866 align:middle
+¡Esta primera prueba era demasiado fácil!
+
+00:00:02.866 --> 00:00:05.386 align:middle
+Así que escribamos otra más interesante.
+
+00:00:05.916 --> 00:00:10.726 align:middle
+¿Qué te parece, ejem, public function
+testIsInLockDownReturnsTrueIfMostRecentLockdownIsActive().
+
+00:00:10.726 --> 00:00:11.586 align:middle
+¡Uf!
+
+00:00:11.806 --> 00:00:17.226 align:middle
+Empieza igual que antes: self::bootKernel(). Lo
+
+00:00:17.906 --> 00:00:23.076 align:middle
+complicado de esta prueba es que necesitamos que la
+base de datos no esté vacía al principio. Necesitamos
+
+00:00:23.376 --> 00:00:26.636 align:middle
+insertar un bloqueo activo en
+la base de datos ... para que
+
+00:00:26.826 --> 00:00:31.436 align:middle
+cuando finalmente llamemos al método y éste
+ejecute la consulta, encuentre el registro. Esta
+
+00:00:31.916 --> 00:00:36.766 align:middle
+es una parte habitual de las pruebas de integración, ya
+que con frecuencia hablan con la base de datos. ¡ No hay
+
+00:00:36.766 --> 00:00:37.816 align:middle
+problema! ¡
+
+00:00:38.286 --> 00:00:39.656 align:middle
+Creemos un bloqueo! Añade
+
+00:00:39.656 --> 00:00:45.456 align:middle
+$lockDown = new LockDown(),
+$lockDown->setReason() para que
+
+00:00:45.576 --> 00:00:47.706 align:middle
+sepamos por qué se produce el bloqueo, y
+
+00:00:47.706 --> 00:00:52.886 align:middle
+$lockDown->setCreatedAt()
+a, qué tal, hace 1 día. Esa
+
+00:00:53.256 --> 00:00:55.386 align:middle
+parte aún no es superimportante. Ah,
+
+00:00:56.346 --> 00:01:02.266 align:middle
+y no necesitamos establecer el estado porque, si
+miras en la clase, aparece por defecto ACTIVE. Guardar
+
+00:01:02.446 --> 00:01:04.866 align:middle
+esto también es sencillo. Coge
+
+00:01:05.366 --> 00:01:06.646 align:middle
+el $entityManager con
+
+00:01:06.646 --> 00:01:12.446 align:middle
+self::getContainer()->get(EntityManagerInterface::class).
+Y haré
+
+00:01:13.126 --> 00:01:14.906 align:middle
+nuestro truco assert() con $entityManager
+
+00:01:14.906 --> 00:01:19.756 align:middle
+instanceof EntityManagerInterface
+para ayudar a mi editor. Termina con
+
+00:01:19.836 --> 00:01:24.136 align:middle
+los habituales $entityManager->persist($lockDown)
+y $entityManager->flush().
+
+00:01:24.666 --> 00:01:26.846 align:middle
+Para ver
+
+00:01:28.076 --> 00:01:32.736 align:middle
+si esto funciona, aquí abajo,
+dd($lockDown->getId()). ¡Vamos a probarlo
+
+00:01:32.736 --> 00:01:34.616 align:middle
+! Ejecuta sólo
+
+00:01:34.976 --> 00:01:38.966 align:middle
+las pruebas de este archivo: Y... oh...
+
+00:01:39.356 --> 00:01:41.856 align:middle
+explota. Veamos...
+
+00:01:42.046 --> 00:01:42.796 align:middle
+¡Ah !
+
+00:01:43.566 --> 00:01:46.446 align:middle
+¡Tiene problemas para conectarse a la base
+de datos! Olvidándonos por un momento de las
+
+00:01:46.506 --> 00:01:50.856 align:middle
+pruebas, ¡éste es un
+problema familiar! La clave
+
+00:01:51.326 --> 00:01:57.236 align:middle
+para conectar nuestra aplicación a la base de datos es
+la variable de entorno DATABASE_URL. Yo estoy utilizando
+
+00:01:57.696 --> 00:02:00.466 align:middle
+Postgres, pero eso no importa.
+Normalmente, cuando configuramos
+
+00:02:00.986 --> 00:02:07.276 align:middle
+nuestro entorno local, personalizamos
+DATABASE_URL aquí en .env... o
+
+00:02:07.756 --> 00:02:12.096 align:middle
+creamos un archivo .env.local
+y lo anulamos allí. Y, en
+
+00:02:12.586 --> 00:02:18.466 align:middle
+general, cuando arrancamos el kernel en nuestras
+pruebas, todo funciona exactamente igual que al cargar
+
+00:02:18.466 --> 00:02:20.336 align:middle
+nuestra aplicación en el
+navegador. Sí que arranca
+
+00:02:21.116 --> 00:02:25.276 align:middle
+nuestro código en un entorno Symfony
+llamado test en lugar de dev... y eso
+
+00:02:25.276 --> 00:02:27.306 align:middle
+cambia algunas cosas. Pero el 99%
+
+00:02:27.306 --> 00:02:30.416 align:middle
+del comportamiento es el mismo. Si te
+
+00:02:30.416 --> 00:02:38.966 align:middle
+fijas en el error, la prueba está teniendo problemas
+para conectarse a 127.0.0.1 en el puerto 5432. Eso tiene
+
+00:02:39.546 --> 00:02:44.166 align:middle
+sentido: lo está leyendo de
+nuestro archivo .env. Todo muy
+
+00:02:44.316 --> 00:02:46.136 align:middle
+normal. Pero
+
+00:02:46.476 --> 00:02:50.196 align:middle
+hay una diferencia importante
+en el entorno test. Si
+
+00:02:50.196 --> 00:02:56.446 align:middle
+creas un archivo .env.local,
+anulas DATABASE_URL, y ejecutas
+
+00:02:56.596 --> 00:03:04.346 align:middle
+tus pruebas (cambiaré este puerto por algo loco
+como 9999), ¡no se utilizará! ¡ Comprueba
+
+00:03:04.926 --> 00:03:05.816 align:middle
+este error! Sigue
+
+00:03:06.126 --> 00:03:10.106 align:middle
+buscando port 5432.
+
+00:03:10.106 --> 00:03:15.276 align:middle
+Sólo en el entornotest, el archivo
+.env.local no se carga. Así que si quieres
+
+00:03:15.336 --> 00:03:21.706 align:middle
+configurar un DATABASE_URL específicamente
+para tu entorno test, tienes
+
+00:03:21.896 --> 00:03:27.566 align:middle
+que ponerlo en .env.test: el archivo de
+variables específico del entorno. Antes de
+
+00:03:28.546 --> 00:03:33.686 align:middle
+continuar, asegúrate de borrar ese archivo
+.env.local para evitar confusiones. Pero en
+
+00:03:34.616 --> 00:03:39.276 align:middle
+nuestro caso, no vamos a depender de ninguno
+de estos archivos .env. Eso es porque,
+
+00:03:39.796 --> 00:03:43.566 align:middle
+si has seguido las instrucciones
+de README.md, estamos utilizando
+
+00:03:43.916 --> 00:03:46.126 align:middle
+Docker entre bastidores. Tenemos
+
+00:03:46.496 --> 00:03:51.126 align:middle
+un archivo docker-compose.yaml, que inicia
+una base de datos Postgres. Y como estamos
+
+00:03:51.666 --> 00:03:54.676 align:middle
+utilizando el binario Symfony
+como servidor web, configura
+
+00:03:54.886 --> 00:04:00.466 align:middle
+el DATABASE_URL automáticamente para
+que apunte a ese contenedor. Cuando
+
+00:04:01.366 --> 00:04:02.736 align:middle
+actualizamos la página... no está
+
+00:04:02.966 --> 00:04:06.666 align:middle
+utilizando el DATABASE_URL
+de mi .env : está utilizando
+
+00:04:07.216 --> 00:04:10.706 align:middle
+el valor dinámico que establece
+el binario symfony. Esto es
+
+00:04:11.176 --> 00:04:13.796 align:middle
+algo de lo que ya hablamos en nuestro tutorial
+de Doctrine. Sin embargo, ¡es evidente que esa
+
+00:04:14.456 --> 00:04:18.716 align:middle
+magia no se produce en nuestra prueba! El error
+
+00:04:19.396 --> 00:04:25.206 align:middle
+hace evidente que está consultando
+el DATABASE_URL de .env. Y.. . ¡es
+
+00:04:25.746 --> 00:04:27.276 align:middle
+cierto! Esto se
+
+00:04:27.856 --> 00:04:30.876 align:middle
+debe a que el binario symfony no
+tiene la oportunidad de inyectar
+
+00:04:30.876 --> 00:04:35.456 align:middle
+la variable de entorno
+DATABASE_URL. Para permitirlo
+
+00:04:36.276 --> 00:04:38.486 align:middle
+, en lugar de ejecutar
+./vendor/bin/phpunit, ejecuta symfony
+
+00:04:38.486 --> 00:04:43.576 align:middle
+php vendor/bin/phpunit... seguido de la
+
+00:04:43.776 --> 00:04:49.806 align:middle
+ruta a la prueba El comando symfony php es
+sólo una forma de ejecutar PHP... pero al hacer
+
+00:04:50.546 --> 00:04:55.396 align:middle
+esto, permite que el binario symfony
+haga su magia. Cuando probamos
+
+00:04:56.246 --> 00:04:57.266 align:middle
+esto... vuelve a fallar.
+
+00:04:57.386 --> 00:04:59.026 align:middle
+Pero
+
+00:04:59.486 --> 00:05:00.366 align:middle
+¡fíjate! Este es un
+
+00:05:00.576 --> 00:05:02.086 align:middle
+error diferente. Ahora habla
+
+00:05:02.516 --> 00:05:05.196 align:middle
+del puerto 58292. Ese es el puerto aleatorio
+
+00:05:05.856 --> 00:05:10.766 align:middle
+por el que aparentemente se puede acceder
+a mi base de datos Docker. También dice
+
+00:05:11.496 --> 00:05:15.646 align:middle
+database "app_test" does not
+exist. Para ver de qué se trata
+
+00:05:16.436 --> 00:05:19.836 align:middle
+, ejecuta: symfony var:export
+--multiline Esto muestra
+
+00:05:20.026 --> 00:05:25.786 align:middle
+todas las variables de entorno que el binario
+Symfony está inyectando. La más importante
+
+00:05:26.226 --> 00:05:28.626 align:middle
+es DATABASE_URL. Esto apunta
+
+00:05:29.086 --> 00:05:30.806 align:middle
+al contenedor Docker... que para mí,
+
+00:05:31.076 --> 00:05:35.186 align:middle
+se está ejecutando en el
+puerto 58292. El detalle clave
+
+00:05:35.186 --> 00:05:37.296 align:middle
+es esta parte app . Es el nombre
+
+00:05:37.686 --> 00:05:40.546 align:middle
+de la base de datos que debe
+utilizarse. Entonces, si DATABASE_URL
+
+00:05:40.576 --> 00:05:46.786 align:middle
+está apuntando a una base de datos llamada app,
+¿por qué el error dice que una base de datos
+
+00:05:46.886 --> 00:05:50.826 align:middle
+llamada app_test no existe?
+Antes de responder a
+
+00:05:51.386 --> 00:05:56.156 align:middle
+eso, tengo otra pregunta: cuando
+ejecutemos nuestras pruebas, ¿queremos
+
+00:05:56.366 --> 00:06:00.506 align:middle
+que utilicen la misma base de datos que está utilizando
+nuestra aplicación local? Idealmente, ¡no! Tener una base de
+
+00:06:01.026 --> 00:06:02.356 align:middle
+datos diferente
+
+00:06:02.906 --> 00:06:05.246 align:middle
+para tus pruebas y para tu
+
+00:06:05.246 --> 00:06:09.106 align:middle
+entorno de desarrollo normal es
+una buena idea. Por un lado ... es
+
+00:06:09.766 --> 00:06:10.416 align:middle
+simplemente molesto
+
+00:06:10.556 --> 00:06:15.476 align:middle
+ejecutar tus pruebas y que manipulen tus datos
+mientras desarrollas. Y, afortunadamente, tener
+
+00:06:16.036 --> 00:06:21.386 align:middle
+dos bases de datos diferentes es algo que ocurre
+automáticamente. Abre config/packages/doctrine.yaml. En
+
+00:06:22.146 --> 00:06:24.266 align:middle
+la parte
+
+00:06:25.266 --> 00:06:29.386 align:middle
+inferior, tenemos este bloque
+especial when@test. Está configurado
+
+00:06:30.136 --> 00:06:33.276 align:middle
+sólo para el entorno test . ¡ Y f íjate en
+
+00:06:33.646 --> 00:06:36.046 align:middle
+dbname_suffix! Está configurado como
+
+00:06:36.306 --> 00:06:38.106 align:middle
+_test. Puedes ignorar
+
+00:06:39.036 --> 00:06:41.906 align:middle
+el bit %env(default::TEST_TOKEN)%. Se refiere a
+
+00:06:42.266 --> 00:06:47.006 align:middle
+una biblioteca llamada ParaTest y, en nuestro
+caso, estará vacía. Así que, efectivamente, es
+
+00:06:47.366 --> 00:06:50.506 align:middle
+sólo _test. Así que, gracias a
+
+00:06:50.576 --> 00:06:55.756 align:middle
+esta configuración, en el entorno test,
+toma la configuración app, le añade _test
+
+00:06:56.046 --> 00:07:01.786 align:middle
+y, en última instancia, utiliza una base de
+datos llamada app_test. ¡Eso está muy bien!
+
+00:07:02.306 --> 00:07:03.986 align:middle
+Y ahora que
+
+00:07:04.396 --> 00:07:09.076 align:middle
+lo entendemos, lo único que tenemos que hacer
+es crear esa base de datos. En tu terminal,
+
+00:07:09.786 --> 00:07:16.106 align:middle
+ejecuta symfony console - esto no es más que bin/console,
+pero permite que el binario symfony inyecte la
+
+00:07:16.106 --> 00:07:24.946 align:middle
+variable de entornoDATABASE_URL - doctrine:database:create
+--env=test: Y... ¡¡éxito!! También tenemos
+
+00:07:25.126 --> 00:07:32.826 align:middle
+que crear el schema: doctrine:schema:create
+¡Genial! Haz la prueba
+
+00:07:33.166 --> 00:07:37.256 align:middle
+ahora: ¡Ha funcionado! Ese 1...
+
+00:07:37.526 --> 00:07:41.176 align:middle
+viene del volcado de aquí abajo.
+Vamos a terminar esta prueba.
+
+00:07:42.106 --> 00:07:43.756 align:middle
+Para
+
+00:07:44.586 --> 00:07:49.466 align:middle
+facilitarte las cosas, copia la línea del repositorio, luego crea un
+nuevo método privado: private function getLockDownRepository(). Pega
+
+00:07:50.536 --> 00:07:52.936 align:middle
+, añade return,
+
+00:07:54.186 --> 00:07:57.256 align:middle
+y luego el tipo de retorno. Ahora no
+
+00:07:58.236 --> 00:08:02.816 align:middle
+necesitamos el assert() porque PHP
+lanzará un gran error si esto devuelve
+
+00:08:02.816 --> 00:08:05.186 align:middle
+otra cosa por alguna
+razón. Simplifica las cosas
+
+00:08:05.316 --> 00:08:11.396 align:middle
+aquí con $this->getLockDownRepository()->isInLockDown().
+Vuelve a hacer la prueba
+
+00:08:12.186 --> 00:08:15.546 align:middle
+para asegurarte de que sigue pasando... Pasa. Y
+
+00:08:16.216 --> 00:08:21.126 align:middle
+, curiosamente, el ID es ahora 2.
+Pronto hablaremos más de ello.
+
+00:08:21.886 --> 00:08:22.986 align:middle
+Sustituye el volcado con
+
+00:08:24.526 --> 00:08:32.526 align:middle
+$this->assertTrue() que
+$this->getLockDownRepository()->isInLockDown(). En el
+
+00:08:33.616 --> 00:08:37.086 align:middle
+repositorio, pegaré la
+consulta real. Esto busca
+
+00:08:37.576 --> 00:08:43.376 align:middle
+un bloqueo que no haya terminado, y devuelve
+verdadero o falso. ¡Vamos a hacerlo!
+
+00:08:43.476 --> 00:08:45.256 align:middle
+Y...
+
+00:08:45.256 --> 00:08:47.626 align:middle
+¿falla la prueba? Ah,
+nuestra segunda prueba ha
+
+00:08:48.146 --> 00:08:53.116 align:middle
+pasado, pero la prueba original
+falla de repente. ¿Cómo ha
+
+00:08:53.516 --> 00:08:54.376 align:middle
+ocurrido? Resulta que,
+
+00:08:55.006 --> 00:08:57.216 align:middle
+gracias a la segunda prueba, cuando
+
+00:08:57.426 --> 00:09:02.166 align:middle
+se ejecuta la primera, la base de datos
+ya no está vacía. De hecho, está
+
+00:09:02.606 --> 00:09:07.306 align:middle
+acumulando más y más filas cada vez que
+ejecutamos las pruebas. Observa, Ejecuta: symfony
+
+00:09:08.066 --> 00:09:18.136 align:middle
+console dbal:run-sql 'SELECT * FROM lock_down'
+--env=test ¡Caramba! Se trata de un
+
+00:09:18.356 --> 00:09:22.836 align:middle
+problema crítico: tenemos que garantizar que la
+base de datos se encuentra en un estado predecible
+
+00:09:22.836 --> 00:09:26.626 align:middle
+al inicio de cada prueba.
+Vamos a sumergirnos en
+
+00:09:26.626 --> 00:09:30.516 align:middle
+este problema tan importante a continuación.
