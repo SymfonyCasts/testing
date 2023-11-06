@@ -20,6 +20,8 @@ that it extends the normal `TestCase` from PHPUnit. It just adds methods to boot
 and shut down Symfony's kernel - that's kind of the heart of Symfony - and to grab
 the container.
 
+[[[ code('929bcce07d') ]]]
+
 ## Fetching Services
 
 At the top of our test method, start with `self::bootKernel()`. Once you call
@@ -30,6 +32,8 @@ with `$lockDownRepository = self::getContainer()` (which is a helper method from
 case, is the class name: `LockDownRepository::class`.
 
 To see if this works, `dd($lockDownRepository)`.
+
+[[[ code('fdf13682f0') ]]]
 
 By the way, unit tests and integration tests generally look the same: you call
 methods on an object and run assertions. If your test happens to boot the kernel
@@ -73,7 +77,11 @@ say `$this->assert`-something. This is just a PHP function that will throw an
 exception if `$lockDownRepository` is *not* a `LockDownRepository`. It *will* be... 
 and this code will never cause a problem... but now we enjoy *lovely* autocompletion!
 
+[[[ code('d363521a6f') ]]]
+
 Say `$this->assertFalse($lockDownRepository->isInLockDown())`.
+
+[[[ code('4fb9dc8d3c') ]]]
 
 The idea is that we haven't added any rows to the database... and *because* of that,
 we should *not* be in a lockdown. And since the method just returns false right now...
