@@ -1,0 +1,256 @@
+WEBVTT
+
+00:00:00.976 --> 00:00:05.776 align:middle
+En nuestra aplicación, si quisiéramos utilizar
+LockDownRepository para hacer consultas reales,
+
+00:00:06.006 --> 00:00:09.426 align:middle
+podríamos autocablear
+LockDownRepository en un controlador
+
+00:00:09.536 --> 00:00:13.336 align:middle
+-o en algún otro lugar-, llamar
+a un método en él, y ¡boom!
+
+00:00:13.666 --> 00:00:14.766 align:middle
+Todo funcionaría.
+
+00:00:15.306 --> 00:00:20.396 align:middle
+Ahora queremos hacer lo mismo en nuestra
+prueba: en lugar de crear el objeto manualmente,
+
+00:00:20.816 --> 00:00:24.856 align:middle
+queremos pedir a Symfony que nos proporcione el
+servicio real que está configurado para hablar
+
+00:00:24.856 --> 00:00:28.566 align:middle
+con la base de datos real, para
+que pueda hacer su lógica real.
+
+00:00:28.796 --> 00:00:35.006 align:middle
+¡De verdad! Para obtener un servicio dentro de una
+prueba, tenemos que arrancar Symfony y luego acceder
+
+00:00:35.006 --> 00:00:40.266 align:middle
+a su contenedor de servicios: el objeto místico que
+contiene todos los servicios de nuestra aplicación.
+
+00:00:41.196 --> 00:00:45.096 align:middle
+Para ello, Symfony nos proporciona
+una clase base llamada KernelTestCase.
+
+00:00:45.736 --> 00:00:48.696 align:middle
+No hay nada particularmente
+especial en esta clase.
+
+00:00:49.156 --> 00:00:53.646 align:middle
+Mantén pulsado "comando" o "control" para
+ver que amplía la normal TestCase de PHPUnit.
+
+00:00:54.096 --> 00:00:58.706 align:middle
+Sólo añade métodos para arrancar y apagar el
+núcleo de Symfony -que es algo así como el corazón
+
+00:00:58.706 --> 00:01:01.126 align:middle
+de Symfony- y para coger el contenedor.
+
+00:01:01.126 --> 00:01:07.106 align:middle
+En la parte superior de nuestro método de
+prueba, comienza con self::bootKernel().
+
+00:01:08.036 --> 00:01:11.966 align:middle
+Una vez que llames a esto, puedes imaginar que
+tienes una aplicación Symfony ejecutándose
+
+00:01:11.966 --> 00:01:14.346 align:middle
+en segundo plano, esperando a que la utilices.
+
+00:01:14.816 --> 00:01:18.786 align:middle
+Concretamente, esto significa que
+podemos coger cualquier servicio.
+
+00:01:19.156 --> 00:01:24.716 align:middle
+Hazlo con $lockDownRepository =
+self::getContainer() (que es un método ayudante
+
+00:01:24.716 --> 00:01:27.006 align:middle
+de KernelTestCase ) ->get().
+
+00:01:27.576 --> 00:01:34.716 align:middle
+A continuación, pasa el ID del servicio que, en nuestro
+caso, es el nombre de la clase: LockDownRepository::class.
+
+00:01:36.206 --> 00:01:39.566 align:middle
+Para ver si funciona, dd($lockDownRepository).
+
+00:01:40.156 --> 00:01:45.326 align:middle
+Por cierto, las pruebas unitarias y las pruebas
+de integración suelen tener el mismo aspecto:
+
+00:01:45.746 --> 00:01:48.886 align:middle
+llamas a métodos de un
+objeto y ejecutas aserciones.
+
+00:01:49.606 --> 00:01:53.636 align:middle
+Si resulta que tu prueba arranca
+el núcleo y coge un servicio real,
+
+00:01:54.036 --> 00:01:56.206 align:middle
+le damos el nombre de "prueba de integración".
+
+00:01:56.556 --> 00:01:59.736 align:middle
+Pero eso no es más que una forma
+elegante de decir: "Una prueba unitaria...
+
+00:01:59.886 --> 00:02:02.246 align:middle
+salvo que utilizamos servicios reales".
+
+00:02:02.896 --> 00:02:04.346 align:middle
+Bien, ¡vamos a probarlo!
+
+00:02:04.676 --> 00:02:05.736 align:middle
+En tu terminal, ejecuta: ./vendor/bin/phpunit
+
+00:02:05.936 --> 00:02:08.676 align:middle
+También puedes ejecutar ./bin/phpunit,
+
+00:02:08.676 --> 00:02:12.216 align:middle
+que es un acceso directo
+configurado para Symfony. Pero yo
+
+00:02:12.526 --> 00:02:14.826 align:middle
+seguiré ejecutando directamente
+phpunit. Y... ¡sí! ¡Ahí está
+
+00:02:16.016 --> 00:02:17.376 align:middle
+nuestro
+
+00:02:17.536 --> 00:02:19.106 align:middle
+servicio! No
+
+00:02:19.416 --> 00:02:25.616 align:middle
+parece gran cosa, pero este objeto perezoso es algo
+que vive en el servicio real. Así que, ¡simple!
+
+00:02:26.266 --> 00:02:27.406 align:middle
+self::getContainer
+
+00:02:27.826 --> 00:02:31.176 align:middle
+nos da el contenedor del servicio... y luego
+
+00:02:31.586 --> 00:02:33.906 align:middle
+llamamos a get() sobre él. Pero
+
+00:02:34.376 --> 00:02:39.066 align:middle
+quiero señalar que acceder al contenedor
+de servicios y obtener un servicio de él
+
+00:02:39.066 --> 00:02:43.286 align:middle
+no es algo que hagamos en el código de
+nuestra aplicación. Para la mayoría de los
+
+00:02:43.796 --> 00:02:48.506 align:middle
+servicios, que son privados, ¡hacer esto
+ni siquiera funcionará! En su lugar,
+
+00:02:49.016 --> 00:02:53.456 align:middle
+confiamos en la inyección de
+dependencias y el autocableado. Pero en
+
+00:02:54.166 --> 00:02:58.966 align:middle
+una prueba no hay inyección de
+dependencias ni autocableado. Así que
+
+00:02:59.396 --> 00:03:02.316 align:middle
+tenemos que coger servicios como éste. Y la
+
+00:03:02.726 --> 00:03:05.626 align:middle
+única razón por la que esto funciona
+es porque self::getContainer()
+
+00:03:05.626 --> 00:03:09.696 align:middle
+nos proporciona un
+contenedor especial que sólo
+
+00:03:09.996 --> 00:03:13.036 align:middle
+existe en el entorno test. Es especial
+
+00:03:13.656 --> 00:03:17.786 align:middle
+porque te permite llamar a un método get() y
+
+00:03:18.106 --> 00:03:21.706 align:middle
+pedir cualquier servicio que
+quieras por su ID... aunque
+
+00:03:22.076 --> 00:03:24.586 align:middle
+ese servicio sea normalmente
+privado. Así que éste
+
+00:03:25.076 --> 00:03:28.506 align:middle
+es un superpoder exclusivo
+del entorno test. Vale, ya que
+
+00:03:29.766 --> 00:03:34.176 align:middle
+tenemos LockDownRepository , vamos a intentar
+ejecutar una prueba sencilla. Pero, hmm,
+
+00:03:35.496 --> 00:03:38.756 align:middle
+no obtengo el autocompletado
+correcto. Ah, eso es
+
+00:03:39.456 --> 00:03:43.976 align:middle
+porque mi editor no sabe lo que
+devuelve el método get(). Para ayudarle
+
+00:03:44.666 --> 00:03:50.386 align:middle
+, assert() que $lockDownRepository es un
+instanceof LockDownRepository. Esto no es
+
+00:03:51.366 --> 00:03:56.286 align:middle
+una aserción PHPUnit: no hemos
+dicho $this->assert -algo. Esto es
+
+00:03:56.886 --> 00:03:59.936 align:middle
+sólo una función PHP que lanzará
+una excepción si $lockDownRepository
+
+00:04:00.046 --> 00:04:03.616 align:middle
+no es un LockDownRepository . Lo
+
+00:04:04.416 --> 00:04:05.526 align:middle
+será... y este código
+
+00:04:05.776 --> 00:04:07.596 align:middle
+nunca causará un problema... ¡pero ahora
+
+00:04:08.046 --> 00:04:10.736 align:middle
+disfrutamos del encantador autocompletado! Digamos
+$this->assertFalse($lockDownRepository->isInLockDown()). La
+
+00:04:12.106 --> 00:04:17.276 align:middle
+idea es que no hemos
+
+00:04:18.246 --> 00:04:21.936 align:middle
+añadido ninguna fila a la
+base de datos ... y por eso
+
+00:04:22.316 --> 00:04:26.206 align:middle
+, no deberíamos estar en un bloqueo. Y como el
+
+00:04:26.576 --> 00:04:29.066 align:middle
+método devuelve false ahora
+mismo... esta prueba debería
+
+00:04:29.606 --> 00:04:32.556 align:middle
+pasar: Y... ¡lo hace! Así que estamos
+
+00:04:32.946 --> 00:04:37.026 align:middle
+utilizando el servicio real... pero
+
+00:04:37.226 --> 00:04:40.406 align:middle
+todavía no está haciendo
+ninguna consulta. ¿Seguirá
+
+00:04:40.986 --> 00:04:43.756 align:middle
+funcionando si hacemos una
+consulta? Vamos a averiguarlo.
