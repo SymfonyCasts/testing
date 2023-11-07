@@ -1,0 +1,275 @@
+WEBVTT
+
+00:00:01.106 --> 00:00:05.566 align:middle
+Es muy habitual que las pruebas de integración o
+las pruebas funcionales hablen con la base de datos.
+
+00:00:05.866 --> 00:00:09.366 align:middle
+Y casi siempre necesitamos sembrar
+la base de datos antes de la prueba:
+
+00:00:09.486 --> 00:00:13.696 align:middle
+añadir algunas filas a LockDown antes de
+hacer el trabajo y llamar a las aserciones.
+
+00:00:14.416 --> 00:00:17.556 align:middle
+En el primer tutorial,
+hablamos de una filosofía
+
+00:00:17.556 --> 00:00:22.556 align:middle
+o patrón de pruebas llamado
+AAA: Organizar, Actuar y Afirmar.
+
+00:00:23.186 --> 00:00:27.926 align:middle
+En una prueba de integración, el paso Organizar
+suele consistir en añadir filas a la base de datos,
+
+00:00:28.416 --> 00:00:32.086 align:middle
+el paso Actuar consiste en
+llamar al método y, por
+
+00:00:32.196 --> 00:00:33.946 align:middle
+supuesto, las afirmaciones finales.
+
+00:00:34.586 --> 00:00:37.026 align:middle
+Hay dos enfoques para sembrar
+tu base de datos en una prueba.
+
+00:00:37.286 --> 00:00:41.156 align:middle
+La primera es escribir código dentro de la prueba
+para insertar todos los datos que necesites.
+
+00:00:41.826 --> 00:00:44.626 align:middle
+La segunda es crear y ejecutar
+un conjunto de fijaciones.
+
+00:00:44.896 --> 00:00:48.146 align:middle
+Y nuestra aplicación tiene fixtures
+que alimentan nuestro sitio local.
+
+00:00:49.156 --> 00:00:49.766 align:middle
+¿Deberíamos...
+
+00:00:50.086 --> 00:00:54.916 align:middle
+cargarlos desde dentro de nuestra prueba para que
+comience con algunos datos en un estado predecible?
+
+00:00:55.596 --> 00:00:56.606 align:middle
+¡Suena bien!
+
+00:00:56.776 --> 00:00:58.896 align:middle
+Pero... ¡no lo hagas!
+
+00:00:59.236 --> 00:01:01.976 align:middle
+No cargues dispositivos en tus pruebas.
+
+00:01:01.976 --> 00:01:08.546 align:middle
+¿Por qué? Porque una buena prueba se lee como una
+historia: deberías poder leer qué datos se añaden,
+
+00:01:08.806 --> 00:01:12.056 align:middle
+a qué método se llama y
+qué comportamiento se espera.
+
+00:01:12.056 --> 00:01:15.056 align:middle
+Si cargas un conjunto de fixtures...
+
+00:01:15.296 --> 00:01:18.616 align:middle
+y de repente afirmas que estamos en un
+
+00:01:18.616 --> 00:01:21.426 align:middle
+bloqueo, no es superobvio por
+qué estamos en un bloqueo...
+
+00:01:21.526 --> 00:01:22.936 align:middle
+¡ni qué estamos probando!
+
+00:01:23.356 --> 00:01:28.526 align:middle
+Tienes que indagar en los accesorios de la aplicación
+para encontrar qué registros LockDown hay...
+
+00:01:28.696 --> 00:01:30.776 align:middle
+y averiguar qué está pasando.
+
+00:01:31.246 --> 00:01:33.036 align:middle
+Eso no me gusta.
+
+00:01:33.146 --> 00:01:37.846 align:middle
+Así que, aunque te parezca un poco
+más de trabajo, la mejor estrategia es
+
+00:01:37.846 --> 00:01:41.356 align:middle
+insertar los datos que necesitas
+dentro de cada método de prueba.
+
+00:01:41.356 --> 00:01:44.856 align:middle
+Y después del próximo capítulo, en
+realidad no será mucho trabajo. Y lo que es
+
+00:01:45.656 --> 00:01:50.046 align:middle
+más importante, independientemente de cómo siembres
+tu base de datos, tenemos que asegurarnos de que,
+
+00:01:50.196 --> 00:01:53.976 align:middle
+antes de que comience cada prueba,
+la base de datos esté vacía.
+
+00:01:54.186 --> 00:01:55.456 align:middle
+Y acabamos de ver por qué.
+
+00:01:55.886 --> 00:01:57.676 align:middle
+Nuestra prueba original pasó...
+
+00:01:57.976 --> 00:02:01.146 align:middle
+hasta que nuestra segunda
+prueba insertó una fila...
+
+00:02:01.416 --> 00:02:04.186 align:middle
+que hizo que la primera fallara de repente.
+
+00:02:04.486 --> 00:02:09.746 align:middle
+Buf. A menos que tu base de datos se encuentre
+en un estado perfectamente predecible al inicio
+
+00:02:09.746 --> 00:02:12.106 align:middle
+de cada prueba, ¡no puedes confiar en ellas!
+
+00:02:12.546 --> 00:02:15.986 align:middle
+¡Y la mejor forma de ser
+predecible es empezar vacío!
+
+00:02:16.906 --> 00:02:21.246 align:middle
+Podríamos anular el método setUp() y
+ejecutar aquí un código que hiciera eso.
+
+00:02:21.346 --> 00:02:26.356 align:middle
+Afortunadamente, no necesitamos hacerlo
+porque hay múltiples bibliotecas
+
+00:02:26.356 --> 00:02:28.006 align:middle
+que ya resuelven este problema.
+
+00:02:28.576 --> 00:02:30.196 align:middle
+Mi favorita es Foundry.
+
+00:02:31.326 --> 00:02:39.266 align:middle
+Ejecuta: Si has visto nuestro tutorial
+sobre Doctrine, ¡recordarás Foundry!
+
+00:02:39.736 --> 00:02:42.576 align:middle
+Pero puede que no conozcas
+sus superpoderes de prueba...
+
+00:02:42.836 --> 00:02:44.806 align:middle
+que es donde realmente brilla.
+
+00:02:45.356 --> 00:02:48.636 align:middle
+El principal objetivo de esta biblioteca
+es ayudar a crear datos ficticios,
+
+00:02:48.976 --> 00:02:50.996 align:middle
+y de eso hablaremos pronto.
+
+00:02:51.496 --> 00:02:56.116 align:middle
+Pero también viene con una forma superfácil
+de vaciar tu base de datos entre cada prueba.
+
+00:02:56.826 --> 00:03:01.336 align:middle
+Para utilizarlo, en la parte superior de
+tu clase de prueba, di use ResetDatabase...
+
+00:03:01.656 --> 00:03:03.926 align:middle
+y también otro trait llamado Factories.
+
+00:03:05.306 --> 00:03:10.956 align:middle
+Ejecuta las pruebas: symfony php vendor/bin/phpunit
+tests/Integration/Repository/LockDownRepositoryTest.php
+
+00:03:10.956 --> 00:03:13.896 align:middle
+¡Pasan! ¡
+
+00:03:13.896 --> 00:03:15.646 align:middle
+Podemos ejecutarlas una y otra vez! Antes de
+
+00:03:15.646 --> 00:03:18.156 align:middle
+cada método de prueba individual,
+¡vacia la base de datos! Por
+
+00:03:18.156 --> 00:03:22.656 align:middle
+cierto, hay otra biblioteca que hace lo
+mismo llamada dama/doctrine-test-bundle , que
+
+00:03:22.956 --> 00:03:26.116 align:middle
+puede ser incluso más rápida
+que ResetDatabase de Foundry.
+
+00:03:26.236 --> 00:03:30.236 align:middle
+No dudes en instalarla, y luego
+utiliza Foundry sólo para las
+
+00:03:30.236 --> 00:03:32.756 align:middle
+cosas de fábrica de las que hablaremos pronto.
+
+00:03:32.996 --> 00:03:34.996 align:middle
+Funcionan muy bien juntos. Antes de
+
+00:03:36.176 --> 00:03:40.476 align:middle
+continuar, ¡probablemente te hayas dado cuenta
+de que tenemos un montón de desaprobaciones! Ver
+
+00:03:41.026 --> 00:03:43.046 align:middle
+desaprobaciones es genial... pero
+
+00:03:43.246 --> 00:03:48.856 align:middle
+una desaprobación indirecta significa que no es nuestro
+código el que está provocando la desaprobación: es
+
+00:03:49.216 --> 00:03:53.716 align:middle
+una biblioteca llamando a un método
+desaprobado de otra biblioteca.
+
+00:03:54.406 --> 00:03:56.036 align:middle
+No me preocupan demasiado... así que vamos a
+
+00:03:56.306 --> 00:03:58.846 align:middle
+silenciarlos durante el
+resto del tutorial. Estas
+
+00:03:59.456 --> 00:04:03.746 align:middle
+advertencias de desaprobación provienen
+del paquete phpunit-bridge de Symfony, y
+
+00:04:03.996 --> 00:04:06.006 align:middle
+podemos controlar cómo funcionan. Abre
+
+00:04:06.706 --> 00:04:08.986 align:middle
+phpunit.xml.dist.
+
+00:04:09.546 --> 00:04:12.026 align:middle
+Aquí abajo, dentro de la sección php, añade
+
+00:04:12.516 --> 00:04:17.226 align:middle
+env para establecer una variable de entorno
+llamada SYMFONY_DEPRECATIONS_HELPER. Para
+
+00:04:17.226 --> 00:04:24.106 align:middle
+el valor, una forma fácil de silenciar estas advertencias es enviarlas
+a un archivo de registro en su lugar: logFile=var/log/deprecations.log.
+
+00:04:24.756 --> 00:04:28.406 align:middle
+Ciérralo.
+
+00:04:29.266 --> 00:04:30.206 align:middle
+Ahora,
+
+00:04:31.686 --> 00:04:36.096 align:middle
+cuando ejecutemos las pruebas:
+¡Limpio y ordenado! Y
+
+00:04:36.666 --> 00:04:39.836 align:middle
+las deprecaciones siguen esperándonos en
+el archivo de registro. A continuación
+
+00:04:40.896 --> 00:04:46.686 align:middle
+¡aprovechemos las Fábricas de Foundry para que
+sembrar nuestra base de datos sea una absoluta delicia!
