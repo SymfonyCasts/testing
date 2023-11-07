@@ -63,6 +63,8 @@ between each test.
 To use it, at the top of your test class, say use `ResetDatabase`... and also another
 trait called `Factories`.
 
+[[[ code('e2daa9c1e9') ]]]
+
 Run the tests:
 
 ```terminal
@@ -92,6 +94,8 @@ Open up `phpunit.xml.dist`. Down here, inside the `php` section, add `env`
 to set an environment variable called `SYMFONY_DEPRECATIONS_HELPER`. For the value,
 an easy way to silence these warnings is to send them to a log file instead:
 `logFile=var/log/deprecations.log`.
+
+[[[ code('0dcdd9d33e') ]]]
 
 Close that up. Now when we run the tests:
 
