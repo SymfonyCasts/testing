@@ -4,7 +4,7 @@ En nuestra aplicación, si quisiéramos utilizar `LockDownRepository` para hacer
 
 Ahora queremos hacer lo mismo en nuestra prueba: en lugar de crear el objeto manualmente, queremos pedirle a Symfony que nos proporcione el servicio real que está configurado para hablar con la base de datos real, para que pueda hacer su lógica real. ¡De verdad!
 
-## Arrancar el núcleo
+## Iniciando el Kernel
 
 Para obtener un servicio dentro de una prueba, necesitamos arrancar Symfony y acceder a su contenedor de servicios: el objeto místico que contiene todos los servicios de nuestra aplicación.
 
