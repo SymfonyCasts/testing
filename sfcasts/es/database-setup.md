@@ -8,7 +8,7 @@ Empieza igual que antes: `self::bootKernel()`. Lo complicado de esta prueba es q
 
 Esta es una parte habitual de las pruebas de integración, ya que con frecuencia hablan con la base de datos.
 
-## Sembrar la base de datos
+## Alimentar la base de datos
 
 ¡No hay problema! ¡Vamos a crear un bloqueo! Añade `$lockDown = new LockDown()`,`$lockDown->setReason()` para que sepamos por qué se produce el bloqueo, y`$lockDown->setCreatedAt()` a, qué tal, hace 1 día. Esa parte aún no es superimportante. Ah, y no necesitamos establecer el estado porque, si miras en la clase, aparece por defecto `ACTIVE`.
 
@@ -30,7 +30,7 @@ Y... oh... explota. Veamos... ¡Ah! ¡Tiene problemas para conectarse a la base 
 
 Olvidándonos por un momento de las pruebas, ¡éste es un problema familiar! La clave para conectar nuestra aplicación a la base de datos es la variable de entorno `DATABASE_URL`. Yo estoy utilizando Postgres, pero eso no importa.
 
-## Manejo especial del .entorno para las Pruebas
+## Manejo especial del .env para las Pruebas
 
 Normalmente, cuando configuramos nuestro entorno local, personalizamos `DATABASE_URL`aquí en `.env`... o creamos un archivo `.env.local` y lo anulamos allí.
 
