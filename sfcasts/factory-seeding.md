@@ -26,12 +26,16 @@ But this class will make it easy to create `LockDown` objects, even setting
 `createdAt` to a random `DateTime`, `reason` to some random text, and `status`
 randomly to one of the valid statuses, by default.
 
+[[[ code('6d9a2e967b') ]]]
+
 ## Using the Factory in a Test
 
 Using this in a test is a delight. Say `LockDownFactory::createOne()`.
 Here, we can pass an array of any field that we want to *explicitly* set. The only
 thing we care about is that this `LockDown` has an `ACTIVE` status. So, set
 `status` to `LockDownStatus::ACTIVE`.
+
+[[[ code('c6e87cb50e') ]]]
 
 That's it! We don't need to create this `LockDown` and we don't need the
 EntityManager. That one call takes care of everything.
@@ -61,6 +65,8 @@ So it looks and acts like your normal object, but with some extra methods. That'
 not important for us right now, I just wanted you to be aware of it. If you do need
 the *real* entity object, you can call `->object()` to get it.
 
+[[[ code('a31edddd11') ]]]
+
 ## Adding More Objects
 
 Anyway, now that adding data is *so* simple, we can quickly make our test more robust.
@@ -69,6 +75,8 @@ objects with `LockDownStatus::ENDED`.
 
 To make sure our query looks only at the *newest* `LockDown`, for the active one,
 set its `createdAt` to `-1 day`. And for the `ENDED`, set these to something older.
+
+[[[ code('665593bdae') ]]]
 
 Let's see if our query is robust enough to still behave correctly.
 
@@ -82,9 +90,13 @@ But... actually... management has some extra tricky rules around a lockdown.
 Copy this test, paste it, and rename it to
 `testIsInLockdownReturnsFalseIfTheMostRecentIsNotActive`.
 
+[[[ code('50bd43d597') ]]]
+
 To explain management's weird rule, let me tweak the data. Make the first `LockDown`
 `ENDED`... then the next, older 5 status `ACTIVE`. Finally, `assertFalse()` at
 the bottom.
+
+[[[ code('8c948d8bfd') ]]]
 
 That... might look confusing... and it kind of is. According to management, when
 determining if we're in lockdown, we should ONLY look at the MOST recent `LockDown`
@@ -104,6 +116,8 @@ If we *don't* find *any* lockdowns, return false. Else, I'll add an `assert()`
 to help my editor... then return true *if* the status does not equal
 `LockDownStatus::ENDED`.
 
+[[[ code('80177d2a3a') ]]]
+
 And now:
 
 ```terminal-silent
@@ -122,8 +136,12 @@ Head over to `MainController`... and autowire `LockdownRepository $lockdownRepos
 Then throw a new variable in the template called `isLockedDown` set to
 `$lockdownRepository->isInLockdown()`.
 
+[[[ code('2514f65635') ]]]
+
 Finally, in the template - `templates/main/index.html.twig` - I already have a
 `_lockdownAlert.html.twig` template. If, `isLockedDown`, include that.
+
+[[[ code('8115705ee9') ]]]
 
 Moment of truth. Refresh. Run for your life! We are in lockdown!
 
