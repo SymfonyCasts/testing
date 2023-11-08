@@ -1,0 +1,324 @@
+WEBVTT
+
+00:00:01.016 --> 00:00:04.686 align:middle
+Tengo que confesarte algo: ¡He estado
+haciéndonos trabajar demasiado!
+
+00:00:05.266 --> 00:00:07.696 align:middle
+Para sembrar la base de datos,
+instanciamos la entidad,
+
+00:00:07.756 --> 00:00:10.546 align:middle
+cogemos el Gestor de Entidades y, a
+continuación, la persistimos y la vaciamos.
+
+00:00:11.126 --> 00:00:16.116 align:middle
+Esto no tiene nada de malo, pero Foundry está
+a punto de hacernos la vida mucho más fácil.
+
+00:00:16.886 --> 00:00:22.046 align:middle
+Ejecuta en tu terminal: php bin/console
+make:factory Este comando viene de Foundry.
+
+00:00:22.466 --> 00:00:24.846 align:middle
+Seleccionaré generar todas las fábricas. La
+
+00:00:25.386 --> 00:00:29.916 align:middle
+idea es que crees una fábrica para
+cada entidad para la que quieras
+
+00:00:29.916 --> 00:00:34.696 align:middle
+crear datos ficticios, ya sea en una
+prueba o para tus fixtures normales.
+
+00:00:35.246 --> 00:00:37.986 align:middle
+Sólo necesitamos LockDownFactory,
+pero eso está bien.
+
+00:00:38.656 --> 00:00:42.866 align:middle
+Gira y mira src/Factory/LockDownFactory.php.
+
+00:00:42.976 --> 00:00:45.746 align:middle
+No voy a hablar demasiado
+de estas clases fábrica:
+
+00:00:46.016 --> 00:00:48.196 align:middle
+ya las cubrimos en nuestro
+tutorial de Doctrine.
+
+00:00:48.796 --> 00:00:53.756 align:middle
+Pero esta clase facilitará la creación de objetos
+LockDown, incluso estableciendo createdAt en
+
+00:00:53.756 --> 00:00:59.706 align:middle
+un DateTime aleatorio, reason en
+un texto aleatorio y status en uno
+
+00:00:59.706 --> 00:01:02.136 align:middle
+de los estados válidos, por defecto.
+
+00:01:03.266 --> 00:01:05.986 align:middle
+Utilizar esto en una prueba es una delicia.
+
+00:01:06.146 --> 00:01:09.966 align:middle
+Digamos LockDownFactory::createOne().
+
+00:01:10.616 --> 00:01:15.826 align:middle
+Aquí, podemos pasar un array de cualquier
+campo que queramos establecer explícitamente.
+
+00:01:16.216 --> 00:01:20.506 align:middle
+Lo único que nos importa es que
+este LockDown tenga un estado ACTIVE.
+
+00:01:21.206 --> 00:01:24.806 align:middle
+Así que establecemos status
+en LockDownStatus::ACTIVE.
+
+00:01:24.956 --> 00:01:27.246 align:middle
+Ya está
+
+00:01:27.736 --> 00:01:31.896 align:middle
+No necesitamos crear este LockDown y
+no necesitamos el Gestor de Entidades.
+
+00:01:32.216 --> 00:01:34.846 align:middle
+Esa única llamada se encarga de todo.
+
+00:01:35.716 --> 00:01:40.356 align:middle
+Observa, cuando ejecutemos la prueba: ¡Pasa!
+
+00:01:40.546 --> 00:01:41.576 align:middle
+Me encanta.
+
+00:01:42.486 --> 00:01:47.166 align:middle
+Por cierto, el método LockDownRepository
+devuelve el nuevo objeto LockDown...
+
+00:01:47.166 --> 00:01:48.906 align:middle
+lo que a menudo puede ser útil.
+
+00:01:49.266 --> 00:01:52.376 align:middle
+Pero en realidad está envuelto
+en un objeto proxy especial.
+
+00:01:52.486 --> 00:01:56.266 align:middle
+Así que si ahora ejecutamos la
+prueba, verás que es un proxy...
+
+00:01:56.666 --> 00:01:58.736 align:middle
+y el LockDown está escondido dentro.
+
+00:01:59.636 --> 00:02:01.326 align:middle
+¿Por qué hace eso Foundry?
+
+00:02:01.956 --> 00:02:05.916 align:middle
+Bueno, si vas a buscar su
+documentación, tienen toda una sección
+
+00:02:05.916 --> 00:02:09.176 align:middle
+sobre el uso de esta biblioteca
+dentro de las pruebas.
+
+00:02:09.376 --> 00:02:12.116 align:middle
+Un punto habla del proxy
+de objetos. El proxy te
+
+00:02:12.526 --> 00:02:14.986 align:middle
+permite llamar a todos los métodos normales
+
+00:02:14.986 --> 00:02:23.486 align:middle
+de tu entidad más varios métodos adicionales, como
+->save(), ->remove() o incluso ->repository()
+
+00:02:23.606 --> 00:02:26.856 align:middle
+para obtener otro objeto proxy
+que envuelve al repositorio.
+
+00:02:26.856 --> 00:02:31.216 align:middle
+Así que parece y actúa como tu objeto
+normal, pero con algunos métodos adicionales.
+
+00:02:31.796 --> 00:02:35.436 align:middle
+Eso no es importante para nosotros ahora,
+sólo quería que lo tuvieras en cuenta.
+
+00:02:36.256 --> 00:02:40.686 align:middle
+Si necesitas el objeto entidad real, puedes
+llamar a ->object() para obtenerlo.
+
+00:02:41.596 --> 00:02:47.096 align:middle
+De todos modos, ahora que añadir datos es tan sencillo,
+podemos hacer rápidamente que nuestra prueba sea más robusta.
+
+00:02:47.586 --> 00:02:50.966 align:middle
+Para ver si podemos engañar a mi
+consulta, llama a createMany()...
+
+00:02:51.706 --> 00:02:56.746 align:middle
+para crear 5 objetos LockDown
+con LockDownStatus::ENDED.
+
+00:02:58.246 --> 00:03:01.496 align:middle
+Para asegurarnos de que nuestra consulta sólo mira
+el LockDown más reciente , para el activo, establece
+
+00:03:02.036 --> 00:03:05.826 align:middle
+su createdAt en -1 day.
+
+00:03:07.746 --> 00:03:10.746 align:middle
+Y para los ENDED, establécelos
+en algo más antiguo.
+
+00:03:11.846 --> 00:03:15.956 align:middle
+Veamos si nuestra consulta es lo suficientemente
+robusta como para seguir comportándose correctamente.
+
+00:03:17.496 --> 00:03:19.656 align:middle
+¡Lo es! Pero...
+
+00:03:19.866 --> 00:03:20.716 align:middle
+en realidad...
+
+00:03:20.806 --> 00:03:24.626 align:middle
+la gestión tiene algunas reglas extra
+complicadas en torno a un bloqueo.
+
+00:03:25.476 --> 00:03:28.886 align:middle
+Copia esta prueba, pégala
+y cámbiale el nombre
+
+00:03:28.886 --> 00:03:35.586 align:middle
+a testIsInLockdownReturnsFalseIfTheMostRecentIsNotActive.
+Para
+
+00:03:36.656 --> 00:03:40.226 align:middle
+explicar la extraña regla de la dirección,
+permíteme modificar los datos. Haz que
+
+00:03:40.856 --> 00:03:42.596 align:middle
+el primer LockDown sea
+ENDED... luego el siguiente
+
+00:03:42.896 --> 00:03:45.996 align:middle
+, más antiguo de 5 estados
+ACTIVE. Por último,
+
+00:03:46.216 --> 00:03:49.396 align:middle
+assertFalse() al final. Eso...
+
+00:03:49.956 --> 00:03:51.896 align:middle
+puede parecer confuso... y
+
+00:03:52.056 --> 00:03:53.876 align:middle
+en cierto modo lo es.
+
+00:03:54.266 --> 00:03:59.686 align:middle
+Según la dirección, al determinar si estamos
+en bloqueo, SÓLO debemos mirar el estado
+
+00:03:59.686 --> 00:04:02.206 align:middle
+LockDown MÁS reciente. Si
+
+00:04:02.536 --> 00:04:04.856 align:middle
+hay bloqueos activos más antiguos... esos,
+
+00:04:05.086 --> 00:04:07.426 align:middle
+aparentemente, no importan. No
+
+00:04:07.936 --> 00:04:12.686 align:middle
+es sorprendente que, cuando probamos
+las pruebas: Ésta falla. Pero,
+
+00:04:13.196 --> 00:04:16.786 align:middle
+mira el lado bueno: ¡esa prueba
+fue superrápida de escribir! Y
+
+00:04:17.106 --> 00:04:20.206 align:middle
+ahora podemos entrar en LockDownRepository
+para arreglar las cosas.
+
+00:04:20.976 --> 00:04:23.106 align:middle
+Avanzaré por algunos cambios que
+
+00:04:23.286 --> 00:04:26.646 align:middle
+recuperan el LockDown más reciente,
+independientemente de su estado. Si no
+
+00:04:28.986 --> 00:04:32.946 align:middle
+encontramos ningún bloqueo,
+devolveré false. Si no,
+
+00:04:32.946 --> 00:04:36.156 align:middle
+añadiré un assert() para ayudar
+a mi editor... y devolveré
+
+00:04:38.116 --> 00:04:44.056 align:middle
+true si el estado no es igual
+a LockDownStatus::ENDED. Y
+
+00:04:46.286 --> 00:04:49.366 align:middle
+ahora ¡Somos verdes! Llevamos
+
+00:04:50.326 --> 00:04:52.516 align:middle
+tanto tiempo viviendo en nuestro terminal que
+
+00:04:52.886 --> 00:04:55.926 align:middle
+creo que deberíamos celebrarlo
+utilizándolo en nuestro sitio. En
+
+00:04:55.926 --> 00:05:00.536 align:middle
+los accesorios, he añadido un
+LockDown activo por defecto. Dirígete
+
+00:05:01.466 --> 00:05:02.556 align:middle
+a MainController... y
+
+00:05:03.906 --> 00:05:07.436 align:middle
+autoconecta LockdownRepository
+$lockdownRepository. A continuación,
+
+00:05:08.986 --> 00:05:13.206 align:middle
+lanza una nueva variable en la plantilla
+llamada isLockedDown ajustada a
+
+00:05:13.206 --> 00:05:16.496 align:middle
+$lockdownRepository->isInLockdown().
+Por último, en
+
+00:05:16.616 --> 00:05:21.926 align:middle
+la plantilla - templates/main/index.html.twig -
+
+00:05:22.176 --> 00:05:26.176 align:middle
+ya tengo una plantilla
+_lockdownAlert.html.twig. Si,
+
+00:05:27.026 --> 00:05:29.686 align:middle
+isLockedDown, incluye eso. Momento
+
+00:05:33.046 --> 00:05:34.686 align:middle
+de la verdad. Actualiza.
+
+00:05:35.776 --> 00:05:38.866 align:middle
+Ejecuta: ¡Sálvese quien pueda! ¡
+
+00:05:38.866 --> 00:05:40.656 align:middle
+Estamos en bloqueo! Siguiente:
+
+00:05:41.576 --> 00:05:44.246 align:middle
+necesitamos una forma de
+desactivar el bloqueo. Porque,
+
+00:05:44.586 --> 00:05:46.496 align:middle
+si hago clic en esto,... ¡no hace
+
+00:05:46.496 --> 00:05:47.786 align:middle
+nada! Para
+
+00:05:48.256 --> 00:05:51.736 align:middle
+ayudarnos con esta nueva tarea, vamos a
+utilizar una prueba de integración en
+
+00:05:51.736 --> 00:05:56.676 align:middle
+una clase diferente: en uno de
+nuestros servicios normales.
