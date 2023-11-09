@@ -18,11 +18,15 @@ some logic... because it's beautifully boring. We have a method called
 sets the status to `ENDED` and flushes. Up here, we autowire `LockdownRepository`
 and `EntityManagerInterface`.
 
+[[[ code('cc9cf735a8') ]]]
+
 The `findMostRecent()` method doesn't exist yet on the repository. So open
 `LockDownRepository`... and let's do some refactoring. Create a new public function
 called `findMostRecent()`, which will return a nullable `Lockdown`. Then grab the
 code from below, paste, return that and call it: `$lockdown` equals
 `$this->findMostRecent()`.
+
+[[[ code('6c51f5c855') ]]]
 
 And yes, you could create an integration test for `findMostRecent()`, but we'll skip
 it.
@@ -45,8 +49,11 @@ Mocks and the container are two different tools to help you get your work done.
 
 In the `Integration/` directory, create a new `Service/` directory... then a new
 PHP class: `LockdownHelperTest`. This time, go straight to extending `KernelTestCase`,
-then use our two favorite traits: `use ResetDatabaseTrait` and `Factories`. Since
-we'll use these traits in *every* integration test, you can also create a base
+then use our two favorite traits: `use ResetDatabaseTrait` and `Factories`. 
+
+[[[ code('260ffd8d3d') ]]]
+
+Since we'll use these traits in *every* integration test, you can also create a base
 class. Somewhere inside of `tests/`, you could create an abstract
 `BaseKernelTestCase`, put the traits there, then have all of your integration tests
 extend *that*.
@@ -54,20 +61,28 @@ extend *that*.
 Down here, let's whip up our test: `testEndCurrentLockdown()`. And we know how to
 start: `self::bootKernel()`.
 
+[[[ code('e042a79100') ]]]
+
 Let's think. If we're going to end a lockdown... we need an active `LockDown`
 in the database. Say `$lockdown` equals `LockDownFactory::createOne()`... and
 pass `status` set to `LockDownStatus::ACTIVE`.
+
+[[[ code('1fa2c58b1d') ]]]
 
 Since we know our database will start empty, we know *this* will be the item
 that our query returns. Down here, grab the `$lockDownHelper` with
 `self::getContainer()->get(LockDownHelper::class)`... and use the `assert()` trick
 to tell our editor that this is an `instanceof` `LockDownHelper`.
 
+[[[ code('19150f0967') ]]]
+
 With the "Arrange" part of the test done, let's act:
 `$lockDownHelper->endCurrentLockDown()`.
 
 With any luck, this record *should* have just changed its status in the database.
 To prove it, assert that `LockDownStatus::ENDED` equals `$lockDown->getStatus()`.
+
+[[[ code('7951c2f338') ]]]
 
 ## Auto-Refreshing in Action
 
@@ -116,6 +131,8 @@ writing this code, certainly we intended to... ya know, *use* it.
 In the `endLockDown()` action, autowire `LockDownHelper $lockDownHelper`... and I'm
 not even going to call anything on it yet. Just having it here will be enough.
 
+[[[ code('9029f9e08b') ]]]
+
 And now:
 
 ```terminal-silent
@@ -126,6 +143,8 @@ The test passes! Woo!
 
 Let's use it: call `$lockDownHelper->endCurrentLockDown()`... then redirect back
 to the homepage.
+
+[[[ code('ba36085629') ]]]
 
 Let's try it! Refresh, we're in a lockdown... "End Lockdown"... it's gone. All
 the dinos are back in their pens.
