@@ -1,0 +1,425 @@
+WEBVTT
+
+00:00:00.036 --> 00:00:03.596 align:middle
+Si pulsas este botón para
+finalizar el bloqueo...
+
+00:00:03.796 --> 00:00:05.636 align:middle
+aparece una declaración die.
+
+00:00:05.826 --> 00:00:07.256 align:middle
+Creé un controlador...
+
+00:00:07.256 --> 00:00:08.356 align:middle
+pero me dio pereza...
+
+00:00:08.956 --> 00:00:11.736 align:middle
+Para finalizar un bloqueo, tenemos
+que encontrar el bloqueo activo,
+
+00:00:11.916 --> 00:00:14.846 align:middle
+cambiar su estado a finalizado
+y guardarlo en la base de datos.
+
+00:00:15.216 --> 00:00:16.286 align:middle
+Muy fácil.
+
+00:00:16.636 --> 00:00:20.606 align:middle
+Pero en lugar de poner esa lógica dentro de
+nuestro controlador, vamos a crear un servicio.
+
+00:00:21.216 --> 00:00:24.876 align:middle
+Podríamos usar TDD, pero voy
+a crear la clase rápidamente,
+
+00:00:25.036 --> 00:00:28.196 align:middle
+y luego haremos pruebas:
+será más fácil de entender.
+
+00:00:29.226 --> 00:00:32.506 align:middle
+Dentro de src/Service/, añade
+una nueva clase LockdownHelper.
+
+00:00:34.016 --> 00:00:35.586 align:middle
+Pondré algo de lógica...
+
+00:00:36.046 --> 00:00:38.366 align:middle
+porque es muy aburrido.
+
+00:00:39.486 --> 00:00:44.526 align:middle
+Tenemos un método llamado endCurrentLockDown(),
+que llama a un método findMostRecent()
+
+00:00:44.526 --> 00:00:48.726 align:middle
+en el repositorio, establece
+el estado en ENDED y lo vacía.
+
+00:00:49.246 --> 00:00:54.436 align:middle
+Aquí arriba, autoconectamos
+LockdownRepository y EntityManagerInterface.
+
+00:00:54.436 --> 00:00:57.906 align:middle
+El método findMostRecent() aún
+no existe en el repositorio.
+
+00:00:58.296 --> 00:00:59.946 align:middle
+Así que abre LockDownRepository...
+
+00:01:00.336 --> 00:01:02.346 align:middle
+y vamos a hacer algo de refactorización.
+
+00:01:03.616 --> 00:01:06.316 align:middle
+Crea una nueva función pública
+llamada findMostRecent(),
+
+00:01:06.516 --> 00:01:08.776 align:middle
+que devolverá un Lockdown anulable.
+
+00:01:10.256 --> 00:01:19.116 align:middle
+Luego coge el código de abajo,
+pégalo, devuélvelo y llámalo:
+
+00:01:19.116 --> 00:01:22.366 align:middle
+$lockdown igual a $this->findMostRecent().
+
+00:01:22.956 --> 00:01:28.306 align:middle
+Y sí, podrías crear una prueba de integración
+para findMostRecent(), pero nos la saltaremos.
+
+00:01:29.286 --> 00:01:30.856 align:middle
+De vuelta en LockDownHelper...
+
+00:01:31.516 --> 00:01:32.616 align:middle
+¡esto es feliz!
+
+00:01:33.086 --> 00:01:35.906 align:middle
+Antes de utilizar esta
+clase, ¡vamos a probarla!
+
+00:01:35.906 --> 00:01:41.126 align:middle
+La primera pregunta es, ¿necesitamos una
+prueba unitaria o una prueba de integración?
+
+00:01:41.446 --> 00:01:43.546 align:middle
+Y sinceramente, cualquiera
+de las dos estaría bien.
+
+00:01:43.966 --> 00:01:47.666 align:middle
+Podríamos hacer una prueba unitaria,
+burlarnos de LockdownRepository,
+
+00:01:47.936 --> 00:01:53.006 align:middle
+asegurarnos de que se llama a findMostRecent(),
+y de que establece el estado en ENDED
+
+00:01:53.006 --> 00:01:55.416 align:middle
+y llama a flush() en el gestor de entidades.
+
+00:01:55.926 --> 00:02:01.376 align:middle
+Así que sí, una prueba unitaria estaría
+bien: el Mocking no es demasiado complicado...
+
+00:02:01.596 --> 00:02:03.756 align:middle
+y probaría la lógica bastante bien.
+
+00:02:04.326 --> 00:02:09.896 align:middle
+O podemos escribir una prueba de integración, que se
+ejecutará un poco más despacio, pero será más realista.
+
+00:02:09.946 --> 00:02:14.306 align:middle
+Por el bien de este tutorial, vamos
+a hacer una prueba de integración.
+
+00:02:14.716 --> 00:02:16.756 align:middle
+Además, puedes hacer ambas cosas.
+
+00:02:17.116 --> 00:02:21.766 align:middle
+No hay nada que te impida arrancar
+el núcleo en un método de prueba...
+
+00:02:21.766 --> 00:02:26.036 align:middle
+y utilizar mocks en otro método
+de prueba de la misma clase.
+
+00:02:26.526 --> 00:02:30.426 align:middle
+Mocks y el contenedor son dos herramientas
+diferentes para ayudarte a hacer tu trabajo.
+
+00:02:31.456 --> 00:02:34.306 align:middle
+En el directorio Integration/, crea
+un nuevo directorio Service/...
+
+00:02:35.186 --> 00:02:39.486 align:middle
+y luego una nueva clase
+PHP: LockdownHelperTest.
+
+00:02:39.486 --> 00:02:42.506 align:middle
+Esta vez, ve directamente
+a extender KernelTestCase,
+
+00:02:43.046 --> 00:02:48.526 align:middle
+y luego utiliza nuestros dos traits
+favoritos: use ResetDatabaseTrait y Factories.
+
+00:02:48.686 --> 00:02:52.796 align:middle
+Como utilizaremos estos rasgos en
+todas las pruebas de integración,
+
+00:02:52.986 --> 00:02:54.966 align:middle
+también puedes crear una clase base.
+
+00:02:54.966 --> 00:02:59.806 align:middle
+En algún lugar dentro de tests/, podrías
+crear una clase abstracta BaseKernelTestCase,
+
+00:03:00.166 --> 00:03:04.696 align:middle
+poner los rasgos allí, y luego hacer que
+todas tus pruebas de integración la extiendan.
+
+00:03:05.406 --> 00:03:10.286 align:middle
+Aquí abajo, vamos a montar nuestra
+prueba: testEndCurrentLockdown().
+
+00:03:10.926 --> 00:03:14.706 align:middle
+Y ya sabemos cómo empezar: self::bootKernel().
+
+00:03:15.696 --> 00:03:16.776 align:middle
+Pensemos.
+
+00:03:17.126 --> 00:03:19.206 align:middle
+Si vamos a terminar un bloqueo...
+
+00:03:19.416 --> 00:03:22.256 align:middle
+necesitamos un LockDown
+activo en la base de datos.
+
+00:03:22.256 --> 00:03:27.136 align:middle
+Digamos que $lockdown es igual a
+LockDownFactory::createOne()...
+
+00:03:28.096 --> 00:03:31.666 align:middle
+y pasamos status igual a
+LockDownStatus::ACTIVE.
+
+00:03:31.876 --> 00:03:34.946 align:middle
+Como sabemos que nuestra base
+de datos empezará vacía,
+
+00:03:35.076 --> 00:03:38.316 align:middle
+sabemos que éste será el elemento
+que devuelva nuestra consulta.
+
+00:03:39.516 --> 00:03:41.566 align:middle
+Aquí abajo, coge el $lockDownHelper
+
+00:03:41.566 --> 00:03:46.976 align:middle
+con
+self::getContainer()->get(LockDownHelper::class)... y
+
+00:03:47.406 --> 00:03:52.736 align:middle
+utiliza el truco assert() para decirle a nuestro editor
+que se trata de un instanceof LockDownHelper . Con
+
+00:03:54.116 --> 00:04:00.086 align:middle
+la parte "Organizar" de la prueba hecha, actuemos:
+$lockDownHelper->endCurrentLockDown(). Con
+
+00:04:01.016 --> 00:04:05.836 align:middle
+un poco de suerte, este registro debería haber
+cambiado su estado en la base de datos. Para probarlo
+
+00:04:06.416 --> 00:04:13.536 align:middle
+, afirma que LockDownStatus::ENDED es
+igual a $lockDown->getStatus() . ¡ Esa
+
+00:04:13.536 --> 00:04:15.616 align:middle
+prueba tiene buena pinta! Aunque
+
+00:04:16.106 --> 00:04:19.216 align:middle
+hay un pequeño detalle que debo
+mencionar. En primer lugar...
+
+00:04:19.436 --> 00:04:22.486 align:middle
+Voy a decir una mentira. Al
+
+00:04:23.206 --> 00:04:27.486 align:middle
+comprobar $lockDown->getStatus(), en
+realidad sólo estamos comprobando que
+
+00:04:27.486 --> 00:04:32.116 align:middle
+el código ha cambiado el estado
+de este objeto LockDown...
+
+00:04:32.716 --> 00:04:37.916 align:middle
+en realidad no estamos comprobando si su nuevo
+valor se ha guardado en la base de datos. Para
+
+00:04:38.446 --> 00:04:42.216 align:middle
+comprobar eso, podríamos hacer una
+nueva consulta a la base de datos, como
+
+00:04:42.536 --> 00:04:45.786 align:middle
+a través de
+LockDownFactory::repository()... y luego
+
+00:04:46.446 --> 00:04:48.146 align:middle
+encontrar la más reciente.
+
+00:04:48.866 --> 00:04:51.606 align:middle
+Hablaremos más sobre el acceso directo
+al repositorio más adelante. Ahora,
+
+00:04:52.796 --> 00:04:54.586 align:middle
+la verdad.
+
+00:04:55.166 --> 00:05:01.146 align:middle
+Deberías pensar críticamente sobre lo que estás
+probando o no, como acabamos de hacer. Sin embargo,
+
+00:05:01.396 --> 00:05:04.956 align:middle
+como hemos creado la variable
+$lockDown a través de
+
+00:05:04.956 --> 00:05:08.566 align:middle
+Foundry, está envuelta en un Proxy. Una
+
+00:05:09.166 --> 00:05:13.296 align:middle
+de las principales características de
+un Proxy se llama "auto-refrescar". Cada
+
+00:05:13.836 --> 00:05:19.116 align:middle
+vez que accedes a una propiedad o llamas a un
+método de tu entidad, entre bastidores, Found ry
+
+00:05:19.426 --> 00:05:23.556 align:middle
+busca los datos más recientes en la base de datos
+y los establece. Por tanto, si no hubiéramos
+
+00:05:24.056 --> 00:05:29.326 align:middle
+volcado el cambio de estado en la base
+de datos, la prueba habría fallado.
+
+00:05:29.446 --> 00:05:34.036 align:middle
+De hecho, Foundry habría visto que
+teníamos cambios sin guardar en
+
+00:05:34.036 --> 00:05:36.706 align:middle
+esa entidad, y nos habría gritado.
+
+00:05:36.976 --> 00:05:37.886 align:middle
+Genial. Vale,
+
+00:05:38.876 --> 00:05:40.556 align:middle
+¡probemos esto! Ejecuta:
+
+00:05:41.286 --> 00:05:45.776 align:middle
+symfony php vendor/bin/phpunit
+tests/Integration/Service/LockDownHelperTest.php Y...
+
+00:05:45.776 --> 00:05:48.986 align:middle
+¿qué demonios
+
+00:05:49.376 --> 00:05:50.026 align:middle
+? Dice
+
+00:05:50.486 --> 00:05:54.216 align:middle
+El servicio o alias LockDownHelper
+ha sido eliminado o inlined
+
+00:05:54.216 --> 00:05:57.186 align:middle
+al compilar el contenedor. ¿Qué
+
+00:05:57.466 --> 00:05:58.616 align:middle
+significa esto? Vale, una
+
+00:05:59.256 --> 00:06:04.806 align:middle
+cosa muy guay del contenedor de servicios de Symfony
+es que si un servicio no es utilizado por nada
+
+00:06:04.806 --> 00:06:08.406 align:middle
+en tu aplicación, se elimina
+del contenedor... lo que hace que
+
+00:06:08.626 --> 00:06:10.776 align:middle
+nuestra aplicación sea más esbelta. En el
+
+00:06:11.516 --> 00:06:16.916 align:middle
+código real de nuestra aplicación, como
+controladores, repositorios y servicios, nadie
+
+00:06:17.126 --> 00:06:20.056 align:middle
+utiliza el servicio LockDownHelper. No
+
+00:06:20.496 --> 00:06:24.896 align:middle
+lo estamos autocableando en ningún
+controlador o servicio. Y así,
+
+00:06:25.406 --> 00:06:29.256 align:middle
+Symfony lo elimina del
+contenedor... lo que significa
+
+00:06:29.506 --> 00:06:31.846 align:middle
+que no está ahí en la prueba. La solución
+
+00:06:32.626 --> 00:06:33.736 align:middle
+para esto es ... ¡asegurarnos de que se
+
+00:06:34.216 --> 00:06:36.176 align:middle
+utiliza en alguna parte! Es decir,
+
+00:06:36.676 --> 00:06:40.446 align:middle
+si estamos escribiendo este código, seguro que
+teníamos la intención de... ya sabes, utilizarlo.
+
+00:06:40.716 --> 00:06:42.046 align:middle
+En la
+
+00:06:43.016 --> 00:06:47.216 align:middle
+acciónendLockDown(), autowire LockDownHelper
+$lockDownHelper... y ni siquiera voy a
+
+00:06:47.756 --> 00:06:51.166 align:middle
+llamar a nada todavía. Con tenerlo
+
+00:06:51.576 --> 00:06:54.176 align:middle
+aquí será suficiente. Y ahora:
+
+00:06:54.216 --> 00:06:57.176 align:middle
+¡La prueba pasa! ¡Guau! Vamos a
+
+00:06:57.386 --> 00:07:03.056 align:middle
+utilizarla: llama a
+$lockDownHelper->endCurrentLockDown()... y luego redirige
+
+00:07:03.346 --> 00:07:05.446 align:middle
+de nuevo a la página de
+inicio. ¡Vamos a probarlo
+
+00:07:08.086 --> 00:07:08.716 align:middle
+! Actualiza, estamos
+
+00:07:09.356 --> 00:07:11.276 align:middle
+en un bloqueo... "Fin del bloqueo"...
+
+00:07:11.546 --> 00:07:12.366 align:middle
+ha desaparecido.
+
+00:07:12.646 --> 00:07:13.766 align:middle
+Todos los
+
+00:07:14.096 --> 00:07:16.036 align:middle
+dinos han vuelto a sus
+corrales. Siguiente: Voy a
+
+00:07:16.116 --> 00:07:21.896 align:middle
+complicar las cosas introduciendo una situación
+que nos hará querer hacer pruebas unitarias
+
+00:07:21.896 --> 00:07:25.586 align:middle
+y pruebas de integración LockDownHelper. .. al
+
+00:07:25.826 --> 00:07:27.466 align:middle
+mismo tiempo. Eso nos llevará
+
+00:07:27.916 --> 00:07:30.776 align:middle
+a algo que yo llamo "mocking parcial".
