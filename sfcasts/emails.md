@@ -1,117 +1,98 @@
 # Emails
 
-Coming soon...
+*All right*, team! We've covered all of the *main* parts of integration testing! Woohoo! It's *delightfully* simple. It's just a *strategy* to grab the *real* services from a container and *test* them, which *ultimately* gives us a more realistic test.
 
-All right, team, we've covered all the main parts of integration testing, woohoo.
-It's really delightfully simple. It's just a strategy to grab the real services from
-a container and test them, which ultimately gives us a more realistic test. The
-downsides of integration tests are that they run slower than unit tests. And they're
-often more complex because you need to think about things like clearing the database
-and seeding the database. And sometimes you really do want to avoid some real things
-from happening like API calls. So in this case, we actually had to use mocking to
-avoid that. But like anything else, the right tool, unit testing or integration
-testing, just depends on the situation. Use both. All right, to finish the tutorial,
-let's show off how we can test a few more complex parts of our system, like testing
-whether emails were sent, or messenger messages were dispatched. To do this, we need
-to give Bob a new superpower, the ability to put the park into a lockdown. When he
-does this, our app should also send out an email to all park staff saying, hey, watch
-out for the dinosaurs. All right, so to help with this, I'm going to go into lockdown
-helper service. Lockdown helper. And create a new method. This will be what we call
-the put the park into lockdown. It's a public function. How about dino escaped? So
-it'll be avoid return type. And I'm just going to put some comments here for what
-we're actually going to do. So we just need to persist the lockdown the database and
-send an email to actually call this code and trigger lockdown. Let's create a new
-console command because those are fun. So I've been console make command. Let's call
-it app lockdown start. Simple enough that creates a single class. Let's go and check
-that out. Oh, there it is. And in here, we're going to inject the private lockdown
-helper lockdown helper. Make sure you call the parent constructor. That's good. And
-I'm going to delete a bunch of logic in here because this is going to be really
-simple. We're just going to say this dot lockdown helper dot dino escaped. And then
-how about IO caution? Lockdown started. Sweet. So this method doesn't do anything
-yet, but we can already try our command cheat and copy my command name from bin
-console app lockdown start. And we've got it sweet. So before we fill the logic into
-our lockdown helper, let's write a test for it. So we have one test for tests in
-current lockdown. And actually, before we even do there, let's do that trick where we
-add a private function to help us get out the service we're testing. So I'll say
-private function. Get lockdown helper, it's going to return a lockdown helper. And
-inside of here, we'll just copy the code from above and return it. And then the code
-up here can simplify to use just this arrow, get lockdown helper error and current
-lockdown. Alright, so now let's create our new test method. So our function test dino
-escaped persists lockdown inside, we're gonna start the same way that we always do by
-booting the kernel. And then we can call our method this arrow get lockdown helper,
-arrow dino escaped. Now we can run this test right now, if we want to, we could run
-symphony, PHP bin slash vendor bin PHP unit. I'll run that entire class. And it
-doesn't fail, we get risky because we haven't actually performed any assertions. But
-at least this isn't blowing up. What we want to assert is that this did insert a row
-into the database. So how can we do that? Well, of course, we can grab the entity
-manager or our repository service, make a query and then do some assertions on that.
-However, foundry comes with a nice little trick for this. So after we call our
-method, we can say lockdown factory. And usually we say things like create or create
-many. But this also has a method on it called repository. This is an object that's
-from foundry that wraps your repository. And you can actually call different methods
-on it. So we can actually call find most recent, we can treat it as if it's our real
-repository find most recent or is in lockdown. But it also has this assert thing on
-it. So we can say assert count one. So we're making sure that the there is one record
-in the database and we could go further and fetch that record and make sure its
-status is active, but I'm not going to worry about that. Alright, so let's run the
-test. This should fail and perfect it does. So let's go real quick. And I'll paste in
-some code that creates the lockdown and saves it. Easy enough. Good, boring code
-there. And now our test passes. Alright, so let's look at sending that email now
-before we do that, I'm actually going to add an assertion for that. So just like how
-we can assert things in the database, simply gives us some tools for asserting things
-like was an email sent, which would normally be kind of a hard thing to test for. We
-can do that by just saying this arrow assert email count. And we're not going to talk
-about any of these other methods because there's actually assert email address
-contains attachment contains HTML body contains, you can assert lots of things via
-email, I'm just going to assert that we sent one email during this request. And of
-course, since we're not sending that, it fails. But actually it fails, even because
-we don't have we don't even have mailer installed. So let's actually get that
-installed. To require symphony slash mailer Whoa, that's not what we want.
+The *downsides* of integration tests are that they run *slower* than unit tests, and they're often more *complex* because you need to think about things like clearing and seeding the database. And sometimes, we don't want real things (like API calls) to happen. In this case, we actually had to use *mocking* to avoid that. The big takeaway here is knowing how to use the right tool - unit testing or integration testing - for the right job. That's *situational* and it's okay to use *both*.
 
-So this composer requires Symfony Mailer, and if it asks you about docker
-configuration it's up to you. But I'm going to say yes permanently, we'll talk about
-what that did in a second, it doesn't really matter. Now just like with a database,
-of course with Mailer you're going to have to configure your Mailer connection
-parameters, and that's done in .n via Mailer underscore dsn. So I'm going to go ahead
-and uncomment this. Null is actually a great default, it means that your emails won't
-actually send in the dev or test environments, then you can override on your
-production environment to send to somewhere real. But null is a great thing. But if
-you did want to change this in .env to something else, I'd probably add this null
-transport to .env.test because it's really nice to not send any emails in the test
-environment. Alright so now let's try our test again. Because we have not sent any
-emails. So let's do that over in Lockdown Helper. Let's inject one more service in
-here, private Mailer interface, Mailer. And then down here since this isn't a Mailer
-tutorial, I'm just going to call a new function called send email alert. And then I'm
-going to paste that in. So perfect. And then I'll hit alt enter on this email to add
-the Symfony Component MIME use statement. And should be good. And got it, the test
-passes. By the way, it's not really related to testing. But one of the cool things is
-that if you use the Docker integration, when we installed Mailer, it actually added
-this little mail catcher service. So if you run Docker Compose down, and then let's
-go back up dash D, it actually creates a little mail catcher service here. And the
-cool thing is, we run our test again. Instead of the email, the email didn't
-actually, normally the email doesn't actually send, it uses the null transport. But
-because we have that running in the background, and we're using the Symfony binary,
-we can actually run Symfony open localhost. Symfony open local webmail. And that's
-actually catching all of our email things in the background, being caught here. And
-if we sent an email is actually using our application, they would actually go here as
-well. In fact, watch this. Let's run Symfony console. app lockdown start. That's our
-lockdown. If you check out over here, ah, we have two messages. Pretty sweet. But
-anyways, before we stop talking about testing, I want to show you one other really
-quick tool for testing email messages. And that is actually another library from
-Zenstruck. So run composer require Zenstruck slash mailer dash dash dev. So Symfony
-as we saw, oops, slash mailer test dash dash dev. So as we saw, Symfony has built in
-tools for testing emails, and they work great. The mailer kind of gives you even this
-middle test library gives even more ways to test your emails. So it's just kind of a
-nice thing and you can totally use it. And it's simple enough, you're going to use a
-another trait. So use interacts with mailer. And then down here, instead of assert
-email count, you can say things like this arrow mailer arrow. And then you have a ton
-of different asserts assert email. Sent to assert sent email count one, let's say
-this arrow mailer arrow. So there's a lot of different email. Assert email sent to
-and we sent it to staff at dinotopia.com with subject line park lockdown. Oops, not
-email count. Email sent to. There we go. So you can see this is the expected to and
-then this is a callable where you can assert more things, or you can just pass the
-subject there that I'm just scratching the surface. It looks small, but it's actually
-a lot that you can do with this mailer test library. And as always, there's really
-great documentation on there about all the cool things that you can do. But anyways,
-we've run our test. It's still passes. All right, next up, let's talk about testing
-messenger.
+To *finish* the tutorial, I'm going to show you how you can test a few more complex parts of your system, like testing whether emails were sent or messenger messages were dispatched. To do this, we need to give Bob a new superpower - the ability to put the park into lockdown. When he does this, our app should automatically send out an email to all park staff saying
+
+`Hey! Watch out for the dinosaurs!`
+
+So let's get started! Head over to `LockDownHelper.php` and down here, create a new method. We're going to call this to put the park into lockdown, so say `public function dinoEscaped()`. This will be a `void` return type, and we're just going to put some `TODO` comments here outlining what we're actually going to do. We just need to lock down the database and send an email.
+
+To actually *call* this code and trigger the lockdown, let's create a new console command. Say
+
+```terminal
+./bin/console make:command
+```
+and let's call it
+
+```terminal
+app:lockdown:start
+```
+
+Simple enough! That creates a single class. Let's go check that out. There it is! In here, we're going to inject the `private LockDownHelper $lockDownHelper` and make sure we're calling the `parent` constructor. Nice! And then we're going to delete a bunch of logic here because we want to simplify things. We're just going to say `$this->lockDownHelper->dinoEscaped()`, and below that, `$io->caution('Lockdown started!!!!!!!!!!)`. *Sweet*.
+
+This method doesn't do anything *yet*, but we can go ahead and try our command. Copy the command name... and run:
+
+```terminal
+./bin/console app:lockdown:start
+```
+
+And... we've got it!
+
+Before we fill the logic into our `LockDownHelper`, let's write a test for it. We already have `testEndCurrentLockDown`. Before we add a new one, let's do that trick where we add a `private function` to help us get the service we're testing. Say `private function getLockDownHelper()`, which will return `LockDownHelper`. And inside of here, we'll just copy the code from above... and return it. *Then*, we can simplify the code up here to just `$this->getLockDownHelper()->endCurrentLockDown()`.
+
+All right, *now* let's create our new test method. Say `public function testDinoEscapedPersistsLockDown()`. Inside, we're going to start the same way we always do - by *booting the kernel*. Then we can call our method with `$this->getLockDownHelper()->dinoEscaped()`. Cool. We *could* run this test right now if we wanted to. We could say:
+
+```terminal
+symfony php vendor/bin/phpunit tests/Integration/Service/LockDownHelperTest.php
+```
+
+And... it doesn't *fail*, but it *is* risky because we haven't actually performed any assertions. What we want to *assert* is that this *did* insert a row into the database. How can we do that? We *could* grab the entity manager or our repository service, make a query, and then do some assertions on that. *However*, Foundry comes with a nice little trick for this.
+
+After we call our method, we can say `LockDownFactory`. Normally, we would say things like `create` or `createMany`, but this *also* has a method on it called `repository`. This is an object from Foundry that *wraps* your repository and allows you to call different methods on it. So we can treat it as if it's our *real* repository and call `findMostRecent()` or `isInLockDown()`. But it *also* has this `assert()` on it. Let's say `assert()->count(1)` to make sure that the there is *one* record in the database. We *could* go further and *fetch* that record to make sure its status is "active", but we're not going to worry about that right now.
+
+Okay, let's run the test again. This should fail and... *perfect*! It does! *So* let's go paste in some code that will create the lockdown and save it. Easy peasy *boring* code. If we try the test now... our test passes!
+
+All right, let's look at sending that email. Before we can send the email, we need to add an assertion for that. Just like how we can assert things in the database, this gives us some tools for asserting things like if an email was sent, which is *normally* a difficult thing to test for. We can do that by saying `$this->assertEmailCount()`. We won't talk about any of the other methods here, even though they sound similar. We can assert *a lot* of things via email, but simplicity's sake, we're just going to assert that we sent a single email during this request. And if we run that... it *fails*. That's because we don't actually have mailer installed yet. So let's do that!
+
+Run:
+
+```terminal
+composer require symfony/mailer
+```
+
+If it asks you about Docker configuration, that's up to you, but I'm going to say `Yes permanently`. We'll talk about what that did in a second, but it's not super important.
+
+Similar to a database, with Mailer, we have to configure our Mailer connection parameters. That's done in `.env` via `MAILER_DSN`. Go ahead and uncomment this. This `null` is actually a great default. It means that your emails *won't* actually send in the dev or test environments, and then you can override on your production environment to send it to somewhere real. That's really handy, but if you *do* want to change this to something else, I would probably add this `null` transport to `.env.test` because it's really nice to avoid sending any emails in the test environment.
+
+Okay, let's try our test again. And... *beautiful*! It fails because we haven't sent any emails. Let's do that now. Over in `LockDownHelper.php`, let's inject one more service here: `private MailerInterface $mailer`. Then, down here, since this isn't a *Mailer* tutorial, we're just going to call a new function called `sendEmailAlert()`... and then we'll paste that in. Perfect! Then, if you hover over `Email()` and hit "alt" + "enter", that will add the `Symfony\Component\Mime\Email` `use` statement. That should be good! Back at our terminal... got it! The test *passes*!
+
+By the way, this isn't really related to testing, but one of the cool things about using the Docker integration is, when we installed Mailer, it actually added this little `mailcatcher` service. If you run
+
+```terminal
+docker compose down
+```
+
+and go back
+
+```terminal
+up -d
+```
+
+it created this `mailcatcher` service, and when we run our test again, instead of the email (which doesn't typically send), it uses the `null` transport. But because we have that running in the background and we're using the Symfony binary, we can run
+
+```terminal
+symfony open:local:webmail
+```
+
+and all of our emails are being caught in the background here. If we actually sent an email using our application, that would go here as well. Watch this!
+
+If we run
+
+```terminal
+symfony console app:lockdown:start
+```
+
+*that's* our lockdown! And if you look over here.. ah! We have two messages! Pretty *sweet*!
+
+Anyway, before we stop talking about testing, I want to show you one more quick tool for testing email messages, and it's *another* library from Zenstruck. Run:
+
+```terminal
+composer require zenstruck/mailer-test --dev
+```
+
+As we saw, Symfony has built-in tools for testing emails, and they work *great*. The mailer test library is no exception, giving us even *more* ways to test our emails. And it's super simple to use! We're going to add another trait - `use InteractsWithMailer` - and then, down here, instead of `assertEmailCount`, we can say something like `$this->mailer()->`... and then, as you can see, we have a *ton* of different asserts at our disposal. We'll say `assertSentEmailCount(1)`, and below that, `assertEmailSentTo()`, which we'll send to the `staff@dinotopia.com` with the Subject line `PARK LOCKDOWN`. Whoops! Let me fix my typo there... And so you can see that this is the `expectedTo` and then this is a `callable` where we could assert more things or just pass the subject. That sounds simple, but this is just one of the *many* things we could do here with our `mailer-test` library. If you're curious, I encourage you to check out the documentation on all of the *other* cool things `mailer-test` can do. If we run our test again... it *still* passes!
+
+Next up: Let's talk about testing *messenger*.
