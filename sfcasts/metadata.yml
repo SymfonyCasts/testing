@@ -6,5 +6,6 @@ chapters:
     - factory-seeding
     - service-test
     - partial-mocking
+    - repository-proxy
     - emails
     - messenger
