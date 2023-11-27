@@ -15,12 +15,16 @@ one method grabs a health report for the dinosaurs. Add a *new*
 `public function` called `clearLockDownAlerts()`. Inside, pretend we're making
 an API call - we don't really need to - then, at least, log a message.
 
+[[[ code('850d2b684c') ]]]
+
 Cool! Also pretend that we've tested this method in some way - via a unit or
 integration test. The *point* is: we're *confident* that this method works.
 
 Over in `LockDownHelper`, to make our fake API call, autowire
 `GithubService $githubService`... and down here, after `flush()`, say
 `$this->githubService->clearLockDownAlerts()`.
+
+[[[ code('f27910e88c') ]]]
 
 Okay! Try the test!
 
@@ -71,6 +75,8 @@ mock set to `$this->createMock(GitHubService::class)`. Below that, say
 `$githubService->expects()` and, to make sure this fails at first, use
 `$this->never()` and `->method('clearLockDownAlerts')`.
 
+[[[ code('e29d741d61') ]]]
+
 If we stop now and run the test:
 
 ```terminal-silent
@@ -84,6 +90,8 @@ Symfony:
 
 Doing that is simple: `self::getContainer()->set()` passing the ID of the service,
 which is `GithubService::class`, then `$githubService`.
+
+[[[ code('2f67150a93') ]]]
 
 Suddenly, *that* becomes the service in the container, and *that* is what will be
 passed to `LockDownHelper` as the *third* argument.
@@ -99,6 +107,8 @@ expected to be called, but it *was*... since we're calling it down here. That
 proves the mock was used!
 
 Change the test from `$this->never()` to `$this->once()` and try again...
+
+[[[ code('889e8270be') ]]]
 
 ```terminal-silent
 symfony php vendor/bin/phpunit tests/Integration/Service/LockDownHelperTest.php
