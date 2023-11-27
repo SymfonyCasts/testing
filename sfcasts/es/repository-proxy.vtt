@@ -1,0 +1,275 @@
+WEBVTT
+
+00:00:01.176 --> 00:00:01.866 align:middle
+¡Muy bien, equipo!
+
+00:00:02.046 --> 00:00:04.856 align:middle
+¡Hemos cubierto todas las partes
+principales de las pruebas de integración!
+
+00:00:05.186 --> 00:00:10.816 align:middle
+¡Guau! Y es deliciosamente sencillo: sólo
+una estrategia para coger los servicios reales
+
+00:00:10.816 --> 00:00:13.186 align:middle
+de un contenedor y probarlos, lo que...
+
+00:00:13.416 --> 00:00:16.206 align:middle
+en última instancia, nos
+proporciona una prueba más realista.
+
+00:00:16.916 --> 00:00:21.826 align:middle
+Las desventajas de las pruebas de integración son que
+se ejecutan más lentamente que las pruebas unitarias,
+
+00:00:21.926 --> 00:00:24.196 align:middle
+y a menudo son más complejas...
+
+00:00:24.496 --> 00:00:28.516 align:middle
+porque tenemos que pensar en cosas como
+limpiar y sembrar la base de datos.
+
+00:00:28.786 --> 00:00:33.906 align:middle
+Y a veces, no queremos que ocurran
+cosas reales (como llamadas a la API).
+
+00:00:34.256 --> 00:00:37.516 align:middle
+En este caso, podemos utilizar
+un poco de Mocking para evitarlo.
+
+00:00:37.516 --> 00:00:43.546 align:middle
+La gran conclusión es que, como en todo, hay que
+utilizar la herramienta adecuada -pruebas unitarias
+
+00:00:43.546 --> 00:00:46.416 align:middle
+o pruebas de integración-
+para el trabajo adecuado.
+
+00:00:46.786 --> 00:00:50.976 align:middle
+Eso es situacional y está bien utilizar ambas.
+
+00:00:50.976 --> 00:00:55.046 align:middle
+A medida que nos acercamos a la línea de meta, vamos a sumergirnos
+en las pruebas de algunas de las partes más complicadas
+
+00:00:55.046 --> 00:01:00.916 align:middle
+de nuestro sistema: por ejemplo, si se enviaron
+correos electrónicos o mensajes de Messenger.
+
+00:01:01.766 --> 00:01:05.176 align:middle
+Para ello, tenemos que dar
+a Bob un nuevo superpoder
+
+00:01:05.386 --> 00:01:08.226 align:middle
+la capacidad de bloquear el parque.
+
+00:01:08.786 --> 00:01:14.886 align:middle
+Una vez activada, nuestra aplicación enviará un correo
+electrónico al personal del parque, diciendo básicamente: ¡Alerta!
+
+00:01:14.886 --> 00:01:16.896 align:middle
+¡Dinosaurios sueltos!
+
+00:01:16.896 --> 00:01:18.436 align:middle
+Dirígete a LockDownHelper.
+
+00:01:19.216 --> 00:01:21.106 align:middle
+Aquí abajo, crea un nuevo método.
+
+00:01:21.656 --> 00:01:27.086 align:middle
+Lo llamaremos para bloquear el parque, así que
+¿qué te parece public function dinoEscaped().
+
+00:01:28.186 --> 00:01:34.276 align:middle
+Dale un tipo de retorno void y pon aquí algunos
+comentarios TODO que indiquen lo que tenemos que hacer:
+
+00:01:34.276 --> 00:01:37.226 align:middle
+guardar un LockDown en la base de
+datos y enviar un correo electrónico.
+
+00:01:37.916 --> 00:01:42.936 align:middle
+Para llamar a este código y activar el bloqueo,
+vamos a crear un nuevo comando de consola.
+
+00:01:43.416 --> 00:01:49.536 align:middle
+En el terminal, ejecuta: php bin/console
+make:command Llámalo app:lockdown:start.
+
+00:01:50.076 --> 00:01:51.446 align:middle
+¡Bastante sencillo!
+
+00:01:52.056 --> 00:01:57.586 align:middle
+Eso ha creado una única clase en
+src/Command/LockdownStartCommand.php.
+
+00:01:57.586 --> 00:02:02.156 align:middle
+Dentro, autoconecta un private
+LockDownHelper $lockDownHelper
+
+00:02:03.156 --> 00:02:05.646 align:middle
+y asegúrate de llamar al constructor parent.
+
+00:02:06.726 --> 00:02:09.956 align:middle
+Aquí abajo, borra casi toda esta lógica...
+
+00:02:10.606 --> 00:02:14.406 align:middle
+y sustitúyela por
+$this->lockDownHelper->dinoEscaped()
+
+00:02:15.166 --> 00:02:19.216 align:middle
+y $io->caution('Lockdown
+started!!!!!!!!!!').
+
+00:02:19.696 --> 00:02:20.746 align:middle
+Peligroso.
+
+00:02:21.706 --> 00:02:26.446 align:middle
+Este método aún no hace nada, pero
+ya podemos ir probando el comando.
+
+00:02:27.186 --> 00:02:27.966 align:middle
+Copia su nombre...
+
+00:02:29.056 --> 00:02:33.136 align:middle
+y ejecútalo: php bin/console
+app:lockdown:start ¡Me encanta!
+
+00:02:33.786 --> 00:02:37.696 align:middle
+Antes de ensuciarnos las manos con el
+nuevo método, escribamos una prueba.
+
+00:02:38.406 --> 00:02:42.326 align:middle
+Pero antes, hagamos ese truco en el
+que añadimos un private function
+
+00:02:42.326 --> 00:02:47.536 align:middle
+para ayudarnos a obtener el servicio que estamos
+probando: private function getLockDownHelper(),
+
+00:02:47.686 --> 00:02:49.946 align:middle
+que devolverá un LockDownHelper.
+
+00:02:51.176 --> 00:02:53.576 align:middle
+Dentro, copia el código de arriba...
+
+00:02:54.126 --> 00:02:55.146 align:middle
+y devuélvelo.
+
+00:02:56.306 --> 00:02:58.536 align:middle
+Luego, simplifica el código de aquí arriba
+
+00:02:58.536 --> 00:03:02.486 align:middle
+a sólo
+$this->getLockDownHelper()->endCurrentLockDown().
+
+00:03:02.486 --> 00:03:06.366 align:middle
+Muy bien, ahora crea el nuevo
+método de prueba: public
+
+00:03:06.656 --> 00:03:10.316 align:middle
+function
+testDinoEscapadoPersisteBloqueo(). Empieza
+
+00:03:10.446 --> 00:03:14.926 align:middle
+como siempre: arrancando el kernel. Luego
+
+00:03:15.796 --> 00:03:20.176 align:middle
+llama al método con
+$this->getLockDownHelper()->dinoEscaped(). ¡Guay!
+
+00:03:21.016 --> 00:03:24.566 align:middle
+No es interesante, pero haz la
+prueba de todos modos: symfony
+
+00:03:24.676 --> 00:03:29.546 align:middle
+php vendor/bin/phpunit
+tests/Integration/Service/LockDownHelperTest.php
+
+00:03:29.546 --> 00:03:34.836 align:middle
+No falla, pero... es
+
+00:03:34.836 --> 00:03:38.456 align:middle
+arriesgado porque no hemos realizado
+ninguna afirmación. Lo que queremos afirmar
+
+00:03:39.106 --> 00:03:43.906 align:middle
+es que esto sí insertó una fila
+en la base de datos. Para ello
+
+00:03:43.906 --> 00:03:50.616 align:middle
+, podríamos coger el gestor de entidades o nuestro
+servicio de repositorio, hacer una consulta y realizar
+
+00:03:50.766 --> 00:03:52.856 align:middle
+algunas aserciones con
+él. Sin embargo, Foundry
+
+00:03:53.316 --> 00:03:57.426 align:middle
+viene con un buen truco para esto. Después de
+
+00:03:57.476 --> 00:04:01.556 align:middle
+llamar al método, digamos
+LockDownFactory. Normalmente,
+
+00:04:02.436 --> 00:04:06.326 align:middle
+llamaríamos a cosas como
+create o createMany, pero éste
+
+00:04:06.646 --> 00:04:10.066 align:middle
+también tiene un método llamado
+repository. Éste devuelve
+
+00:04:10.816 --> 00:04:14.666 align:middle
+un objeto de Foundry que envuelve
+el repositorio, de forma parecida a
+
+00:04:15.016 --> 00:04:19.136 align:middle
+como Foundry envuelve nuestras entidades
+en un objeto Proxy. Esto significa que
+
+00:04:19.686 --> 00:04:26.116 align:middle
+podemos llamar a métodos reales del repositorio,
+como findMostRecent() o isInLockDown(). Pero
+
+00:04:26.426 --> 00:04:30.006 align:middle
+también tiene cosas extra, como assert().
+Digamos ->assert()->count(1)
+
+00:04:30.636 --> 00:04:36.166 align:middle
+para asegurarnos de que hay un
+registro en esta tabla. Podríamos
+
+00:04:36.876 --> 00:04:39.296 align:middle
+ir más allá y obtener ese registro para
+
+00:04:39.296 --> 00:04:42.676 align:middle
+asegurarnos de que su estado es "activo",
+pero me lo saltaré. Ejecuta ahora la
+
+00:04:43.366 --> 00:04:44.946 align:middle
+prueba. Debería
+
+00:04:45.796 --> 00:04:47.656 align:middle
+fallar y... falla.
+
+00:04:47.656 --> 00:04:53.116 align:middle
+Voy a pegar un código que cree
+el LockDown y lo guarde. Fácil
+
+00:04:54.816 --> 00:04:56.886 align:middle
+y aburrido código. Haz la prueba ahora...
+
+00:04:57.976 --> 00:04:58.716 align:middle
+¡pasa!
+
+00:05:00.316 --> 00:05:01.466 align:middle
+Siguiente paso:
+
+00:05:02.076 --> 00:05:05.646 align:middle
+enviemos el correo electrónico
+y comprobemos que se ha enviado.
+
+00:05:06.156 --> 00:05:11.986 align:middle
+Lo haremos con algunas herramientas básicas de
+Symfony y también con otra biblioteca de zenstruck.
