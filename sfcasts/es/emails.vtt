@@ -1,0 +1,243 @@
+WEBVTT
+
+00:00:01.106 --> 00:00:04.246 align:middle
+Cuando entramos en bloqueo, necesitamos
+enviar un correo electrónico.
+
+00:00:04.726 --> 00:00:09.056 align:middle
+Antes de escribir el código para hacerlo,
+añadamos una aserción para ello.
+
+00:00:09.596 --> 00:00:14.646 align:middle
+¿Cómo? Symfony nos cubre las espaldas: nos
+proporciona unos cuantos métodos relacionados con
+
+00:00:14.646 --> 00:00:17.846 align:middle
+los correos electrónicos, como
+$this->assertEmailCount().
+
+00:00:18.446 --> 00:00:22.666 align:middle
+Podemos afirmar muchas cosas sobre los correos
+electrónicos, pero por simplicidad, nos
+
+00:00:22.826 --> 00:00:24.626 align:middle
+ceñiremos a esta sencilla cuenta.
+
+00:00:25.506 --> 00:00:29.316 align:middle
+Ejecuta la prueba: Fracaso épico, porque...
+
+00:00:29.316 --> 00:00:31.416 align:middle
+ni siquiera tenemos mailer instalado todavía.
+
+00:00:31.826 --> 00:00:32.606 align:middle
+¡Hagámoslo!
+
+00:00:33.266 --> 00:00:40.616 align:middle
+Ejecuta: composer require symfony/mailer Si te pregunta
+por la configuración de Docker, eso depende de ti,
+
+00:00:40.806 --> 00:00:42.986 align:middle
+pero yo voy a decir Yes permanently.
+
+00:00:43.986 --> 00:00:47.336 align:middle
+Hablaremos de lo que hizo eso en un
+minuto, pero no es superimportante.
+
+00:00:48.056 --> 00:00:52.316 align:middle
+De forma similar a una base de datos, necesitamos
+configurar nuestros parámetros de conexión a Mailer.
+
+00:00:52.706 --> 00:00:56.066 align:middle
+Eso se hace en .env a través de MAILER_DSN.
+
+00:00:56.986 --> 00:00:58.196 align:middle
+Descomenta esto.
+
+00:00:58.776 --> 00:01:01.316 align:middle
+El transporte null es un
+gran valor por defecto.
+
+00:01:01.746 --> 00:01:06.106 align:middle
+Significa que los correos electrónicos no se
+enviarán realmente en los entornos dev o test.
+
+00:01:06.536 --> 00:01:10.846 align:middle
+Y luego puedes anularlo en tu entorno de producción
+para establecerlo en algo real. Si quieres cambiarlo
+
+00:01:10.846 --> 00:01:15.136 align:middle
+por otra cosa en el entorno dev,
+
+00:01:15.396 --> 00:01:18.876 align:middle
+probablemente añadiría este
+transporte null a .env.test...
+
+00:01:19.246 --> 00:01:23.956 align:middle
+porque está muy bien evitar el envío de
+correos electrónicos desde nuestras pruebas.
+
+00:01:24.136 --> 00:01:28.126 align:middle
+Muy bien, vuelve a tirar los
+dados de las pruebas: ¡Mejor!
+
+00:01:28.226 --> 00:01:30.456 align:middle
+Falla porque no hemos enviado
+ningún correo electrónico.
+
+00:01:30.726 --> 00:01:31.786 align:middle
+¡Hagámoslo!
+
+00:01:32.446 --> 00:01:37.986 align:middle
+En LockDownHelper, autoconecta un servicio
+más: private MailerInterface $mailer.
+
+00:01:38.716 --> 00:01:45.446 align:middle
+Luego, aquí abajo, como esto no es un tutorial de
+Mailer, llama a un nuevo método sendEmailAlert()...
+
+00:01:45.826 --> 00:01:47.336 align:middle
+y lo pegaré.
+
+00:01:48.526 --> 00:01:51.046 align:middle
+Pasa el ratón por encima de la
+clase Email y pulsa "alt" + "enter"
+
+00:01:51.046 --> 00:01:54.356 align:middle
+para añadir la declaración
+Symfony\Component\Mime\Email use .
+
+00:01:55.006 --> 00:01:59.706 align:middle
+¡Listo! Vuelve a la línea
+de comandos: ¡Ya está!
+
+00:01:59.766 --> 00:02:01.376 align:middle
+¡La prueba pasa! Por
+
+00:02:01.896 --> 00:02:06.006 align:middle
+cierto, esto no tiene nada que ver con
+las pruebas, pero una de las cosas buenas
+
+00:02:06.006 --> 00:02:09.976 align:middle
+de utilizar la integración con Docker
+es que, cuando instalamos Mailer,
+
+00:02:10.246 --> 00:02:12.846 align:middle
+añadió este servicio mailcatcher.
+
+00:02:14.516 --> 00:02:21.416 align:middle
+Ejecuta: docker compose down Luego docker
+compose up -d para iniciar el nuevo servicio.
+
+00:02:22.106 --> 00:02:23.896 align:middle
+Ejecuta de nuevo la prueba.
+
+00:02:24.926 --> 00:02:26.326 align:middle
+Sigue pasando.
+
+00:02:26.566 --> 00:02:32.346 align:middle
+Sin embargo, como el servicio mailcatcher
+está en marcha y ejecutamos nuestras pruebas
+
+00:02:32.346 --> 00:02:37.936 align:middle
+a través del binario de Symfony, éste
+anuló la variable de entorno MAILER_DSN
+
+00:02:38.146 --> 00:02:40.656 align:middle
+y la apuntó a MailCatcher.
+
+00:02:41.486 --> 00:02:43.016 align:middle
+¿Qué... es MailCatcher?
+
+00:02:43.656 --> 00:02:50.846 align:middle
+Para averiguarlo, ejecuta: symfony
+open:local:webmail ¡Genial! MailCatcher
+
+00:02:51.556 --> 00:02:55.246 align:middle
+es un servicio de correo electrónico
+falso con una pequeña GUI web
+
+00:02:55.246 --> 00:02:57.626 align:middle
+para ver los correos que
+ha enviado tu aplicación.
+
+00:02:58.366 --> 00:03:02.616 align:middle
+Si enviáramos un correo electrónico a través
+de nuestra aplicación real, aparecería aquí.
+
+00:03:03.456 --> 00:03:09.336 align:middle
+Observa. Ejecuta: symfony console
+app:lockdown:start ¡Cierre!
+
+00:03:09.336 --> 00:03:11.696 align:middle
+Y cuando compruebes MailCatcher...
+
+00:03:12.176 --> 00:03:14.526 align:middle
+¡ja! ¡Tenemos dos mensajes!
+
+00:03:14.756 --> 00:03:15.656 align:middle
+¡Qué guay!
+
+00:03:16.476 --> 00:03:21.126 align:middle
+De todos modos, antes de dejar de hablar de correos
+electrónicos, quiero mostrarte una herramienta más.
+
+00:03:21.586 --> 00:03:24.376 align:middle
+Y es otra biblioteca de Zenstruck.
+
+00:03:25.106 --> 00:03:28.956 align:middle
+Ejecuta: composer require zenstruck/mailer-test
+
+00:03:28.956 --> 00:03:34.916 align:middle
+--dev Symfony tiene herramientas integradas para
+probar correos electrónicos, y funcionan muy bien.
+
+00:03:35.396 --> 00:03:41.076 align:middle
+Esta biblioteca de mailer-test nos proporciona
+aún más herramientas, ¡y es muy fácil de usar!
+
+00:03:41.696 --> 00:03:46.726 align:middle
+Añadimos otro rasgo a nuestra prueba - use
+InteractsWithMailer - y luego, aquí abajo,
+
+00:03:47.156 --> 00:03:51.866 align:middle
+en lugar de assertEmailCount, podemos
+decir $this->mailer()->...
+
+00:03:51.866 --> 00:03:57.256 align:middle
+y entonces, woh, tenemos una tonelada de
+asertos diferentes a nuestra disposición. Di
+
+00:03:57.906 --> 00:04:03.406 align:middle
+->assertSentEmailCount(1),
+y debajo, assertEmailSentTo()
+
+00:04:03.926 --> 00:04:08.976 align:middle
+con staff@dinotopia.com y la
+línea de asunto PARK LOCKDOWN.
+
+00:04:09.726 --> 00:04:11.536 align:middle
+¡Uy! Permíteme que corrija
+mi error tipográfico.
+
+00:04:13.626 --> 00:04:18.646 align:middle
+Puedes ver que este es el expectedTo
+y luego este es un callable
+
+00:04:18.756 --> 00:04:23.146 align:middle
+donde podríamos afirmar más cosas o
+simplemente pasar el asunto esperado.
+
+00:04:23.836 --> 00:04:28.496 align:middle
+Esto es bastante sencillo, pero es una de las
+muchas cosas que podemos hacer con esta biblioteca.
+
+00:04:29.476 --> 00:04:32.026 align:middle
+Consulta la documentación
+para enterarte de todo.
+
+00:04:33.376 --> 00:04:37.416 align:middle
+Ejecuta de nuevo la prueba: ¡Todo bien!
+
+00:04:38.286 --> 00:04:41.126 align:middle
+A continuación: hablemos
+de las pruebas de Messenger.
