@@ -27,6 +27,8 @@ put the park into lockdown, so how about `public function dinoEscaped()`. Give i
 a `void` return type and just put some `TODO` comments here outlining what we
 need to do: save a `LockDown` to the database and send an email.
 
+[[[ code('770eb2609b') ]]]
+
 To *call* this code and trigger the lockdown, let's create a new console command.
 At the terminal, run:
 
@@ -40,9 +42,13 @@ Simple enough! That created a single class in `src/Command/LockdownStartCommand.
 Inside, autowire a `private LockDownHelper $lockDownHelper` and make sure to call
 the `parent` constructor.
 
+[[[ code('aa391d50f1') ]]]
+
 Down here, delete pretty much all of this logic... and replace it with
 `$this->lockDownHelper->dinoEscaped()` and
 `$io->caution('Lockdown started!!!!!!!!!!')`.
+
+[[[ code('6eb47e2496') ]]]
 
 Dangerous. This method doesn't do anything *yet*, but we can already go ahead
 and try the command. Copy its name... and run:
@@ -61,10 +67,14 @@ we're testing: `private function getLockDownHelper()`, which will return a
 `LockDownHelper`. Inside, copy the code from above... and return it. *Then*,
 simplify the code up here to just `$this->getLockDownHelper()->endCurrentLockDown()`.
 
+[[[ code('139f58c090') ]]]
+
 All right, *now* create the new test method:
 `public function testDinoEscapedPersistsLockDown()`. Start the same way we always
 do - by *booting the kernel*. Then call the method with
 `$this->getLockDownHelper()->dinoEscaped()`.
+
+[[[ code('391176b6bb') ]]]
 
 Cool! It's not interesting, but try the test anyway:
 
@@ -91,6 +101,8 @@ extra stuff, like `assert()`. Say `->assert()->count(1)` to make sure
 that the there is *one* record in this table. We *could* go further and *fetch* that
 record to make sure its status is "active", but I'll skip that.
 
+[[[ code('8ee63f0e19') ]]]
+
 Run the test now.
 
 ```terminal-silent
@@ -101,6 +113,8 @@ This should fail and... it *does*.
 
 I'll go paste in some code that creates the `LockDown` and saves it. Easy peasy
 *boring* code.
+
+[[[ code('1eedf0832c') ]]]
 
 Try the test now... it passes!
 
