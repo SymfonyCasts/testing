@@ -9,6 +9,8 @@ How? Symfony has our back: it gives us a few methods related to emails,
 like `$this->assertEmailCount()`. We can assert *a lot* of things about emails, but
 for simplicity's sake, we'll stick to this simple count.
 
+[[[ code('aed90b5090') ]]]
+
 Run the test:
 
 ```terminal-silent
@@ -32,6 +34,8 @@ default. It means that emails *won't* actually be sent in the dev or test
 environments. And then you can override on your production environment to set it
 to something real.
 
+[[[ code('7871a7b275') ]]]
+
 If you *do* want to change this to something else in the `dev` environment, I would
 probably add this `null` transport to `.env.test`... because it's *really* nice to
 avoid sending any emails from our tests.
@@ -52,6 +56,8 @@ tutorial, call a new `sendEmailAlert()` method... and I'll paste that in.
 Hover over the `Email` class and hit "alt" + "enter" to add the
 `Symfony\Component\Mime\Email` `use` statement.
 
+[[[ code('8d1f812c8c') ]]]
+
 All set! Hustle back to the command-line:
 
 ```terminal-silent
@@ -64,6 +70,9 @@ Got it! The test *passes*!
 
 By the way, this isn't related to testing, but one cool things about using the Docker
 integration is, when we installed Mailer, it added this `mailcatcher` service.
+
+[[[ code('08c1cf5ef6') ]]]
+
 Run:
 
 ```terminal
@@ -118,6 +127,8 @@ woh, we have a *ton* of different asserts at our disposal. Say
 `staff@dinotopia.com` and Subject line `PARK LOCKDOWN`. Whoops! Let me fix my typo.
 You can see that this is the `expectedTo` and then this is a `callable` where
 we could assert more things or just pass the expected subject.
+
+[[[ code('f20cd362b9') ]]]
 
 This is pretty simple, but it's one of the *many* things we can do with this
 library. Check out the docs to learn about everything.
