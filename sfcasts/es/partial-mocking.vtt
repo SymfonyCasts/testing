@@ -1,0 +1,278 @@
+WEBVTT
+
+00:00:01.156 --> 00:00:03.536 align:middle
+Hagamos LockDownHelper más interesante.
+
+00:00:03.976 --> 00:00:09.106 align:middle
+Digamos que, cuando termina un bloqueo,
+necesitamos enviar una petición API a GitHub.
+
+00:00:09.826 --> 00:00:14.236 align:middle
+En nuestro primer tutorial, escribimos código que
+hacía peticiones al API para obtener información
+
+00:00:14.236 --> 00:00:17.556 align:middle
+sobre este repositorio SymfonyCasts/dino-park.
+
+00:00:18.396 --> 00:00:24.546 align:middle
+Ahora, vamos a pretender que, cuando finalice
+un bloqueo, necesitamos enviar una petición API
+
+00:00:24.546 --> 00:00:29.026 align:middle
+para encontrar todas las incidencias
+con la etiqueta "bloqueo" y cerrarlas.
+
+00:00:29.726 --> 00:00:30.106 align:middle
+No vamos...
+
+00:00:30.206 --> 00:00:36.006 align:middle
+vamos a hacer esto realmente, pero vamos a pasar por los
+movimientos para desencadenar una situación fascinante.
+
+00:00:37.076 --> 00:00:41.366 align:middle
+En ese primer tutorial, hicimos un servicio
+de GitHub que envuelve las llamadas a la API.
+
+00:00:42.156 --> 00:00:45.246 align:middle
+Su único método obtiene un
+informe de salud de los dinosaurios.
+
+00:00:46.496 --> 00:00:50.686 align:middle
+Añade un nuevo public function
+llamado clearLockDownAlerts().
+
+00:00:50.686 --> 00:00:55.366 align:middle
+Dentro, haz como si hiciéramos una
+llamada a la API -en realidad no hace
+
+00:00:55.366 --> 00:00:57.996 align:middle
+falta- y, al menos, registra un mensaje.
+
+00:00:59.386 --> 00:01:06.186 align:middle
+¡Guay! Finge también que hemos probado este método de
+alguna manera: mediante una prueba unitaria o de integración.
+
+00:01:07.066 --> 00:01:10.396 align:middle
+La cuestión es: estamos seguros
+de que este método funciona.
+
+00:01:11.406 --> 00:01:18.626 align:middle
+En LockDownHelper, para hacer nuestra falsa llamada
+a la API, autoconecta GithubService $githubService...
+
+00:01:18.626 --> 00:01:25.846 align:middle
+y aquí abajo, después de flush(), di
+$this->githubService->clearLockDownAlerts().
+
+00:01:25.966 --> 00:01:27.546 align:middle
+¡De acuerdo! ¡Haz la prueba!
+
+00:01:28.376 --> 00:01:30.296 align:middle
+No hemos cambiado nada y...
+
+00:01:30.296 --> 00:01:31.756 align:middle
+sigue pasando.
+
+00:01:32.136 --> 00:01:32.966 align:middle
+Eso tiene sentido.
+
+00:01:33.326 --> 00:01:36.566 align:middle
+En nuestra prueba, pedimos
+a Symfony el LockDownHelper
+
+00:01:36.776 --> 00:01:41.846 align:middle
+y él se encarga de pasar el nuevo argumento
+GithubService cuando crea ese servicio.
+
+00:01:42.296 --> 00:01:48.156 align:middle
+Y como GitHubService no está haciendo realmente
+una llamada real a la API, todo va bien.
+
+00:01:48.576 --> 00:01:54.996 align:middle
+Pero, ¿y si GithubService contuviera una lógica
+real para hacer una petición HTTP a GitHub?
+
+00:01:55.566 --> 00:01:57.596 align:middle
+Eso podría causar algunos problemas.
+
+00:01:57.646 --> 00:02:01.206 align:middle
+En primer lugar, ralentizaría definitivamente
+nuestra prueba. En segundo lugar
+
+00:02:01.796 --> 00:02:06.156 align:middle
+, podría fallar porque, cuando
+compruebe el repositorio,
+
+00:02:06.496 --> 00:02:09.746 align:middle
+puede que no tengamos ningún
+problema con la etiqueta LockDown.
+
+00:02:10.226 --> 00:02:15.456 align:middle
+Y tercero, si encuentra problemas
+con esa etiqueta, podría cerrarlos
+
+00:02:15.456 --> 00:02:17.756 align:middle
+en nuestro repositorio de producción real...
+
+00:02:18.016 --> 00:02:20.166 align:middle
+aunque sólo se trate de una prueba.
+
+00:02:20.246 --> 00:02:25.236 align:middle
+Además -lo sé, estoy en
+racha- si quisiéramos probar
+
+00:02:25.236 --> 00:02:30.656 align:middle
+que el método clearLockDownAlerts() se ha
+llamado realmente, en una prueba de integración,
+
+00:02:30.956 --> 00:02:36.646 align:middle
+la única forma de hacerlo es haciendo una petición a
+la API desde nuestra prueba para sembrar el repos itorio
+
+00:02:36.646 --> 00:02:41.636 align:middle
+con algunas incidencias (creando una incidencia
+con una etiqueta LockDown ), llamando al método, y
+
+00:02:42.006 --> 00:02:47.656 align:middle
+luego haciendo otra petición a la API desde nuestra
+prueba para verificar que la incidencia se ha cerrado.
+
+00:02:48.266 --> 00:02:52.416 align:middle
+Vaya. ¡Eso es demasiado trabajo
+para comprobar algo tan sencillo!
+
+00:02:52.986 --> 00:02:56.006 align:middle
+Espero que le estés gritando
+a tu ordenador: ¡Ryan!
+
+00:02:56.136 --> 00:03:00.036 align:middle
+Este es el objetivo de Mocking: ¡lo
+que aprendimos en el primer tutorial!
+
+00:03:00.546 --> 00:03:01.796 align:middle
+Sí, ¡totalmente!
+
+00:03:02.016 --> 00:03:07.316 align:middle
+Si burláramos GitHubHelper, evitaríamos cualquier
+llamada a la API y tendríamos una forma fácil
+
+00:03:07.316 --> 00:03:09.436 align:middle
+de afirmar que se ha llamado al método.
+
+00:03:10.006 --> 00:03:14.116 align:middle
+Así que, maldita sea, básicamente
+queremos burlarnos de una dependencia...
+
+00:03:14.326 --> 00:03:17.896 align:middle
+pero utilizar los servicios reales
+para las demás dependencias.
+
+00:03:18.426 --> 00:03:19.716 align:middle
+¿Es posible?
+
+00:03:20.356 --> 00:03:24.206 align:middle
+Pues sí Con algo que yo
+llamo "mocking parcial".
+
+00:03:24.756 --> 00:03:30.106 align:middle
+Cuando pedimos al contenedor el servicio
+LockDownHelper, éste instancia los servicios reales
+
+00:03:30.106 --> 00:03:34.196 align:middle
+que necesita y los pasa a cada
+uno de los tres argumentos.
+
+00:03:34.746 --> 00:03:39.706 align:middle
+Lo que realmente queremos hacer es que pase
+el servicio real para $lockDownRepository
+
+00:03:39.706 --> 00:03:43.976 align:middle
+y $entityManager, pero un
+simulacro para $githubService.
+
+00:03:44.346 --> 00:03:46.326 align:middle
+¡Y Symfony nos da una forma de hacerlo!
+
+00:03:47.086 --> 00:03:47.656 align:middle
+Compruébalo.
+
+00:03:48.066 --> 00:03:53.406 align:middle
+Antes de pedir LockDownHelperService, crea
+un simulacro de $githubService establecido
+
+00:03:53.406 --> 00:03:57.566 align:middle
+en $this->createMock(GitHubService::class).
+
+00:03:58.246 --> 00:04:04.776 align:middle
+Debajo, digamos $githubService->expects()
+y, para asegurarnos de que falla al principio,
+
+00:04:04.956 --> 00:04:10.106 align:middle
+utiliza $this->never() y
+->method('clearLockDownAlerts').
+
+00:04:10.226 --> 00:04:16.136 align:middle
+Si nos detenemos ahora y ejecutamos
+la prueba: Sigue pasando.
+
+00:04:16.496 --> 00:04:17.856 align:middle
+Hemos creado un simulacro...
+
+00:04:17.976 --> 00:04:20.156 align:middle
+pero nadie lo utiliza.
+
+00:04:20.966 --> 00:04:22.756 align:middle
+Tenemos que decirle a Symfony ¡Eh!
+
+00:04:23.036 --> 00:04:26.916 align:middle
+Sustituye el GitHubService real
+del contenedor por este simulacro.
+
+00:04:27.536 --> 00:04:34.136 align:middle
+Hacerlo es sencillo:
+self::getContainer()->set() pasando el ID
+
+00:04:34.136 --> 00:04:39.276 align:middle
+del servicio, que es GithubService::class,
+luego $githubService.
+
+00:04:39.306 --> 00:04:45.356 align:middle
+De repente, eso se convierte en el servicio
+del contenedor, y eso es lo que se pasará
+
+00:04:45.356 --> 00:04:47.876 align:middle
+a LockDownHelper como tercer argumento.
+
+00:04:49.076 --> 00:04:50.166 align:middle
+¡Haz la prueba!
+
+00:04:51.516 --> 00:04:53.376 align:middle
+Debido al $this->never()...
+
+00:04:53.536 --> 00:04:59.556 align:middle
+¡falla! No se esperaba que se llamara a
+clearLockDownAlerts(), pero se llamó...
+
+00:04:59.666 --> 00:05:01.276 align:middle
+ya que lo estamos llamando aquí.
+
+00:05:01.746 --> 00:05:04.086 align:middle
+¡Eso demuestra que se utilizó el simulacro!
+
+00:05:04.756 --> 00:05:09.116 align:middle
+Cambia la prueba de $this->never() a
+$this->once() e inténtalo de nuevo...
+
+00:05:10.886 --> 00:05:12.186 align:middle
+¡Pasa!
+
+00:05:12.486 --> 00:05:14.646 align:middle
+Es una estrategia genial.
+
+00:05:15.546 --> 00:05:20.076 align:middle
+A continuación: Veamos cómo podemos probar si nuestro
+código ha provocado que ocurran determinadas cosas externas
+
+00:05:20.076 --> 00:05:22.936 align:middle
+, empezando por probar
+los correos electrónicos.
