@@ -1,0 +1,365 @@
+WEBVTT
+
+00:00:01.066 --> 00:00:04.026 align:middle
+Vamos a darle un poco más de
+sabor a nuestro LockDownHelper
+
+00:00:04.576 --> 00:00:07.936 align:middle
+Cuando creemos un bloqueo, en lugar de enviar
+el correo electrónico directamente, vamos a
+
+00:00:08.286 --> 00:00:12.696 align:middle
+enviar un mensaje a Messenger y hacer
+que envíe el correo electrónico.
+
+00:00:12.936 --> 00:00:21.276 align:middle
+Empieza por instalar Messenger: composer
+require symfony/messenger ¡Encantador!
+
+00:00:22.306 --> 00:00:27.716 align:middle
+En .env, esto añade un
+MESSENGER_TRANSPORT_DSN que, por defecto,
+
+00:00:27.856 --> 00:00:30.246 align:middle
+utiliza el tipo de transporte Doctrine.
+
+00:00:30.976 --> 00:00:35.516 align:middle
+Aunque no importará qué tipo de transporte
+utilices: Doctrine, Redis, lo que sea.
+
+00:00:36.136 --> 00:00:40.556 align:middle
+Como verás, en el entorno test,
+anularemos esto por completo.
+
+00:00:41.446 --> 00:00:47.626 align:middle
+Para facilitar las pruebas, también necesitaremos
+otro paquete de, lo has adivinado, ¡Zenstruck!
+
+00:00:48.676 --> 00:00:54.926 align:middle
+composer require
+zenstruck/messenger-test --dev ¡Genial!
+
+00:00:55.516 --> 00:01:01.216 align:middle
+Esta biblioteca añade un transporte especial
+de Messenger llamado . messenger-test test
+
+00:01:01.896 --> 00:01:07.886 align:middle
+Seguiremos utilizando Doctrine por defecto,
+pero ahora abre . config/packages/messenger.yaml
+
+00:01:08.906 --> 00:01:13.096 align:middle
+Descomenta el transporte , que utiliza
+. async MESSENGER_TRANSPORT_DSN
+
+00:01:14.916 --> 00:01:22.726 align:middle
+A continuación, en , anulamos el transporte y lo
+establecemos en el tipo . when@test async in-memory
+
+00:01:23.336 --> 00:01:25.866 align:middle
+Ah, y tengo que eliminar un espacio de más.
+
+00:01:26.366 --> 00:01:32.006 align:middle
+Perfecto El viene de Symfony y está
+bien para hacer pruebas. in-memory
+
+00:01:32.506 --> 00:01:37.596 align:middle
+Cuando se utiliza, los mensajes no se envían
+realmente a un transporte, sino que se almacenan
+
+00:01:37.926 --> 00:01:40.846 align:middle
+-en memoria- en un objeto durante la prueba...
+
+00:01:41.196 --> 00:01:44.486 align:middle
+que luego puedes utilizar para
+afirmar que el mensaje está ahí.
+
+00:01:45.236 --> 00:01:45.926 align:middle
+¡Eso me gusta!
+
+00:01:46.696 --> 00:01:50.166 align:middle
+Pero los paquetes nos ofrecen
+algo aún mejor. messenger-test
+
+00:01:50.966 --> 00:01:53.876 align:middle
+Cambia esto por . test://
+
+00:01:54.286 --> 00:01:56.346 align:middle
+Veremos lo que hace en un momento.
+
+00:01:57.146 --> 00:02:00.876 align:middle
+Antes de enviar el mensaje dentro de
+nuestro código, dirígete a la prueba.
+
+00:02:01.416 --> 00:02:05.176 align:middle
+Aquí queremos afirmar que hemos
+enviado un mensaje a Messenger.
+
+00:02:05.846 --> 00:02:09.796 align:middle
+Y -sorpresa, sorpresa-
+vamos a utilizar otro rasgo.
+
+00:02:10.176 --> 00:02:12.516 align:middle
+Se llama . InteractsWithMessenger
+
+00:02:13.596 --> 00:02:22.106 align:middle
+Aquí abajo, justo antes de llamar al método, decimos
+. $this->transport()->queue()->assertEmpty() Al
+
+00:02:22.176 --> 00:02:27.066 align:middle
+igual que en la biblioteca de
+correo, hay muchas cosas diferentes
+
+00:02:27.066 --> 00:02:28.866 align:middle
+sobre los mensajes que podemos comprobar.
+
+00:02:29.506 --> 00:02:34.246 align:middle
+Estamos afirmando que la cola empieza
+vacía, lo cual no es realmente necesario,
+
+00:02:34.356 --> 00:02:36.046 align:middle
+pero es una buena forma de empezar.
+
+00:02:36.866 --> 00:02:41.316 align:middle
+Al final, también que se ha
+enviado el mensaje . assertCount() 1
+
+00:02:41.316 --> 00:02:43.436 align:middle
+¡Vamos a probar esto!
+
+00:02:43.966 --> 00:02:48.116 align:middle
+Sigue ejecutando todas las
+pruebas de : Y... LockDownHelper
+
+00:02:48.406 --> 00:02:51.206 align:middle
+¡falla con el mensaje exacto que queríamos!
+
+00:02:51.426 --> 00:02:54.596 align:middle
+Se esperaba 1 mensaje, pero
+se han encontrado 0 mensajes.
+
+00:02:54.946 --> 00:02:58.156 align:middle
+¡Genial! Genera un mensaje de
+Messenger con: ./bin/console
+
+00:02:58.406 --> 00:03:03.756 align:middle
+make:message Llámalo y
+LockDownStartedNotification ponlo
+
+00:03:03.896 --> 00:03:08.226 align:middle
+en el transporte . ¡Listo! async
+
+00:03:08.856 --> 00:03:15.836 align:middle
+Esto ha creado una clase de mensaje, una clase
+manejadora y también ha actualizado messenger.yaml para
+
+00:03:16.216 --> 00:03:19.046 align:middle
+que esta clase se envíe al
+transporte . async A continuación,
+
+00:03:19.876 --> 00:03:23.516 align:middle
+entra en para enviarlo.
+En LockDownHelper la parte
+
+00:03:24.066 --> 00:03:28.316 align:middle
+superior, añade un . Luego, private
+MessageBusInterface $messageBus
+
+00:03:29.716 --> 00:03:30.896 align:middle
+en la parte inferior, pon
+
+00:03:31.356 --> 00:03:37.086 align:middle
+$this->messageBus->dispatch(new
+LockDownStartedNotification()). El
+
+00:03:38.546 --> 00:03:40.926 align:middle
+manejador de esta clase, si miramos en ,
+
+00:03:40.926 --> 00:03:44.966 align:middle
+src/MessageHandler/LockDownStartedNotification.php
+aún no hace
+
+00:03:45.056 --> 00:03:47.186 align:middle
+nada. Pero esto
+
+00:03:47.696 --> 00:03:52.666 align:middle
+debería bastar para que nuestra
+prueba pase. Y... ¡huy! ¡
+
+00:03:52.666 --> 00:03:54.136 align:middle
+Un gremlin
+
+00:03:54.556 --> 00:03:56.396 align:middle
+se coló en mi código! Añadí
+
+00:03:57.006 --> 00:04:01.316 align:middle
+el código dentro de en lugar de .
+Y endCurrentLockDown() dinoEscaped()
+
+00:04:01.776 --> 00:04:04.556 align:middle
+por eso tenemos gente de pruebas. Cuando
+
+00:04:06.586 --> 00:04:07.626 align:middle
+volvamos a intentarlo... ya lo tengo.
+
+00:04:08.746 --> 00:04:12.976 align:middle
+Movamos toda la lógica del correo
+fuera de esta clase. Copia el
+
+00:04:13.486 --> 00:04:19.556 align:middle
+método privado, borra donde lo llamamos,
+el ... e incluso MailerInterface
+
+00:04:20.746 --> 00:04:22.616 align:middle
+las antiguas declaraciones . Abre el use
+
+00:04:24.086 --> 00:04:30.426 align:middle
+manejador, pega allí el método privado y dale a "Aceptar"
+para volver a añadir esas sentencias . use Luego di
+
+00:04:31.006 --> 00:04:33.736 align:middle
+$this->sendEmailAlert(). ¡Genial! Todo
+
+00:04:34.816 --> 00:04:37.246 align:middle
+debería seguir funcionando bien... excepto que
+
+00:04:37.736 --> 00:04:44.286 align:middle
+la prueba falla: Se esperaba que se enviaran 1
+correos, pero se enviaron 0 correos. Hmmm. Si
+
+00:04:44.796 --> 00:04:50.786 align:middle
+esto fuera producción, cuando enviemos
+este mensaje al transporte , async
+
+00:04:51.106 --> 00:04:54.016 align:middle
+no enviará el correo
+electrónico inmediatamente.
+
+00:04:54.016 --> 00:04:57.606 align:middle
+Se enviaría a una cola y se
+procesaría más tarde. Y, el transporte
+
+00:04:58.136 --> 00:05:02.696 align:middle
+test que estamos utilizando funciona de forma
+muy parecida a una verdadera cola. Recibe
+
+00:05:03.216 --> 00:05:08.506 align:middle
+el mensaje, pero no lo procesa automáticamente,
+lo cual es genial. Esto significa
+
+00:05:09.086 --> 00:05:13.446 align:middle
+que, en nuestra prueba, estamos
+enviando este mensaje... pero el
+
+00:05:13.726 --> 00:05:17.516 align:middle
+correo nunca se envía porque sigue
+esperando a ser procesado. Lo que
+
+00:05:18.346 --> 00:05:19.956 align:middle
+hagas aquí depende de ti. Quizá te parezca
+
+00:05:20.636 --> 00:05:23.736 align:middle
+bien saber simplemente que
+el mensaje se ha enviado. O
+
+00:05:24.376 --> 00:05:28.976 align:middle
+puede que quieras ser un poco más
+práctico y decir: ¡Ni hablar! Quiero
+
+00:05:29.256 --> 00:05:34.596 align:middle
+una prueba completa de que cuando se gestiona este
+mensaje, se envía un correo electrónico. Podemos
+
+00:05:35.286 --> 00:05:39.766 align:middle
+hacerlo diciéndole al transporte que
+procese sus mensajes. Copia esas test
+
+00:05:40.576 --> 00:05:42.956 align:middle
+dos líneas y bórralas.
+Aquí abajo, mailer() di
+
+00:05:44.216 --> 00:05:47.966 align:middle
+$this->transport()->process(). Ya está
+
+00:05:48.486 --> 00:05:49.486 align:middle
+Eso
+
+00:05:50.096 --> 00:05:53.596 align:middle
+ejecutará el manejador para
+cualquier mensaje en su cola. Debajo,
+
+00:05:54.566 --> 00:05:57.656 align:middle
+debería enviarse el correo
+electrónico. Pruébalo:
+
+00:05:58.846 --> 00:06:01.016 align:middle
+Y... falla.
+
+00:06:01.356 --> 00:06:03.776 align:middle
+¡Otro error! ¿Por qué no se envió
+
+00:06:04.276 --> 00:06:05.676 align:middle
+? Porque fui
+
+00:06:06.076 --> 00:06:11.996 align:middle
+demasiado rápido con mi manejador: no existe
+la propiedad . $this->mailer De hecho,
+
+00:06:12.786 --> 00:06:16.226 align:middle
+me sorprende que no se produjera un error mayor
+dentro de nuestra prueba. Para solucionarlo
+
+00:06:17.476 --> 00:06:23.276 align:middle
+, añade . ¡Así queda public function
+__construct(private MailerInterface $mailer)
+
+00:06:24.356 --> 00:06:25.806 align:middle
+mejor! Y si
+
+00:06:27.146 --> 00:06:29.076 align:middle
+lo intentamos de nuevo... pasa. ¡
+
+00:06:29.496 --> 00:06:30.876 align:middle
+Y
+
+00:06:31.326 --> 00:06:32.696 align:middle
+podemos acortar las cosas! En lugar de
+
+00:06:33.186 --> 00:06:38.626 align:middle
+assertCount(1) y , podemos decir . Este
+método ->process() processOrFail()
+
+00:06:38.806 --> 00:06:44.846 align:middle
+se asegura de que hay al menos un mensaje que
+procesar, y luego lo procesa. Comprueba dos veces la
+
+00:06:46.346 --> 00:06:50.266 align:middle
+prueba: ¡Lo tenemos! ¡Lo hicimos
+
+00:06:50.406 --> 00:06:51.416 align:middle
+equipo! Nuestra aplicación Dinotopia
+
+00:06:51.646 --> 00:06:56.106 align:middle
+es peligrosa y está bien
+probada, gracias a las
+
+00:06:56.396 --> 00:06:58.896 align:middle
+pruebas unitarias y de integración. En el
+
+00:06:59.356 --> 00:07:03.916 align:middle
+próximo tutorial de esta serie, pasaremos al
+último tipo de pruebas: las pruebas funcionales
+
+00:07:04.436 --> 00:07:08.196 align:middle
+, en las que controlas efectivamente
+un navegador, navegas por las
+
+00:07:08.286 --> 00:07:11.126 align:middle
+páginas y compruebas lo que
+hay en ellas. Es divertido
+
+00:07:11.746 --> 00:07:15.676 align:middle
+y también puede utilizarse para comprobar el
+comportamiento de JavaScript. Muy bien amigos, hasta la
+
+00:07:16.446 --> 00:07:18.006 align:middle
+próxima.
