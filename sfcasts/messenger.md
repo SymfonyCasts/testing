@@ -13,6 +13,8 @@ uses the Doctrine transport type. Though, it won't matter which transport type y
 use - Doctrine, Redis, whatever. As you'll see, in the `test` environment, we'll
 override this completely.
 
+[[[ code('d1ae629d66') ]]]
+
 ## Setting up the Test Environment Transport
 
 To make testing *easier*, let's also require *another* package from, you guessed
@@ -29,6 +31,8 @@ We'll still use Doctrine by default, but now open up
 transport and set it to the `in-memory` type. Oh, and I need to get rid of one
 extra space. Perfect!
 
+[[[ code('3927670ded') ]]]
+
 The `in-memory` comes from Symfony and it *is* nice for testing. When it's used,
 messages are not *really* sent to a transport, but are stored - in memory - on
 an object during the test... which you can then use to assert that the message
@@ -37,6 +41,8 @@ is there.
 I like that! But the `messenger-test` packages gives us something even better.
 Change this to `test://`. We'll see what that does in a moment.
 
+[[[ code('9d91d738e2') ]]]
+
 ## Testing that Messages were Dispatched
 
 Before we *dispatch* the message inside our code, head into the test. Here, we want
@@ -44,10 +50,14 @@ to assert that we sent a message to Messenger. And - surprise, surprise - we're
 going to use another trait. It's called `InteractsWithMessenger`. Down here, right
 before we call the method, say `$this->transport()->queue()->assertEmpty()`.
 
+[[[ code('69a16861d0') ]]]
+
 Similar to the mailer library, there are *a lot* of different things about messages
 that we can check. We're asserting that the queue starts *empty*, which isn't
 *really* necessary - but it's a nice way for us to start. At the end, also
 `assertCount()` that `1` message was sent.
+
+[[[ code('b5476a42c8') ]]]
 
 Let's try this! Keep running all of the tests from `LockDownHelper`:
 
@@ -71,13 +81,19 @@ Call it `LockDownStartedNotification` and put this into the `async` transport.
 Done! This created a message class, a *handler* class, and also updated
 `messenger.yaml` so that this class is sent to the `async` transport.
 
+[[[ code('2f0929508b') ]]]
+
 Next, waltz into `LockDownHelper` to *dispatch* that. On top, add
 a `private MessageBusInterface $messageBus`. Then, at the bottom, say
 `$this->messageBus->dispatch(new LockDownStartedNotification())`.
 
+[[[ code('99743a4ad9') ]]]
+
 The *handler* for this class, if we look in
 `src/MessageHandler/LockDownStartedNotification.php`, isn't doing anything *yet*.
 But this *should* be enough to get our test to pass.
+
+[[[ code('40e6055780') ]]]
 
 ```terminal-silent
 symfony php vendor/bin/phpunit tests/Integration/Service/LockDownHelperTest.php
@@ -92,6 +108,8 @@ delete where we call it, the `MailerInterface`... and even the old `use` stateme
 
 Open the handler, paste the private method there and hit "OK" to re-add those
 `use` statements. Then say `$this->sendEmailAlert()`.
+
+[[[ code('d8a629bb8c') ]]]
 
 Cool! Everything should still work fine... except that the test fails:
 
@@ -117,6 +135,8 @@ message *was* sent.
 We can do that by telling the `test` transport to *process* its messages. Copy those
 two `mailer()` lines and delete them. Down here, say `$this->transport()->process()`.
 
+[[[ code('27b01fd847') ]]]
+
 That's it! That will execute the handler for any messages in its queue. Below *that*,
 the email *should* be sent.
 
@@ -136,6 +156,8 @@ That looks better! And if we try that *again*... it *passes*.
 And we can shorten things! Instead of `assertCount(1)` and `->process()`,
 we can say `processOrFail()`. This method makes sure that there's at least one message
 to process, and then processes it.
+
+[[[ code('525e2430e1') ]]]
 
 Double-check the test:
 
