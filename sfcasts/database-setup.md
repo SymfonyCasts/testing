@@ -148,13 +148,13 @@ allows the `symfony` binary to inject the `DATABASE_URL` environment variable -
 `doctrine:database:create --env=test`:
 
 ```terminal-silent
-symfony binary doctrine:database:create --env=test
+symfony console doctrine:database:create --env=test
 ```
 
 And... success!! We also need to create the `schema`: `doctrine:schema:create`
 
 ```terminal-silent
-symfony binary doctrine:schema:create --env=test
+symfony console doctrine:schema:create --env=test
 ```
 
 *Cool*! Try the test *now*:

@@ -89,13 +89,13 @@ Así que, gracias a esta configuración, en el entorno `test`, toma la configura
 En tu terminal, ejecuta `symfony console` - esto es sólo `bin/console`, pero permite que el binario `symfony` inyecte la variable de entorno `DATABASE_URL` -`doctrine:database:create --env=test`:
 
 ```terminal-silent
-symfony binary doctrine:database:create --env=test
+symfony console doctrine:database:create --env=test
 ```
 
 Y... ¡¡éxito!! También tenemos que crear la base de datos `schema`: `doctrine:schema:create`
 
 ```terminal-silent
-symfony binary doctrine:schema:create --env=test
+symfony console doctrine:schema:create --env=test
 ```
 
 ¡Genial! Haz la prueba ahora:
