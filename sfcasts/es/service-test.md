@@ -89,7 +89,7 @@ symfony php vendor/bin/phpunit tests/Integration/Service/LockDownHelperTest.php
 
 Vamos a utilizarlo: llama a `$lockDownHelper->endCurrentLockDown()`... y luego redirige de nuevo a la página de inicio.
 
-[[[ code('ba36085629') ]]]
+[[[ code('2348905b21') ]]]
 
 ¡Vamos a probarlo! Actualiza, estamos en un bloqueo... "Fin del bloqueo"... ya no está. Todos los dinos han vuelto a sus corrales.
 

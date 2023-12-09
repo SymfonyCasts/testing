@@ -144,7 +144,7 @@ The test passes! Woo!
 Let's use it: call `$lockDownHelper->endCurrentLockDown()`... then redirect back
 to the homepage.
 
-[[[ code('ba36085629') ]]]
+[[[ code('2348905b21') ]]]
 
 Let's try it! Refresh, we're in a lockdown... "End Lockdown"... it's gone. All
 the dinos are back in their pens.
