@@ -13,7 +13,7 @@ que GenLab ha aplicado a
 varios temas de dino en GitHub
 
 00:00:16.096 --> 00:00:21.596 align:middle
-Para ello, crearemos un servicio que tomará
+Para ello, crearemos un servicio que obtendrá
 esas etiquetas utilizando la API de GitHub.
 
 00:00:22.656 --> 00:00:23.946 align:middle
