@@ -3,7 +3,7 @@
 Let's take a quick look back at `GithubService` to see *exactly* what it's doing.
 First, the constructor requires an `HttpClientInterface` object that we use to
 call GitHub. In return, we get back a `ResponseInterface` that has an array of
-issue's for the `dino-park` repository. Next we call the `toArray()` method on
+issues for the `dino-park` repository. Next, we call the `toArray()` method on
 the response, and iterate over each issue to see if the title contains the 
 `$dinosaurName`, so we can get its status label.
 
@@ -14,6 +14,12 @@ call the `request()` method, it should give back a `ResponseInterface` object
 containing data that *we* control. So... let's do that.
 
 ## Training the Mock on what to Return
+
+***NOTE
+Since this tutorial was recorded, PHPUnit has added a `createStub()` method. Since we're only controlling 
+return values here (not asserting how methods are called), `createStub()` would be the "correct" choice.
+Although `createMock()` works just fine too.
+***
 
 Right after `$mockHttpClient`, say `$mockResponse = $this->createMock()` using
 `ResponseInterface::class` for the class name. Below on `$mockHttpClient`, call,
@@ -26,7 +32,7 @@ that hey, anytime we call the `request()` method on our mock, you need to return
 We *could* run our tests now, but they would fail. We taught our mock client
 *what* it should return when we call the `request()` method. *But*, *now* we need
 to teach our `$mockResponse` what *it* needs to do when we call the `toArray()`
-method. So right above, lets teach the `$mockResponse` that when we call,
+method. So right above, let's teach the `$mockResponse` that when we call,
 `method('toArray')` and it `willReturn()` an array of issues. Because that's what 
 GitHub returns when we call the API.
 
