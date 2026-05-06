@@ -1,0 +1,211 @@
+WEBVTT
+
+00:00:01.076 --> 00:00:06.836 align:middle
+Ahora que tenemos una idea de lo que necesitamos que
+haga GithubService, vamos a añadir la lógica interna
+
+00:00:06.836 --> 00:00:11.556 align:middle
+que obtendrá las incidencias del repositorio
+dino-park utilizando la API de GitHub.
+
+00:00:12.976 --> 00:00:18.976 align:middle
+Para realizar peticiones HTTP, instala en
+tu terminal el Cliente HTTP de Symfony con:
+
+00:00:19.416 --> 00:00:30.096 align:middle
+composer require symfony/http-client Dentro
+de GithubService, instala un cliente HTTP
+
+00:00:30.096 --> 00:00:34.096 align:middle
+con $client = HttpClient::create().
+
+00:00:35.226 --> 00:00:39.076 align:middle
+Para hacer una petición,
+llama a $client->request().
+
+00:00:40.646 --> 00:00:42.136 align:middle
+Esto necesita 2 cosas.
+
+00:00:42.466 --> 00:00:46.946 align:middle
+1ª: qué método HTTP
+utilizar, como GET o POST.
+
+00:00:47.436 --> 00:00:49.406 align:middle
+En este caso, debería ser GET.
+
+00:00:50.646 --> 00:00:53.856 align:middle
+2º: la URL, que pegaré.
+
+00:00:54.566 --> 00:00:59.686 align:middle
+Esto recuperará todas las "incidencias" del
+repositorio dino-park a través de la API de GitHub.
+
+00:01:01.146 --> 00:01:03.216 align:middle
+Vale, ¿y ahora qué?
+
+00:01:04.216 --> 00:01:08.576 align:middle
+Volviendo al repositorio dino-park,
+GitHub devolverá una respuesta JSON
+
+00:01:08.626 --> 00:01:10.916 align:middle
+que contiene las incidencias que vemos aquí.
+
+00:01:11.716 --> 00:01:14.116 align:middle
+Cada incidencia tiene un
+título con el nombre de un dino
+
+00:01:14.256 --> 00:01:17.436 align:middle
+y, si la incidencia tiene una etiqueta
+adjunta, también nos la devolverá.
+
+00:01:18.926 --> 00:01:24.036 align:middle
+Así pues, establece $client->request()
+en una nueva variable $response.
+
+00:01:25.516 --> 00:01:31.526 align:middle
+A continuación, foreach() sobre
+$response->toArray() como $issue.
+
+00:01:31.526 --> 00:01:37.766 align:middle
+Lo bueno de utilizar el cliente
+HTTP de Symfony es que no tenemos
+
+00:01:37.796 --> 00:01:41.396 align:middle
+que molestarnos en transformar
+el JSON de GitHub en un array -
+
+00:01:41.806 --> 00:01:45.026 align:middle
+toArray() hace ese trabajo pesado por nosotros.
+
+00:01:45.906 --> 00:01:50.206 align:middle
+Dentro de este bucle, comprueba si el título
+de la incidencia contiene el $dinosaurName.
+
+00:01:50.746 --> 00:01:54.686 align:middle
+Así que si (str_contains($emisión['título'],
+
+00:01:54.686 --> 00:01:59.966 align:middle
+$nombredinosaurio)) entonces //
+Do Something con esa edición.
+
+00:02:01.436 --> 00:02:05.726 align:middle
+Llegados a este punto, hemos encontrado
+la edición para nuestro dinosaurio.
+
+00:02:05.726 --> 00:02:10.936 align:middle
+¡Guau! Ahora tenemos que hacer un bucle sobre cada
+etiqueta para ver si podemos encontrar el estado de salud.
+
+00:02:11.736 --> 00:02:17.256 align:middle
+Para ayudarte, pegaré un método privado: puedes
+copiarlo del bloque de código de esta página.
+
+00:02:17.996 --> 00:02:19.876 align:middle
+Toma una matriz de etiquetas...
+
+00:02:20.526 --> 00:02:23.686 align:middle
+y cuando encuentra una que empieza por Status:,
+
+00:02:24.296 --> 00:02:28.826 align:middle
+devuelve el enum HealthStatus
+correcto basado en esa etiqueta.
+
+00:02:30.146 --> 00:02:37.536 align:middle
+Ahora en lugar de // Do Something, decimos
+$health = $this->getDinoStatusFromLabels()
+
+00:02:37.886 --> 00:02:41.366 align:middle
+y pasamos las etiquetas con $issue['labels'].
+
+00:02:42.646 --> 00:02:46.146 align:middle
+Y ahora podemos devolver $health.
+
+00:02:46.226 --> 00:02:50.716 align:middle
+Pero... ¿qué pasa si un número no
+tiene una etiqueta de estado de salud?
+
+00:02:51.676 --> 00:02:58.636 align:middle
+Hmm... al principio de este método, establece
+por defecto $health en HealthStatus::HEALTHY -
+
+00:02:59.206 --> 00:03:05.516 align:middle
+porque GenLab nunca olvidaría poner una etiqueta
+Sick en un dino que no se encuentra bien.
+
+00:03:06.316 --> 00:03:08.626 align:middle
+Hmm... Bueno, ¡creo que lo hemos conseguido!
+
+00:03:09.336 --> 00:03:10.996 align:middle
+Hagamos nuestras pruebas para estar seguros.
+
+00:03:11.346 --> 00:03:15.186 align:middle
+./vendor/bin/phpunit Y...
+
+00:03:15.186 --> 00:03:21.026 align:middle
+¡Vaya! Tenemos 8 pruebas, 11
+afirmaciones, ¡y todas pasan!
+
+00:03:21.276 --> 00:03:24.626 align:middle
+¡Shweeet! ¡Un último reto!
+
+00:03:25.226 --> 00:03:30.776 align:middle
+Para facilitar la depuración, quiero registrar un mensaje
+cada vez que hagamos una petición a la API de GitHub.
+
+00:03:31.816 --> 00:03:33.176 align:middle
+¡No hay problema!
+
+00:03:33.776 --> 00:03:35.846 align:middle
+Sólo tenemos que obtener el servicio logger.
+
+00:03:36.696 --> 00:03:41.486 align:middle
+Añade un constructor con
+private LoggerInterface $logger
+
+00:03:41.796 --> 00:03:45.206 align:middle
+para añadir un argumento y
+una propiedad de una sola vez.
+
+00:03:46.586 --> 00:03:50.396 align:middle
+Justo después de llamar al método
+request(), añade $this->logger->info()
+
+00:03:50.856 --> 00:03:56.946 align:middle
+y pasa Request Dino Issues para el mensaje
+y también un array con contexto extra.
+
+00:03:57.516 --> 00:04:06.546 align:middle
+¿Qué te parece una clave dino establecida en $dinosaurName
+y responseStatus en $response->getStatusCode().
+
+00:04:08.006 --> 00:04:12.896 align:middle
+¡Genial! Eso no debería haber
+roto nada en nuestra clase,
+
+00:04:13.546 --> 00:04:18.006 align:middle
+pero ejecutemos las pruebas
+para estar seguros: Y...
+
+00:04:18.276 --> 00:04:21.736 align:middle
+¡Ay! ¡Sí que hemos roto algo!
+
+00:04:22.416 --> 00:04:25.836 align:middle
+Demasiados pocos argumentos pasados
+al constructor en GithubService.
+
+00:04:26.396 --> 00:04:29.176 align:middle
+se esperaban 0 pasados 1.
+
+00:04:30.156 --> 00:04:31.786 align:middle
+¡Por supuesto!
+
+00:04:32.176 --> 00:04:36.086 align:middle
+Cuando añadimos el argumento
+LoggerInterface a GithubService,
+
+00:04:36.616 --> 00:04:39.366 align:middle
+nunca actualizamos nuestra prueba para pasarlo.
+
+00:04:40.246 --> 00:04:46.036 align:middle
+A continuación te mostraré cómo podemos hacerlo utilizando
+una de las superhabilidades de PHPUnit: el mocking.
