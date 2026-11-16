@@ -15,19 +15,22 @@ class ShipSystem
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\ManyToOne(inversedBy: 'systems')]
+    #[ORM\JoinColumn(nullable: false)]
+    private Ship $ship;
+
+    #[ORM\Column]
+    #[Groups(['ship:read'])]
+    private SystemType $type;
+
     #[ORM\Column]
     #[Groups(['ship:read'])]
     private SystemStatus $status = SystemStatus::Ok;
 
-    public function __construct(
-        #[ORM\ManyToOne(inversedBy: 'systems')]
-        #[ORM\JoinColumn(nullable: false)]
-        private Ship $ship,
-
-        #[ORM\Column]
-        #[Groups(['ship:read'])]
-        private SystemType $type,
-    ) {
+    public function __construct(Ship $ship, SystemType $type)
+    {
+        $this->ship = $ship;
+        $this->type = $type;
     }
 
     public function getId(): ?int

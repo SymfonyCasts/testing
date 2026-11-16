@@ -16,6 +16,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 180, unique: true)]
+    private string $email;
+
+    #[ORM\Column(length: 255)]
+    private string $name;
+
+    #[ORM\Column]
+    private string $password;
+
+    /**
+     * @var list<string>
+     */
+    #[ORM\Column]
+    private array $roles;
+
     #[ORM\Column(length: 64, unique: true)]
     private string $apiToken;
 
@@ -23,19 +38,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @param list<string> $roles
      */
     public function __construct(
-        #[ORM\Column(length: 180, unique: true)]
-        private string $email,
-
-        #[ORM\Column(length: 255)]
-        private string $name,
-
-        #[ORM\Column]
-        private string $password,
-
-        #[ORM\Column]
-        private array $roles = [],
+        string $email,
+        string $name,
+        string $password,
+        array $roles = [],
         ?string $apiToken = null,
     ) {
+        $this->email = $email;
+        $this->name = $name;
+        $this->password = $password;
+        $this->roles = $roles;
         $this->apiToken = $apiToken ?? bin2hex(random_bytes(32));
     }
 

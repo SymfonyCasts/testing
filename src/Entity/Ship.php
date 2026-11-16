@@ -20,9 +20,25 @@ class Ship
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 255)]
+    #[Groups(['ship:read', 'ticket:read'])]
+    private string $name;
+
     #[ORM\Column(length: 255, unique: true)]
     #[Groups(['ship:read', 'ticket:read'])]
     private string $slug;
+
+    #[ORM\Column(length: 255)]
+    #[Groups(['ship:read'])]
+    private string $model;
+
+    #[ORM\Column(length: 255)]
+    #[Groups(['ship:read'])]
+    private string $captain;
+
+    #[ORM\Column]
+    #[Groups(['ship:read'])]
+    private \DateTimeImmutable $arrivedAt;
 
     #[ORM\Column]
     #[Groups(['ship:read'])]
@@ -37,22 +53,15 @@ class Ship
     private Collection $systems;
 
     public function __construct(
-        #[ORM\Column(length: 255)]
-        #[Groups(['ship:read', 'ticket:read'])]
-        private string $name,
-
-        #[ORM\Column(length: 255)]
-        #[Groups(['ship:read'])]
-        private string $model,
-
-        #[ORM\Column(length: 255)]
-        #[Groups(['ship:read'])]
-        private string $captain,
-
-        #[ORM\Column]
-        #[Groups(['ship:read'])]
-        private \DateTimeImmutable $arrivedAt = new \DateTimeImmutable(),
+        string $name,
+        string $model,
+        string $captain,
+        \DateTimeImmutable $arrivedAt = new \DateTimeImmutable(),
     ) {
+        $this->name = $name;
+        $this->model = $model;
+        $this->captain = $captain;
+        $this->arrivedAt = $arrivedAt;
         $this->slug = (new AsciiSlugger())->slug($name)->lower()->toString();
         $this->systems = new ArrayCollection(array_map(
             fn (SystemType $type) => new ShipSystem($this, $type),
