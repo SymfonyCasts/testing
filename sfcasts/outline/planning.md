@@ -31,6 +31,7 @@ Symfony 7.4, PHP 8.4, SQLite, Tailwind, and Foundry for fixtures. No testing too
 
 ## 4. Foundry in tests
 
+- Brief refresher: covered in the integration testing course
 - Use the same factories inside tests
 - Fresh database for each test, with only the ships the test needs
 - Rewrite the ship page test
@@ -63,12 +64,14 @@ Symfony 7.4, PHP 8.4, SQLite, Tailwind, and Foundry for fixtures. No testing too
 
 ## 10. Emails
 
+- Brief refresher: covered in the integration testing course
 - Booking a repair emails the captain
 - Install mailer-test and check the email's recipient, subject and contents
 - A bad booking sends nothing
 
 ## 11. Messenger
 
+- Brief refresher: covered in the integration testing course
 - Critical bookings sound a red alert in the background
 - In a test, nothing happens because the message just waits in the queue
 - Install messenger-test, check the alert was queued, process it, then check the engineers got their email
@@ -109,6 +112,7 @@ Symfony 7.4, PHP 8.4, SQLite, Tailwind, and Foundry for fixtures. No testing too
 
 ## 19. Faster tests: DAMA
 
+- Brief refresher: covered in the integration testing course
 - Time the suite
 - Roll back each test instead of rebuilding the database
 - Time it again

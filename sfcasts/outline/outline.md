@@ -1,6 +1,6 @@
 # End to End (E2E) App Testing
 
-## Intro: the app & the testing pack
+## Touring the App & Installing the Testing Pack
 
 ### Setup
 
@@ -43,7 +43,7 @@
   `bin/phpunit`
 - Run `symfony php bin/phpunit`: "No tests executed!" - time to write one
 
-## First feature test
+## Writing Your First Feature Test with WebTestCase
 
 ### Kinds of tests
 

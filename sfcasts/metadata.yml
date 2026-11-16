@@ -1,1 +1,21 @@
-chapters: []
+chapters:
+    - test-pack
+    - first-feature-test
+    - test-database
+    - foundry
+    - listing-page
+    - submitting-forms
+    - zenstruck-browser
+    - validation-errors
+    - debugging
+    - emails
+    - messenger
+    - login-form
+    - access-control
+    - api-testing
+    - api-tokens
+    - api-create
+    - playwright
+    - playwright-debugging
+    - dama
+    - paratest
