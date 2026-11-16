@@ -5,7 +5,7 @@ namespace App\Controller\Api;
 use App\Dto\RepairRequest;
 use App\Entity\Ship;
 use App\Repository\RepairTicketRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\RepairDesk;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
@@ -28,11 +28,10 @@ final class TicketController extends AbstractController
 
         #[MapRequestPayload]
         RepairRequest $repairRequest,
-        EntityManagerInterface $entityManager,
+        RepairDesk $repairDesk,
     ): JsonResponse {
         $ticket = $repairRequest->createTicketFor($ship);
-        $entityManager->persist($ticket);
-        $entityManager->flush();
+        $repairDesk->file($ticket);
 
         return $this->json($ticket, JsonResponse::HTTP_CREATED, context: ['groups' => 'ticket:read']);
     }

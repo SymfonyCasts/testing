@@ -1,0 +1,10 @@
+<div style="font-family: ui-monospace, Menlo, monospace; color: #0f172a; max-width: 560px;">
+    <h1 style="font-size: 20px;">Ticket {{ ticket.number }} filed</h1>
+    <p>Thanks for booking a repair for <strong>{{ ticket.ship.name }}</strong>. Our engineers are on it!</p>
+    <p>
+        <strong>Priority:</strong> {{ ticket.priority.label }}<br>
+        <strong>What's wrong:</strong> {{ ticket.description }}
+    </p>
+    <p><a href="{{ url('app_ship_show', {slug: ticket.ship.slug}) }}">Check on {{ ticket.ship.name }}</a></p>
+    <p style="color: #64748b; font-size: 12px;">Shipshape Repair Dock // Bay 7, Outer Ring // If it beeps, we fix it.</p>
+</div>

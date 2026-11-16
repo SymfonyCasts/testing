@@ -1,0 +1,9 @@
+<div style="font-family: ui-monospace, Menlo, monospace; color: #0f172a; max-width: 560px;">
+    <h1 style="font-size: 20px; color: #e11d48;">RED ALERT: {{ ticket.number }}</h1>
+    <p><strong>{{ ticket.ship.name }}</strong> needs a critical repair. All hands to Bay 7!</p>
+    <p>
+        <strong>Reported by:</strong> {{ ticket.reporterEmail }}<br>
+        <strong>What's wrong:</strong> {{ ticket.description }}
+    </p>
+    <p><a href="{{ url('app_tickets') }}">Open the repair queue</a></p>
+</div>

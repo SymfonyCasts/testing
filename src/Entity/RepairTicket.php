@@ -75,6 +75,11 @@ class RepairTicket
         return $this->priority;
     }
 
+    public function isCritical(): bool
+    {
+        return $this->priority === TicketPriority::Critical;
+    }
+
     public function getStatus(): TicketStatus
     {
         return $this->status;

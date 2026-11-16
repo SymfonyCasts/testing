@@ -2,7 +2,7 @@
 
 ## Preconditions
 
-- Fresh Symfony 7.4 webapp (PHP 8.3), SQLite, Tailwind, Foundry (fixtures only)
+- Fresh Symfony 7.4 webapp (PHP 8.4), SQLite, Tailwind, Foundry (fixtures only)
 - No testing pack installed - chapter 1 does that
 - Assumes the PHPUnit unit + integration testing courses
 
@@ -57,51 +57,70 @@
 - Artifacts saved automatically on failure (`var/browser/...`)
 - Exceptions: `expectException()` vs `throwExceptions()`
 
-## 10. Authentication: login form
+## 10. Emails (new)
+
+- Booking a repair emails the reporter a confirmation ("Repair ticket SD-001 filed for USS Espresso")
+- Emails go out through the `async` Messenger transport, but mailer-test collects them when they're queued: no worker needed
+- `composer require --dev zenstruck/mailer-test`, `InteractsWithMailer`
+- `$this->mailer()->assertSentEmailCount(1)->assertEmailSentTo(...)`: subject, body contains the ticket number, link to the ship
+- Invalid submission -> `assertNoEmailSent()`
+- Browser integration: assert emails mid-chain with `->use(function (MailerComponent $mailer) { ... })`
+
+## 11. Messenger (new)
+
+- Booking a *Critical* repair dispatches `SoundRedAlert`, routed to the `async` transport; its handler emails `engineering@shipshape.space`
+- The red alert email never shows up in the test: the message just sits in the queue
+- `composer require --dev zenstruck/messenger-test`, `test://` transport in `when@test`
+- `InteractsWithMessenger`: `$this->transport('async')->queue()->assertContains(SoundRedAlert::class, 1)`
+- The queue also holds the confirmation `SendEmailMessage`, so assert on the message class, not the total count
+- `->process()` the queue, then assert the red alert email (reuses chapter 10)
+- Normal priority -> no `SoundRedAlert` queued (`assertNotContains()`); mention `intercept=false` to handle messages immediately
+
+## 12. Authentication: login form
 
 - Log in through the real login form: `fillField()` + `click()`
 - `assertAuthenticated()` / `assertNotAuthenticated()`, logout
 
-## 11. `actingAs()` & access control
+## 13. `actingAs()` & access control
 
 - Skip the form: `->actingAs($user)` with a `UserFactory` user
 - Test the denied path too: anonymous -> redirect to login, wrong role -> 403
 
-## 12. API testing with browser
+## 14. API testing with browser
 
 - `get()`, `assertJson()`, `assertJsonMatches()` (needs `mtdowling/jmespath.php`)
 - `->json()` to dig into the response
 
-## 13. API auth: API key
+## 15. API auth: API key
 
 - Unauthenticated -> 401
 - `HttpOptions::json()->withHeader(...)` / reusable options
 
-## 14. API create (POST)
+## 16. API create (POST)
 
 - `post()` with a JSON body, assert 201 + response, assert it persisted
 - Validation error -> 422 (reuses chapter 8's ideas)
 
-## 15. JS testing: `PlaywrightBrowser` setup (new split)
+## 17. JS testing: `PlaywrightBrowser` setup (new split)
 
 - Something on the page that needs JS (Stimulus/Turbo/Live Component)
 - Show it can't be tested with `KernelBrowser`
 - `playwright-php/playwright-symfony` + `vendor/bin/playwright-install --browsers`
 - `$this->playwrightBrowser()`: same API, real browser, requests stay in-process
 
-## 16. JS testing: auto-waiting & debugging (new split)
+## 18. JS testing: auto-waiting & debugging (new split)
 
 - Auto-waiting for async UI, `BROWSER_DEFAULT_TIMEOUT`
 - `PLAYWRIGHT_HEADLESS=false` to watch, pause into the Inspector, screenshots on failure
 - Foundry + `actingAs()` still work, since it's all one process
 
-## 17. Speed: DAMA DoctrineTestBundle
+## 19. Speed: DAMA DoctrineTestBundle
 
 - Time the suite first: `ResetDatabase` re-creates the schema for every test
 - Install DAMA: each test wrapped in a transaction, rolled back
 - Time it again
 
-## 18. Speed: ParaTest
+## 20. Speed: ParaTest
 
 - `vendor/bin/paratest`
 - SQLite: each worker needs its own DB file (`TEST_TOKEN` in `DATABASE_URL`)
@@ -109,7 +128,6 @@
 
 ## Advanced bonus topics
 
-- Testing emails with `zenstruck/mailer-test`
 - Running the suite (Playwright included) in CI with `playwright-php/setup-playwright`
 - Profiler assertions (`withProfiling()`, query counts)
 - Wrap-up: which kind of test to write for what (if not covered enough in chapter 1)

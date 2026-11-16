@@ -2,3 +2,8 @@ workers:
     # Watch and build CSS files using Tailwind CSS
     tailwind:
         cmd: ['symfony', 'console', 'tailwind:build', '--watch']
+
+    # Handle async messages (red alerts for critical repairs)
+    messenger_consume_async:
+        cmd: ['symfony', 'console', 'messenger:consume', 'async']
+        watch: ['config', 'src', 'templates', 'vendor/composer']
