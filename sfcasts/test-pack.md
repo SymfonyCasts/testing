@@ -1,7 +1,7 @@
 # Touring the App & Installing the Testing Pack
 
-Hey friends! Welcome to our end-to-end app testing course for Symfony! End-to-end tests
-- I usually call them *feature tests*, and that's what we'll call them in this course -
+Hey friends! Welcome to our end-to-end app testing course for Symfony! End-to-end tests -
+I usually call them *feature tests*, and that's what we'll call them in this course -
 are my favorite tests to write. They mimic what your users actually do on your site:
 visiting pages, seeing results, clicking buttons, submitting forms... the real deal.
 
@@ -34,11 +34,11 @@ testing that specifically.
 
 As an anonymous user, you can also book a repair: click "Book a repair" right here on
 the ship's page. The form already has this ship selected. Submit the form without
-filling anything else in and... validation errors. A nice spot for some tests! Now
-fill it in for real: use `quick@espresso.space` for the email, keep the priority as
-"Normal", and for "What's wrong?", write "The warp core smells like burnt coffee!". Click
-"Book repair" and... we're redirected to the ship's page with a flash message: our
-engineers are on it!
+filling anything else in and... validation errors. A nice spot for some tests! Now fill
+it in for real: use `quick@espresso.space` for the email, keep the priority as "Normal",
+and for "What's wrong?", write "The warp core smells like burnt coffee!". Click "Book
+repair" and... we're redirected to the ship's page with a flash message: our engineers
+are on it!
 
 The form sent an email too. Down in the web debug toolbar, hover over the status code:
 it shows the POST request that redirected us here. Click its token to open that request
@@ -52,12 +52,12 @@ Scotty gets a new "Repair queue" link in the nav. Click it to see all the submit
 repairs... with ours down at the bottom. Then click "Log out".
 
 Finally, there's an API with the same functionality as the web interface. In the address
-bar, go to `/api/ships`. I'll check "Pretty print" to make this look nicer: a list of all the ships in JSON. Now
-try `/api/tickets`... a 401! That's for engineers only, and it requires an API token.
+bar, go to `/api/ships`. I'll check "Pretty print" to make this look nicer: a list of
+all the ships in JSON. Now try `/api/tickets`... a 401! That's for engineers only, and
+it requires an API token.
 
-That's the quick tour! We're going to add end-to-end tests for *all* of these
-features. And we won't change any app code: in this course, we're just writing the
-tests.
+That's the quick tour! We're going to add end-to-end tests for *all* of these features.
+And we won't change any app code: in this course, we're just writing the tests.
 
 ## Installing the Testing Pack
 
@@ -78,9 +78,9 @@ Some stuff was added to `.gitignore`, and of course, `composer.json`, `composer.
 and `symfony.lock` changed. We also have a new `.env.test` file, a `bin/phpunit` script,
 a `tests/` directory and `phpunit.dist.xml`, which is the configuration for PHPUnit.
 
-Jump over to your editor and open `.env.test`. It sets some test-specific environment variables.
-Then check out `phpunit.dist.xml`: a sensible default config for getting started with PHPUnit,
-added by its recipe.
+Jump over to your editor and open `.env.test`. It sets some test-specific environment
+variables. Then check out `phpunit.dist.xml`: a sensible default config for getting
+started with PHPUnit, added by its recipe.
 
 Finally, in `composer.json`, look at the packages installed under `require-dev` at the
 bottom: PHPUnit, Symfony's BrowserKit and Symfony's CssSelector. That's the default
