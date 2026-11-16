@@ -17,9 +17,9 @@ Symfony 7.4, PHP 8.4, SQLite, Tailwind, and Foundry for fixtures. No testing too
 - Tour Shipshape
 - Install the testing pack and run the empty suite
 
-## 2. First functional test
+## 2. First feature test
 
-- Unit vs integration vs end-to-end tests, and what each is good at
+- Unit vs integration vs end-to-end (feature) tests, and what each is good at
 - Test the homepage: it loads and shows the right heading
 - No database needed yet
 
