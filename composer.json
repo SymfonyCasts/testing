@@ -7,7 +7,7 @@
         "php": ">=8.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/doctrine-bundle": "^2.19",
+        "doctrine/doctrine-bundle": "^3.4",
         "doctrine/doctrine-migrations-bundle": "^3.7",
         "doctrine/orm": "^3.8",
         "phpdocumentor/reflection-docblock": "^6.0",

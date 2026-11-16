@@ -32,7 +32,7 @@ class Ship
      * @var Collection<int, ShipSystem>
      */
     #[ORM\OneToMany(targetEntity: ShipSystem::class, mappedBy: 'ship', cascade: ['persist'], orphanRemoval: true)]
-    #[ORM\OrderBy(['id' => 'ASC'])]
+    #[ORM\OrderBy(['id' => \SortDirection::Ascending])]
     #[Groups(['ship:read'])]
     private Collection $systems;
 
