@@ -1,133 +1,126 @@
 # End to End (E2E) App Testing
 
-## Preconditions
+## The app: Shipshape
 
-- Fresh Symfony 7.4 webapp (PHP 8.4), SQLite, Tailwind, Foundry (fixtures only)
-- No testing pack installed - chapter 1 does that
-- Assumes the PHPUnit unit + integration testing courses
+A starship repair dock. Ships come in, captains book repairs, engineers work the repair queue. Everything the course tests already exists, so we only write tests.
 
-## 1. Intro: the app & installing the testing pack
+- Homepage, ships in dock, a ship's page with a JavaScript "Run full diagnostic" button
+- Book a repair form, which emails the captain a confirmation
+- Critical repairs sound a red alert in the background, which emails the engineers
+- Engineer login and a repair queue only engineers can see
+- A small JSON API that mirrors the website, protected by API tokens
 
-- Unit vs integration vs E2E: what each is good at (promised on the course page)
-- Tour the app, load fixtures (`foundry:load-fixtures`) - Foundry is already here, but only for fixtures
-- `composer require --dev symfony/test-pack`: what it adds (phpunit, browser-kit, css-selector, `.env.test`)
-- Run the (empty) suite
+Symfony 7.4, PHP 8.4, SQLite, Tailwind, and Foundry for fixtures. No testing tools installed yet.
 
-## 2. First functional test: `WebTestCase`
+## 1. Intro: the app & the testing pack
 
-- `make:test` -> `WebTestCase`, homepage, no database
-- `createClient()`, `request()`, `assertResponseIsSuccessful()`, `assertSelectorTextContains()`
+- Tour Shipshape
+- Install the testing pack and run the empty suite
 
-## 3. Show page: the database problem
+## 2. First functional test
 
-- Test an entity's show page
-- Fails: test DB (`var/data_test.db`) is empty
-- "Fix" by loading fixtures into the test env first - brittle: hardcoded ids/data, order-dependent, someone edits a fixture and tests break
+- Unit vs integration vs end-to-end tests, and what each is good at
+- Test the homepage: it loads and shows the right heading
+- No database needed yet
+
+## 3. Ship page: the database problem
+
+- Test a ship's page
+- It fails because the test database is empty
+- Loading fixtures first works, but it's brittle
 
 ## 4. Foundry in tests
 
-- Same factories we already use for fixtures, now inside a test
-- `ResetDatabase` + `Factories` traits: fresh schema, create exactly the state the test needs
-- Rewrite chapter 3's test with `SomeFactory::createOne([...])`
+- Use the same factories inside tests
+- Fresh database for each test, with only the ships the test needs
+- Rewrite the ship page test
 
-## 5. Listing page
+## 5. Ships in dock listing
 
-- `createMany()`, assert count of rows/items, ordering
-- Maybe: only "published" items show up (a state the factory controls)
+- Create a few ships, check they're listed, newest first
+- Departed ships don't show up
 
-## 6. A form with the traditional client
+## 6. Book a repair with the built-in client
 
-- Submit a form with `selectButton()->form()`, `submit()`, `followRedirect()`
-- Point out the pain: crawler juggling, field names like `thing[name]`, verbose assertions
+- Fill out and submit the booking form
+- Show how clunky it is
 
-## 7. `zenstruck/browser`
+## 7. zenstruck/browser
 
-- Install, `HasBrowser` trait, rewrite chapter 6's form test fluently
-- `visit()`, `fillField()`, `click()`, `assertOn()`, `assertSee()`
-- Rewrite an earlier test too to show the contrast
+- Install it and rewrite the booking test so it reads like a user story
+- Rewrite an earlier test to compare
 
-## 8. Validation errors & redirects (new)
+## 8. Validation errors & redirects
 
-- Submit invalid data: assert error messages, status 422, nothing persisted (factory `::repository()->assert()->count()`)
-- Happy path: `assertRedirectedTo()`, flash message
+- Submit a bad booking: see the errors, nothing saved
+- Submit a good one: redirected to the ship, success message shown
 
-## 9. Debugging failing tests (new)
+## 9. Debugging failing tests
 
-- `->dump()`, `->dd()`, `->saveSource()`
-- Artifacts saved automatically on failure (`var/browser/...`)
-- Exceptions: `expectException()` vs `throwExceptions()`
+- Dump the page or save it to a file
+- What gets saved automatically when a test fails
+- Seeing the real exception
 
-## 10. Emails (new)
+## 10. Emails
 
-- Booking a repair emails the reporter a confirmation ("Repair ticket SD-001 filed for USS Espresso")
-- Emails go out through the `async` Messenger transport, but mailer-test collects them when they're queued: no worker needed
-- `composer require --dev zenstruck/mailer-test`, `InteractsWithMailer`
-- `$this->mailer()->assertSentEmailCount(1)->assertEmailSentTo(...)`: subject, body contains the ticket number, link to the ship
-- Invalid submission -> `assertNoEmailSent()`
-- Browser integration: assert emails mid-chain with `->use(function (MailerComponent $mailer) { ... })`
+- Booking a repair emails the captain
+- Install mailer-test and check the email's recipient, subject and contents
+- A bad booking sends nothing
 
-## 11. Messenger (new)
+## 11. Messenger
 
-- Booking a *Critical* repair dispatches `SoundRedAlert`, routed to the `async` transport; its handler emails `engineering@shipshape.space`
-- The red alert email never shows up in the test: the message just sits in the queue
-- `composer require --dev zenstruck/messenger-test`, `test://` transport in `when@test`
-- `InteractsWithMessenger`: `$this->transport('async')->queue()->assertContains(SoundRedAlert::class, 1)`
-- The queue also holds the confirmation `SendEmailMessage`, so assert on the message class, not the total count
-- `->process()` the queue, then assert the red alert email (reuses chapter 10)
-- Normal priority -> no `SoundRedAlert` queued (`assertNotContains()`); mention `intercept=false` to handle messages immediately
+- Critical bookings sound a red alert in the background
+- In a test, nothing happens because the message just waits in the queue
+- Install messenger-test, check the alert was queued, process it, then check the engineers got their email
+- Normal bookings don't sound the alert
 
-## 12. Authentication: login form
+## 12. Logging in
 
-- Log in through the real login form: `fillField()` + `click()`
-- `assertAuthenticated()` / `assertNotAuthenticated()`, logout
+- Log in as an engineer through the real login form
+- Check we're logged in, then log out
 
-## 13. `actingAs()` & access control
+## 13. Access control
 
-- Skip the form: `->actingAs($user)` with a `UserFactory` user
-- Test the denied path too: anonymous -> redirect to login, wrong role -> 403
+- Skip the login form and log in directly in the test
+- Visitors get sent to the login page, cadets are denied the repair queue
 
-## 14. API testing with browser
+## 14. API: reading
 
-- `get()`, `assertJson()`, `assertJsonMatches()` (needs `mtdowling/jmespath.php`)
-- `->json()` to dig into the response
+- Fetch the ships from the API and check the JSON
 
-## 15. API auth: API key
+## 15. API: tokens
 
-- Unauthenticated -> 401
-- `HttpOptions::json()->withHeader(...)` / reusable options
+- The ticket list needs a token: no token is rejected, a cadet is denied, an engineer gets in
 
-## 16. API create (POST)
+## 16. API: booking a repair
 
-- `post()` with a JSON body, assert 201 + response, assert it persisted
-- Validation error -> 422 (reuses chapter 8's ideas)
+- Book a repair through the API and check it was saved
+- Bad data returns the same validation errors as the website
 
-## 17. JS testing: `PlaywrightBrowser` setup (new split)
+## 17. JavaScript testing: Playwright
 
-- Something on the page that needs JS (Stimulus/Turbo/Live Component)
-- Show it can't be tested with `KernelBrowser`
-- `playwright-php/playwright-symfony` + `vendor/bin/playwright-install --browsers`
-- `$this->playwrightBrowser()`: same API, real browser, requests stay in-process
+- The diagnostic button needs JavaScript, so our current tests can't click it
+- Install Playwright and run the same test in a real browser
 
-## 18. JS testing: auto-waiting & debugging (new split)
+## 18. JavaScript testing: waiting & debugging
 
-- Auto-waiting for async UI, `BROWSER_DEFAULT_TIMEOUT`
-- `PLAYWRIGHT_HEADLESS=false` to watch, pause into the Inspector, screenshots on failure
-- Foundry + `actingAs()` still work, since it's all one process
+- Wait for the diagnostic to finish before checking the result
+- Watch the browser, pause it, take screenshots on failure
 
-## 19. Speed: DAMA DoctrineTestBundle
+## 19. Faster tests: DAMA
 
-- Time the suite first: `ResetDatabase` re-creates the schema for every test
-- Install DAMA: each test wrapped in a transaction, rolled back
+- Time the suite
+- Roll back each test instead of rebuilding the database
 - Time it again
 
-## 20. Speed: ParaTest
+## 20. Faster tests: ParaTest
 
-- `vendor/bin/paratest`
-- SQLite: each worker needs its own DB file (`TEST_TOKEN` in `DATABASE_URL`)
+- Run tests in parallel
+- Give each worker its own SQLite database
 - Time it again
 
-## Advanced bonus topics
+## Bonus ideas
 
-- Running the suite (Playwright included) in CI with `playwright-php/setup-playwright`
-- Profiler assertions (`withProfiling()`, query counts)
-- Wrap-up: which kind of test to write for what (if not covered enough in chapter 1)
+- Running the suite, Playwright included, in CI
+- Counting database queries with the profiler (the ships listing has an easy one to find)
+- Wrap-up: which kind of test to write for what
