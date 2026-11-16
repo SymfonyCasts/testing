@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Repair queue{% endblock %}
+
+{% block body %}
+    <h1 class="text-3xl font-bold text-white">Repair queue</h1>
+    <p class="mt-2 text-sm text-slate-400">{{ tickets|length }} open {{ tickets|length == 1 ? 'ticket' : 'tickets' }}</p>
+
+    {% if tickets is empty %}
+        <p class="mt-10 rounded-lg border border-dashed border-slate-700 p-10 text-center text-slate-400">
+            The queue is empty. Time for a cup of tea.
+        </p>
+    {% else %}
+        <ul class="mt-8 space-y-4">
+            {% for ticket in tickets %}
+                <li class="rounded-lg border border-slate-800 bg-slate-900/60 p-5">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <span class="font-bold text-sky-300">{{ ticket.number }}</span>
+                        <a href="{{ path('app_ship_show', {slug: ticket.ship.slug}) }}" class="font-bold text-white hover:text-sky-300">{{ ticket.ship.name }}</a>
+                        {{ include('_badge.html.twig', {
+                            label: ticket.priority.label,
+                            tone: {critical: 'fault', normal: 'warning', low: 'muted'}[ticket.priority.value],
+                        }) }}
+                    </div>
+                    <p class="mt-3 text-slate-300">{{ ticket.description }}</p>
+                    <p class="mt-3 text-xs text-slate-500">Filed {{ ticket.createdAt|date('M j, Y') }} by {{ ticket.reporterEmail }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

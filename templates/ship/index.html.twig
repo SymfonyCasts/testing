@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ships in dock{% endblock %}
+
+{% block body %}
+    <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-white">Ships in dock</h1>
+            <p class="mt-2 text-sm text-slate-400">{{ ships|length }} {{ ships|length == 1 ? 'ship' : 'ships' }} currently in dock</p>
+        </div>
+        <a href="{{ path('app_book_repair') }}" class="rounded bg-sky-400 px-4 py-2 text-sm font-bold text-slate-950 hover:bg-sky-300">Book a repair</a>
+    </div>
+
+    {% if ships is empty %}
+        <p class="mt-10 rounded-lg border border-dashed border-slate-700 p-10 text-center text-slate-400">
+            No ships in dock. Enjoy the quiet!
+        </p>
+    {% else %}
+        <ul class="mt-8 grid gap-6 sm:grid-cols-2">
+            {% for ship in ships %}
+                <li>
+                    <a href="{{ path('app_ship_show', {slug: ship.slug}) }}" class="block rounded-lg border border-slate-800 bg-slate-900/60 p-6 hover:border-sky-400/60">
+                        <div class="flex items-start justify-between gap-4">
+                            <h2 class="text-lg font-bold text-white">{{ ship.name }}</h2>
+                            {% set faults = ship.countFaults %}
+                            {% if faults == 0 %}
+                                {{ include('_badge.html.twig', {label: 'All systems OK', tone: 'ok'}) }}
+                            {% else %}
+                                {{ include('_badge.html.twig', {label: faults ~ (faults == 1 ? ' fault' : ' faults'), tone: 'fault'}) }}
+                            {% endif %}
+                        </div>
+                        <p class="mt-2 text-sm text-slate-400">{{ ship.model }} // {{ ship.captain }}</p>
+                        <p class="mt-4 text-xs text-slate-500">Arrived {{ ship.arrivedAt|date('M j, Y') }}</p>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ ship.name }}{% endblock %}
+
+{% block body %}
+    <a href="{{ path('app_ships') }}" class="text-sm text-slate-400 hover:text-sky-300">&larr; Ships in dock</a>
+
+    <div class="mt-6 flex flex-wrap items-start justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-white">{{ ship.name }}</h1>
+            <p class="mt-2 text-slate-400">{{ ship.model }} // {{ ship.captain }}</p>
+        </div>
+        {{ include('_badge.html.twig', {label: ship.status.label, tone: ship.inDock ? 'info' : 'muted'}) }}
+    </div>
+
+    <dl class="mt-8 grid gap-4 sm:grid-cols-3">
+        <div class="rounded-lg border border-slate-800 bg-slate-900/60 p-4">
+            <dt class="text-xs uppercase tracking-wider text-slate-500">Arrived</dt>
+            <dd class="mt-1">{{ ship.arrivedAt|date('M j, Y') }}</dd>
+        </div>
+        <div class="rounded-lg border border-slate-800 bg-slate-900/60 p-4">
+            <dt class="text-xs uppercase tracking-wider text-slate-500">Systems</dt>
+            <dd class="mt-1">{{ ship.systems|length }}</dd>
+        </div>
+        <div class="rounded-lg border border-slate-800 bg-slate-900/60 p-4">
+            <dt class="text-xs uppercase tracking-wider text-slate-500">Reported faults</dt>
+            <dd class="mt-1 {{ ship.countFaults ? 'text-rose-300' : 'text-emerald-300' }}">{{ ship.countFaults }}</dd>
+        </div>
+    </dl>
+
+    <section
+        class="mt-8 rounded-lg border border-sky-400/30 bg-slate-900/80 p-6"
+        {{ stimulus_controller('diagnostic', {url: path('api_ship_show', {slug: ship.slug})}) }}
+    >
+        <div class="flex flex-wrap items-center justify-between gap-4">
+            <h2 class="font-bold uppercase tracking-wider text-sky-300">Diagnostic console</h2>
+            <button
+                type="button"
+                class="rounded bg-sky-400 px-4 py-2 text-sm font-bold text-slate-950 hover:bg-sky-300 disabled:cursor-wait disabled:opacity-50"
+                {{ stimulus_target('diagnostic', 'button') }}
+                {{ stimulus_action('diagnostic', 'run') }}
+            >Run full diagnostic</button>
+        </div>
+        <ol class="mt-6 min-h-40 space-y-2 text-sm" {{ stimulus_target('diagnostic', 'output') }}>
+            <li class="text-slate-500">&gt; Diagnostic idle. Press "Run full diagnostic" to scan every system.</li>
+        </ol>
+    </section>
+
+    <div class="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-lg border border-slate-800 bg-slate-900/60 p-6">
+        <p class="text-slate-400">Something not right with the {{ ship.name }}?</p>
+        <a href="{{ path('app_book_repair', {ship: ship.slug}) }}" class="rounded border border-sky-400/40 px-4 py-2 text-sm text-sky-300 hover:bg-sky-400/10">Book a repair</a>
+    </div>
+{% endblock %}

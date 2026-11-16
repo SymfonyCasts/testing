@@ -1,24 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Shipshape{% endblock %} | Shipshape Repair Dock</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>🛠️</text></svg>">
         {% block stylesheets %}
         {% endblock %}
 
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
-
-        {% set frankenphp_hot_reload = app.request.server.get('FRANKENPHP_HOT_RELOAD') %}
-        {% if frankenphp_hot_reload %}
-        <meta name="frankenphp-hot-reload:url" content="{{ frankenphp_hot_reload }}">
-        <script src="https://cdn.jsdelivr.net/npm/idiomorph"></script>
-        <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
-        {% endif %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="min-h-screen font-mono text-slate-200 antialiased">
+        <header class="border-b border-sky-400/20 bg-slate-950/80 backdrop-blur">
+            <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-4">
+                <a href="{{ path('app_homepage') }}" class="group flex items-baseline gap-3">
+                    <span class="text-xl font-bold tracking-widest text-sky-300 group-hover:text-sky-200">SHIPSHAPE</span>
+                    <span class="hidden text-xs uppercase tracking-wider text-slate-500 sm:inline">Starship repair &amp; diagnostics</span>
+                </a>
+                <nav class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+                    <a href="{{ path('app_ships') }}" class="hover:text-sky-300">Ships in dock</a>
+                    <a href="{{ path('app_book_repair') }}" class="hover:text-sky-300">Book a repair</a>
+                    {% if is_granted('ROLE_ENGINEER') %}
+                        <a href="{{ path('app_tickets') }}" class="hover:text-sky-300">Repair queue</a>
+                    {% endif %}
+                    {% if app.user %}
+                        <a href="{{ path('app_logout') }}" class="text-slate-400 hover:text-sky-300">Log out ({{ app.user.name }})</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="rounded border border-sky-400/40 px-3 py-1 text-sky-300 hover:bg-sky-400/10">Engineer login</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </header>
+
+        <main class="mx-auto max-w-5xl px-4 py-10">
+            {% for message in app.flashes('success') %}
+                <div class="mb-8 rounded border border-emerald-400/40 bg-emerald-400/10 px-4 py-3 text-emerald-300" role="status">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer class="mx-auto max-w-5xl px-4 pb-10 text-xs text-slate-600">
+            Shipshape Repair Dock // Bay 7, Outer Ring // If it beeps, we fix it.
+        </footer>
     </body>
 </html>

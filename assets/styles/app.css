@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
 body {
-    background-color: skyblue;
+    background-color: var(--color-slate-950);
+    background-image:
+        linear-gradient(to right, rgb(56 189 248 / 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgb(56 189 248 / 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+
+.readout-leader {
+    flex: 1;
+    border-bottom: 2px dotted var(--color-slate-700);
+    margin: 0 0.75rem 0.35rem;
 }
