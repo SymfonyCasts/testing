@@ -7,7 +7,7 @@ helps separate them visually.
 ## Unit Tests
 
 Create the first directory: `Unit/`. As a refresher, unit tests test a single unit -
-a class - and any complex dependencies that class has, you mock. These are the
+a class typically - and any complex dependencies that class has, you mock. These are the
 fastest tests to run. To organize them, I mirror the namespace structure of the
 `src/` directory inside `Unit/`.
 
@@ -25,7 +25,7 @@ the database. Same as with unit tests, I mirror the `src/` namespace structure i
 The last type, and the focus of this course, is end-to-end - or *feature* - tests:
 create a `Feature/` directory. These are typically the slowest, because they make
 actual requests against your app. But there are lots of cool tools we can use to
-speed them up.
+speed them up, and we'll talk about these.
 
 I name these by *feature*: something like `BookRepairTest` or `HomepageTest`. I only
 use sub-directories when I'm grouping a set of features together.
@@ -48,7 +48,7 @@ Let's go take a look! It was created directly in `tests/`, so move it into `Feat
 and make sure its namespace is now `App\Tests\Feature`. It stubbed out an initial test
 for us: first, rename the method to `testHomepageLoads()`:
 
-
+[[[ code_block({"sha": "80e1cf11bdecd68bd2c3bf7e086563779713a90c", "step": "2-first-test", "file": "tests/Feature/HomepageTest.php", "lines": "1-10,16-17"}) ]]]
 
 Because this class extends `WebTestCase` from FrameworkBundle, we have access to
 special tooling for making requests against our app. Keep in mind that this boots
@@ -79,7 +79,7 @@ HTML: `$this->assertSelectorTextContains()`. The selector is the HTML element we
 to look at: `nav`, because that's our nav bar. And we want it to contain "Book a
 repair":
 
-
+[[[ code_block({"sha": "80e1cf11bdecd68bd2c3bf7e086563779713a90c", "step": "2-first-test-pass", "file": "tests/Feature/HomepageTest.php", "lines": "7-18"}) ]]]
 
 Run the test suite again:
 
@@ -87,7 +87,7 @@ Run the test suite again:
 symfony php bin/phpunit
 ```
 
-Passing! 5 assertions and we're all good.
+Passing! 5 assertions - we're all good.
 
 That was an easy one, since the homepage is a static page. Next up: let's test a page
 that needs the database!
