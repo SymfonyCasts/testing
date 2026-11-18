@@ -1,0 +1,23 @@
+diff --git a/tests/Feature/HomepageTest.php b/tests/Feature/HomepageTest.php
+new file mode 100644
+index 0000000..b34a8d4
+--- /dev/null
++++ b/tests/Feature/HomepageTest.php
+@@ -0,0 +1,17 @@
++<?php
++
++namespace App\Tests\Feature;
++
++use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
++
++class HomepageTest extends WebTestCase
++{
++    public function testHomepageLoads(): void
++    {
++        $client = static::createClient();
++        $crawler = $client->request('GET', '/');
++
++        $this->assertResponseIsSuccessful();
++        $this->assertSelectorTextContains('h1', 'Hello World');
++    }
++}

@@ -14,7 +14,17 @@
             "id": "1-test-pack",
             "name": "1. test-pack",
             "description": null
+        },
+        {
+            "id": "2-first-test",
+            "name": "2. first test",
+            "description": null
+        },
+        {
+            "id": "2-first-test-pass",
+            "name": "2. first test pass",
+            "description": null
         }
     ],
-    "sha": "7102d8f4b806a917076f29e1402021ff89564294"
+    "sha": "07b476d69084cf6652f729f3a07d2c792ea1094d"
 }

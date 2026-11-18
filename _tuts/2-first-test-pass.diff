@@ -1,0 +1,13 @@
+diff --git a/tests/Feature/HomepageTest.php b/tests/Feature/HomepageTest.php
+index b34a8d4..eca82b5 100644
+--- a/tests/Feature/HomepageTest.php
++++ b/tests/Feature/HomepageTest.php
+@@ -12,6 +12,7 @@ class HomepageTest extends WebTestCase
+         $crawler = $client->request('GET', '/');
+ 
+         $this->assertResponseIsSuccessful();
+-        $this->assertSelectorTextContains('h1', 'Hello World');
++        $this->assertPageTitleContains('Starship repair');
++        $this->assertSelectorTextContains('nav', 'Book a repair');
+     }
+ }
