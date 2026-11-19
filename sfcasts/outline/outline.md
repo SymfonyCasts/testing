@@ -79,3 +79,80 @@
 
 - The homepage doesn't touch the database, so this "just works"
 - Tease: the ship page *does* need the database - next chapter
+
+## Testing Pages that Need the Database
+
+### Ship page test
+
+- `make:test ShipTest`, `testShowsShip()`
+- Request `/ships/uss-espresso` (the slug from the URL in the browser)
+- Assert: successful, `h1` contains "USS Espresso", page shows "Latte-class"
+- Run it: fails with a 500 - "no such table: ship"
+
+### The test database
+
+- Our test isn't using the dev database: `DATABASE_URL` has `%kernel.environment%`
+  in it, so tests use `var/data_test.db`
+- Point out `dbname_suffix: '_test...'` in `doctrine.yaml`: same idea for MySQL or
+  Postgres (SQLite already gets its own file)
+- That file is empty: no tables, no ships
+- Load the fixtures into it: `symfony console foundry:load-fixtures --env=test`
+  (it creates the schema too)
+- Run again: passing!
+
+### Why this is brittle
+
+- The test only passes because of data it can't see: the fixtures
+- Delete `var/data_test.db` (a fresh clone, CI...) and run: broken again until
+  someone remembers the command
+- Change a fixture (rename USS Espresso, drop a fault) and an unrelated test fails
+- Tests that *change* data (booking a repair) leave it behind for the next test and
+  the next run
+- Fix it next: each test creates exactly the data it needs, on a fresh database
+
+## Creating Test Data with Foundry
+
+### Quick refresher
+
+- Brief: Foundry is covered in the integration testing course
+- It's already installed: `src/Factory/` has a factory per entity, and
+  `src/Story/AppStory.php` is what `foundry:load-fixtures` loads
+- The same factories work inside tests: no fixtures command needed
+
+### Enable Foundry in PHPUnit
+
+- Foundry's recipe adds its PHPUnit extension to `phpunit.dist.xml`... but Foundry was
+  installed before the test pack, so that file didn't exist yet
+- Re-run the recipe: `symfony composer recipes:install zenstruck/foundry --force -v`
+- `git status`: `<bootstrap class="Zenstruck\Foundry\PHPUnit\FoundryExtension"/>` was
+  added inside `<extensions>`... but `--force` also overwrote `src/Story/AppStory.php`
+  with the recipe's empty story - restore it: `git checkout src/Story/AppStory.php`
+- If you took the integration course: we used the `Factories` and `ResetDatabase`
+  traits there - since Foundry 2.9 the extension (plus an attribute) replaces them
+
+### A fresh database for each test
+
+- Add `#[ResetDatabase]` to `ShipPageTest`
+- Delete `var/data_test.db` to prove we don't need it anymore
+- Run: fails with a 404 - the database is created, but it's empty. Exactly what we
+  want: the test has to bring its own ship
+
+### Rewrite the ship page test
+
+- At the top of the test, create the ship:
+  `ShipFactory::new()->withFaults(SystemType::WarpCore, SystemType::Navigation)->create([...])`
+  with `name` "USS Espresso" and `model` "Latte-class"
+- Only set what we assert on - the factory fills in the rest
+- Request `'/ships/'.$ship->getSlug()` instead of a hardcoded URL
+- Run: passing!
+- Everything the test checks is set up right there in the test: nothing hidden in
+  fixtures, and nothing left behind for the next test
+
+### Unknown ship: 404
+
+- Add a second test: `testUnknownShipIs404()`
+- No ship to create: request `/ships/uss-nope`
+- `assertResponseStatusCodeSame(404)`
+- Run: both passing. Thanks to the reset, we *know* no ship from the previous test
+  is still around
+- Tease: next, test the ships in dock listing with a few ships at once
