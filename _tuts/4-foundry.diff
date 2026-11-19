@@ -1,0 +1,52 @@
+diff --git a/phpunit.dist.xml b/phpunit.dist.xml
+index 22bd879..f312c20 100644
+--- a/phpunit.dist.xml
++++ b/phpunit.dist.xml
+@@ -40,5 +40,6 @@
+     </source>
+ 
+     <extensions>
++        <bootstrap class="Zenstruck\Foundry\PHPUnit\FoundryExtension" />
+     </extensions>
+ </phpunit>
+diff --git a/symfony.lock b/symfony.lock
+index 57805d9..9101092 100644
+--- a/symfony.lock
++++ b/symfony.lock
+@@ -332,7 +332,7 @@
+         "version": "v3.29.0"
+     },
+     "zenstruck/foundry": {
+-        "version": "2.16",
++        "version": "2.17",
+         "recipe": {
+             "repo": "github.com/symfony/recipes",
+             "branch": "main",
+diff --git a/tests/Feature/ShipTest.php b/tests/Feature/ShipTest.php
+index 639fe19..442c1e3 100644
+--- a/tests/Feature/ShipTest.php
++++ b/tests/Feature/ShipTest.php
+@@ -2,14 +2,22 @@
+ 
+ namespace App\Tests\Feature;
+ 
++use App\Factory\ShipFactory;
+ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
++use Zenstruck\Foundry\Attribute\ResetDatabase;
+ 
++#[ResetDatabase]
+ class ShipTest extends WebTestCase
+ {
+     public function testShipShow(): void
+     {
++        $ship = ShipFactory::createOne([
++            'name' => 'USS Espresso',
++            'model' => 'Latte-class',
++        ]);
++
+         $client = static::createClient();
+-        $crawler = $client->request('GET', '/ships/uss-espresso');
++        $crawler = $client->request('GET', '/ships/'.$ship->getSlug());
+ 
+         $this->assertResponseIsSuccessful();
+         $this->assertSelectorTextContains('h1', 'USS Espresso');

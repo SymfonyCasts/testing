@@ -1,0 +1,31 @@
+diff --git a/tests/Feature/ShipTest.php b/tests/Feature/ShipTest.php
+index 442c1e3..7513660 100644
+--- a/tests/Feature/ShipTest.php
++++ b/tests/Feature/ShipTest.php
+@@ -11,16 +11,25 @@ class ShipTest extends WebTestCase
+ {
+     public function testShipShow(): void
+     {
++        $client = static::createClient();
++
+         $ship = ShipFactory::createOne([
+             'name' => 'USS Espresso',
+             'model' => 'Latte-class',
+         ]);
+ 
+-        $client = static::createClient();
+         $crawler = $client->request('GET', '/ships/'.$ship->getSlug());
+ 
+         $this->assertResponseIsSuccessful();
+         $this->assertSelectorTextContains('h1', 'USS Espresso');
+         $this->assertAnySelectorTextContains('p', 'Latte-class');
+     }
++
++    public function testUnknownShipIs404(): void
++    {
++        $client = static::createClient();
++        $crawler = $client->request('GET', '/ships/uss-espresso');
++
++        $this->assertResponseStatusCodeSame(404);
++    }
+ }

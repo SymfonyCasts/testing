@@ -1,0 +1,24 @@
+diff --git a/tests/Feature/ShipTest.php b/tests/Feature/ShipTest.php
+new file mode 100644
+index 0000000..639fe19
+--- /dev/null
++++ b/tests/Feature/ShipTest.php
+@@ -0,0 +1,18 @@
++<?php
++
++namespace App\Tests\Feature;
++
++use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
++
++class ShipTest extends WebTestCase
++{
++    public function testShipShow(): void
++    {
++        $client = static::createClient();
++        $crawler = $client->request('GET', '/ships/uss-espresso');
++
++        $this->assertResponseIsSuccessful();
++        $this->assertSelectorTextContains('h1', 'USS Espresso');
++        $this->assertAnySelectorTextContains('p', 'Latte-class');
++    }
++}
