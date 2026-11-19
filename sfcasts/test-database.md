@@ -22,7 +22,7 @@ assertion to look for "USS Espresso". Then add
 not just the first one. Pass `p` and "Latte-class", since I know the model is in a
 `p` tag:
 
-
+[[[ code_block({"sha": "4149a241022ee6761f069bc62a6239ec62fe1171", "step": "3-database-test", "file": "tests/Feature/ShipTest.php", "lines": "1-18"}) ]]]
 
 Give the tests a run:
 

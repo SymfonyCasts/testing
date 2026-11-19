@@ -110,7 +110,7 @@
   the next run
 - Fix it next: each test creates exactly the data it needs, on a fresh database
 
-## Creating Test Data with Foundry
+## Database Resets & Test Data with Foundry
 
 ### Quick refresher
 

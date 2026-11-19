@@ -1,4 +1,4 @@
-# Creating Test Data with Foundry
+# Database Resets & Test Data with Foundry
 
 We have a test for the ship page, but we need a way to reset the database and create
 our data right inside the test, so it's nice and easy to read. My tool of choice is
@@ -36,7 +36,7 @@ git restore config/packages/zenstruck_foundry.yaml
 Check `git status` again... perfect: only `phpunit.dist.xml` changed. Take a quick
 look: the recipe added few lines down at the bottom:
 
-
+[[[ code_block({"sha": "4149a241022ee6761f069bc62a6239ec62fe1171", "step": "4-foundry", "file": "phpunit.dist.xml", "lines": "4,12,42-45"}) ]]]
 
 This is Foundry's PHPUnit extension, and it lets us use the database reset feature
 and factories in our tests.
@@ -57,7 +57,7 @@ Down in the request, we know the ship's slug is made from its name... but we hav
 ship right here, so let's be totally sure and use it: `'/ships/'.$ship->getSlug()`.
 Slug generation isn't what we're testing here anyway. Everything else stays the same:
 
-
+[[[ code_block({"sha": "4149a241022ee6761f069bc62a6239ec62fe1171", "step": "4-foundry", "file": "tests/Feature/ShipTest.php", "lines": "5-17,20,25-26"}) ]]]
 
 Just to be doubly sure, delete `var/data_test.db`. Then jump over to your terminal and
 run the test suite:
@@ -72,7 +72,7 @@ already been booted in this test... and it's hard to see, but behind the scenes,
 `createOne()` boots the kernel: it needs Doctrine from the container to save the
 ship. The fix is simple: move the `createClient()` call above `createOne()`:
 
-
+[[[ code_block({"sha": "4149a241022ee6761f069bc62a6239ec62fe1171", "step": "5-not-found", "file": "tests/Feature/ShipTest.php", "lines": "10-21,26,35"}) ]]]
 
 Run the tests again:
 
@@ -91,7 +91,7 @@ empty. Instead of asserting on the content, write
 `$this->assertResponseStatusCodeSame(404)`. Then rename the method to
 `testUnknownShipIs404()`:
 
-
+[[[ code_block({"sha": "4149a241022ee6761f069bc62a6239ec62fe1171", "step": "5-not-found", "file": "tests/Feature/ShipTest.php", "lines": "10-11,28-35"}) ]]]
 
 We know the test above *does* create a USS Espresso. But thanks to `#[ResetDatabase]`,
 the database is reset before this test starts, so that ship is gone. Run the test
